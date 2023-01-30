@@ -30,41 +30,41 @@ def rLMC(A, phis, locs):
 
 
 
-#### target example
-n = 1000
+# #### target example
+# n = 1000
 
-locs = random.uniform(0,1,(n,2))
+# locs = random.uniform(0,1,(n,2))
 
-A = np.array([[-1,1,1,1,1],
-              [1,-1,1,1,1],
-              [1,1,-1,1,1],
-              [1,1,1,-1,1],
-              [1,1,1,1,-1]])
-phis = np.array([2,4,8,16,32])
-
-
-V = rLMC(A,phis,locs)
-####
+# A = np.array([[-1,1,1,1,1],
+#               [1,-1,1,1,1],
+#               [1,1,-1,1,1],
+#               [1,1,1,-1,1],
+#               [1,1,1,1,-1]])
+# phis = np.array([2,4,8,16,32])
 
 
-
-#### showcase example
-
-
-#### create grid
-
-locs = np.linspace(0, 1, 1001)
-
-A = np.array([[-1,1],
-              [1,1]])
-phis = np.array([2,32])
+# V = rLMC(A,phis,locs)
+# ####
 
 
-V = rLMC(A,phis,np.transpose([locs]))
-####
 
-plt.plot(locs,V[0],locs,V[1])
-plt.show()
+# #### showcase example
+
+
+# #### create grid
+
+# locs = np.linspace(0, 1, 1001)
+
+# A = np.array([[-1,1],
+#               [1,1]])
+# phis = np.array([2,32])
+
+
+# V = rLMC(A,phis,np.transpose([locs]))
+# ####
+
+# plt.plot(locs,V[0],locs,V[1])
+# plt.show()
 
 
 
