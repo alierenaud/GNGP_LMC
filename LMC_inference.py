@@ -98,7 +98,7 @@ A_prop = 0.02
 
 
 ### samples
-N = 10000
+N = 2000
 
 ### global run containers
 phis_run = np.zeros((N,p))
@@ -174,23 +174,23 @@ for i in range(N):
 et = time.time()
 print('Execution time:', (et-st)/60, 'minutes')
 
-tail = 4000
+tail = 1000
 
-print(np.mean(acc_phis[0,tail:]))
-print(np.mean(acc_phis[1,tail:]))
-print(np.mean(acc_phis[2,tail:]))
+print('accept phi_1:',np.mean(acc_phis[0,tail:]))
+print('accept phi_2:',np.mean(acc_phis[1,tail:]))
+print('accept phi_3:',np.mean(acc_phis[2,tail:]))
 
 plt.plot(phis_run[:,0])
 plt.plot(phis_run[:,1])
 plt.plot(phis_run[:,2])
 plt.show
 
-print(np.mean(phis_run[tail:,0]))
-print(np.mean(phis_run[tail:,1]))
-print(np.mean(phis_run[tail:,2]))
+print('mean phi_1:',np.mean(phis_run[tail:,0]))
+print('mean phi_2:',np.mean(phis_run[tail:,1]))
+print('mean phi_3:',np.mean(phis_run[tail:,2]))
 
-print(np.mean(acc_A[tail:]))
-print(np.mean(A_run[tail:],axis=0))
+print('accept A:',np.mean(acc_A[tail:]))
+print('mean A:',np.mean(A_run[tail:],axis=0))
 
 
 
