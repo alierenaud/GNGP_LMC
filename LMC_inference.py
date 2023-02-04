@@ -13,19 +13,71 @@ import matplotlib.pyplot as plt
 from scipy.spatial import distance_matrix
 
 
+def A_move(A_current,A_inv_current,A_invV_current,A_prop,sigma_A,V,Rs_inv_current):
+
+    
+    p = V.shape[0] 
+    n = V.shape[1]
+
+    A_new = A_current + A_prop*random.normal(size=(p,p))
+    
+    A_inv_new = np.linalg.inv(A_new)
+    
+    A_invV_new = A_inv_new @ V
+    
+    rat = np.exp( -1/2 * np.sum( [ A_invV_new[j] @ Rs_inv_current[j] @ A_invV_new[j] - A_invV_current[j] @ Rs_inv_current[j] @ A_invV_current[j] for j in range(p) ] ) ) * np.abs(np.linalg.det(A_inv_new @ A_current))**n * np.exp(-1/2/sigma_A**2 * (np.sum(A_new**2) - np.sum(A_current**2)))
+    
+    if random.uniform() < rat:
+        
+        return(A_new,A_inv_new,A_invV_new,1)
+    else:
+        
+        return(A_current,A_inv_current,A_invV_current,0)
+
+
+def phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V,D,A_invV_current,Rs_current,Rs_inv_current):
+    
+    p = phis_current.shape[0]
+    range_phi = max_phi - min_phi
+    
+    acc_phis = np.zeros(p)
+    
+    for j in range(p):
+        
+        phis_new = phis_current[j] + phis_prop[j]*random.normal()
+        
+        if (phis_new > min_phi)  &  (phis_new < max_phi):
+            
+            Rs_new = np.exp(-D*phis_new)
+            Rs_inv_new = np.linalg.inv(Rs_new)
+            
+            phis_new_star_j = (phis_new - min_phi)/range_phi
+            phis_current_star_j = (phis_current[j] - min_phi)/range_phi
+            
+            
+            rat = np.exp( -1/2 * ( A_invV_current[j] @ ( Rs_inv_new - Rs_inv_current[j] ) @ A_invV_current[j] ) ) * np.linalg.det( Rs_inv_new @ Rs_current[j] ) **(1/2) * (phis_new_star_j/phis_current_star_j)**(alphas[j]-1) * ((1-phis_new_star_j)/(1-phis_current_star_j))**(betas[j]-1)                             
+            
+            
+            if random.uniform() < rat:
+                phis_current[j] = phis_new
+                Rs_current[j] = Rs_new
+                Rs_inv_current[j] = Rs_inv_new
+                
+                acc_phis[j] = 1
+                
+    return(phis_current,Rs_current,Rs_inv_current,acc_phis)
 ### global parameters
 n = 1000
-p = 3
+p = 2
 
 
 ### generate random example
 locs = random.uniform(0,1,(n,2))
 
 
-A = np.array([[-1.,0.,0],
-              [1.,-1.,0],
-              [1.,1.,1]])
-phis = np.array([5.,15.,25.])
+A = np.array([[-1.,0.],
+              [1.,-1.]])
+phis = np.array([5.,25.])
 
 
 # ### 1D case
@@ -70,7 +122,7 @@ D = distance_matrix(locs,locs)
 # D = distance_matrix(np.transpose(np.array([locs])),np.transpose(np.array([locs])))
 
 ### init and current state
-phis_current = np.array([5.,15.,25.])
+phis_current = np.array([5.,25.])
 Rs_current = np.array([ np.exp(-D*phis_current[j]) for j in range(p) ])
 Rs_inv_current = np.array([ np.linalg.inv(Rs_current[j]) for j in range(p) ])
 
@@ -81,7 +133,7 @@ A_inv_current = np.linalg.inv(A_current)
 A_invV_current = A_inv_current @ V
 
 ### new state containers
-phis_new = np.array([5.,15.,25.])
+phis_new = np.array([5.,25.])
 Rs_new = np.array([ np.exp(-D*phis_current[j]) for j in range(p) ])
 Rs_inv_new = np.array([ np.linalg.inv(Rs_current[j]) for j in range(p) ])
 
@@ -119,51 +171,12 @@ for i in range(N):
     
     
     
-    ### sample A
-    
-    A_new = A_current + A_prop*random.normal(size=(p,p))
-    
-    A_inv_new = np.linalg.inv(A_new)
-    
-    A_invV_new = A_inv_new @ V
-    
-    rat = np.exp( -1/2 * np.sum( [ A_invV_new[j] @ Rs_inv_current[j] @ A_invV_new[j] - A_invV_current[j] @ Rs_inv_current[j] @ A_invV_current[j] for j in range(p) ] ) ) * np.abs(np.linalg.det(A_inv_new @ A_current))**n * np.exp(-1/2/sigma_A**2 * (np.sum(A_new**2) - np.sum(A_current**2)))
-    
-    if random.uniform() < rat:
-        A_current = A_new
-        A_inv_current = A_inv_new
 
-        A_invV_current = A_invV_new
-        
-        acc_A[i] = 1
+    A_current, A_inv_current, A_invV_current, acc_A[i] = A_move(A_current,A_inv_current,A_invV_current,A_prop,sigma_A,V,Rs_inv_current)
     
     
-    ### sample psis
-    
-    
-    for j in range(p):
-        
-        phis_new[j] = phis_current[j] + phis_prop[j]*random.normal()
-        
-        if (phis_new[j] > min_phi)  &  (phis_new[j] < max_phi):
-            
-            Rs_new[j] = np.exp(-D*phis_new[j])
-            Rs_inv_new[j] = np.linalg.inv(Rs_new[j])
-            
-            phis_new_star_j = (phis_new[j] - min_phi)/range_phi
-            phis_current_star_j = (phis_current[j] - min_phi)/range_phi
-            
-            A_inv_jV = np.matmul(A_inv_current[j],V)
-            rat = np.exp( -1/2 * ( A_inv_jV @ ( Rs_inv_new[j] - Rs_inv_current[j] ) @ A_inv_jV ) ) * np.linalg.det( Rs_inv_new[j] @ Rs_current[j] ) **(1/2) * (phis_new_star_j/phis_current_star_j)**(alphas[j]-1) * ((1-phis_new_star_j)/(1-phis_current_star_j))**(betas[j]-1)                             
-            
-            
-            if random.uniform() < rat:
-                phis_current[j] = phis_new[j]
-                Rs_current[j] = Rs_new[j]
-                Rs_inv_current[j] = Rs_inv_new[j]
-                
-                acc_phis[j,i] = 1
 
+    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V,D,A_invV_current,Rs_current,Rs_inv_current)
 
     phis_run[i] =  phis_current
     A_run[i] = A_current
@@ -178,16 +191,16 @@ tail = 1000
 
 print('accept phi_1:',np.mean(acc_phis[0,tail:]))
 print('accept phi_2:',np.mean(acc_phis[1,tail:]))
-print('accept phi_3:',np.mean(acc_phis[2,tail:]))
+# print('accept phi_3:',np.mean(acc_phis[2,tail:]))
 
 plt.plot(phis_run[:,0])
 plt.plot(phis_run[:,1])
-plt.plot(phis_run[:,2])
+# plt.plot(phis_run[:,2])
 plt.show
 
 print('mean phi_1:',np.mean(phis_run[tail:,0]))
 print('mean phi_2:',np.mean(phis_run[tail:,1]))
-print('mean phi_3:',np.mean(phis_run[tail:,2]))
+# print('mean phi_3:',np.mean(phis_run[tail:,2]))
 
 print('accept A:',np.mean(acc_A[tail:]))
 print('mean A:',np.mean(A_run[tail:],axis=0))
