@@ -10,7 +10,7 @@ from LMC_generation import rLMC
 
 
 
-def rNLMC(A, phis, taus, locs):
+def rNLMC(A, phis, taus, locs, retV=False):
     
     p = A.shape[0]
     n = locs.shape[0]
@@ -19,28 +19,30 @@ def rNLMC(A, phis, taus, locs):
     
     Y = V + random.normal(size=(p,n))*np.outer(taus,np.ones(n))
     
-    
-    return(Y)
+    if retV:
+        return(Y,V)
+    else:
+        return(Y)
 
 
 #### showcase example
 
 
-#### create grid
+# #### create grid
 
-locs = np.linspace(0, 1, 101)
+# locs = np.linspace(0, 1, 101)
 
-A = np.array([[-1,1],
-              [1,1]])
-phis = np.array([2,32])
-taus = np.array([1,4])*0.1
+# A = np.array([[-1,1],
+#               [1,1]])
+# phis = np.array([2,32])
+# taus = np.array([1,4])*0.1
 
 
-Y = rNLMC(A,phis,taus,np.transpose([locs]))
-####
+# Y = rNLMC(A,phis,taus,np.transpose([locs]))
+# ####
 
-plt.plot(locs,Y[0],locs,Y[1])
-plt.show()
+# plt.plot(locs,Y[0],locs,Y[1])
+# plt.show()
 
 
 
