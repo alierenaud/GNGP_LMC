@@ -97,8 +97,8 @@ p = 2
 locs = np.linspace(0, 1, n)
 
 
-A = np.array([[-1.,0.],
-              [1.,-1.]])
+A = np.array([[-1.,1.],
+              [1.,1.]])
 phis = np.array([5.,20.])
 taus_sqrt_inv = np.array([1.,2.]) * 0.1
 
