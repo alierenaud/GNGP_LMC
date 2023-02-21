@@ -26,14 +26,12 @@ def M_comp(Rs_inv_current, A_inv_current, taus):
     
     return(M)
 
-def b_comp(taus,Y):
-    
-    return(np.diag(taus) @ Y)
 
-def V_move_conj(Rs_inv_current, A_inv_current, taus, Y, V_current):
+
+def V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y, V_current):
     
-    M = M_comp(Rs_inv_current, A_inv_current, taus)
-    b = b_comp(taus,Y)
+    M = M_comp(Rs_inv_current, A_inv_current, taus_current)
+    b = Dm1Y_current
     
     for i in range(n):
         for j in range(p):
@@ -66,15 +64,18 @@ def V_move_mh(V_current, VmY_inner_rows_current, V_prop, A_invV_current, Rs_inv_
         return(V_current, VmY_current, VmY_inner_rows_current, A_invV_current, 0)
 
 
-def taus_move(taus_current,VmY_inner_rows_current,a,b,n):
+def taus_move(taus_current,VmY_inner_rows_current,Y,a,b,n):
     
     p = VmY_inner_rows_current.shape[0]
     
     for j in range(p):
         
         taus_current[j] = random.gamma(a + n/2, 1/( b + VmY_inner_rows_current[j]/2), 1)
-
-    return(taus_current)
+        
+    Dm1_current = np.diag(taus_current)
+    Dm1Y_current = Dm1_current @ Y
+    
+    return(taus_current, Dm1_current, Dm1Y_current)
 
 
 ### global parameters
@@ -129,7 +130,7 @@ plt.show()
 
 ## tau
 
-a = 10
+a = 50
 b = 1
 
 
@@ -137,12 +138,12 @@ b = 1
 
 ### useful quantities 
 
-# D = distance_matrix(locs,locs)
-D = distance_matrix(np.transpose(np.array([locs])),np.transpose(np.array([locs])))
+# Dists = distance_matrix(locs,locs)
+Dists = distance_matrix(np.transpose(np.array([locs])),np.transpose(np.array([locs])))
 
 ### init and current state
 phis_current = np.array([5.,20.])
-Rs_current = np.array([ np.exp(-D*phis_current[j]) for j in range(p) ])
+Rs_current = np.array([ np.exp(-Dists*phis_current[j]) for j in range(p) ])
 Rs_inv_current = np.array([ np.linalg.inv(Rs_current[j]) for j in range(p) ])
 
 # V_current = V_true
@@ -159,8 +160,8 @@ A_inv_current = np.linalg.inv(A_current)
 A_invV_current = A_inv_current @ V_current
 
 taus_current = 1/(np.array([1.,2.]) * 0.1)**2
-
-
+Dm1_current = np.diag(taus_current)
+Dm1Y_current = Dm1_current @ Y
 
 
 
@@ -195,15 +196,15 @@ st = time.time()
 for i in range(N):
     
     
-    V_current, VmY_current, VmY_inner_rows_current, A_invV_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Y, V_current)
+    V_current, VmY_current, VmY_inner_rows_current, A_invV_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y, V_current)
         
         
-    taus_current = taus_move(taus_current,VmY_inner_rows_current,a,b,n)
+    taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y,a,b,n)
         
         
     A_current, A_inv_current, A_invV_current, acc_A[i] = A_move(A_current,A_inv_current,A_invV_current,A_prop,sigma_A,V_current,Rs_inv_current)
     
-    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_current,D,A_invV_current,Rs_current,Rs_inv_current)
+    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_current,Dists,A_invV_current,Rs_current,Rs_inv_current)
 
     V_run[i] = V_current
     taus_run[i] = taus_current
@@ -265,14 +266,14 @@ plt.plot(1/np.sqrt(taus_run[:,1]))
 # plt.plot(1/np.sqrt(taus_run[:,2]))
 plt.show()
 
-for i in range(N):
-    if i % 100 == 0:
-        plt.plot(locs,V_run[i,0])
-        plt.plot(locs,Y[0], '.', c="tab:blue", alpha=0.5)
-        plt.plot(locs,V_run[i,1])
-        plt.plot(locs,Y[1], '.', c="tab:orange", alpha=0.5)
+# for i in range(N):
+#     if i % 100 == 0:
+#         plt.plot(locs,V_run[i,0])
+#         plt.plot(locs,Y[0], '.', c="tab:blue", alpha=0.5)
+#         plt.plot(locs,V_run[i,1])
+#         plt.plot(locs,Y[1], '.', c="tab:orange", alpha=0.5)
 
-        plt.show()
+#         plt.show()
 
 
 
