@@ -17,17 +17,7 @@ from scipy.spatial import distance_matrix
 
 def M_comp(Rs_inv_current, A_inv_current, taus):
     
-    # M = np.zeros((p,n,p,n))
-    
-    # for i1 in range(n):
-    #     for i2 in range(n):
-    #         for j1 in range(p):
-    #             for j2 in range(p):
-        
-    #                 M[j1,i1,j2,i2] = np.sum( [Rs_inv_current[k,i1,i2] * A_inv_current[k,j1] * A_inv_current[k,j2] for k in range(p) ] )
-                    
-    #                 if (i1==i2) & (j1==j2):
-    #                     M[j1,i1,j2,i2] += taus[j1]
+
                         
     
     M = np.sum([ np.kron( Rs_inv_current[j] , np.outer(A_inv_current[j],A_inv_current[j]) ) for j in range(p) ],axis=0) + np.kron( np.identity(n), np.diag(taus) )
@@ -139,8 +129,8 @@ plt.show()
 
 ## tau
 
-a = 2
-b = 2
+a = 10
+b = 1
 
 
 
@@ -244,6 +234,13 @@ print('mean phi_2:',np.mean(phis_run[tail:,1]))
 
 print('accept A:',np.mean(acc_A[tail:]))
 print('mean A:',np.mean(A_run[tail:],axis=0))
+
+plt.plot(A_run[:,0,0])
+plt.plot(A_run[:,0,1])
+plt.plot(A_run[:,1,0])
+plt.plot(A_run[:,1,1])
+plt.show()
+
 
 # print('accept V:',np.mean(acc_V[tail:]))
 
