@@ -134,7 +134,7 @@ A_prop = 0.02
 
 
 ### samples
-N = 4000
+N = 10000
 
 ### global run containers
 phis_run = np.zeros((N,p))
@@ -179,7 +179,7 @@ for i in range(N):
     ### update V
     V_current = A_current @ A_invV_current
     
-    
+    ####
     
     
     phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_current,Dists,A_invV_current,Rs_current,Rs_inv_current)
@@ -198,7 +198,7 @@ et = time.time()
 print('Execution time:', (et-st)/60, 'minutes')
 
 
-tail = 2000
+tail = 4000
 
 print('accept phi_1:',np.mean(acc_phis[0,tail:]))
 print('accept phi_2:',np.mean(acc_phis[1,tail:]))
@@ -246,11 +246,21 @@ plt.plot(1/np.sqrt(taus_run[:,1]))
 # plt.plot(1/np.sqrt(taus_run[:,2]))
 plt.show()
 
-for i in range(N):
-    if i % 100 == 0:
-        plt.plot(locs,V_run[i,0])
-        plt.plot(locs,Y[0], '.', c="tab:blue", alpha=0.5)
-        plt.plot(locs,V_run[i,1])
-        plt.plot(locs,Y[1], '.', c="tab:orange", alpha=0.5)
+# for i in range(N):
+#     if i % 100 == 0:
+#         plt.plot(locs,V_run[i,0])
+#         plt.plot(locs,Y[0], '.', c="tab:blue", alpha=0.5)
+#         plt.plot(locs,V_run[i,1])
+#         plt.plot(locs,Y[1], '.', c="tab:orange", alpha=0.5)
 
-        plt.show()
+#         plt.show()
+
+plt.plot(A_run[tail:,0,0])
+plt.show()
+plt.plot(A_run[tail:,0,1])
+plt.show()
+plt.plot(A_run[tail:,1,0])
+plt.show()
+plt.plot(A_run[tail:,1,1])
+plt.show()
+
