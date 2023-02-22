@@ -1,6 +1,5 @@
 
 
-
 import numpy as np
 from numpy import random
 
@@ -12,6 +11,8 @@ from noisyLMC_inference import V_move_conj, taus_move
 import matplotlib.pyplot as plt
 
 from scipy.spatial import distance_matrix
+
+
 
 
 def vec(A):
@@ -35,6 +36,7 @@ def vec_inv(A, nrow):
 # print(A)
 # print(vec(A))
 # print(vec_inv(vec(A),nrow))
+
 
 
 ### global parameters
@@ -111,15 +113,14 @@ V_current = random.normal(size=(p,n))*1
 VmY_current = V_current - Y
 VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
 
-
+# A_current = np.array([[-1.,0.],
+#                       [1.,-1.]])
 A_current = np.identity(p)
 A_inv_current = np.linalg.inv(A_current)
+
 A_invV_current = A_inv_current @ V_current
 
-
-# W_current = A_inv_current @ V_current
-
-taus_current = 1/(np.array([1.,2.]) * 0.1)**2
+taus_current = np.array([1.,1.])
 Dm1_current = np.diag(taus_current)
 Dm1Y_current = Dm1_current @ Y
 
@@ -129,11 +130,11 @@ Dm1Y_current = Dm1_current @ Y
 
 phis_prop = np.linspace(1/p, 1, p) * 2.
 A_prop = 0.02
-
+# V_prop = 0.005
 
 
 ### samples
-N = 1000
+N = 10000
 
 ### global run containers
 phis_run = np.zeros((N,p))
@@ -145,6 +146,7 @@ V_run = np.zeros((N,p,n))
 
 acc_phis = np.zeros((p,N))
 acc_A = np.zeros(N)
+# acc_V = np.zeros(N)
 
 
 
@@ -157,29 +159,31 @@ for i in range(N):
     
     V_current, VmY_current, VmY_inner_rows_current, A_invV_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y, V_current)
         
-    A_current, A_inv_current, A_invV_current, acc_A[i] = A_move(A_current,A_inv_current,W_current,A_prop,sigma_A,V_current,Rs_inv_current)
-    
-    # W_current = A_inv_current @ V_current
-    
-    # M = np.kron(W_current @ np.transpose(W_current), Dm1_current) + np.identity(p**2)/sigma_A**2
-    # b1 = vec(Dm1Y_current @ np.transpose(W_current))
-    
-    # M_inv = np.linalg.inv(M)
-    
-    # A_current = vec_inv( np.linalg.cholesky(M_inv) @ random.normal(size=p**2) + M_inv @ b1, p)
-    # A_inv_current = np.linalg.inv(A_current)
-    # A_invV_current = A_inv_current @ V_current
-    
-    # ### this
-    # V_current = A_current @ W_current
-    # VmY_current = V_current - Y
-    # VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
-    
-    # ### or this
-    # A_invV_current = A_inv_current @ V_current
         
-    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_current,Dists,A_invV_current,Rs_current,Rs_inv_current)
     
+        
+        
+    A_current, A_inv_current, A_invV_current, acc_A[i] = A_move(A_current,A_inv_current,A_invV_current,A_prop,sigma_A,V_current,Rs_inv_current)
+    
+    #### interweave update
+    
+    
+    M = np.kron( A_invV_current @ np.transpose(A_invV_current), Dm1_current ) + np.identity(p**2)/sigma_A**2
+    b1 = vec(Dm1Y_current @ np.transpose(A_invV_current))
+    
+    M_inv = np.linalg.inv(M)
+    
+    A_current = vec_inv( np.linalg.cholesky(M_inv) @ random.normal(size=p**2) + M_inv @ b1, p)
+    A_inv_current = np.linalg.inv(A_current)
+    
+    ### update V
+    V_current = A_current @ A_invV_current
+    
+    ####
+    
+    
+    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_current,Dists,A_invV_current,Rs_current,Rs_inv_current)
+
     taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y,a,b,n)
     
     V_run[i] = V_current
@@ -194,7 +198,7 @@ et = time.time()
 print('Execution time:', (et-st)/60, 'minutes')
 
 
-tail = 400
+tail = 4000
 
 print('accept phi_1:',np.mean(acc_phis[0,tail:]))
 print('accept phi_2:',np.mean(acc_phis[1,tail:]))
@@ -251,9 +255,12 @@ plt.show()
 
 #         plt.show()
 
-
-
-
-
-
+plt.plot(A_run[tail:,0,0])
+plt.show()
+plt.plot(A_run[tail:,0,1])
+plt.show()
+plt.plot(A_run[tail:,1,0])
+plt.show()
+plt.plot(A_run[tail:,1,1])
+plt.show()
 
