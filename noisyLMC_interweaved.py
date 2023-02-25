@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from scipy.spatial import distance_matrix
 
 
-
+random.seed(10)
 
 def vec(A):
     
@@ -78,6 +78,8 @@ range_phi = max_phi - min_phi
 alphas = np.linspace(1, p, p)*10
 betas = np.linspace(p, 1, p)*10
 
+prior_means = alphas/(alphas+betas) * range_phi + min_phi
+
 # alphas = np.linspace(2, p+1, p)*5
 # betas = np.linspace(p+1, 2, p)*5
 
@@ -103,7 +105,7 @@ b = 1
 Dists = distance_matrix(np.transpose(np.array([locs])),np.transpose(np.array([locs])))
 
 ### init and current state
-phis_current = np.array([5.,20.])
+phis_current = prior_means
 Rs_current = np.array([ np.exp(-Dists*phis_current[j]) for j in range(p) ])
 Rs_inv_current = np.array([ np.linalg.inv(Rs_current[j]) for j in range(p) ])
 
@@ -120,7 +122,7 @@ A_inv_current = np.linalg.inv(A_current)
 
 A_invV_current = A_inv_current @ V_current
 
-taus_current = np.array([1.,1.])
+taus_current = np.array([a/b,a/b])
 Dm1_current = np.diag(taus_current)
 Dm1Y_current = Dm1_current @ Y
 
@@ -129,12 +131,12 @@ Dm1Y_current = Dm1_current @ Y
 ### proposals
 
 phis_prop = np.linspace(1/p, 1, p) * 2.
-A_prop = 0.02
+A_prop = 0.05
 # V_prop = 0.005
 
 
 ### samples
-N = 10000
+N = 4000
 
 ### global run containers
 phis_run = np.zeros((N,p))
@@ -198,7 +200,7 @@ et = time.time()
 print('Execution time:', (et-st)/60, 'minutes')
 
 
-tail = 4000
+tail = 2000
 
 print('accept phi_1:',np.mean(acc_phis[0,tail:]))
 print('accept phi_2:',np.mean(acc_phis[1,tail:]))
@@ -246,14 +248,14 @@ plt.plot(1/np.sqrt(taus_run[:,1]))
 # plt.plot(1/np.sqrt(taus_run[:,2]))
 plt.show()
 
-# for i in range(N):
-#     if i % 100 == 0:
-#         plt.plot(locs,V_run[i,0])
-#         plt.plot(locs,Y[0], '.', c="tab:blue", alpha=0.5)
-#         plt.plot(locs,V_run[i,1])
-#         plt.plot(locs,Y[1], '.', c="tab:orange", alpha=0.5)
+for i in range(N):
+    if i % 100 == 0:
+        plt.plot(locs,V_run[i,0])
+        plt.plot(locs,Y[0], '.', c="tab:blue", alpha=0.5)
+        plt.plot(locs,V_run[i,1])
+        plt.plot(locs,Y[1], '.', c="tab:orange", alpha=0.5)
 
-#         plt.show()
+        plt.show()
 
 plt.plot(A_run[tail:,0,0])
 plt.show()
@@ -264,3 +266,12 @@ plt.show()
 plt.plot(A_run[tail:,1,1])
 plt.show()
 
+
+arr = np.zeros((N-tail,p**2))
+
+arr[:,0] = A_run[tail:,0,0]
+arr[:,1] = A_run[tail:,0,1]
+arr[:,2] = A_run[tail:,1,0]
+arr[:,3] = A_run[tail:,1,1]
+
+np.savetxt('output.csv', arr, delimiter=',')
