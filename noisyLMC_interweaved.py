@@ -31,6 +31,24 @@ def vec_inv(A, nrow):
     
     return(np.reshape(A,newshape=(nrow,ncol),order='F'))
 
+
+def A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A):
+    
+    p = A_invV_current.shape[0]
+    
+    M = np.kron( A_invV_current @ np.transpose(A_invV_current), Dm1_current ) + np.identity(p**2)/sigma_A**2
+    b1 = vec(Dm1Y_current @ np.transpose(A_invV_current))
+    
+    M_inv = np.linalg.inv(M)
+    
+    A_current = vec_inv( np.linalg.cholesky(M_inv) @ random.normal(size=p**2) + M_inv @ b1, p)
+    A_inv_current = np.linalg.inv(A_current)
+    
+    ### update V
+    V_current = A_current @ A_invV_current
+    
+    return(A_current,A_inv_current,V_current)
+
 # A = np.array([[1,2,7],[3,4,8],[5,6,9],[10,11,12]])
 # nrow = A.shape[0]
 # print(A)
@@ -40,7 +58,7 @@ def vec_inv(A, nrow):
 
 
 ### global parameters
-n = 1000
+n = 600
 p = 2
 
 
@@ -136,7 +154,7 @@ A_prop = 0.05
 
 
 ### samples
-N = 4000
+N = 1000
 
 ### global run containers
 phis_run = np.zeros((N,p))
@@ -169,19 +187,10 @@ for i in range(N):
     
     #### interweave update
     
+    A_current, A_inv_current, V_current = A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A)
     
-    M = np.kron( A_invV_current @ np.transpose(A_invV_current), Dm1_current ) + np.identity(p**2)/sigma_A**2
-    b1 = vec(Dm1Y_current @ np.transpose(A_invV_current))
     
-    M_inv = np.linalg.inv(M)
-    
-    A_current = vec_inv( np.linalg.cholesky(M_inv) @ random.normal(size=p**2) + M_inv @ b1, p)
-    A_inv_current = np.linalg.inv(A_current)
-    
-    ### update V
-    V_current = A_current @ A_invV_current
-    
-    ####
+
     
     
     phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_current,Dists,A_invV_current,Rs_current,Rs_inv_current)
@@ -200,7 +209,7 @@ et = time.time()
 print('Execution time:', (et-st)/60, 'minutes')
 
 
-tail = 2000
+tail = 400
 
 print('accept phi_1:',np.mean(acc_phis[0,tail:]))
 print('accept phi_2:',np.mean(acc_phis[1,tail:]))
