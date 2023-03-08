@@ -58,7 +58,7 @@ def A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A):
 
 
 ### global parameters
-n = 600
+n = 1000
 p = 2
 
 
@@ -154,7 +154,7 @@ A_prop = 0.05
 
 
 ### samples
-N = 1000
+N = 5000
 
 ### global run containers
 phis_run = np.zeros((N,p))
@@ -187,7 +187,7 @@ for i in range(N):
     
     #### interweave update
     
-    A_current, A_inv_current, V_current = A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A)
+    # A_current, A_inv_current, V_current = A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A)
     
     
 
@@ -209,7 +209,7 @@ et = time.time()
 print('Execution time:', (et-st)/60, 'minutes')
 
 
-tail = 400
+tail = 1000
 
 print('accept phi_1:',np.mean(acc_phis[0,tail:]))
 print('accept phi_2:',np.mean(acc_phis[1,tail:]))

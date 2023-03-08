@@ -33,20 +33,27 @@ effectiveSize(rAR1(1000,1,-0.9))
 
 
 
-stand = read.csv("standard.csv",header=F)
+centered = read.csv("centered.csv",header=F)
 
-effectiveSize(stand[,1])
-effectiveSize(stand[,2])
-effectiveSize(stand[,3])
-effectiveSize(stand[,4])
+effectiveSize(centered[,1])
+effectiveSize(centered[,2])
+effectiveSize(centered[,3])
+effectiveSize(centered[,4])
 
 
-inter = read.csv("interweave.csv",header=F)
+white = read.csv("white.csv",header=F)
 
-effectiveSize(inter[,1])
-effectiveSize(inter[,2])
-effectiveSize(inter[,3])
-effectiveSize(inter[,4])
+effectiveSize(white[,1])
+effectiveSize(white[,2])
+effectiveSize(white[,3])
+effectiveSize(white[,4])
+
+interweave = read.csv("interweave.csv",header=F)
+
+effectiveSize(interweave[,1])
+effectiveSize(interweave[,2])
+effectiveSize(interweave[,3])
+effectiveSize(interweave[,4])
 
 
 
