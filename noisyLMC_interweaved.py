@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from scipy.spatial import distance_matrix
 
 
-random.seed(10)
+# random.seed(10)
 
 def vec(A):
     
@@ -58,7 +58,7 @@ def A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A):
 
 
 ### global parameters
-n = 1000
+n = 500
 p = 2
 
 
@@ -154,7 +154,7 @@ A_prop = 0.05
 
 
 ### samples
-N = 5000
+N = 4000
 
 ### global run containers
 phis_run = np.zeros((N,p))
@@ -187,7 +187,7 @@ for i in range(N):
     
     #### interweave update
     
-    # A_current, A_inv_current, V_current = A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A)
+    A_current, A_inv_current, V_current = A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A)
     
     
 
