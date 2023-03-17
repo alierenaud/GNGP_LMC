@@ -5,7 +5,7 @@ from numpy import random
 
 from noisyLMC_generation import rNLMC
 
-from LMC_inference import A_move, phis_move
+from LMC_inference import phis_move
 from noisyLMC_inference import V_move_conj, taus_move
 
 import matplotlib.pyplot as plt
@@ -32,16 +32,45 @@ def vec_inv(A, nrow):
     return(np.reshape(A,newshape=(nrow,ncol),order='F'))
 
 
-def A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A):
+def A_move(A_current,A_inv_current,A_invV_current,A_prop,sigma_A,mu_A,V,Rs_inv_current):
+
+    
+    p = V.shape[0] 
+    n = V.shape[1]
+
+    A_new = A_current + A_prop*random.normal(size=(p,p))
+    
+    if np.prod(A_new[0]>0):
+        A_inv_new = np.linalg.inv(A_new)
+        
+        A_invV_new = A_inv_new @ V
+        
+        rat = np.exp( -1/2 * np.sum( [ A_invV_new[j] @ Rs_inv_current[j] @ A_invV_new[j] - A_invV_current[j] @ Rs_inv_current[j] @ A_invV_current[j] for j in range(p) ] ) ) * np.abs(np.linalg.det(A_inv_new @ A_current))**n * np.exp(-1/2/sigma_A**2 * (np.sum((A_new-mu_A)**2) - np.sum((A_current-mu_A)**2)))
+        
+        if random.uniform() < rat:
+            
+            return(A_new,A_inv_new,A_invV_new,1)
+        else:
+            
+            return(A_current,A_inv_current,A_invV_current,0)
+    else:
+        
+        return(A_current,A_inv_current,A_invV_current,0)
+
+
+def A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A,mu_A):
     
     p = A_invV_current.shape[0]
     
     M = np.kron( A_invV_current @ np.transpose(A_invV_current), Dm1_current ) + np.identity(p**2)/sigma_A**2
-    b1 = vec(Dm1Y_current @ np.transpose(A_invV_current))
+    b1 = vec(Dm1Y_current @ np.transpose(A_invV_current)) + vec(mu_A)/sigma_A**2
     
     M_inv = np.linalg.inv(M)
     
-    A_current = vec_inv( np.linalg.cholesky(M_inv) @ random.normal(size=p**2) + M_inv @ b1, p)
+    A_current = np.zeros(shape=(p,p))
+    
+    while not np.prod(A_current[0]>0):
+        A_current = vec_inv( np.linalg.cholesky(M_inv) @ random.normal(size=p**2) + M_inv @ b1, p)
     A_inv_current = np.linalg.inv(A_current)
     
     ### update V
@@ -58,7 +87,7 @@ def A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A):
 
 
 ### global parameters
-n = 500
+n = 1000
 p = 2
 
 
@@ -87,6 +116,8 @@ plt.show()
 
 ### priors
 sigma_A = 1.
+mu_A = np.array([[sigma_A,sigma_A],
+                 [0.,0.]])
 
 min_phi = 3.
 max_phi = 30.
@@ -105,8 +136,9 @@ prior_means = alphas/(alphas+betas) * range_phi + min_phi
 from scipy.stats import beta
 
 for i in range(p):
-    plt.plot(np.linspace(0, 1, 1001),beta.pdf(np.linspace(0, 1, 1001), alphas[i], betas[i]))
+    plt.plot(np.linspace(0, 1, 1001)*range_phi + min_phi,beta.pdf(np.linspace(0, 1, 1001), alphas[i], betas[i]))
 plt.show()
+
 
 
 ## tau
@@ -154,7 +186,7 @@ A_prop = 0.05
 
 
 ### samples
-N = 4000
+N = 10000
 
 ### global run containers
 phis_run = np.zeros((N,p))
@@ -183,9 +215,9 @@ for i in range(N):
     
        
         
-    A_current, A_inv_current, A_invV_current, acc_A[i] = A_move(A_current,A_inv_current,A_invV_current,A_prop,sigma_A,V_current,Rs_inv_current)
+    A_current, A_inv_current, A_invV_current, acc_A[i] = A_move(A_current,A_inv_current,A_invV_current,A_prop,sigma_A,mu_A,V_current,Rs_inv_current)
     
-    A_current, A_inv_current, V_current = A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A) 
+    A_current, A_inv_current, V_current = A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A,mu_A) 
     
     
     
@@ -208,8 +240,9 @@ for i in range(N):
 et = time.time()
 print('Execution time:', (et-st)/60, 'minutes')
 
+print("Prior Means for Ranges", alphas / (alphas + betas) * range_phi + min_phi)
 
-tail = 1000
+tail = 2000
 
 print('accept phi_1:',np.mean(acc_phis[0,tail:]))
 print('accept phi_2:',np.mean(acc_phis[1,tail:]))
