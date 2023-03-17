@@ -181,13 +181,13 @@ for i in range(N):
         
         
     
-        
+       
         
     A_current, A_inv_current, A_invV_current, acc_A[i] = A_move(A_current,A_inv_current,A_invV_current,A_prop,sigma_A,V_current,Rs_inv_current)
     
-    #### interweave update
+    A_current, A_inv_current, V_current = A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A) 
     
-    A_current, A_inv_current, V_current = A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A)
+    
     
     
 
@@ -258,7 +258,7 @@ plt.plot(1/np.sqrt(taus_run[:,1]))
 plt.show()
 
 for i in range(N):
-    if i % 100 == 0:
+    if i % 1000 == 0:
         plt.plot(locs,V_run[i,0])
         plt.plot(locs,Y[0], '.', c="tab:blue", alpha=0.5)
         plt.plot(locs,V_run[i,1])
