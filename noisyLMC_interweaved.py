@@ -155,7 +155,7 @@ b = 1
 Dists = distance_matrix(np.transpose(np.array([locs])),np.transpose(np.array([locs])))
 
 ### init and current state
-phis_current = prior_means
+phis_current = np.array([5.,20.])
 Rs_current = np.array([ np.exp(-Dists*phis_current[j]) for j in range(p) ])
 Rs_inv_current = np.array([ np.linalg.inv(Rs_current[j]) for j in range(p) ])
 
@@ -165,14 +165,14 @@ V_current = random.normal(size=(p,n))*1
 VmY_current = V_current - Y
 VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
 
-# A_current = np.array([[-1.,0.],
-#                       [1.,-1.]])
-A_current = np.identity(p)
+A_current = np.array([[1.,1.],
+              [0.,1.]])
+# A_current = np.identity(p)
 A_inv_current = np.linalg.inv(A_current)
 
 A_invV_current = A_inv_current @ V_current
 
-taus_current = np.array([a/b,a/b])
+taus_current = 1/(np.array([1.,2.]) * 0.1)**2
 Dm1_current = np.diag(taus_current)
 Dm1Y_current = Dm1_current @ Y
 
@@ -181,7 +181,7 @@ Dm1Y_current = Dm1_current @ Y
 ### proposals
 
 phis_prop = np.linspace(1/p, 1, p) * 2.
-A_prop = 0.05
+A_prop = 0.02
 # V_prop = 0.005
 
 
