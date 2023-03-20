@@ -87,7 +87,7 @@ def A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A,mu_A):
 
 
 ### global parameters
-n = 1000
+n = 500
 p = 2
 
 
@@ -225,9 +225,9 @@ for i in range(N):
 
     
     
-    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_current,Dists,A_invV_current,Rs_current,Rs_inv_current)
+    # phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_current,Dists,A_invV_current,Rs_current,Rs_inv_current)
 
-    taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y,a,b,n)
+    # taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y,a,b,n)
     
     V_run[i] = V_current
     taus_run[i] = taus_current
