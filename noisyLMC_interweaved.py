@@ -87,7 +87,7 @@ def A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A,mu_A):
 
 
 ### global parameters
-n = 500
+n = 800
 p = 2
 
 
@@ -181,7 +181,8 @@ Dm1Y_current = Dm1_current @ Y
 ### proposals
 
 phis_prop = np.linspace(1/p, 1, p) * 2.
-A_prop = 0.02
+A_prop = 0.03
+sigma_slice = 1
 # V_prop = 0.005
 
 
@@ -211,13 +212,41 @@ for i in range(N):
     
     V_current, VmY_current, VmY_inner_rows_current, A_invV_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y, V_current)
         
-        
     
-       
-        
-    A_current, A_inv_current, A_invV_current, acc_A[i] = A_move(A_current,A_inv_current,A_invV_current,A_prop,sigma_A,mu_A,V_current,Rs_inv_current)
+    z =  -1/2 * np.sum( [A_invV_current[j] @ Rs_inv_current[j] @ A_invV_current[j] for j in range(p) ] ) - n * np.log( np.abs(np.linalg.det(A_current))) - 1/2/sigma_A**2 * np.sum((A_current-mu_A)**2) - random.exponential(1,1)
     
-    A_current, A_inv_current, V_current = A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A,mu_A) 
+    L = A_current - random.uniform(0,sigma_slice,(p,p))
+    L[0] = np.maximum(L[0],0)
+    
+    U = L + sigma_slice
+        
+    while True:
+    
+        
+        
+        A_prop = random.uniform(L,U)
+        A_inv_prop = np.linalg.inv(A_prop)
+        A_invV_prop = A_inv_prop @ V_current
+        
+        acc = z < -1/2 * np.sum( [A_invV_prop[j] @ Rs_inv_current[j] @ A_invV_prop[j] for j in range(p) ] ) - n * np.log( np.abs(np.linalg.det(A_prop))) - 1/2/sigma_A**2 * np.sum((A_prop-mu_A)**2) 
+            
+        if acc:
+            A_current = A_prop
+            A_inv_current = A_inv_prop
+            A_invV_current = A_invV_prop
+            break
+        else:
+            for ii in range(p):
+                for jj in range(p):
+                    if A_prop[ii,jj] < A_current[ii,jj]:
+                        L[ii,jj] = A_prop[ii,jj]
+                    else:
+                        U[ii,jj] = A_prop[ii,jj]
+                        
+    
+    # A_current, A_inv_current, A_invV_current, acc_A[i] = A_move(A_current,A_inv_current,A_invV_current,A_prop,sigma_A,mu_A,V_current,Rs_inv_current)
+    
+    # A_current, A_inv_current, V_current = A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A,mu_A) 
     
     
     
@@ -225,9 +254,9 @@ for i in range(N):
 
     
     
-    # phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_current,Dists,A_invV_current,Rs_current,Rs_inv_current)
+    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_current,Dists,A_invV_current,Rs_current,Rs_inv_current)
 
-    # taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y,a,b,n)
+    taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y,a,b,n)
     
     V_run[i] = V_current
     taus_run[i] = taus_current
