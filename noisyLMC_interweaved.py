@@ -122,7 +122,7 @@ def A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A,mu_A):
 
 
 ### global parameters
-n = 1000
+n = 500
 p = 2
 
 
@@ -134,7 +134,7 @@ locs = np.linspace(0, 1, n)
 A = np.array([[-1.,1.],
               [1.,1.]])
 phis = np.array([5.,20.])
-taus_sqrt_inv = np.array([1.,1.]) * 1
+taus_sqrt_inv = np.array([1.,1.]) * 0.5
 
 
 # Y, V_true = rNLMC(A,phis,taus_sqrt_inv,locs, retV=True)
@@ -178,8 +178,8 @@ plt.show()
 
 ## tau
 
-a = 50
-b = 1
+a = 1
+b = 0.1
 
 
 
@@ -207,7 +207,7 @@ A_inv_current = np.linalg.inv(A_current)
 
 A_invV_current = A_inv_current @ V_current
 
-taus_current = 1/(np.array([1.,1.]) * 1)**2
+taus_current = 1/(np.array([1.,1.]) * 0.5)**2
 Dm1_current = np.diag(taus_current)
 Dm1Y_current = Dm1_current @ Y
 
@@ -253,7 +253,7 @@ for i in range(N):
     
     A_current, A_inv_current, A_invV_current = A_move_slice(A_current, A_invV_current, Rs_inv_current, V_current, sigma_A, mu_A)
     
-    # A_current, A_inv_current, V_current = A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A,mu_A) 
+    A_current, A_inv_current, V_current = A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A,mu_A) 
     
     
     
