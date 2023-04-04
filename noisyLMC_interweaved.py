@@ -92,6 +92,47 @@ def A_move_slice(A_current, A_invV_current, Rs_inv_current, V_current, sigma_A, 
                         U[ii,jj] = A_prop[ii,jj]
 
 
+def A_move_slice_mask(A_current, A_invV_current, A_mask_current, Rs_inv_current, V_current, sigma_A, mu_A):
+
+    
+    p = A_current.shape[0] 
+    n = A_invV_current.shape[1]
+    
+    ### threshold
+    z =  -1/2 * np.sum( [A_invV_current[j] @ Rs_inv_current[j] @ A_invV_current[j] for j in range(p) ] ) - n * np.log( np.abs(np.linalg.det(A_current))) - 1/2/sigma_A**2 * np.sum((A_current-mu_A)**2) - random.exponential(1,1)
+    
+    L = A_current - random.uniform(0,sigma_slice,(p,p))
+    # L[0] = np.maximum(L[0],0)
+    
+    U = L + sigma_slice
+    
+    L *= A_mask_current
+    U *= A_mask_current
+        
+    while True:
+    
+        
+        
+        A_prop = random.uniform(L,U)
+        A_inv_prop = np.linalg.inv(A_prop)
+        A_invV_prop = A_inv_prop @ V_current
+        
+        acc = z < -1/2 * np.sum( [A_invV_prop[j] @ Rs_inv_current[j] @ A_invV_prop[j] for j in range(p) ] ) - n * np.log( np.abs(np.linalg.det(A_prop))) - 1/2/sigma_A**2 * np.sum((A_prop-mu_A)**2) 
+            
+        if acc:
+            return(A_prop,A_inv_prop,A_invV_prop)
+        else:
+            for ii in range(p):
+                for jj in range(p):
+                    if A_prop[ii,jj] < A_current[ii,jj]:
+                        L[ii,jj] = A_prop[ii,jj]
+                    else:
+                        U[ii,jj] = A_prop[ii,jj]
+
+
+
+
+
 
 def A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A,mu_A):
     
@@ -150,12 +191,12 @@ locs = np.linspace(0, 1, n)
 # taus_sqrt_inv = np.array([1.,1.]) * 0.5
 
 
-A = np.array([[-1.,-1.5,2.],
-              [-2.,1.5,1.],
-              [1.5,1.,2.]])
-# A = np.array([[-1.,0,1.2],
-#               [1.,0,1.2],
-#               [0.,np.sqrt(1.2**2 + 1.**2),0.]])
+# A = np.array([[-1.,-1.5,2.],
+#               [-2.,1.5,1.],
+#               [1.5,1.,2.]])
+A = np.array([[-1.,0,1.2],
+              [1.,0,1.2],
+              [0.,np.sqrt(1.2**2 + 1.**2),0.]])
 phis = np.array([5.,10.,20.])
 taus_sqrt_inv = np.array([1.,1.,1.]) * 0.1
 
@@ -301,6 +342,9 @@ a = 1
 b = 0.1
 
 
+### RJMCMC
+
+prob_one = 0.9
 
 
 ### useful quantities 
@@ -336,7 +380,23 @@ taus_current = 1/(np.array([1.,1.,1.]) * 0.1)**2
 Dm1_current = np.diag(taus_current)
 Dm1Y_current = Dm1_current @ Y
 
+### RJMCMC
 
+n_ones_current = p**2
+A_mask_current = np.ones((p,p))
+
+def pairs(p):
+    a = []
+    k = 0
+    for i in range(p):
+        for j in range(p):
+            a.append((i,j))
+            k += 1
+    
+    return(a)
+        
+A_ones_ind_current = pairs(p)
+A_zeros_ind_current = []
 
 ### proposals
 
@@ -346,6 +406,16 @@ A_prop = 0.03
 sigma_slice = 1
 # V_prop = 0.005
 
+def b(n_ones,p):
+    
+    if n_ones == p**2:
+        return(0)
+    elif n_ones == p:
+        return(1)
+    else:
+        return(0.5)
+
+n_jumps = p
 
 ### samples
 N = 24000
@@ -354,12 +424,13 @@ N = 24000
 phis_run = np.zeros((N,p))
 taus_run = np.zeros((N,p))
 A_run = np.zeros((N,p,p))
+# A_mask_run = np.zeros((N,p,p))
 V_run = np.zeros((N,p,n))
 
 ### acc vector
 
 acc_phis = np.zeros((p,N))
-acc_A = np.zeros(N)
+# acc_A = np.zeros(N)
 # acc_V = np.zeros(N)
 
 
@@ -377,7 +448,72 @@ for i in range(N):
     
                         
     
-    A_current, A_inv_current, A_invV_current = A_move_slice(A_current, A_invV_current, Rs_inv_current, V_current, sigma_A, mu_A)
+    A_current, A_inv_current, A_invV_current = A_move_slice_mask(A_current, A_invV_current, A_mask_current, Rs_inv_current, V_current, sigma_A, mu_A)
+    
+    
+    for j in range(n_jumps):
+        
+        
+        insert = random.binomial(1, b(n_ones_current,p))
+        
+        if insert:
+            
+            rand_int = random.choice(range(p**2 - n_ones_current))
+            rand_ind = A_zeros_ind_current[rand_int]
+            new_elem = random.normal(mu_A[rand_ind],sigma_A,1)
+            
+            A_new = np.copy(A_current)
+            A_new[rand_ind] = new_elem
+            
+            A_inv_new = np.linalg.inv(A_new)
+            
+            A_invV_new = A_inv_new @ V_current
+            
+            rat = np.exp( -1/2 * np.sum( [ A_invV_new[j] @ Rs_inv_current[j] @ A_invV_new[j] - A_invV_current[j] @ Rs_inv_current[j] @ A_invV_current[j] for j in range(p) ] ) ) * np.abs(np.linalg.det(A_inv_new @ A_current))**n * (1-b(n_ones_current+1,p))/b(n_ones_current,p) * (p**2 - n_ones_current)/(n_ones_current + 1) * prob_one / (1-prob_one)
+            
+            if random.uniform() < rat:
+                
+                A_current = A_new
+                A_inv_current = A_inv_new
+                A_invV_current = A_invV_new
+                
+                n_ones_current += 1
+                
+                A_mask_current[rand_ind] = 1.
+                
+                A_ones_ind_current.append(A_zeros_ind_current.pop(rand_int))
+                
+            
+            
+        else:
+            
+            rand_int = random.choice(range(n_ones_current))
+            rand_ind = A_ones_ind_current[rand_int]
+            
+            A_new = np.copy(A_current)
+            A_new[rand_ind] = 0.
+            
+            if np.linalg.det(A_new) != 0:
+                A_inv_new = np.linalg.inv(A_new)
+                
+                A_invV_new = A_inv_new @ V_current
+                
+                rat = np.exp( -1/2 * np.sum( [ A_invV_new[j] @ Rs_inv_current[j] @ A_invV_new[j] - A_invV_current[j] @ Rs_inv_current[j] @ A_invV_current[j] for j in range(p) ] ) ) * np.abs(np.linalg.det(A_inv_new @ A_current))**n * b(n_ones_current-1,p)/(1-b(n_ones_current,p)) * (n_ones_current)/(p**2 - n_ones_current + 1) * (1-prob_one)/prob_one
+                
+                if random.uniform() < rat:
+                    
+                    A_current = A_new
+                    A_inv_current = A_inv_new
+                    A_invV_current = A_invV_new
+                    
+                    n_ones_current -= 1
+                    
+                    A_mask_current[rand_ind] = 0.
+                    
+                    A_zeros_ind_current.append(A_ones_ind_current.pop(rand_int))
+        
+    
+    
     
     # A_current, A_inv_current, V_current = A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A,mu_A) 
     
@@ -395,6 +531,7 @@ for i in range(N):
     taus_run[i] = taus_current
     phis_run[i] =  phis_current
     A_run[i] = A_current
+    # A_mask_run[i] = A_mask_current
     
     if i % 100 == 0:
         print(i)
@@ -421,7 +558,7 @@ print('mean phi_1:',np.mean(phis_run[tail:,0]))
 print('mean phi_2:',np.mean(phis_run[tail:,1]))
 print('mean phi_3:',np.mean(phis_run[tail:,2]))
 
-print('accept A:',np.mean(acc_A[tail:]))
+# print('accept A:',np.mean(acc_A[tail:]))
 print('mean A:',np.mean(A_run[tail:],axis=0))
 
 plt.plot(A_run[:,0,0])
