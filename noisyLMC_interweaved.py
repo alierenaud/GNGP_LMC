@@ -325,7 +325,8 @@ VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for
 # A_current = np.array([[1.,1.,1.],
 #                       [0.,1.,1.],
 #                       [0.,0.,1.]])
-A_current = np.identity(p)
+# A_current = np.identity(p)
+A_current = random.normal(size=(p,p))
 A_inv_current = np.linalg.inv(A_current)
 
 A_invV_current = A_inv_current @ V_current
@@ -347,7 +348,7 @@ sigma_slice = 1
 
 
 ### samples
-N = 240000
+N = 24000
 
 ### global run containers
 phis_run = np.zeros((N,p))
@@ -405,7 +406,7 @@ print('Execution time:', (et-st)/60, 'minutes')
 
 print("Prior Means for Ranges", alphas / (alphas + betas) * range_phi + min_phi)
 
-tail = 40000
+tail = 4000
 
 print('accept phi_1:',np.mean(acc_phis[0,tail:]))
 print('accept phi_2:',np.mean(acc_phis[1,tail:]))
