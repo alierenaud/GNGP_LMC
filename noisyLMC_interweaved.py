@@ -344,7 +344,7 @@ b = 0.1
 
 ### RJMCMC
 
-prob_one = 0.9
+prob_one = 0.5
 
 
 ### useful quantities 
