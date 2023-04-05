@@ -167,11 +167,11 @@ Y, V_true = rNLMC(A,phis,taus_sqrt_inv,np.transpose(np.array([locs])), retV=True
 ### showcase V and Y
 
 plt.plot(locs,V_true[0])
-plt.plot(locs,Y[0], '.', c="tab:blue", alpha=0.5)
+# plt.plot(locs,Y[0], '.', c="tab:blue", alpha=0.5)
 plt.plot(locs,V_true[1])
-plt.plot(locs,Y[1], '.', c="tab:orange", alpha=0.5)
+# plt.plot(locs,Y[1], '.', c="tab:orange", alpha=0.5)
 plt.plot(locs,V_true[2])
-plt.plot(locs,Y[2], '.', c="tab:green", alpha=0.5)
+# plt.plot(locs,Y[2], '.', c="tab:green", alpha=0.5)
 
 plt.show()
 
@@ -450,29 +450,29 @@ print('mean inv sqrt tau_3:',np.mean(1/np.sqrt(taus_run[tail:,2])))
 
 print('real sqrt inv taus:',taus_sqrt_inv)
 
-plt.plot(taus_run[:,0])
-plt.plot(taus_run[:,1])
-plt.plot(taus_run[:,2])
+# plt.plot(taus_run[:,0])
+# plt.plot(taus_run[:,1])
+# plt.plot(taus_run[:,2])
+# # plt.plot(1/np.sqrt(taus_run[:,2]))
+# plt.show()
+
+
+# plt.plot(1/np.sqrt(taus_run[:,0]))
+# plt.plot(1/np.sqrt(taus_run[:,1]))
 # plt.plot(1/np.sqrt(taus_run[:,2]))
-plt.show()
+# # plt.plot(1/np.sqrt(taus_run[:,2]))
+# plt.show()
 
+# for i in range(N):
+#     if i % 1000 == 0:
+#         plt.plot(locs,V_run[i,0])
+#         plt.plot(locs,Y[0], '.', c="tab:blue", alpha=0.5)
+#         plt.plot(locs,V_run[i,1])
+#         plt.plot(locs,Y[1], '.', c="tab:orange", alpha=0.5)
+#         plt.plot(locs,V_run[i,2])
+#         plt.plot(locs,Y[2], '.', c="tab:green", alpha=0.5)
 
-plt.plot(1/np.sqrt(taus_run[:,0]))
-plt.plot(1/np.sqrt(taus_run[:,1]))
-plt.plot(1/np.sqrt(taus_run[:,2]))
-# plt.plot(1/np.sqrt(taus_run[:,2]))
-plt.show()
-
-for i in range(N):
-    if i % 1000 == 0:
-        plt.plot(locs,V_run[i,0])
-        plt.plot(locs,Y[0], '.', c="tab:blue", alpha=0.5)
-        plt.plot(locs,V_run[i,1])
-        plt.plot(locs,Y[1], '.', c="tab:orange", alpha=0.5)
-        plt.plot(locs,V_run[i,2])
-        plt.plot(locs,Y[2], '.', c="tab:green", alpha=0.5)
-
-        plt.show()
+#         plt.show()
 
 
 ### inference of cross covariance
