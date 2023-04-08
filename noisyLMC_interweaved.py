@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from scipy.spatial import distance_matrix
 
 
-random.seed(0)
+random.seed(709)
 
 def vec(A):
     
@@ -132,10 +132,10 @@ def makeGrid(n):
 
 
 ### global parameters
-n = 500
+n = 1000
 # n = 20
-# p = 2
-p = 3
+p = 2
+# p = 3
 
 
 ### generate random example
@@ -144,20 +144,20 @@ locs = np.linspace(0, 1, n)
 
 # locs = makeGrid(n)
 
-# A = np.array([[-1.,1.],
-#               [1.,1.]])
-# phis = np.array([5.,20.])
-# taus_sqrt_inv = np.array([1.,1.]) * 0.5
+A = np.array([[-1.5,1.1],
+              [1,2]])
+phis = np.array([5.,20.])
+taus_sqrt_inv = np.array([1.,1.]) * 0.1
 
 
 # A = np.array([[-1.,-1.5,2.],
 #               [-2.,1.5,1.],
 #               [1.5,1.,2.]])
-A = np.array([[-1.,0,1.2],
-              [1.,0,1.2],
-              [0.,np.sqrt(1.2**2 + 1.**2),0.]])
-phis = np.array([5.,10.,20.])
-taus_sqrt_inv = np.array([1.,1.,1.]) * 0.1
+# A = np.array([[-1.,0,1.2],
+#               [1.,0,1.2],
+#               [0.,np.sqrt(1.2**2 + 1.**2),0.]])
+# phis = np.array([5.,10.,20.])
+# taus_sqrt_inv = np.array([1.,1.,1.]) * 0.1
 
 
 # Y, V_true = rNLMC(A,phis,taus_sqrt_inv,locs, retV=True)
@@ -170,7 +170,7 @@ plt.plot(locs,V_true[0])
 # plt.plot(locs,Y[0], '.', c="tab:blue", alpha=0.5)
 plt.plot(locs,V_true[1])
 # plt.plot(locs,Y[1], '.', c="tab:orange", alpha=0.5)
-plt.plot(locs,V_true[2])
+# plt.plot(locs,V_true[2])
 # plt.plot(locs,Y[2], '.', c="tab:green", alpha=0.5)
 
 plt.show()
@@ -214,7 +214,7 @@ for r in range(res):
     cc[r] = crossCov(ds[r],A,phis,i,j)
     
 plt.plot(ds,cc, c="tab:blue")
-plt.show()
+# plt.show()
 
 i=1
 j=1
@@ -223,16 +223,16 @@ for r in range(res):
     cc[r] = crossCov(ds[r],A,phis,i,j)
     
 plt.plot(ds,cc, c="tab:orange")
-plt.show()
+# plt.show()
 
-i=2
-j=2
+# i=2
+# j=2
 
-for r in range(res):
-    cc[r] = crossCov(ds[r],A,phis,i,j)
+# for r in range(res):
+#     cc[r] = crossCov(ds[r],A,phis,i,j)
     
-plt.plot(ds,cc, c="tab:green")
-plt.show()
+# plt.plot(ds,cc, c="tab:green")
+# plt.show()
 
 i=0
 j=1
@@ -243,35 +243,35 @@ for r in range(res):
 plt.plot(ds,cc, c="black")
 plt.show()
 
-i=0
-j=2
+# i=0
+# j=2
 
-for r in range(res):
-    cc[r] = crossCov(ds[r],A,phis,i,j)
+# for r in range(res):
+#     cc[r] = crossCov(ds[r],A,phis,i,j)
     
-plt.plot(ds,cc, c="black")
-plt.show()
+# plt.plot(ds,cc, c="black")
+# plt.show()
 
 
 
-i=1
-j=2
+# i=1
+# j=2
 
-for r in range(res):
-    cc[r] = crossCov(ds[r],A,phis,i,j)
+# for r in range(res):
+#     cc[r] = crossCov(ds[r],A,phis,i,j)
     
-plt.plot(ds,cc, c="black")
-plt.show()
+# plt.plot(ds,cc, c="black")
+# plt.show()
 
 
 
 ### priors
 sigma_A = 1.
-# mu_A = np.array([[sigma_A,sigma_A],
-#                  [0.,0.]])
-mu_A = np.array([[0.,0.,0.],
-                 [0.,0.,0.],
-                 [0.,0.,0.]])
+mu_A = np.array([[0.,0.],
+                 [0.,0.]])
+# mu_A = np.array([[0.,0.,0.],
+#                  [0.,0.,0.],
+#                  [0.,0.,0.]])
 
 min_phi = 3.
 max_phi = 30.
@@ -309,8 +309,8 @@ b = 0.1
 Dists = distance_matrix(np.transpose(np.array([locs])),np.transpose(np.array([locs])))
 
 ### init and current state
-# phis_current = np.array([5.,20.])
-phis_current = np.array([5.,10.,20.])
+phis_current = np.array([5.,20.])
+# phis_current = np.array([5.,10.,20.])
 Rs_current = np.array([ np.exp(-Dists*phis_current[j]) for j in range(p) ])
 Rs_inv_current = np.array([ np.linalg.inv(Rs_current[j]) for j in range(p) ])
 
@@ -331,8 +331,8 @@ A_inv_current = np.linalg.inv(A_current)
 
 A_invV_current = A_inv_current @ V_current
 
-# taus_current = 1/(np.array([1.,1.]) * 0.5)**2
-taus_current = 1/(np.array([1.,1.,1.]) * 0.1)**2
+taus_current = 1/(np.array([1.,1.]) * 0.1)**2
+# taus_current = 1/(np.array([1.,1.,1.]) * 0.1)**2
 Dm1_current = np.diag(taus_current)
 Dm1Y_current = Dm1_current @ Y
 
@@ -342,13 +342,13 @@ Dm1Y_current = Dm1_current @ Y
 
 # phis_prop = np.linspace(1/p, 1, p) * 2.
 phis_prop = np.ones(p)
-A_prop = 0.03
+# A_prop = 0.03
 sigma_slice = 1
 # V_prop = 0.005
 
 
 ### samples
-N = 24000
+N = 2400*50
 
 ### global run containers
 phis_run = np.zeros((N,p))
@@ -406,33 +406,33 @@ print('Execution time:', (et-st)/60, 'minutes')
 
 print("Prior Means for Ranges", alphas / (alphas + betas) * range_phi + min_phi)
 
-tail = 4000
+tail = 400*50
 
 print('accept phi_1:',np.mean(acc_phis[0,tail:]))
 print('accept phi_2:',np.mean(acc_phis[1,tail:]))
-print('accept phi_3:',np.mean(acc_phis[2,tail:]))
+# print('accept phi_3:',np.mean(acc_phis[2,tail:]))
 
 plt.plot(phis_run[:,0])
 plt.plot(phis_run[:,1])
-plt.plot(phis_run[:,2])
+# plt.plot(phis_run[:,2])
 plt.show()
 
 print('mean phi_1:',np.mean(phis_run[tail:,0]))
 print('mean phi_2:',np.mean(phis_run[tail:,1]))
-print('mean phi_3:',np.mean(phis_run[tail:,2]))
+# print('mean phi_3:',np.mean(phis_run[tail:,2]))
 
 print('accept A:',np.mean(acc_A[tail:]))
 print('mean A:',np.mean(A_run[tail:],axis=0))
 
 plt.plot(A_run[:,0,0])
 plt.plot(A_run[:,0,1])
-plt.plot(A_run[:,0,2])
+# plt.plot(A_run[:,0,2])
 plt.plot(A_run[:,1,0])
 plt.plot(A_run[:,1,1])
-plt.plot(A_run[:,1,2])
-plt.plot(A_run[:,2,0])
-plt.plot(A_run[:,2,1])
-plt.plot(A_run[:,2,2])
+# plt.plot(A_run[:,1,2])
+# plt.plot(A_run[:,2,0])
+# plt.plot(A_run[:,2,1])
+# plt.plot(A_run[:,2,2])
 plt.show()
 
 
@@ -440,13 +440,13 @@ plt.show()
 
 print('mean tau_1:',np.mean(taus_run[tail:,0]))
 print('mean tau_2:',np.mean(taus_run[tail:,1]))
-print('mean tau_3:',np.mean(taus_run[tail:,2]))
+# print('mean tau_3:',np.mean(taus_run[tail:,2]))
 
 print('real taus:',taus_sqrt_inv ** (-2))
 
 print('mean inv sqrt tau_1:',np.mean(1/np.sqrt(taus_run[tail:,0])))
 print('mean inv sqrt tau_2:',np.mean(1/np.sqrt(taus_run[tail:,1])))
-print('mean inv sqrt tau_3:',np.mean(1/np.sqrt(taus_run[tail:,2])))
+# print('mean inv sqrt tau_3:',np.mean(1/np.sqrt(taus_run[tail:,2])))
 
 print('real sqrt inv taus:',taus_sqrt_inv)
 
@@ -506,46 +506,46 @@ plt.show()
 plt.plot(cc[:,0])
 plt.show()
 
-i=0
-j=2
+# i=0
+# j=2
 
 
 
-for n in range(tail,N):
-    for r in range(res):
-        cc[n-tail,r] = crossCov(ds[r],A_run[n],phis_run[n],i,j)
+# for n in range(tail,N):
+#     for r in range(res):
+#         cc[n-tail,r] = crossCov(ds[r],A_run[n],phis_run[n],i,j)
 
-for r in range(res):
-    cc_true[r] = crossCov(ds[r],A,phis,i,j)               
+# for r in range(res):
+#     cc_true[r] = crossCov(ds[r],A,phis,i,j)               
     
-plt.fill_between(ds, np.quantile(cc,0.05,axis=0), np.quantile(cc,0.95,axis=0), color="silver")   
-plt.plot(ds,np.mean(cc,axis=0), c="black")
-plt.plot(ds,cc_true)
-plt.show()
+# plt.fill_between(ds, np.quantile(cc,0.05,axis=0), np.quantile(cc,0.95,axis=0), color="silver")   
+# plt.plot(ds,np.mean(cc,axis=0), c="black")
+# plt.plot(ds,cc_true)
+# plt.show()
 
-plt.plot(cc[:,0])
-plt.show()
-
-
-i=1
-j=2
+# plt.plot(cc[:,0])
+# plt.show()
 
 
+# i=1
+# j=2
 
-for n in range(tail,N):
-    for r in range(res):
-        cc[n-tail,r] = crossCov(ds[r],A_run[n],phis_run[n],i,j)
 
-for r in range(res):
-    cc_true[r] = crossCov(ds[r],A,phis,i,j)           
 
-plt.fill_between(ds, np.quantile(cc,0.05,axis=0), np.quantile(cc,0.95,axis=0), color="silver")    
-plt.plot(ds,np.mean(cc,axis=0), c="black")
-plt.plot(ds,cc_true)
-plt.show()
+# for n in range(tail,N):
+#     for r in range(res):
+#         cc[n-tail,r] = crossCov(ds[r],A_run[n],phis_run[n],i,j)
 
-plt.plot(cc[:,0])
-plt.show()
+# for r in range(res):
+#     cc_true[r] = crossCov(ds[r],A,phis,i,j)           
+
+# plt.fill_between(ds, np.quantile(cc,0.05,axis=0), np.quantile(cc,0.95,axis=0), color="silver")    
+# plt.plot(ds,np.mean(cc,axis=0), c="black")
+# plt.plot(ds,cc_true)
+# plt.show()
+
+# plt.plot(cc[:,0])
+# plt.show()
 
 
 # plt.plot(A_run[tail:,0,0])
