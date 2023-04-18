@@ -35,25 +35,43 @@ effectiveSize(rAR1(1000,1,-0.9))
 
 centered = read.csv("centered.csv",header=F)
 
-effectiveSize(centered[,1])
-effectiveSize(centered[,2])
-effectiveSize(centered[,3])
-effectiveSize(centered[,4])
+n = ncol(centered)
+centerSamp = rep(0,n)
+
+for (i in 1:n) {
+  centerSamp[i] = effectiveSize(centered[,i])
+}
+
+boxplot(centerSamp)
+
+
+
 
 
 white = read.csv("white.csv",header=F)
 
-effectiveSize(white[,1])
-effectiveSize(white[,2])
-effectiveSize(white[,3])
-effectiveSize(white[,4])
+n = ncol(white)
+whiteSamp = rep(0,n)
+
+for (i in 1:n) {
+  whiteSamp[i] = effectiveSize(white[,i])
+}
+
+boxplot(whiteSamp)
+
+
+
 
 interweave = read.csv("interweave.csv",header=F)
 
-effectiveSize(interweave[,1])
-effectiveSize(interweave[,2])
-effectiveSize(interweave[,3])
-effectiveSize(interweave[,4])
+n = ncol(interweave)
+interSamp = rep(0,n)
+
+for (i in 1:n) {
+  interSamp[i] = effectiveSize(interweave[,i])
+}
+
+boxplot(interSamp)
 
 
 
