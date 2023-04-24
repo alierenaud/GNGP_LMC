@@ -33,46 +33,239 @@ effectiveSize(rAR1(1000,1,-0.9))
 
 
 
-centered = read.csv("centered.csv",header=F)
+#### centered ####
 
-n = ncol(centered)
-centerSamp = rep(0,n)
+### COVARIANCE 00
 
-for (i in 1:n) {
-  centerSamp[i] = effectiveSize(centered[,i])
-}
+centeredC00 = read.csv("centeredC00.csv",header=F)
 
-boxplot(centerSamp)
-
-
-
-
-
-white = read.csv("white.csv",header=F)
-
-n = ncol(white)
-whiteSamp = rep(0,n)
+n = ncol(centeredC00)
+centerSampC00 = rep(0,n)
 
 for (i in 1:n) {
-  whiteSamp[i] = effectiveSize(white[,i])
+  centerSampC00[i] = effectiveSize(centeredC00[,i])
 }
 
-boxplot(whiteSamp)
+boxplot(centerSampC00)
 
 
+### PRANGE 0
 
+centeredp00 = read.csv("centeredp00.csv",header=F)
 
-interweave = read.csv("interweave.csv",header=F)
-
-n = ncol(interweave)
-interSamp = rep(0,n)
+n = ncol(centeredp00)
+centerSampp00 = rep(0,n)
 
 for (i in 1:n) {
-  interSamp[i] = effectiveSize(interweave[,i])
+  centerSampp00[i] = effectiveSize(centeredp00[,i])
 }
 
-boxplot(interSamp)
+boxplot(centerSampp00)
 
+
+
+### COVARIANCE 11
+
+centeredC11 = read.csv("centeredC11.csv",header=F)
+
+n = ncol(centeredC11)
+centerSampC11 = rep(0,n)
+
+for (i in 1:n) {
+  centerSampC11[i] = effectiveSize(centeredC11[,i])
+}
+
+boxplot(centerSampC11)
+
+
+### PRANGE 1
+
+centeredp11 = read.csv("centeredp11.csv",header=F)
+
+n = ncol(centeredp11)
+centerSampp11 = rep(0,n)
+
+for (i in 1:n) {
+  centerSampp11[i] = effectiveSize(centeredp11[,i])
+}
+
+boxplot(centerSampp11)
+
+
+
+### COVARIANCE 01
+
+centeredC01 = read.csv("centeredC01.csv",header=F)
+
+n = ncol(centeredC01)
+centerSampC01 = rep(0,n)
+
+for (i in 1:n) {
+  centerSampC01[i] = effectiveSize(centeredC01[,i])
+}
+
+boxplot(centerSampC01)
+
+
+
+
+
+#### white ####
+
+### COVARIANCE 00
+
+whiteC00 = read.csv("whiteC00.csv",header=F)
+
+n = ncol(whiteC00)
+whiteSampC00 = rep(0,n)
+
+for (i in 1:n) {
+  whiteSampC00[i] = effectiveSize(whiteC00[,i])
+}
+
+boxplot(whiteSampC00)
+
+
+### PRANGE 0
+
+whitep00 = read.csv("whitep00.csv",header=F)
+
+n = ncol(whitep00)
+whiteSampp00 = rep(0,n)
+
+for (i in 1:n) {
+  whiteSampp00[i] = effectiveSize(whitep00[,i])
+}
+
+boxplot(whiteSampp00)
+
+
+
+### COVARIANCE 11
+
+whiteC11 = read.csv("whiteC11.csv",header=F)
+
+n = ncol(whiteC11)
+whiteSampC11 = rep(0,n)
+
+for (i in 1:n) {
+  whiteSampC11[i] = effectiveSize(whiteC11[,i])
+}
+
+boxplot(whiteSampC11)
+
+
+### PRANGE 1
+
+whitep11 = read.csv("whitep11.csv",header=F)
+
+n = ncol(whitep11)
+whiteSampp11 = rep(0,n)
+
+for (i in 1:n) {
+  whiteSampp11[i] = effectiveSize(whitep11[,i])
+}
+
+boxplot(whiteSampp11)
+
+
+
+### COVARIANCE 01
+
+whiteC01 = read.csv("whiteC01.csv",header=F)
+
+n = ncol(whiteC01)
+whiteSampC01 = rep(0,n)
+
+for (i in 1:n) {
+  whiteSampC01[i] = effectiveSize(whiteC01[,i])
+}
+
+boxplot(whiteSampC01)
+
+
+#### interweave ####
+
+### COVARIANCE 00
+
+interweaveC00 = read.csv("interweaveC00.csv",header=F)
+
+n = ncol(interweaveC00)
+interSampC00 = rep(0,n)
+
+for (i in 1:n) {
+  interSampC00[i] = effectiveSize(interweaveC00[,i])
+}
+
+boxplot(interSampC00)
+
+
+### PRANGE 0
+
+interweavep00 = read.csv("interweavep00.csv",header=F)
+
+n = ncol(interweavep00)
+interSampp00 = rep(0,n)
+
+for (i in 1:n) {
+  interSampp00[i] = effectiveSize(interweavep00[,i])
+}
+
+boxplot(interSampp00)
+
+
+
+### COVARIANCE 11
+
+interweaveC11 = read.csv("interweaveC11.csv",header=F)
+
+n = ncol(interweaveC11)
+interSampC11 = rep(0,n)
+
+for (i in 1:n) {
+  interSampC11[i] = effectiveSize(interweaveC11[,i])
+}
+
+boxplot(interSampC11)
+
+
+### PRANGE 1
+
+interweavep11 = read.csv("interweavep11.csv",header=F)
+
+n = ncol(interweavep11)
+interSampp11 = rep(0,n)
+
+for (i in 1:n) {
+  interSampp11[i] = effectiveSize(interweavep11[,i])
+}
+
+boxplot(interSampp11)
+
+
+
+### COVARIANCE 01
+
+interweaveC01 = read.csv("interweaveC01.csv",header=F)
+
+n = ncol(interweaveC01)
+interSampC01 = rep(0,n)
+
+for (i in 1:n) {
+  interSampC01[i] = effectiveSize(interweaveC01[,i])
+}
+
+boxplot(interSampC01)
+
+
+
+###
+
+boxplot(whiteSampC00,centerSampC00,interSampC00)
+boxplot(whiteSampp00,centerSampp00,interSampp00)
+boxplot(whiteSampC11,centerSampC11,interSampC11)
+boxplot(whiteSampp11,centerSampp11,interSampp11)
+boxplot(whiteSampC01,centerSampC01,interSampC01)
 
 
 

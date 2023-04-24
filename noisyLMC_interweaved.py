@@ -276,7 +276,7 @@ sigma_slice = 1
 
 
 ### samples
-N = 2000
+N = 4000
 
 ### global run containers
 phis_run = np.zeros((N,p))
@@ -293,12 +293,447 @@ acc_A = np.zeros(N)
 Dists = distance_matrix(locs,locs)
 # Dists = distance_matrix(np.transpose(np.array([locs])),np.transpose(np.array([locs])))
 
-tail = 1000
-reps = 50
-arr = np.zeros((N-tail,reps))
+tail = 2000
+reps = 30
+nquant = 5
+
+
+### INTERWEAVE
+
+arr = np.zeros((nquant,N-tail,reps))
 
 import time
 stg = time.time()
+
+for rep in range(reps):
+
+    Y, V_true = rNLMC(A,phis,taus_sqrt_inv,locs, retV=True)
+    # Y, V_true = rNLMC(A,phis,taus_sqrt_inv,np.transpose(np.array([locs])), retV=True)
+    
+    
+    ### showcase V and Y
+    
+    # plt.plot(locs,V_true[0])
+    # plt.plot(locs,Y[0], '.', c="tab:blue", alpha=0.5)
+    # plt.plot(locs,V_true[1])
+    # plt.plot(locs,Y[1], '.', c="tab:orange", alpha=0.5)
+    # plt.plot(locs,V_true[2])
+    # plt.plot(locs,Y[2], '.', c="tab:green", alpha=0.5)
+    
+    # plt.show()
+    
+    ### showcase V
+    
+    # fig, ax = plt.subplots()
+    # ax.pcolormesh(locs[:n,0], locs[:n,0], np.reshape(V_true[0],(n,n)))
+    # ax.set_aspect(1)
+    # ax.set(xlim=(0, 1), ylim=(0, 1))
+    # plt.show()
+    
+    # fig, ax = plt.subplots()
+    # ax.pcolormesh(locs[:n,0], locs[:n,0], np.reshape(V_true[1],(n,n)))
+    # ax.set_aspect(1)
+    # ax.set(xlim=(0, 1), ylim=(0, 1))
+    # plt.show()
+    
+    # fig, ax = plt.subplots()
+    # ax.pcolormesh(locs[:n,0], locs[:n,0], np.reshape(V_true[2],(n,n)))
+    # ax.set_aspect(1)
+    # ax.set(xlim=(0, 1), ylim=(0, 1))
+    # plt.show()
+    
+    
+    
+    
+    
+    
+    ### useful quantities 
+    
+
+    
+    ### init and current state
+    phis_current = np.array([5.,20.])
+    # phis_current = np.array([5.,10.,20.])
+    Rs_current = np.array([ np.exp(-Dists*phis_current[j]) for j in range(p) ])
+    Rs_inv_current = np.array([ np.linalg.inv(Rs_current[j]) for j in range(p) ])
+    
+    # V_current = V_true
+    # V_current = Y + random.normal(size=(p,n))*0.1
+    V_current = random.normal(size=(p,n))*1
+    VmY_current = V_current - Y
+    VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
+    
+    # A_current = np.array([[1.,1.],
+    #               [0.,1.]])
+    # A_current = np.array([[1.,1.,1.],
+    #                       [0.,1.,1.],
+    #                       [0.,0.,1.]])
+    # A_current = np.identity(p)
+    A_current = random.normal(size=(p,p))
+    A_inv_current = np.linalg.inv(A_current)
+    
+    A_invV_current = A_inv_current @ V_current
+    
+    taus_current = 1/(np.array([1.,1.]) * 1)**2
+    # taus_current = 1/(np.array([1.,1.,1.]) * 0.1)**2
+    Dm1_current = np.diag(taus_current)
+    Dm1Y_current = Dm1_current @ Y
+    
+    
+    
+
+    
+    
+    
+    
+    st = time.time()
+    
+    
+    for i in range(N):
+        
+        
+        V_current, VmY_current, VmY_inner_rows_current, A_invV_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y, V_current)
+            
+        
+        
+                            
+        
+        A_current, A_inv_current, A_invV_current = A_move_slice(A_current, A_invV_current, Rs_inv_current, V_current, sigma_A, mu_A)
+        
+        A_current, A_inv_current, V_current = A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A,mu_A) 
+        
+        
+        
+        
+    
+        
+        
+        phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_current,Dists,A_invV_current,Rs_current,Rs_inv_current)
+    
+        taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y,a,b,n)
+        
+        V_run[i] = V_current
+        taus_run[i] = taus_current
+        phis_run[i] =  phis_current
+        A_run[i] = A_current
+        
+        if i % 100 == 0:
+            print(i)
+    
+    et = time.time()
+    print('Execution time:', (et-st)/60, 'minutes')
+    
+    
+    
+    print("Prior Means for Ranges", alphas / (alphas + betas) * range_phi + min_phi)
+    
+    
+    
+    print('accept phi_1:',np.mean(acc_phis[0,tail:]))
+    print('accept phi_2:',np.mean(acc_phis[1,tail:]))
+    # print('accept phi_3:',np.mean(acc_phis[2,tail:]))
+    
+    plt.plot(phis_run[:,0])
+    plt.plot(phis_run[:,1])
+    # plt.plot(phis_run[:,2])
+    plt.show()
+    
+    print('mean phi_1:',np.mean(phis_run[tail:,0]))
+    print('mean phi_2:',np.mean(phis_run[tail:,1]))
+    # print('mean phi_3:',np.mean(phis_run[tail:,2]))
+    
+    print('accept A:',np.mean(acc_A[tail:]))
+    print('mean A:',np.mean(A_run[tail:],axis=0))
+    
+    plt.plot(A_run[:,0,0])
+    plt.plot(A_run[:,0,1])
+    # plt.plot(A_run[:,0,2])
+    plt.plot(A_run[:,1,0])
+    plt.plot(A_run[:,1,1])
+    # plt.plot(A_run[:,1,2])
+    # plt.plot(A_run[:,2,0])
+    # plt.plot(A_run[:,2,1])
+    # plt.plot(A_run[:,2,2])
+    plt.show()
+    
+    
+    # print('accept V:',np.mean(acc_V[tail:]))
+    
+    print('mean tau_1:',np.mean(taus_run[tail:,0]))
+    print('mean tau_2:',np.mean(taus_run[tail:,1]))
+    # print('mean tau_3:',np.mean(taus_run[tail:,2]))
+    
+    print('real taus:',taus_sqrt_inv ** (-2))
+    
+    print('mean inv sqrt tau_1:',np.mean(1/np.sqrt(taus_run[tail:,0])))
+    print('mean inv sqrt tau_2:',np.mean(1/np.sqrt(taus_run[tail:,1])))
+    # print('mean inv sqrt tau_3:',np.mean(1/np.sqrt(taus_run[tail:,2])))
+    
+    print('real sqrt inv taus:',taus_sqrt_inv)
+    
+    plt.plot(taus_run[:,0])
+    plt.plot(taus_run[:,1])
+    # plt.plot(taus_run[:,2])
+    # # plt.plot(1/np.sqrt(taus_run[:,2]))
+    plt.show()
+    
+    
+    plt.plot(1/np.sqrt(taus_run[:,0]))
+    plt.plot(1/np.sqrt(taus_run[:,1]))
+    # plt.plot(1/np.sqrt(taus_run[:,2]))
+    # # plt.plot(1/np.sqrt(taus_run[:,2]))
+    plt.show()
+    
+    # for i in range(N):
+    #     if i % 100 == 0:
+    #         plt.plot(locs,V_run[i,0])
+    #         plt.plot(locs,Y[0], '.', c="tab:blue", alpha=0.5)
+    #         plt.plot(locs,V_run[i,1])
+    #         plt.plot(locs,Y[1], '.', c="tab:orange", alpha=0.5)
+    #         # plt.plot(locs,V_run[i,2])
+    #         # plt.plot(locs,Y[2], '.', c="tab:green", alpha=0.5)
+    
+    #         plt.show()
+    
+    
+    ### inference of cross covariance
+    
+    max_d = 1
+    res = 100
+    
+    ds = np.linspace(0,max_d,res)
+        
+    cc = np.zeros((N-tail,res))
+    cc_true = np.zeros(res)
+    
+    p_range = np.zeros(N-tail)
+    
+    i=0
+    j=0
+    
+    for ns in range(tail,N):
+        for r in range(res):
+            cc[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+            
+        ### practical range
+        
+        min_range = 0
+        max_range = 1
+        
+        cov = crossCov(0,A_run[ns],phis_run[ns],i,j)
+        
+        cov_max = crossCov(max_range,A_run[ns],phis_run[ns],i,j)
+        
+        while cov_max/cov > 0.05:
+            max_range *= 2
+            cov_max = crossCov(max_range,A_run[ns],phis_run[ns],i,j)
+        
+        range_cand = (max_range - min_range)/2
+        cov_cand = crossCov(range_cand,A_run[ns],phis_run[ns],i,j)
+        
+        while np.abs(cov_cand/cov - 0.05) > 0.001:
+            
+            if cov_cand/cov > 0.05:
+                min_range = range_cand
+            else: 
+                max_range = range_cand
+            
+            range_cand = (max_range + min_range)/2
+            cov_cand = crossCov(range_cand,A_run[ns],phis_run[ns],i,j)
+        
+        p_range[ns-tail] = range_cand
+
+     
+        
+    
+    for r in range(res):
+        cc_true[r] = crossCov(ds[r],A,phis,i,j)        
+        
+    plt.fill_between(ds, np.quantile(cc,0.05,axis=0), np.quantile(cc,0.95,axis=0), color="silver")    
+    plt.plot(ds,np.mean(cc,axis=0), c="black")
+    plt.plot(ds,cc_true)
+    plt.show()
+    
+    plt.plot(cc[:,0])
+    plt.show()
+    
+    plt.plot(p_range, c="tab:orange")
+    plt.show()   
+    
+    arr[0,:,rep] = cc[:,0]
+    arr[1,:,rep] = p_range
+    
+    
+    
+    
+    i=1
+    j=1
+    
+    for ns in range(tail,N):
+        for r in range(res):
+            cc[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+        
+        ### practical range
+        
+        min_range = 0
+        max_range = 1
+        
+        cov = crossCov(0,A_run[ns],phis_run[ns],i,j)
+        
+        cov_max = crossCov(max_range,A_run[ns],phis_run[ns],i,j)
+        
+        while cov_max/cov > 0.05:
+            max_range *= 2
+            cov_max = crossCov(max_range,A_run[ns],phis_run[ns],i,j)
+        
+        range_cand = (max_range - min_range)/2
+        cov_cand = crossCov(range_cand,A_run[ns],phis_run[ns],i,j)
+        
+        while np.abs(cov_cand/cov - 0.05) > 0.001:
+            
+            if cov_cand/cov > 0.05:
+                min_range = range_cand
+            else: 
+                max_range = range_cand
+            
+            range_cand = (max_range + min_range)/2
+            cov_cand = crossCov(range_cand,A_run[ns],phis_run[ns],i,j)
+        
+        p_range[ns-tail] = range_cand
+
+    
+    
+    for r in range(res):
+        cc_true[r] = crossCov(ds[r],A,phis,i,j)        
+        
+    plt.fill_between(ds, np.quantile(cc,0.05,axis=0), np.quantile(cc,0.95,axis=0), color="silver")    
+    plt.plot(ds,np.mean(cc,axis=0), c="black")
+    plt.plot(ds,cc_true)
+    plt.show()
+    
+    plt.plot(cc[:,0])
+    plt.show()
+    
+    plt.plot(p_range, c="tab:orange")
+    plt.show() 
+    
+    arr[2,:,rep] = cc[:,0]
+    arr[3,:,rep] = p_range
+    
+    
+    
+    
+    
+    
+    i=0
+    j=1
+    
+    for ns in range(tail,N):
+        for r in range(res):
+            cc[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+    
+    
+    for r in range(res):
+        cc_true[r] = crossCov(ds[r],A,phis,i,j)        
+        
+    plt.fill_between(ds, np.quantile(cc,0.05,axis=0), np.quantile(cc,0.95,axis=0), color="silver")    
+    plt.plot(ds,np.mean(cc,axis=0), c="black")
+    plt.plot(ds,cc_true)
+    plt.show()
+    
+    plt.plot(cc[:,0])
+    plt.show()
+    
+    arr[4,:,rep] = cc[:,0]
+    
+    
+    
+    # i=0
+    # j=2
+    
+    
+    
+    # for n in range(tail,N):
+    #     for r in range(res):
+    #         cc[n-tail,r] = crossCov(ds[r],A_run[n],phis_run[n],i,j)
+    
+    # for r in range(res):
+    #     cc_true[r] = crossCov(ds[r],A,phis,i,j)               
+        
+    # plt.fill_between(ds, np.quantile(cc,0.05,axis=0), np.quantile(cc,0.95,axis=0), color="silver")   
+    # plt.plot(ds,np.mean(cc,axis=0), c="black")
+    # plt.plot(ds,cc_true)
+    # plt.show()
+    
+    # plt.plot(cc[:,0])
+    # plt.show()
+    
+    
+    # i=1
+    # j=2
+    
+    
+    
+    # for n in range(tail,N):
+    #     for r in range(res):
+    #         cc[n-tail,r] = crossCov(ds[r],A_run[n],phis_run[n],i,j)
+    
+    # for r in range(res):
+    #     cc_true[r] = crossCov(ds[r],A,phis,i,j)           
+    
+    # plt.fill_between(ds, np.quantile(cc,0.05,axis=0), np.quantile(cc,0.95,axis=0), color="silver")    
+    # plt.plot(ds,np.mean(cc,axis=0), c="black")
+    # plt.plot(ds,cc_true)
+    # plt.show()
+    
+    # plt.plot(cc[:,0])
+    # plt.show()
+    
+    
+    # plt.plot(A_run[tail:,0,0])
+    # plt.show()
+    # plt.plot(A_run[tail:,0,1])
+    # plt.show()
+    # plt.plot(A_run[tail:,0,2])
+    # plt.show()
+    # plt.plot(A_run[tail:,1,0])
+    # plt.show()
+    # plt.plot(A_run[tail:,1,1])
+    # plt.show()
+    # plt.plot(A_run[tail:,1,2])
+    # plt.show()
+    # plt.plot(A_run[tail:,2,0])
+    # plt.show()
+    # plt.plot(A_run[tail:,2,1])
+    # plt.show()
+    # plt.plot(A_run[tail:,2,2])
+    # plt.show()
+    
+    
+    
+
+
+
+# arr = np.zeros((N-tail,reps))
+
+# arr[:,0] = A_run[tail:,0,0]
+# arr[:,1] = A_run[tail:,0,1]
+# arr[:,2] = A_run[tail:,1,0]
+# arr[:,3] = A_run[tail:,1,1]
+
+np.savetxt('interweaveC00.csv', arr[0], delimiter=',')
+np.savetxt('interweavep00.csv', arr[1], delimiter=',')
+np.savetxt('interweaveC11.csv', arr[2], delimiter=',')
+np.savetxt('interweavep11.csv', arr[3], delimiter=',')
+np.savetxt('interweaveC01.csv', arr[4], delimiter=',')
+
+
+### CENTERED
+
+
+arr = np.zeros((nquant,N-tail,reps))
+
+
 
 for rep in range(reps):
 
@@ -501,10 +936,127 @@ for rep in range(reps):
     cc = np.zeros((N-tail,res))
     cc_true = np.zeros(res)
     
+    p_range = np.zeros(N-tail)
+    
     i=0
+    j=0
+    
+    for ns in range(tail,N):
+        for r in range(res):
+            cc[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+            
+        ### practical range
+        
+        min_range = 0
+        max_range = 1
+        
+        cov = crossCov(0,A_run[ns],phis_run[ns],i,j)
+        
+        cov_max = crossCov(max_range,A_run[ns],phis_run[ns],i,j)
+        
+        while cov_max/cov > 0.05:
+            max_range *= 2
+            cov_max = crossCov(max_range,A_run[ns],phis_run[ns],i,j)
+        
+        range_cand = (max_range - min_range)/2
+        cov_cand = crossCov(range_cand,A_run[ns],phis_run[ns],i,j)
+        
+        while np.abs(cov_cand/cov - 0.05) > 0.001:
+            
+            if cov_cand/cov > 0.05:
+                min_range = range_cand
+            else: 
+                max_range = range_cand
+            
+            range_cand = (max_range + min_range)/2
+            cov_cand = crossCov(range_cand,A_run[ns],phis_run[ns],i,j)
+        
+        p_range[ns-tail] = range_cand
+
+     
+        
+    
+    for r in range(res):
+        cc_true[r] = crossCov(ds[r],A,phis,i,j)        
+        
+    plt.fill_between(ds, np.quantile(cc,0.05,axis=0), np.quantile(cc,0.95,axis=0), color="silver")    
+    plt.plot(ds,np.mean(cc,axis=0), c="black")
+    plt.plot(ds,cc_true)
+    plt.show()
+    
+    plt.plot(cc[:,0])
+    plt.show()
+    
+    plt.plot(p_range, c="tab:orange")
+    plt.show()   
+    
+    arr[0,:,rep] = cc[:,0]
+    arr[1,:,rep] = p_range
+    
+    
+    
+    
+    i=1
     j=1
     
+    for ns in range(tail,N):
+        for r in range(res):
+            cc[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+        
+        ### practical range
+        
+        min_range = 0
+        max_range = 1
+        
+        cov = crossCov(0,A_run[ns],phis_run[ns],i,j)
+        
+        cov_max = crossCov(max_range,A_run[ns],phis_run[ns],i,j)
+        
+        while cov_max/cov > 0.05:
+            max_range *= 2
+            cov_max = crossCov(max_range,A_run[ns],phis_run[ns],i,j)
+        
+        range_cand = (max_range - min_range)/2
+        cov_cand = crossCov(range_cand,A_run[ns],phis_run[ns],i,j)
+        
+        while np.abs(cov_cand/cov - 0.05) > 0.001:
+            
+            if cov_cand/cov > 0.05:
+                min_range = range_cand
+            else: 
+                max_range = range_cand
+            
+            range_cand = (max_range + min_range)/2
+            cov_cand = crossCov(range_cand,A_run[ns],phis_run[ns],i,j)
+        
+        p_range[ns-tail] = range_cand
+
     
+    
+    for r in range(res):
+        cc_true[r] = crossCov(ds[r],A,phis,i,j)        
+        
+    plt.fill_between(ds, np.quantile(cc,0.05,axis=0), np.quantile(cc,0.95,axis=0), color="silver")    
+    plt.plot(ds,np.mean(cc,axis=0), c="black")
+    plt.plot(ds,cc_true)
+    plt.show()
+    
+    plt.plot(cc[:,0])
+    plt.show()
+    
+    plt.plot(p_range, c="tab:orange")
+    plt.show() 
+    
+    arr[2,:,rep] = cc[:,0]
+    arr[3,:,rep] = p_range
+    
+    
+    
+    
+    
+    
+    i=0
+    j=1
     
     for ns in range(tail,N):
         for r in range(res):
@@ -522,7 +1074,441 @@ for rep in range(reps):
     plt.plot(cc[:,0])
     plt.show()
     
-    arr[:,rep] = cc[:,0]
+    arr[4,:,rep] = cc[:,0]
+    
+    
+    
+    # i=0
+    # j=2
+    
+    
+    
+    # for n in range(tail,N):
+    #     for r in range(res):
+    #         cc[n-tail,r] = crossCov(ds[r],A_run[n],phis_run[n],i,j)
+    
+    # for r in range(res):
+    #     cc_true[r] = crossCov(ds[r],A,phis,i,j)               
+        
+    # plt.fill_between(ds, np.quantile(cc,0.05,axis=0), np.quantile(cc,0.95,axis=0), color="silver")   
+    # plt.plot(ds,np.mean(cc,axis=0), c="black")
+    # plt.plot(ds,cc_true)
+    # plt.show()
+    
+    # plt.plot(cc[:,0])
+    # plt.show()
+    
+    
+    # i=1
+    # j=2
+    
+    
+    
+    # for n in range(tail,N):
+    #     for r in range(res):
+    #         cc[n-tail,r] = crossCov(ds[r],A_run[n],phis_run[n],i,j)
+    
+    # for r in range(res):
+    #     cc_true[r] = crossCov(ds[r],A,phis,i,j)           
+    
+    # plt.fill_between(ds, np.quantile(cc,0.05,axis=0), np.quantile(cc,0.95,axis=0), color="silver")    
+    # plt.plot(ds,np.mean(cc,axis=0), c="black")
+    # plt.plot(ds,cc_true)
+    # plt.show()
+    
+    # plt.plot(cc[:,0])
+    # plt.show()
+    
+    
+    # plt.plot(A_run[tail:,0,0])
+    # plt.show()
+    # plt.plot(A_run[tail:,0,1])
+    # plt.show()
+    # plt.plot(A_run[tail:,0,2])
+    # plt.show()
+    # plt.plot(A_run[tail:,1,0])
+    # plt.show()
+    # plt.plot(A_run[tail:,1,1])
+    # plt.show()
+    # plt.plot(A_run[tail:,1,2])
+    # plt.show()
+    # plt.plot(A_run[tail:,2,0])
+    # plt.show()
+    # plt.plot(A_run[tail:,2,1])
+    # plt.show()
+    # plt.plot(A_run[tail:,2,2])
+    # plt.show()
+    
+    
+    
+
+
+
+# arr = np.zeros((N-tail,reps))
+
+# arr[:,0] = A_run[tail:,0,0]
+# arr[:,1] = A_run[tail:,0,1]
+# arr[:,2] = A_run[tail:,1,0]
+# arr[:,3] = A_run[tail:,1,1]
+
+np.savetxt('centeredC00.csv', arr[0], delimiter=',')
+np.savetxt('centeredp00.csv', arr[1], delimiter=',')
+np.savetxt('centeredC11.csv', arr[2], delimiter=',')
+np.savetxt('centeredp11.csv', arr[3], delimiter=',')
+np.savetxt('centeredC01.csv', arr[4], delimiter=',')
+
+
+
+
+### WHITE
+
+
+arr = np.zeros((nquant,N-tail,reps))
+
+
+
+for rep in range(reps):
+
+    Y, V_true = rNLMC(A,phis,taus_sqrt_inv,locs, retV=True)
+    # Y, V_true = rNLMC(A,phis,taus_sqrt_inv,np.transpose(np.array([locs])), retV=True)
+    
+    
+    ### showcase V and Y
+    
+    # plt.plot(locs,V_true[0])
+    # plt.plot(locs,Y[0], '.', c="tab:blue", alpha=0.5)
+    # plt.plot(locs,V_true[1])
+    # plt.plot(locs,Y[1], '.', c="tab:orange", alpha=0.5)
+    # plt.plot(locs,V_true[2])
+    # plt.plot(locs,Y[2], '.', c="tab:green", alpha=0.5)
+    
+    # plt.show()
+    
+    ### showcase V
+    
+    # fig, ax = plt.subplots()
+    # ax.pcolormesh(locs[:n,0], locs[:n,0], np.reshape(V_true[0],(n,n)))
+    # ax.set_aspect(1)
+    # ax.set(xlim=(0, 1), ylim=(0, 1))
+    # plt.show()
+    
+    # fig, ax = plt.subplots()
+    # ax.pcolormesh(locs[:n,0], locs[:n,0], np.reshape(V_true[1],(n,n)))
+    # ax.set_aspect(1)
+    # ax.set(xlim=(0, 1), ylim=(0, 1))
+    # plt.show()
+    
+    # fig, ax = plt.subplots()
+    # ax.pcolormesh(locs[:n,0], locs[:n,0], np.reshape(V_true[2],(n,n)))
+    # ax.set_aspect(1)
+    # ax.set(xlim=(0, 1), ylim=(0, 1))
+    # plt.show()
+    
+    
+    
+    
+    
+    
+    ### useful quantities 
+    
+
+    
+    ### init and current state
+    phis_current = np.array([5.,20.])
+    # phis_current = np.array([5.,10.,20.])
+    Rs_current = np.array([ np.exp(-Dists*phis_current[j]) for j in range(p) ])
+    Rs_inv_current = np.array([ np.linalg.inv(Rs_current[j]) for j in range(p) ])
+    
+    # V_current = V_true
+    # V_current = Y + random.normal(size=(p,n))*0.1
+    V_current = random.normal(size=(p,n))*1
+    VmY_current = V_current - Y
+    VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
+    
+    # A_current = np.array([[1.,1.],
+    #               [0.,1.]])
+    # A_current = np.array([[1.,1.,1.],
+    #                       [0.,1.,1.],
+    #                       [0.,0.,1.]])
+    # A_current = np.identity(p)
+    A_current = random.normal(size=(p,p))
+    A_inv_current = np.linalg.inv(A_current)
+    
+    A_invV_current = A_inv_current @ V_current
+    
+    taus_current = 1/(np.array([1.,1.]) * 1)**2
+    # taus_current = 1/(np.array([1.,1.,1.]) * 0.1)**2
+    Dm1_current = np.diag(taus_current)
+    Dm1Y_current = Dm1_current @ Y
+    
+    
+    
+
+    
+    
+    
+    
+    st = time.time()
+    
+    
+    for i in range(N):
+        
+        
+        V_current, VmY_current, VmY_inner_rows_current, A_invV_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y, V_current)
+            
+        
+        
+                            
+        
+        # A_current, A_inv_current, A_invV_current = A_move_slice(A_current, A_invV_current, Rs_inv_current, V_current, sigma_A, mu_A)
+        
+        A_current, A_inv_current, V_current = A_move_white(A_invV_current,Dm1_current,Dm1Y_current,sigma_A,mu_A) 
+        
+        
+        
+        
+    
+        
+        
+        phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_current,Dists,A_invV_current,Rs_current,Rs_inv_current)
+    
+        taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y,a,b,n)
+        
+        V_run[i] = V_current
+        taus_run[i] = taus_current
+        phis_run[i] =  phis_current
+        A_run[i] = A_current
+        
+        if i % 100 == 0:
+            print(i)
+    
+    et = time.time()
+    print('Execution time:', (et-st)/60, 'minutes')
+    
+    
+    
+    print("Prior Means for Ranges", alphas / (alphas + betas) * range_phi + min_phi)
+    
+    
+    
+    print('accept phi_1:',np.mean(acc_phis[0,tail:]))
+    print('accept phi_2:',np.mean(acc_phis[1,tail:]))
+    # print('accept phi_3:',np.mean(acc_phis[2,tail:]))
+    
+    plt.plot(phis_run[:,0])
+    plt.plot(phis_run[:,1])
+    # plt.plot(phis_run[:,2])
+    plt.show()
+    
+    print('mean phi_1:',np.mean(phis_run[tail:,0]))
+    print('mean phi_2:',np.mean(phis_run[tail:,1]))
+    # print('mean phi_3:',np.mean(phis_run[tail:,2]))
+    
+    print('accept A:',np.mean(acc_A[tail:]))
+    print('mean A:',np.mean(A_run[tail:],axis=0))
+    
+    plt.plot(A_run[:,0,0])
+    plt.plot(A_run[:,0,1])
+    # plt.plot(A_run[:,0,2])
+    plt.plot(A_run[:,1,0])
+    plt.plot(A_run[:,1,1])
+    # plt.plot(A_run[:,1,2])
+    # plt.plot(A_run[:,2,0])
+    # plt.plot(A_run[:,2,1])
+    # plt.plot(A_run[:,2,2])
+    plt.show()
+    
+    
+    # print('accept V:',np.mean(acc_V[tail:]))
+    
+    print('mean tau_1:',np.mean(taus_run[tail:,0]))
+    print('mean tau_2:',np.mean(taus_run[tail:,1]))
+    # print('mean tau_3:',np.mean(taus_run[tail:,2]))
+    
+    print('real taus:',taus_sqrt_inv ** (-2))
+    
+    print('mean inv sqrt tau_1:',np.mean(1/np.sqrt(taus_run[tail:,0])))
+    print('mean inv sqrt tau_2:',np.mean(1/np.sqrt(taus_run[tail:,1])))
+    # print('mean inv sqrt tau_3:',np.mean(1/np.sqrt(taus_run[tail:,2])))
+    
+    print('real sqrt inv taus:',taus_sqrt_inv)
+    
+    plt.plot(taus_run[:,0])
+    plt.plot(taus_run[:,1])
+    # plt.plot(taus_run[:,2])
+    # # plt.plot(1/np.sqrt(taus_run[:,2]))
+    plt.show()
+    
+    
+    plt.plot(1/np.sqrt(taus_run[:,0]))
+    plt.plot(1/np.sqrt(taus_run[:,1]))
+    # plt.plot(1/np.sqrt(taus_run[:,2]))
+    # # plt.plot(1/np.sqrt(taus_run[:,2]))
+    plt.show()
+    
+    # for i in range(N):
+    #     if i % 100 == 0:
+    #         plt.plot(locs,V_run[i,0])
+    #         plt.plot(locs,Y[0], '.', c="tab:blue", alpha=0.5)
+    #         plt.plot(locs,V_run[i,1])
+    #         plt.plot(locs,Y[1], '.', c="tab:orange", alpha=0.5)
+    #         # plt.plot(locs,V_run[i,2])
+    #         # plt.plot(locs,Y[2], '.', c="tab:green", alpha=0.5)
+    
+    #         plt.show()
+    
+    
+    ### inference of cross covariance
+    
+    max_d = 1
+    res = 100
+    
+    ds = np.linspace(0,max_d,res)
+        
+    cc = np.zeros((N-tail,res))
+    cc_true = np.zeros(res)
+    
+    p_range = np.zeros(N-tail)
+    
+    i=0
+    j=0
+    
+    for ns in range(tail,N):
+        for r in range(res):
+            cc[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+            
+        ### practical range
+        
+        min_range = 0
+        max_range = 1
+        
+        cov = crossCov(0,A_run[ns],phis_run[ns],i,j)
+        
+        cov_max = crossCov(max_range,A_run[ns],phis_run[ns],i,j)
+        
+        while cov_max/cov > 0.05:
+            max_range *= 2
+            cov_max = crossCov(max_range,A_run[ns],phis_run[ns],i,j)
+        
+        range_cand = (max_range - min_range)/2
+        cov_cand = crossCov(range_cand,A_run[ns],phis_run[ns],i,j)
+        
+        while np.abs(cov_cand/cov - 0.05) > 0.001:
+            
+            if cov_cand/cov > 0.05:
+                min_range = range_cand
+            else: 
+                max_range = range_cand
+            
+            range_cand = (max_range + min_range)/2
+            cov_cand = crossCov(range_cand,A_run[ns],phis_run[ns],i,j)
+        
+        p_range[ns-tail] = range_cand
+
+     
+        
+    
+    for r in range(res):
+        cc_true[r] = crossCov(ds[r],A,phis,i,j)        
+        
+    plt.fill_between(ds, np.quantile(cc,0.05,axis=0), np.quantile(cc,0.95,axis=0), color="silver")    
+    plt.plot(ds,np.mean(cc,axis=0), c="black")
+    plt.plot(ds,cc_true)
+    plt.show()
+    
+    plt.plot(cc[:,0])
+    plt.show()
+    
+    plt.plot(p_range, c="tab:orange")
+    plt.show()   
+    
+    arr[0,:,rep] = cc[:,0]
+    arr[1,:,rep] = p_range
+    
+    
+    
+    
+    i=1
+    j=1
+    
+    for ns in range(tail,N):
+        for r in range(res):
+            cc[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+        
+        ### practical range
+        
+        min_range = 0
+        max_range = 1
+        
+        cov = crossCov(0,A_run[ns],phis_run[ns],i,j)
+        
+        cov_max = crossCov(max_range,A_run[ns],phis_run[ns],i,j)
+        
+        while cov_max/cov > 0.05:
+            max_range *= 2
+            cov_max = crossCov(max_range,A_run[ns],phis_run[ns],i,j)
+        
+        range_cand = (max_range - min_range)/2
+        cov_cand = crossCov(range_cand,A_run[ns],phis_run[ns],i,j)
+        
+        while np.abs(cov_cand/cov - 0.05) > 0.001:
+            
+            if cov_cand/cov > 0.05:
+                min_range = range_cand
+            else: 
+                max_range = range_cand
+            
+            range_cand = (max_range + min_range)/2
+            cov_cand = crossCov(range_cand,A_run[ns],phis_run[ns],i,j)
+        
+        p_range[ns-tail] = range_cand
+
+    
+    
+    for r in range(res):
+        cc_true[r] = crossCov(ds[r],A,phis,i,j)        
+        
+    plt.fill_between(ds, np.quantile(cc,0.05,axis=0), np.quantile(cc,0.95,axis=0), color="silver")    
+    plt.plot(ds,np.mean(cc,axis=0), c="black")
+    plt.plot(ds,cc_true)
+    plt.show()
+    
+    plt.plot(cc[:,0])
+    plt.show()
+    
+    plt.plot(p_range, c="tab:orange")
+    plt.show() 
+    
+    arr[2,:,rep] = cc[:,0]
+    arr[3,:,rep] = p_range
+    
+    
+    
+    
+    
+    
+    i=0
+    j=1
+    
+    for ns in range(tail,N):
+        for r in range(res):
+            cc[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+    
+    
+    for r in range(res):
+        cc_true[r] = crossCov(ds[r],A,phis,i,j)        
+        
+    plt.fill_between(ds, np.quantile(cc,0.05,axis=0), np.quantile(cc,0.95,axis=0), color="silver")    
+    plt.plot(ds,np.mean(cc,axis=0), c="black")
+    plt.plot(ds,cc_true)
+    plt.show()
+    
+    plt.plot(cc[:,0])
+    plt.show()
+    
+    arr[4,:,rep] = cc[:,0]
+    
+    
     
     # i=0
     # j=2
@@ -598,4 +1584,9 @@ print('GLOBAL TIME:', (etg-stg)/60, 'minutes')
 # arr[:,2] = A_run[tail:,1,0]
 # arr[:,3] = A_run[tail:,1,1]
 
-np.savetxt('output.csv', arr, delimiter=',')
+np.savetxt('whiteC00.csv', arr[0], delimiter=',')
+np.savetxt('whitep00.csv', arr[1], delimiter=',')
+np.savetxt('whiteC11.csv', arr[2], delimiter=',')
+np.savetxt('whitep11.csv', arr[3], delimiter=',')
+np.savetxt('whiteC01.csv', arr[4], delimiter=',')
+
