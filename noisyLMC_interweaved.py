@@ -132,7 +132,7 @@ def makeGrid(n):
 
 
 ### global parameters
-n = 500
+n = 200
 # n = 20
 p = 2
 # p = 3
@@ -276,7 +276,7 @@ sigma_slice = 1
 
 
 ### samples
-N = 4000
+N = 1000
 
 ### global run containers
 phis_run = np.zeros((N,p))
@@ -293,8 +293,8 @@ acc_A = np.zeros(N)
 Dists = distance_matrix(locs,locs)
 # Dists = distance_matrix(np.transpose(np.array([locs])),np.transpose(np.array([locs])))
 
-tail = 2000
-reps = 30
+tail = 400
+reps = 10
 nquant = 5
 
 
