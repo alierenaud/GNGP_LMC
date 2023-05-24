@@ -185,7 +185,7 @@ locs = random.uniform(0,1,(n,2))
 # locs = makeGrid(n)
 
 A = np.array([[-1.5,1.1],
-              [1,2]])
+              [1,2]])*1
 phis = np.array([5.,20.])
 taus_sqrt_inv = np.array([1.,1.]) * 1
 
@@ -270,7 +270,7 @@ taus_sqrt_inv = np.array([1.,1.]) * 1
 
 
 ### priors
-sigma_A = 1.
+sigma_A = 10.
 mu_A = np.array([[0.,0.],
                  [0.,0.]])
 # mu_A = np.array([[0.,0.,0.],
@@ -466,7 +466,7 @@ for rep in range(reps):
     
     et = time.time()
     #### SAVE TIME
-    times[0,rep] = st-et
+    times[0,rep] = et-st
     print('Execution time:', (et-st)/60, 'minutes')
     
     
@@ -860,7 +860,7 @@ for rep in range(reps):
     
     et = time.time()
     #### SAVE TIME
-    times[1,rep] = st-et
+    times[1,rep] = et-st
     print('Execution time:', (et-st)/60, 'minutes')
     
     
@@ -1253,7 +1253,7 @@ for rep in range(reps):
     
     et = time.time()
     #### SAVE TIME
-    times[2,rep] = st-et
+    times[2,rep] = et-st
     print('Execution time:', (et-st)/60, 'minutes')
     
     
@@ -1528,4 +1528,11 @@ for rep in range(reps):
 # np.savetxt('interweavep11.csv', arr[3], delimiter=',')
 # np.savetxt('interweaveC01.csv', arr[4], delimiter=',')
 
+
+etg = time.time()
+print('Global time:', (etg-stg)/60, 'minutes')
+print('Mean times:', np.mean(times, axis=1))
+
+np.save("results.npy", arr)
+np.save("times.npy", times)
 
