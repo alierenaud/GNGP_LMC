@@ -335,7 +335,7 @@ Dists = distance_matrix(locs,locs)
 # Dists = distance_matrix(np.transpose(np.array([locs])),np.transpose(np.array([locs])))
 
 tail = 400
-reps = 5
+reps = 100
 nquant = 4
 n_meth = 3
 
