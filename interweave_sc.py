@@ -187,7 +187,7 @@ A_base = np.array([[-1.5,1.1],
                    [1,2]])
 
 phis = np.array([5.,20.])
-taus_sqrt_inv = np.array([1.,1.]) * 1
+taus_sqrt_inv_base = np.array([1.,1.]) * 1
 
 
 # A = np.array([[-1.,-1.5,2.],
@@ -270,7 +270,7 @@ taus_sqrt_inv = np.array([1.,1.]) * 1
 
 
 ### priors
-sigma_A = 10.
+sigma_A = 2.
 mu_A = np.array([[0.,0.],
                  [0.,0.]])
 # mu_A = np.array([[0.,0.,0.],
@@ -312,7 +312,7 @@ b = 0.1
 # phis_prop = np.linspace(1/p, 1, p) * 2.
 phis_prop = np.ones(p) * 1
 # A_prop = 0.03
-sigma_slice = 20
+sigma_slice = 10
 # V_prop = 0.005
 
 
@@ -356,11 +356,11 @@ stg = time.time() ### global start
 
 
 for rat in range(n_rat):
-    A = A_base*ratios[rat]
+    taus_sqrt_inv = taus_sqrt_inv_base/ratios[rat]
     for rep in range(reps):
         print("------------INTERWEAVE-----------")    
     
-        Y, V_true = rNLMC(A,phis,taus_sqrt_inv,locs, retV=True)
+        Y, V_true = rNLMC(A_base,phis,taus_sqrt_inv,locs, retV=True)
         # Y, V_true = rNLMC(A,phis,taus_sqrt_inv,np.transpose(np.array([locs])), retV=True)
         
         
@@ -759,12 +759,12 @@ for rat in range(n_rat):
 
 
 for rat in range(n_rat):
-    A = A_base*ratios[rat]
+    taus_sqrt_inv = taus_sqrt_inv_base/ratios[rat]
     for rep in range(reps):
         
         print("------------CENTERED-----------")
     
-        Y, V_true = rNLMC(A,phis,taus_sqrt_inv,locs, retV=True)
+        Y, V_true = rNLMC(A_base,phis,taus_sqrt_inv,locs, retV=True)
         # Y, V_true = rNLMC(A,phis,taus_sqrt_inv,np.transpose(np.array([locs])), retV=True)
         
         
@@ -1162,12 +1162,12 @@ for rat in range(n_rat):
 
 
 for rat in range(n_rat):
-    A = A_base*ratios[rat]
+    taus_sqrt_inv = taus_sqrt_inv_base/ratios[rat]
     for rep in range(reps):
         
         print("------------WHITE-----------")
     
-        Y, V_true = rNLMC(A,phis,taus_sqrt_inv,locs, retV=True)
+        Y, V_true = rNLMC(A_base,phis,taus_sqrt_inv,locs, retV=True)
         # Y, V_true = rNLMC(A,phis,taus_sqrt_inv,np.transpose(np.array([locs])), retV=True)
         
         
