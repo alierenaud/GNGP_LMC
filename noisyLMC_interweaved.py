@@ -132,7 +132,7 @@ def makeGrid(n):
 
 
 ### global parameters
-n = 1000
+n = 200
 # n = 20
 p = 2
 # p = 3
@@ -386,9 +386,10 @@ st = time.time()
 for i in range(N):
     
     
-    V_current, VmY_current, VmY_inner_rows_current, A_invV_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y, V_current)
+    V_current, VmY_current, VmY_inner_rows_current, A_invV_current = V_move_conj(Rs_inv_current, A_inv_current, Dm1_current, Dm1Y_current, Y, V_current)
         
-    
+    # V_current, VmY_current, VmY_inner_rows_current, A_invV_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y, V_current)
+     
     
                         
     
@@ -411,7 +412,7 @@ for i in range(N):
     phis_run[i] =  phis_current
     A_run[i] = A_current
     
-    if i % 100 == 0:
+    if i % 1 == 0:
         print(i)
     
     
