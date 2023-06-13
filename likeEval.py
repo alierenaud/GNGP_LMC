@@ -72,10 +72,10 @@ random.seed(0)
 
 ### global parameters
 ns = np.array([100,200,300,400])
-ps = np.array([2,4,6,8,10])
+ps = np.array([2,4,6,8])
 
 ### number of likelihood evaluations
-N = 100
+N = 500
 
 
 ### results container
