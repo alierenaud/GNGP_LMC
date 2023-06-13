@@ -75,7 +75,7 @@ ns = np.array([100,200,300,400])
 ps = np.array([2,4,6,8,10])
 
 ### number of likelihood evaluations
-N = 1000
+N = 100
 
 
 ### results container
