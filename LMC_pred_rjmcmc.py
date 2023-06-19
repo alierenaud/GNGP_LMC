@@ -59,11 +59,11 @@ def A_move_slice_mask(A_current, A_invV_current, A_mask_current, Rs_inv_current,
                     else:
                         U[ii,jj] = A_prop[ii,jj]
 
-random.seed(0)
+# random.seed(10)
 
 ### number of points 
 n_obs=400
-n_grid=1000
+n_grid=400
 
 ### global parameters
 
@@ -71,16 +71,18 @@ n_grid=1000
 
 ### generate random example
 loc_obs = random.uniform(0,1,(n_obs,1))
-loc_grid = np.transpose([np.linspace(0, 1, n_grid+1)])
+loc_obs = np.transpose([np.linspace(0, 0.4, n_obs)])
+loc_grid = np.transpose([np.linspace(0.5, 1, n_grid+1)])
 
 locs = np.concatenate((loc_obs,loc_grid), axis=0)
 
 
 ### parameters
-A = np.array([[5,0],
-              [0,4]])
+A = np.array([[5,0,0],
+              [0,4,0],
+              [0,0,3]])
 p = A.shape[0]
-phis = np.array([5.,20.])
+phis = np.array([5.,10.,20.])
 
 
 
@@ -104,8 +106,9 @@ plt.show()
 
 ### priors
 sigma_A = 10.
-mu_A = np.array([[0.,0.],
-                  [0.,0.]])
+mu_A = np.array([[0.,0.,0.],
+                 [0.,0.,0.],
+                 [0.,0.,0.]])
 # mu_A = np.array([[0.,0.,0.],
 #                  [0.,0.,0.],
 #                  [0.,0.,0.]])
@@ -123,7 +126,7 @@ prob_one = 0.5
 
 ### RJMCMC
 
-RJMCMC = False
+RJMCMC = True
 
 n_ones_current = p**2
 A_mask_current = np.ones((p,p))
@@ -162,8 +165,8 @@ n_jumps = p
 
 
 ### samples
-N = 5000
-tail = 1000
+N = 1000
+tail = 400
 
 ### global run containers
 phis_run = np.zeros((N,p))
@@ -284,7 +287,7 @@ for i in range(N):
                         A_zeros_ind_current.append(A_ones_ind_current.pop(rand_int))
 
 
-
+    
     ### make pred cond on current phis, A
     
     
