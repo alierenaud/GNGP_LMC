@@ -16,6 +16,8 @@ from scipy.spatial import distance_matrix
 
 
 from noisyLMC_interweaved import A_move_slice
+from noisyLMC_interweaved import makeGrid
+from noisyLMC_interweaved import vec_inv
 
 
 
@@ -62,25 +64,26 @@ def A_move_slice_mask(A_current, A_invV_current, A_mask_current, Rs_inv_current,
 # random.seed(10)
 
 ### number of points 
-n_obs=400
-n_grid=400
+n_obs=100
+# n_grid=400  ### 1D grid
+n_grid=20  ### 2D Grid
 
 ### global parameters
 
 
 
 ### generate random example
-loc_obs = random.uniform(0,1,(n_obs,1))
-loc_obs = np.transpose([np.linspace(0, 0.4, n_obs)])
-loc_grid = np.transpose([np.linspace(0.5, 1, n_grid+1)])
+loc_obs = random.uniform(0,1,(n_obs,2))
+# loc_grid = np.transpose([np.linspace(0.5, 1, n_grid+1)])
+loc_grid = makeGrid(n_grid)
 
 locs = np.concatenate((loc_obs,loc_grid), axis=0)
 
 
 ### parameters
 A = np.array([[5,0,0],
-              [0,4,0],
-              [0,0,3]])
+              [0,5,0],
+              [0,0,5]])
 p = A.shape[0]
 phis = np.array([5.,10.,20.])
 
@@ -96,10 +99,50 @@ V_grid = V[:,n_obs:]
 
 ### showcase
 
-plt.plot(loc_grid,V_grid[0],loc_grid,V_grid[1])
+# plt.plot(loc_grid,V_grid[0],loc_grid,V_grid[1])
+# plt.show()
+# plt.plot(loc_obs,V_obs[0],'o',c="tab:blue",markersize=2)
+# plt.plot(loc_obs,V_obs[1],'o',c="tab:orange",markersize=2)
+# plt.show()
+
+
+locs1D = (np.arange(n_grid) + 0.5)/n_grid
+xv, yv = np.meshgrid(locs1D, locs1D)
+
+### process 1
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+vv = vec_inv(V_grid[0],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Blues")
 plt.show()
-plt.plot(loc_obs,V_obs[0],'o',c="tab:blue",markersize=2)
-plt.plot(loc_obs,V_obs[1],'o',c="tab:orange",markersize=2)
+
+### process 2
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+vv = vec_inv(V_grid[1],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Oranges")
+plt.show()
+
+### process 3
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+vv = vec_inv(V_grid[2],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Greens")
 plt.show()
 
 
@@ -171,7 +214,7 @@ tail = 400
 ### global run containers
 phis_run = np.zeros((N,p))
 A_run = np.zeros((N,p,p))
-V_grid_run = np.zeros((N,p,n_grid+1))
+V_grid_run = np.zeros((N,p,n_grid**2))
 
 
 ### acc vector
@@ -299,7 +342,7 @@ for i in range(N):
     
     Cs = np.array([ np.linalg.cholesky(Rs_prime[j] - np.transpose(rs[j])@Rinvsrs[j]) for j in range(p) ])
     
-    V_grid_current = A_current @ np.array([ Cs[j]@random.normal(size=n_grid+1) + A_invV_current[j]@Rinvsrs[j] for j in range(p)])
+    V_grid_current = A_current @ np.array([ Cs[j]@random.normal(size=n_grid**2) + A_invV_current[j]@Rinvsrs[j] for j in range(p)])
     
     
     ###
@@ -317,14 +360,23 @@ print("TTIME:", (et-st)/60, "min")
 
 print('accept phi_1:',np.mean(acc_phis[0,tail:]))
 print('accept phi_2:',np.mean(acc_phis[1,tail:]))
-# print('accept phi_3:',np.mean(acc_phis[2,tail:]))
+print('accept phi_3:',np.mean(acc_phis[2,tail:]))
 
 plt.plot(phis_run[tail:,0])
 plt.plot(phis_run[tail:,1])
-# plt.plot(phis_run[tail:,2])
+plt.plot(phis_run[tail:,2])
 plt.show()
 
 
 
 
 print("MSE", np.mean([(V_grid_run[j] - V_grid)**2 for j in range(tail,N)]))
+
+
+### evaluate independencies
+
+indep_post = np.mean(np.array([A_run[i]@np.transpose(A_run[i]) for i in range(tail,N)])==0,axis=0)
+print("POSTERIOR PROBABILITY OF INDEPENDENCE")
+print(indep_post)
+
+

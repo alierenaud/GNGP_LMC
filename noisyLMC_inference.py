@@ -29,49 +29,49 @@ def M_comp(Rs_inv_current, A_inv_current, taus):
 
 
 
-# def V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y, V_current):
+def V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y, V_current):
     
-#     p = Rs_inv_current.shape[0]
-#     n = Rs_inv_current.shape[1]
-    
-#     M = M_comp(Rs_inv_current, A_inv_current, taus_current)
-#     b = Dm1Y_current
-    
-#     for i in range(n):
-#         for j in range(p):
-            
-#             V_current[j,i] = np.sqrt(1/M[j,i,j,i]) * random.normal() + 1/M[j,i,j,i] * (b[j,i] - np.sum(M[j,i]*V_current) + M[j,i,j,i]*V_current[j,i])
-            
-#     VmY_current = V_current - Y
-#     VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
-    
-#     A_invV_current = A_inv_current @ V_current
-    
-#     return(V_current, VmY_current, VmY_inner_rows_current, A_invV_current)
-
-def V_move_conj(Rs_inv_current, A_inv_current, Dm1_current, Dm1Y_current, Y, V_current):
-    
-    n = Rs_inv_current.shape[1]
     p = Rs_inv_current.shape[0]
+    n = Rs_inv_current.shape[1]
+    
+    M = M_comp(Rs_inv_current, A_inv_current, taus_current)
+    b = Dm1Y_current
     
     for i in range(n):
-        
-        M = Dm1_current + np.sum([np.outer(Rs_inv_current[j,i,i] * A_inv_current[j],A_inv_current[j]) for j in range(p)],axis=0)
-        
-        
-        
-        b = Dm1Y_current[:,i] - np.sum([np.inner(A_inv_current[j],V_current[:,k])*Rs_inv_current[j,k,i]*A_inv_current[j] for j in range(p) for k in range(n) if k != i],axis=0)
-        
-        M_inv = np.linalg.inv(M)
-        
-        V_current[:,i] = np.linalg.cholesky(M_inv)@random.normal(size=p) + M_inv@b
-        
+        for j in range(p):
+            
+            V_current[j,i] = np.sqrt(1/M[j,i,j,i]) * random.normal() + 1/M[j,i,j,i] * (b[j,i] - np.sum(M[j,i]*V_current) + M[j,i,j,i]*V_current[j,i])
+            
     VmY_current = V_current - Y
     VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
     
-    A_invV_current = A_inv_current @ V_current        
-
+    A_invV_current = A_inv_current @ V_current
+    
     return(V_current, VmY_current, VmY_inner_rows_current, A_invV_current)
+
+# def V_move_conj(Rs_inv_current, A_inv_current, Dm1_current, Dm1Y_current, Y, V_current):
+    
+#     n = Rs_inv_current.shape[1]
+#     p = Rs_inv_current.shape[0]
+    
+#     for i in range(n):
+        
+#         M = Dm1_current + np.sum([np.outer(Rs_inv_current[j,i,i] * A_inv_current[j],A_inv_current[j]) for j in range(p)],axis=0)
+        
+        
+        
+#         b = Dm1Y_current[:,i] - np.sum([np.inner(A_inv_current[j],V_current[:,k])*Rs_inv_current[j,k,i]*A_inv_current[j] for j in range(p) for k in range(n) if k != i],axis=0)
+        
+#         M_inv = np.linalg.inv(M)
+        
+#         V_current[:,i] = np.linalg.cholesky(M_inv)@random.normal(size=p) + M_inv@b
+        
+#     VmY_current = V_current - Y
+#     VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
+    
+#     A_invV_current = A_inv_current @ V_current        
+
+#     return(V_current, VmY_current, VmY_inner_rows_current, A_invV_current)
 
 
 # def V_move_mh(V_current, VmY_inner_rows_current, V_prop, A_invV_current, Rs_inv_current):
