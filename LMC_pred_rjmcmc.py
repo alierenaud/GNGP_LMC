@@ -8,21 +8,25 @@ Created on Tue Jun 13 13:53:27 2023
 import numpy as np
 from numpy import random
 
-from LMC_generation import rLMC
+from noisyLMC_generation import rNLMC
 
 import matplotlib.pyplot as plt
 
 from scipy.spatial import distance_matrix
 
+from scipy.stats import beta
 
 from noisyLMC_interweaved import A_move_slice
 from noisyLMC_interweaved import makeGrid
 from noisyLMC_interweaved import vec_inv
 
-
+from noisyLMC_inference import V_move_conj, taus_move
 
 from LMC_inference import phis_move
 
+random.seed(10)
+# RJMCMC = True
+RJMCMC = True
 
 def A_move_slice_mask(A_current, A_invV_current, A_mask_current, Rs_inv_current, V_current, sigma_A, mu_A, sigma_slice):
 
@@ -61,19 +65,33 @@ def A_move_slice_mask(A_current, A_invV_current, A_mask_current, Rs_inv_current,
                     else:
                         U[ii,jj] = A_prop[ii,jj]
 
-# random.seed(10)
+
 
 ### number of points 
 n_obs=100
 # n_grid=400  ### 1D grid
-n_grid=20  ### 2D Grid
+n_grid=30  ### 2D Grid
 
 ### global parameters
 
 
 
 ### generate random example
-loc_obs = random.uniform(0,1,(n_obs,2))
+# loc_obs = random.uniform(0,1,(n_obs,2))
+
+### beta locations
+loc_obs = beta.rvs(2, 1, size=(n_obs,2))
+
+### showcase locations
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+ax.scatter(loc_obs[:,0],loc_obs[:,1],color="black")
+plt.show()
+
 # loc_grid = np.transpose([np.linspace(0.5, 1, n_grid+1)])
 loc_grid = makeGrid(n_grid)
 
@@ -81,20 +99,36 @@ locs = np.concatenate((loc_obs,loc_grid), axis=0)
 
 
 ### parameters
-A = np.array([[5,0,0],
-              [0,5,0],
-              [0,0,5]])
-p = A.shape[0]
-phis = np.array([5.,10.,20.])
+# A = np.array([[np.sqrt(1/2),0,np.sqrt(1/2)],
+#               [-np.sqrt(1/2),0,np.sqrt(1/2)],
+#               [0,1.,0]])
+# p = A.shape[0]
+# phis = np.array([5.,10.,20.])
+# taus_sqrt_inv = np.array([1.,1.,1.]) 
 
+
+### 5D example
+
+# A = random.normal(size=(5,5))
+A = np.ones((5,5))*np.sqrt(1/5)
+A *= np.array([[1,-1,-1,-1,-1],
+               [1,1,-1,-1,-1],
+               [1,1,1,-1,-1],
+               [1,1,1,1,-1],
+               [1,1,1,1,1]])
+p = A.shape[0]
+phis = np.array([5.,10.,15.,20.,25.])
+taus_sqrt_inv = np.array([1.,1.,1.,1.,1.]) 
 
 
 ### generate rfs
 
-V = rLMC(A,phis,locs)
+Y_true, V_true = rNLMC(A,phis,taus_sqrt_inv,locs, retV=True)
 
-V_obs = V[:,:n_obs]
-V_grid = V[:,n_obs:]
+Y_obs = Y_true[:,:n_obs]
+
+# V_obs = V_true[:,:n_obs]
+V_grid = V_true[:,n_obs:]
 
 
 ### showcase
@@ -145,13 +179,35 @@ vv = vec_inv(V_grid[2],n_grid)
 ax.pcolormesh(xv, yv, vv, cmap = "Greens")
 plt.show()
 
+### process 4
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+vv = vec_inv(V_grid[3],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Reds")
+plt.show()
+
+### process 5
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+vv = vec_inv(V_grid[4],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Purples")
+plt.show()
+
 
 
 ### priors
 sigma_A = 10.
-mu_A = np.array([[0.,0.,0.],
-                 [0.,0.,0.],
-                 [0.,0.,0.]])
+mu_A = np.zeros((p,p))
 # mu_A = np.array([[0.,0.,0.],
 #                  [0.,0.,0.],
 #                  [0.,0.,0.]])
@@ -169,7 +225,7 @@ prob_one = 0.5
 
 ### RJMCMC
 
-RJMCMC = True
+
 
 n_ones_current = p**2
 A_mask_current = np.ones((p,p))
@@ -187,15 +243,19 @@ def pairs(p):
 A_ones_ind_current = pairs(p)
 A_zeros_ind_current = []
 
+## tau
 
-# ### proposals
+a = 1
+b = 1
+
+### proposals
 
 
-phis_prop = np.ones(p)*1.5
+phis_prop = np.ones(p)*1.0
 sigma_slice = 10
 
 
-def b(n_ones,p):
+def ins_prob(n_ones,p):
     
     if n_ones == p**2:
         return(0)
@@ -208,11 +268,13 @@ n_jumps = p
 
 
 ### samples
-N = 1000
-tail = 400
+N = 2000
+tail = 1000
 
 ### global run containers
 phis_run = np.zeros((N,p))
+taus_run = np.zeros((N,p))
+V_run = np.zeros((N,p,n_obs))
 A_run = np.zeros((N,p,p))
 V_grid_run = np.zeros((N,p,n_grid**2))
 
@@ -235,12 +297,19 @@ Rs_current = np.array([ np.exp(-Dists_obs*phis_current[j]) for j in range(p) ])
 Rs_inv_current = np.array([ np.linalg.inv(Rs_current[j]) for j in range(p) ])
 
 
+V_current = random.normal(size=(p,n_obs))*1
+VmY_current = V_current - Y_obs
+VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
 
 
 A_current = random.normal(size=(p,p))
 A_inv_current = np.linalg.inv(A_current)
 
-A_invV_current = A_inv_current @ V_obs
+A_invV_current = A_inv_current @ V_current
+
+taus_current = 1/taus_sqrt_inv**2
+Dm1_current = np.diag(taus_current)
+Dm1Y_current = Dm1_current @ Y_obs
 
 import time
 
@@ -249,20 +318,23 @@ st = time.time()
 for i in range(N):
     
     
-    
+    V_current, VmY_current, VmY_inner_rows_current, A_invV_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y_obs, V_current)
+  
     
                         
     if RJMCMC:
         
-        A_current, A_inv_current, A_invV_current = A_move_slice_mask(A_current, A_invV_current, A_mask_current, Rs_inv_current, V_obs, sigma_A, mu_A, sigma_slice)
+        A_current, A_inv_current, A_invV_current = A_move_slice_mask(A_current, A_invV_current, A_mask_current, Rs_inv_current, V_current, sigma_A, mu_A, sigma_slice)
     
     else:
         
-        A_current, A_inv_current, A_invV_current = A_move_slice(A_current, A_invV_current, Rs_inv_current, V_obs, sigma_A, mu_A, sigma_slice)
+        A_current, A_inv_current, A_invV_current = A_move_slice(A_current, A_invV_current, Rs_inv_current, V_current, sigma_A, mu_A, sigma_slice)
     
         
         
-    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_obs,Dists_obs,A_invV_current,Rs_current,Rs_inv_current)
+    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_current,Dists_obs,A_invV_current,Rs_current,Rs_inv_current)
+
+    taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y_obs,a,b,n_obs)
 
     
     if RJMCMC:
@@ -271,7 +343,7 @@ for i in range(N):
         for j in range(n_jumps):
             
             
-            insert = random.binomial(1, b(n_ones_current,p))
+            insert = random.binomial(1, ins_prob(n_ones_current,p))
             
             if insert:
                 
@@ -284,9 +356,9 @@ for i in range(N):
                 
                 A_inv_new = np.linalg.inv(A_new)
                 
-                A_invV_new = A_inv_new @ V_obs
+                A_invV_new = A_inv_new @ V_current
                 
-                rat = np.exp( -1/2 * np.sum( [ A_invV_new[j] @ Rs_inv_current[j] @ A_invV_new[j] - A_invV_current[j] @ Rs_inv_current[j] @ A_invV_current[j] for j in range(p) ] ) ) * np.abs(np.linalg.det(A_inv_new @ A_current))**n_obs * (1-b(n_ones_current+1,p))/b(n_ones_current,p) * (p**2 - n_ones_current)/(n_ones_current + 1) * prob_one / (1-prob_one)
+                rat = np.exp( -1/2 * np.sum( [ A_invV_new[j] @ Rs_inv_current[j] @ A_invV_new[j] - A_invV_current[j] @ Rs_inv_current[j] @ A_invV_current[j] for j in range(p) ] ) ) * np.abs(np.linalg.det(A_inv_new @ A_current))**n_obs * (1-ins_prob(n_ones_current+1,p))/ins_prob(n_ones_current,p) * (p**2 - n_ones_current)/(n_ones_current + 1) * prob_one / (1-prob_one)
                 
                 if random.uniform() < rat:
                     
@@ -313,9 +385,9 @@ for i in range(N):
                 if np.linalg.det(A_new) != 0:
                     A_inv_new = np.linalg.inv(A_new)
                     
-                    A_invV_new = A_inv_new @ V_obs
+                    A_invV_new = A_inv_new @ V_current
                     
-                    rat = np.exp( -1/2 * np.sum( [ A_invV_new[j] @ Rs_inv_current[j] @ A_invV_new[j] - A_invV_current[j] @ Rs_inv_current[j] @ A_invV_current[j] for j in range(p) ] ) ) * np.abs(np.linalg.det(A_inv_new @ A_current))**n_obs * b(n_ones_current-1,p)/(1-b(n_ones_current,p)) * (n_ones_current)/(p**2 - n_ones_current + 1) * (1-prob_one)/prob_one
+                    rat = np.exp( -1/2 * np.sum( [ A_invV_new[j] @ Rs_inv_current[j] @ A_invV_new[j] - A_invV_current[j] @ Rs_inv_current[j] @ A_invV_current[j] for j in range(p) ] ) ) * np.abs(np.linalg.det(A_inv_new @ A_current))**n_obs * ins_prob(n_ones_current-1,p)/(1-ins_prob(n_ones_current,p)) * (n_ones_current)/(p**2 - n_ones_current + 1) * (1-prob_one)/prob_one
                     
                     if random.uniform() < rat:
                         
@@ -347,11 +419,13 @@ for i in range(N):
     
     ###
     
+    V_run[i] = V_current
+    taus_run[i] = taus_current
     V_grid_run[i] = V_grid_current
     phis_run[i] =  phis_current
     A_run[i] = A_current
     
-    if i % 10 == 0:
+    if i % 100 == 0:
         print(i)
 
 et = time.time()
@@ -361,13 +435,22 @@ print("TTIME:", (et-st)/60, "min")
 print('accept phi_1:',np.mean(acc_phis[0,tail:]))
 print('accept phi_2:',np.mean(acc_phis[1,tail:]))
 print('accept phi_3:',np.mean(acc_phis[2,tail:]))
+print('accept phi_4:',np.mean(acc_phis[3,tail:]))
+print('accept phi_5:',np.mean(acc_phis[4,tail:]))
 
 plt.plot(phis_run[tail:,0])
 plt.plot(phis_run[tail:,1])
 plt.plot(phis_run[tail:,2])
+plt.plot(phis_run[tail:,3])
+plt.plot(phis_run[tail:,4])
 plt.show()
 
-
+plt.plot(taus_run[tail:,0])
+plt.plot(taus_run[tail:,1])
+plt.plot(taus_run[tail:,2])
+plt.plot(taus_run[tail:,3])
+plt.plot(taus_run[tail:,4])
+plt.show()
 
 
 print("MSE", np.mean([(V_grid_run[j] - V_grid)**2 for j in range(tail,N)]))
@@ -375,8 +458,81 @@ print("MSE", np.mean([(V_grid_run[j] - V_grid)**2 for j in range(tail,N)]))
 
 ### evaluate independencies
 
-indep_post = np.mean(np.array([A_run[i]@np.transpose(A_run[i]) for i in range(tail,N)])==0,axis=0)
-print("POSTERIOR PROBABILITY OF INDEPENDENCE")
-print(indep_post)
+covariances = np.array([A_run[i]@np.transpose(A_run[i]) for i in range(tail,N)])
 
+print("POSTERIOR MARGINAL COVARIANCE MEAN")
+print(np.around(np.mean(covariances,axis=0), 2))
+
+print("TRUE MARGINAL COVARIANCE")
+print(np.around(A@np.transpose(A), 2))
+
+indep_post = np.mean(covariances==0,axis=0)
+print("POSTERIOR PROBABILITY OF INDEPENDENCE")
+print(np.around(indep_post, 2))
+
+
+
+### showcase mean predictions
+
+V_grid_mean = np.mean(V_grid_run,axis=0)
+
+### process 1
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+vv = vec_inv(V_grid_mean[0],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Blues")
+plt.show()
+
+### process 2
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+vv = vec_inv(V_grid_mean[1],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Oranges")
+plt.show()
+
+### process 3
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+vv = vec_inv(V_grid_mean[2],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Greens")
+plt.show()
+
+### process 4
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+vv = vec_inv(V_grid_mean[3],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Reds")
+plt.show()
+
+### process 5
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+vv = vec_inv(V_grid_mean[4],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Purples")
+plt.show()
 
