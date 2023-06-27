@@ -24,9 +24,9 @@ from noisyLMC_inference import V_move_conj, taus_move
 
 from LMC_inference import phis_move
 
-random.seed(10)
-# RJMCMC = True
-RJMCMC = True
+random.seed(0)
+
+RJMCMC = False
 
 def A_move_slice_mask(A_current, A_invV_current, A_mask_current, Rs_inv_current, V_current, sigma_A, mu_A, sigma_slice):
 
@@ -110,14 +110,26 @@ locs = np.concatenate((loc_obs,loc_grid), axis=0)
 ### 5D example
 
 # A = random.normal(size=(5,5))
-A = np.ones((5,5))*np.sqrt(1/5)
-A *= np.array([[1,-1,-1,-1,-1],
-               [1,1,-1,-1,-1],
-               [1,1,1,-1,-1],
-               [1,1,1,1,-1],
-               [1,1,1,1,1]])
+
+
+# A = np.ones((5,5))*np.sqrt(1/5)
+# A *= np.array([[1,-1,-1,-1,-1],
+#                [1,1,-1,-1,-1],
+#                [1,1,1,-1,-1],
+#                [1,1,1,1,-1],
+#                [1,1,1,1,1]])
+# p = A.shape[0]
+# phis = np.array([5.,10.,15.,20.,25.])
+
+
+A = np.array([[np.sqrt(1/2),np.sqrt(1/2),0,0,0],
+              [-np.sqrt(1/2),np.sqrt(1/2),0,0,0],
+              [0,0,np.sqrt(1/2),np.sqrt(1/2),0],
+              [0,0,np.sqrt(1/2),-np.sqrt(1/2),0],
+              [0,0,0,0,1.]])
 p = A.shape[0]
-phis = np.array([5.,10.,15.,20.,25.])
+phis = np.array([5.,20.,5.,20.,10.])
+
 taus_sqrt_inv = np.array([1.,1.,1.,1.,1.]) 
 
 
@@ -251,7 +263,7 @@ b = 1
 ### proposals
 
 
-phis_prop = np.ones(p)*1.0
+phis_prop = np.ones(p)*3.0
 sigma_slice = 10
 
 
@@ -268,8 +280,8 @@ n_jumps = p
 
 
 ### samples
-N = 2000
-tail = 1000
+N = 10000
+tail = 4000
 
 ### global run containers
 phis_run = np.zeros((N,p))
