@@ -24,7 +24,7 @@ from noisyLMC_inference import V_move_conj, taus_move
 
 from LMC_inference import phis_move
 
-random.seed(100)
+random.seed(10)
 
 RJMCMC = True
 def A_move_slice_mask(A_current, A_invV_current, A_mask_current, Rs_inv_current, V_current, sigma_A, mu_A, sigma_slice):
@@ -65,9 +65,104 @@ def A_move_slice_mask(A_current, A_invV_current, A_mask_current, Rs_inv_current,
                         U[ii,jj] = A_prop[ii,jj]
 
 
+def A_rjmcmc(Rs_inv_current, V_current, A_current, A_inv_current, A_invV_current, A_zeros_ind_current, A_ones_ind_current, n_ones_current, prob_one, mu_A, sigma_A):
+    for j in range(n_jumps):
+        
+        p = A_current.shape[0]
+        
+        
+        insert = random.binomial(1, ins_prob(n_ones_current,p))
+        
+        if insert:
+            
+            rand_int = random.choice(range(p**2 - n_ones_current))
+            rand_ind = A_zeros_ind_current[rand_int]
+            new_elem = random.normal(mu_A[rand_ind],sigma_A,1)
+            
+            A_new = np.copy(A_current)
+            A_new[rand_ind] = new_elem
+            
+            A_inv_new = np.linalg.inv(A_new)
+            
+            A_invV_new = A_inv_new @ V_current
+            
+            rat = np.exp( -1/2 * np.sum( [ A_invV_new[j] @ Rs_inv_current[j] @ A_invV_new[j] - A_invV_current[j] @ Rs_inv_current[j] @ A_invV_current[j] for j in range(p) ] ) ) * np.abs(np.linalg.det(A_inv_new @ A_current))**n_obs * (1-ins_prob(n_ones_current+1,p))/ins_prob(n_ones_current,p) * (p**2 - n_ones_current)/(n_ones_current + 1) * prob_one / (1-prob_one)
+            
+            if random.uniform() < rat:
+                
+                A_current = A_new
+                A_inv_current = A_inv_new
+                A_invV_current = A_invV_new
+                
+                n_ones_current += 1
+                
+                A_mask_current[rand_ind] = 1.
+                
+                A_ones_ind_current.append(A_zeros_ind_current.pop(rand_int))
+                
+                
+                
+            
+            
+        else:
+            
+            rand_int = random.choice(range(n_ones_current))
+            rand_ind = A_ones_ind_current[rand_int]
+            
+            A_new = np.copy(A_current)
+            A_new[rand_ind] = 0.
+            
+            if np.linalg.det(A_new) != 0:
+                A_inv_new = np.linalg.inv(A_new)
+                
+                A_invV_new = A_inv_new @ V_current
+                
+                rat = np.exp( -1/2 * np.sum( [ A_invV_new[j] @ Rs_inv_current[j] @ A_invV_new[j] - A_invV_current[j] @ Rs_inv_current[j] @ A_invV_current[j] for j in range(p) ] ) ) * np.abs(np.linalg.det(A_inv_new @ A_current))**n_obs * ins_prob(n_ones_current-1,p)/(1-ins_prob(n_ones_current,p)) * (n_ones_current)/(p**2 - n_ones_current + 1) * (1-prob_one)/prob_one
+                
+                if random.uniform() < rat:
+                    
+                    A_current = A_new
+                    A_inv_current = A_inv_new
+                    A_invV_current = A_invV_new
+                    
+                    n_ones_current -= 1
+                    
+                    A_mask_current[rand_ind] = 0.
+                    
+                    A_zeros_ind_current.append(A_ones_ind_current.pop(rand_int))
+
+    
+    
+    return(A_current,A_inv_current,A_invV_current,n_ones_current,A_mask_current,A_ones_ind_current,A_zeros_ind_current)
+
+
+def V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invV_current, n_grid):
+    
+    p = A_current.shape[0]
+    
+    rs = np.array([ np.exp(-Dists_obs_grid*phis_current[j]) for j in range(p) ])
+    Rs_prime = np.array([ np.exp(-Dists_grid*phis_current[j]) for j in range(p) ])
+    
+    Rinvsrs = np.array([ Rs_inv_current[j]@rs[j] for j in range(p) ])
+    
+    Cs = np.array([ np.linalg.cholesky(Rs_prime[j] - np.transpose(rs[j])@Rinvsrs[j]) for j in range(p) ])
+    
+    V_grid_current = A_current @ np.array([ Cs[j]@random.normal(size=n_grid**2) + A_invV_current[j]@Rinvsrs[j] for j in range(p)])
+    
+    return(V_grid_current)
+
+def pairs(p):
+    a = []
+    k = 0
+    for i in range(p):
+        for j in range(p):
+            a.append((i,j))
+            k += 1
+    
+    return(a)
 
 ### number of points 
-n_obs=100
+n_obs=400
 # n_grid=400  ### 1D grid
 n_grid=20  ### 2D Grid
 
@@ -112,12 +207,12 @@ locs = np.concatenate((loc_obs,loc_grid), axis=0)
 
 ### Triangular
 
-A = np.array([[1,0,0,0,0],
-              [-np.sqrt(1/2),-np.sqrt(1/2),0,0,0],
-              [np.sqrt(1/3),np.sqrt(1/3),np.sqrt(1/3),0,0],
-              [-np.sqrt(1/4),-np.sqrt(1/4),-np.sqrt(1/4),-np.sqrt(1/4),0],
-              [np.sqrt(1/5),np.sqrt(1/5),np.sqrt(1/5),np.sqrt(1/5),np.sqrt(1/5)]])
-p = A.shape[0]
+# A = np.array([[1,0,0,0,0],
+#               [-np.sqrt(1/2),-np.sqrt(1/2),0,0,0],
+#               [np.sqrt(1/3),np.sqrt(1/3),np.sqrt(1/3),0,0],
+#               [-np.sqrt(1/4),-np.sqrt(1/4),-np.sqrt(1/4),-np.sqrt(1/4),0],
+#               [np.sqrt(1/5),np.sqrt(1/5),np.sqrt(1/5),np.sqrt(1/5),np.sqrt(1/5)]])
+# p = A.shape[0]
 
 
 ### Full
@@ -144,8 +239,8 @@ p = A.shape[0]
 
 ### Diagonal
 
-# p = 5
-# A = np.identity(p)
+p = 5
+A = np.identity(p)
 
 
 phis = np.exp(np.linspace(np.log(5), np.log(25),5))
@@ -347,7 +442,7 @@ plt.show()
 
 
 ### priors
-sigma_A = 10.
+sigma_A = 1.
 mu_A = np.zeros((p,p))
 # mu_A = np.array([[0.,0.,0.],
 #                  [0.,0.,0.],
@@ -371,15 +466,7 @@ prob_one = 0.5
 n_ones_current = p**2
 A_mask_current = np.ones((p,p))
 
-def pairs(p):
-    a = []
-    k = 0
-    for i in range(p):
-        for j in range(p):
-            a.append((i,j))
-            k += 1
-    
-    return(a)
+
         
 A_ones_ind_current = pairs(p)
 A_zeros_ind_current = []
@@ -409,8 +496,8 @@ n_jumps = p
 
 
 ### samples
-N = 10000
-tail = 4000
+N = 2000
+tail = 1000
 
 ### global run containers
 phis_run = np.zeros((N,p))
@@ -481,82 +568,11 @@ for i in range(N):
     if RJMCMC:
         ### reversible jumps
         
-        for j in range(n_jumps):
-            
-            
-            insert = random.binomial(1, ins_prob(n_ones_current,p))
-            
-            if insert:
-                
-                rand_int = random.choice(range(p**2 - n_ones_current))
-                rand_ind = A_zeros_ind_current[rand_int]
-                new_elem = random.normal(mu_A[rand_ind],sigma_A,1)
-                
-                A_new = np.copy(A_current)
-                A_new[rand_ind] = new_elem
-                
-                A_inv_new = np.linalg.inv(A_new)
-                
-                A_invV_new = A_inv_new @ V_current
-                
-                rat = np.exp( -1/2 * np.sum( [ A_invV_new[j] @ Rs_inv_current[j] @ A_invV_new[j] - A_invV_current[j] @ Rs_inv_current[j] @ A_invV_current[j] for j in range(p) ] ) ) * np.abs(np.linalg.det(A_inv_new @ A_current))**n_obs * (1-ins_prob(n_ones_current+1,p))/ins_prob(n_ones_current,p) * (p**2 - n_ones_current)/(n_ones_current + 1) * prob_one / (1-prob_one)
-                
-                if random.uniform() < rat:
-                    
-                    A_current = A_new
-                    A_inv_current = A_inv_new
-                    A_invV_current = A_invV_new
-                    
-                    n_ones_current += 1
-                    
-                    A_mask_current[rand_ind] = 1.
-                    
-                    A_ones_ind_current.append(A_zeros_ind_current.pop(rand_int))
-                    
-                
-                
-            else:
-                
-                rand_int = random.choice(range(n_ones_current))
-                rand_ind = A_ones_ind_current[rand_int]
-                
-                A_new = np.copy(A_current)
-                A_new[rand_ind] = 0.
-                
-                if np.linalg.det(A_new) != 0:
-                    A_inv_new = np.linalg.inv(A_new)
-                    
-                    A_invV_new = A_inv_new @ V_current
-                    
-                    rat = np.exp( -1/2 * np.sum( [ A_invV_new[j] @ Rs_inv_current[j] @ A_invV_new[j] - A_invV_current[j] @ Rs_inv_current[j] @ A_invV_current[j] for j in range(p) ] ) ) * np.abs(np.linalg.det(A_inv_new @ A_current))**n_obs * ins_prob(n_ones_current-1,p)/(1-ins_prob(n_ones_current,p)) * (n_ones_current)/(p**2 - n_ones_current + 1) * (1-prob_one)/prob_one
-                    
-                    if random.uniform() < rat:
-                        
-                        A_current = A_new
-                        A_inv_current = A_inv_new
-                        A_invV_current = A_invV_new
-                        
-                        n_ones_current -= 1
-                        
-                        A_mask_current[rand_ind] = 0.
-                        
-                        A_zeros_ind_current.append(A_ones_ind_current.pop(rand_int))
-
-
+        A_current, A_inv_current, A_invV_current, n_ones_current, A_mask_current, A_ones_ind_current, A_zeros_ind_current = A_rjmcmc(Rs_inv_current, V_current, A_current, A_inv_current, A_invV_current, A_zeros_ind_current, A_ones_ind_current, n_ones_current, prob_one, mu_A, sigma_A)
     
     ### make pred cond on current phis, A
-    
-    
-    
-    rs = np.array([ np.exp(-Dists_obs_grid*phis_current[j]) for j in range(p) ])
-    Rs_prime = np.array([ np.exp(-Dists_grid*phis_current[j]) for j in range(p) ])
-    
-    Rinvsrs = np.array([ Rs_inv_current[j]@rs[j] for j in range(p) ])
-    
-    Cs = np.array([ np.linalg.cholesky(Rs_prime[j] - np.transpose(rs[j])@Rinvsrs[j]) for j in range(p) ])
-    
-    V_grid_current = A_current @ np.array([ Cs[j]@random.normal(size=n_grid**2) + A_invV_current[j]@Rinvsrs[j] for j in range(p)])
-    
+
+    V_grid_current = V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invV_current, n_grid)
     
     ###
     
