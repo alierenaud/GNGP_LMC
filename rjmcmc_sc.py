@@ -38,7 +38,7 @@ n_obs=100
 n_grid=20  ### 2D Grid
 
 ### repetitions per category
-reps = 8
+reps = 30
 
 ### markov chain + tail length
 N = 1000
@@ -320,5 +320,7 @@ for ex in range(n_exes):
 ETG = time.time()
 
 print("GLOBAL TIME", (ETG-STG)/60, "min")
+
+dMSE = MSES[:,0,:] - MSES[:,1,:]
         
-np.save("MSES.npy", MSES)    
+np.savetxt("dMSE.csv", dMSE, delimiter=",")  

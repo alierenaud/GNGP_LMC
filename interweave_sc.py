@@ -20,7 +20,7 @@ from noisyLMC_inference import V_move_conj, taus_move
 from scipy.spatial import distance_matrix
 
 
-random.seed(0)
+random.seed(10)
 
 def vec(A):
     
