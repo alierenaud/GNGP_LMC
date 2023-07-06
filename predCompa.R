@@ -18,5 +18,5 @@ p <- ggplot(dMSE, aes(x=model, y=value, fill=model)) +
 ggsave(
   "MSEdiff.pdf",
   plot = p,
-  device = "pdf", width = 6, height=8
+  device = "pdf", width = 6, height=3
 )
