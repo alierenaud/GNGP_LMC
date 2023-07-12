@@ -21,6 +21,13 @@ res_glob = rbind(res_vec,res_mat)
 
 res_glob = res_glob %>% mutate(p = as.numeric(p))
 
-ggplot(data=res_glob, aes(x=p, y=time, col=method)) + facet_wrap( ~ n, nrow = 2, scales = "free")+
+p = ggplot(data=res_glob, aes(x=p, y=time, col=method)) + facet_wrap( ~ n, nrow = 2, scales = "free")+
   geom_line()+
   geom_point()
+
+
+ggsave(
+  "timeCompa.pdf",
+  plot = p,
+  device = "pdf", width = 6, height=6
+)
