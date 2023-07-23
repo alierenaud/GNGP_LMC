@@ -38,7 +38,7 @@ n_obs=100
 n_grid=20  ### 2D Grid
 
 ### repetitions per category
-reps = 30
+reps = 40
 
 ### markov chain + tail length
 N = 1000
