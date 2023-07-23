@@ -180,23 +180,16 @@ def ins_prob(n_ones,p):
     else:
         return(0.5)
 
-<<<<<<< HEAD
-random.seed(10)
 
-RJMCMC = True
-
-### number of points 
-n_obs=200
-=======
 random.seed(0)
 
 RJMCMC = False
 
 ### number of points 
 n_obs=400
->>>>>>> 8e265f97fe6d13c16e97e0c7ee62b8109875d605
 # n_grid=400  ### 1D grid
 n_grid=20  ### 2D Grid
+
 
 ### global parameters
 
@@ -260,33 +253,23 @@ locs = np.concatenate((loc_obs,loc_grid), axis=0)
 
 ### Block Diagonal
 
-<<<<<<< HEAD
-A = np.array([[np.sqrt(2/3),np.sqrt(1/3),0,0,0],
-              [-np.sqrt(2/3),np.sqrt(1/3),0,0,0],
-              [0,0,1.,0,0],
-              [0,0,0,np.sqrt(2/3),np.sqrt(1/3)],
-              [0,0,0,np.sqrt(2/3),-np.sqrt(1/3)]])
-p = A.shape[0]
-=======
+
 # A = np.array([[np.sqrt(2/3),np.sqrt(1/3),0,0,0],
 #               [-np.sqrt(2/3),np.sqrt(1/3),0,0,0],
 #               [0,0,1.,0,0],
 #               [0,0,0,np.sqrt(2/3),np.sqrt(1/3)],
 #               [0,0,0,np.sqrt(2/3),-np.sqrt(1/3)]])
 # p = A.shape[0]
->>>>>>> 8e265f97fe6d13c16e97e0c7ee62b8109875d605
+
 
 
 
 ### Diagonal
 
-<<<<<<< HEAD
-# p = 5
-# A = np.identity(p)
-=======
+
 p = 5
 A = np.identity(p)
->>>>>>> 8e265f97fe6d13c16e97e0c7ee62b8109875d605
+
 
 
 phis = np.exp(np.linspace(np.log(5), np.log(25),5))
@@ -534,13 +517,10 @@ n_jumps = p
 
 
 ### samples
-<<<<<<< HEAD
-N = 10000
-tail = 5000
-=======
+
 N = 2000
 tail = 1000
->>>>>>> 8e265f97fe6d13c16e97e0c7ee62b8109875d605
+
 
 ### global run containers
 phis_run = np.zeros((N,p))
@@ -548,10 +528,8 @@ taus_run = np.zeros((N,p))
 V_run = np.zeros((N,p,n_obs))
 A_run = np.zeros((N,p,p))
 V_grid_run = np.zeros((N,p,n_grid**2))
-<<<<<<< HEAD
-=======
 n_ones_run = np.zeros((N))
->>>>>>> 8e265f97fe6d13c16e97e0c7ee62b8109875d605
+
 
 
 ### acc vector
@@ -628,10 +606,7 @@ for i in range(N):
     V_grid_run[i] = V_grid_current
     phis_run[i] =  phis_current
     A_run[i] = A_current
-<<<<<<< HEAD
-=======
     n_ones_run[i] = n_ones_current
->>>>>>> 8e265f97fe6d13c16e97e0c7ee62b8109875d605
     
     if i % 100 == 0:
         print(i)
@@ -659,12 +634,10 @@ plt.plot(taus_run[tail:,2])
 plt.plot(taus_run[tail:,3])
 plt.plot(taus_run[tail:,4])
 plt.show()
-<<<<<<< HEAD
-=======
 
 plt.plot(n_ones_run[tail:])
 plt.show()
->>>>>>> 8e265f97fe6d13c16e97e0c7ee62b8109875d605
+
 
 
 print("MSE", np.mean([(V_grid_run[j] - V_grid)**2 for j in range(tail,N)]))
