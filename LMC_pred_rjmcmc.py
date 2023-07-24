@@ -186,7 +186,7 @@ def ins_prob(n_ones,p):
 # RJMCMC = True
 
 # ### number of points 
-# n_obs=100
+# n_obs=400
 # # n_grid=400  ### 1D grid
 # n_grid=20  ### 2D Grid
 
@@ -240,7 +240,7 @@ def ins_prob(n_ones,p):
 # # p = A.shape[0]
 
 
-# ### Full
+# ## Full
 
 # # A = np.ones((5,5))*np.sqrt(1/5)
 # # A *= np.array([[1,-1,-1,-1,-1],
@@ -254,21 +254,21 @@ def ins_prob(n_ones,p):
 # ### Block Diagonal
 
 
-# # A = np.array([[np.sqrt(2/3),np.sqrt(1/3),0,0,0],
-# #               [-np.sqrt(2/3),np.sqrt(1/3),0,0,0],
-# #               [0,0,1.,0,0],
-# #               [0,0,0,np.sqrt(2/3),np.sqrt(1/3)],
-# #               [0,0,0,np.sqrt(2/3),-np.sqrt(1/3)]])
-# # p = A.shape[0]
+# A = np.array([[np.sqrt(2/3),np.sqrt(1/3),0,0,0],
+#               [-np.sqrt(2/3),np.sqrt(1/3),0,0,0],
+#               [0,0,1.,0,0],
+#               [0,0,0,np.sqrt(2/3),np.sqrt(1/3)],
+#               [0,0,0,np.sqrt(2/3),-np.sqrt(1/3)]])
+# p = A.shape[0]
 
 
 
 
-# ### Diagonal
+# # ### Diagonal
 
 
-# p = 5
-# A = np.identity(p)
+# # p = 5
+# # A = np.identity(p)
 
 
 
@@ -508,7 +508,7 @@ def ins_prob(n_ones,p):
 # ### proposals
 
 
-# phis_prop = np.ones(p)*3.0
+# phis_prop = np.ones(p)*2.0
 # sigma_slice = 10
 
 
@@ -518,8 +518,8 @@ def ins_prob(n_ones,p):
 
 # ### samples
 
-# N = 10000
-# tail = 4000
+# N = 2000
+# tail = 1000
 
 
 # ### global run containers
@@ -641,7 +641,7 @@ def ins_prob(n_ones,p):
 
 
 # print("MSE", np.mean([(V_grid_run[j] - V_grid)**2 for j in range(tail,N)]))
-
+# print("mean MSE", np.mean((np.mean(V_grid_run,axis=0) - V_grid)**2 ))
 
 # ### evaluate independencies
 
