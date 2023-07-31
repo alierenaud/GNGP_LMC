@@ -38,11 +38,11 @@ n_obs=100
 n_grid=20  ### 2D Grid
 
 ### repetitions per category
-reps = 50
+reps = 20
 
 ### markov chain + tail length
-N = 1000
-tail = 400
+N = 2000
+tail = 1000
 
 ### generate uniform locations
 loc_obs = random.uniform(0,1,(n_obs,2))
