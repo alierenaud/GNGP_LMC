@@ -38,7 +38,7 @@ n_obs=100
 n_grid=20  ### 2D Grid
 
 ### repetitions per category
-reps = 40
+reps = 50
 
 ### markov chain + tail length
 N = 1000
@@ -151,6 +151,7 @@ taus_run = np.zeros((N,p))
 V_run = np.zeros((N,p,n_obs))
 A_run = np.zeros((N,p,p))
 V_grid_run = np.zeros((N,p,n_grid**2))
+n_comps_run = np.zeros((N))
 
 
 ### acc vector
@@ -168,6 +169,7 @@ Dists_grid = distance_matrix(loc_grid,loc_grid)
 #### container of pred errors
 
 MSES = np.zeros((n_exes,2,reps))
+n_comps = np.zeros((n_exes,reps,N-tail))
 
 STG = time.time()
 
@@ -246,6 +248,7 @@ for ex in range(n_exes):
             V_grid_run[i] = V_grid_current
             phis_run[i] =  phis_current
             A_run[i] = A_current
+            n_comps_run[i] = n_ones_current
             
             if i % 100 == 0:
                 print(i)
@@ -256,6 +259,7 @@ for ex in range(n_exes):
         print("RJMCMC", ex, rep)
         
         MSES[ex,0,rep] = np.mean([(V_grid_run[j] - V_grid)**2 for j in range(tail,N)])
+        n_comps[ex,rep] = n_comps_run[tail:N]
         
         ### init and current state
         phis_current = np.repeat(10.,p)
@@ -324,3 +328,4 @@ print("GLOBAL TIME", (ETG-STG)/60, "min")
 dMSE = MSES[:,0,:] - MSES[:,1,:]
         
 np.savetxt("dMSE.csv", dMSE, delimiter=",")  
+np.save("n_comps.npy", n_comps)
