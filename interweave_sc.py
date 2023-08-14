@@ -317,7 +317,7 @@ sigma_slice = 10
 
 
 ### samples
-N = 1000
+N = 2000
 
 ### global run containers
 phis_run = np.zeros((N,p))
@@ -334,8 +334,8 @@ acc_A = np.zeros(N)
 Dists = distance_matrix(locs,locs)
 # Dists = distance_matrix(np.transpose(np.array([locs])),np.transpose(np.array([locs])))
 
-tail = 400
-reps = 100
+tail = 1000
+reps = 50
 nquant = 4
 n_meth = 3
 

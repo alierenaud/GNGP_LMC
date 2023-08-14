@@ -13,7 +13,7 @@ dMSE = pivot_longer(as.data.frame(dMSE),c(1,2,3,4),names_to = "model")
 
 
 p <- ggplot(dMSE, aes(x=model, y=value, fill=model)) + 
-  geom_boxplot() + ylim(-1, 0.5) + ylab("MSE Difference") + xlab("") + guides(fill="none")  +
+  geom_boxplot()  + ylim(-0.25,0.1) +ylab("RMSE Difference") + xlab("") + guides(fill="none")  +
   theme_bw() + theme(axis.title.x=element_blank()) #+ facet_wrap(scale ~ parameter,scales="free_y", nrow=3)
 ggsave(
   "MSEdiff.pdf",

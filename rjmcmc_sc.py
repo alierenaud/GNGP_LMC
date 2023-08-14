@@ -8,6 +8,8 @@ Created on Mon Jul  3 14:09:47 2023
 
 import numpy as np
 from numpy import random
+from scipy.stats import beta
+from scipy.linalg import sqrtm
 
 from noisyLMC_generation import rNLMC
 
@@ -31,6 +33,9 @@ from LMC_inference import phis_move
 
 import time
 
+def WassDist(A,B):
+    return(np.trace( A + B - 2*sqrtm(sqrtm(A)@B@sqrtm(A))))
+
 random.seed(0)
 
 ### number of points 
@@ -38,7 +43,7 @@ n_obs=100
 n_grid=20  ### 2D Grid
 
 ### repetitions per category
-reps = 20
+reps = 50
 
 ### markov chain + tail length
 N = 2000
@@ -46,6 +51,7 @@ tail = 1000
 
 ### generate uniform locations
 loc_obs = random.uniform(0,1,(n_obs,2))
+# loc_obs = beta.rvs(5, 5, size=(n_obs,2))
 ### grid locations
 loc_grid = makeGrid(n_grid)
 ### all locations
@@ -100,6 +106,9 @@ taus_sqrt_inv = np.array([1.,1.,1.,1.,1.])
 
 
 As = np.array([A1,A2,A3,A4])
+Sigmas = np.array([A1@np.transpose(A1),A2@np.transpose(A2),A3@np.transpose(A3),A4@np.transpose(A4)])
+D0p1 = np.diag(np.exp(-phis*0.1))
+Sigmas0p1 = np.array([A1@D0p1@np.transpose(A1),A2@D0p1@np.transpose(A2),A3@D0p1@np.transpose(A3),A4@D0p1@np.transpose(A4)])
 n_exes = As.shape[0]
 
 
@@ -130,7 +139,7 @@ b = 1
 ### proposals
 
 
-phis_prop = np.ones(p)*3.0
+phis_prop = np.ones(p)*2.0
 sigma_slice = 10
 
 
@@ -168,8 +177,10 @@ Dists_grid = distance_matrix(loc_grid,loc_grid)
 
 #### container of pred errors
 
-MSES = np.zeros((n_exes,2,reps))
+MSES = np.zeros((n_exes,2,reps,N-tail,p,n_grid**2))
 n_comps = np.zeros((n_exes,reps,N-tail))
+Wnorms = np.zeros((n_exes,2,reps,N-tail))
+# fnorms0p1 = np.zeros((n_exes,2,reps,N-tail))
 
 STG = time.time()
 
@@ -258,7 +269,11 @@ for ex in range(n_exes):
         print("Time Elapsed", (et-st)/60, "min")
         print("RJMCMC", ex, rep)
         
-        MSES[ex,0,rep] = np.mean([(V_grid_run[j] - V_grid)**2 for j in range(tail,N)])
+        print("Accept Rate for phis",np.mean(acc_phis,axis=1))
+        
+        MSES[ex,0,rep] = np.array([(V_grid_run[j] - V_grid)**2 for j in range(tail,N)])
+        Wnorms[ex,0,rep] = np.array([ WassDist(A_run[j]@np.transpose(A_run[j]),Sigmas[ex]) for j in range(tail,N)])
+        # fnorms0p1[ex,0,rep] = [ np.sum((A_run[j]@np.diag(np.exp(-phis_run[j]*0.1))@np.transpose(A_run[j]) - Sigmas0p1[ex])**2) for j in range(tail,N)]
         n_comps[ex,rep] = n_comps_run[tail:N]
         
         ### init and current state
@@ -319,13 +334,26 @@ for ex in range(n_exes):
         print("Time Elapsed", (et-st)/60, "min")
         print("Standard", ex, rep)
         
-        MSES[ex,1,rep] = np.mean([(V_grid_run[j] - V_grid)**2 for j in range(tail,N)])
+        print("Accept Rate for phis",np.mean(acc_phis,axis=1))
+        
+        MSES[ex,1,rep] = [(V_grid_run[j] - V_grid)**2 for j in range(tail,N)]
+        Wnorms[ex,1,rep] = [ WassDist(A_run[j]@np.transpose(A_run[j]),Sigmas[ex]) for j in range(tail,N)]
+        # fnorms0p1[ex,1,rep] = [ np.sum((A_run[j]@np.diag(np.exp(-phis_run[j]*0.1))@np.transpose(A_run[j]) - Sigmas0p1[ex])**2) for j in range(tail,N)]
  
 ETG = time.time()
 
 print("GLOBAL TIME", (ETG-STG)/60, "min")
 
-dMSE = MSES[:,0,:] - MSES[:,1,:]
+
+### differences in RMSE
+
+dMSE = np.sqrt(np.mean(MSES,axis=(3,4,5)))[:,0,:] - np.sqrt(np.mean(MSES,axis=(3,4,5)))[:,1,:]
+dWnorms = np.sqrt(np.mean(Wnorms,axis=3))[:,0,:] - np.sqrt(np.mean(Wnorms,axis=3))[:,1,:]
+
+# dMSE = MSES[:,0,:] - MSES[:,1,:]
         
 np.savetxt("dMSE.csv", dMSE, delimiter=",")  
+np.savetxt("dWnorms.csv", dWnorms, delimiter=",")  
 np.save("n_comps.npy", n_comps)
+# np.save("fnorms.npy", fnorms)
+# np.save("fnorms0p1.npy", fnorms0p1)

@@ -181,717 +181,717 @@ def ins_prob(n_ones,p):
         return(0.5)
 
 
-# random.seed(10)
+random.seed(10)
 
-# RJMCMC = True
+RJMCMC = True
 
-# ### number of points 
-# n_obs=400
-# # n_grid=400  ### 1D grid
-# n_grid=20  ### 2D Grid
-
-
-# ### global parameters
+### number of points 
+n_obs=400
+# n_grid=400  ### 1D grid
+n_grid=20  ### 2D Grid
 
 
+### global parameters
 
-# ### generate random example
+
+
+### generate random example
 # loc_obs = random.uniform(0,1,(n_obs,2))
 
-# ### beta locations
-# # loc_obs = beta.rvs(2, 1, size=(n_obs,2))
+### beta locations
+loc_obs = beta.rvs(5, 5, size=(n_obs,2))
 
-# ### showcase locations
+### showcase locations
 
-# fig, ax = plt.subplots()
-# ax.set_xlim(0,1)
-# ax.set_ylim(0,1)
-# ax.set_box_aspect(1)
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
 
-# ax.scatter(loc_obs[:,0],loc_obs[:,1],color="black")
-# plt.show()
+ax.scatter(loc_obs[:,0],loc_obs[:,1],color="black")
+plt.show()
 
-# # loc_grid = np.transpose([np.linspace(0.5, 1, n_grid+1)])
-# loc_grid = makeGrid(n_grid)
+# loc_grid = np.transpose([np.linspace(0.5, 1, n_grid+1)])
+loc_grid = makeGrid(n_grid)
 
-# locs = np.concatenate((loc_obs,loc_grid), axis=0)
-
-
-# ### parameters
-# # A = np.array([[np.sqrt(1/2),0,np.sqrt(1/2)],
-# #               [-np.sqrt(1/2),0,np.sqrt(1/2)],
-# #               [0,1.,0]])
-# # p = A.shape[0]
-# # phis = np.array([5.,10.,20.])
-# # taus_sqrt_inv = np.array([1.,1.,1.]) 
+locs = np.concatenate((loc_obs,loc_grid), axis=0)
 
 
-# ### 5D example
-
-# # A = random.normal(size=(5,5))
-
-# ### Triangular
-
-# # A = np.array([[1,0,0,0,0],
-# #               [-np.sqrt(1/2),-np.sqrt(1/2),0,0,0],
-# #               [np.sqrt(1/3),np.sqrt(1/3),np.sqrt(1/3),0,0],
-# #               [-np.sqrt(1/4),-np.sqrt(1/4),-np.sqrt(1/4),-np.sqrt(1/4),0],
-# #               [np.sqrt(1/5),np.sqrt(1/5),np.sqrt(1/5),np.sqrt(1/5),np.sqrt(1/5)]])
-# # p = A.shape[0]
+### parameters
+# A = np.array([[np.sqrt(1/2),0,np.sqrt(1/2)],
+#               [-np.sqrt(1/2),0,np.sqrt(1/2)],
+#               [0,1.,0]])
+# p = A.shape[0]
+# phis = np.array([5.,10.,20.])
+# taus_sqrt_inv = np.array([1.,1.,1.]) 
 
 
-# ## Full
+### 5D example
 
-# # A = np.ones((5,5))*np.sqrt(1/5)
-# # A *= np.array([[1,-1,-1,-1,-1],
-# #                 [1,1,-1,-1,-1],
-# #                 [1,1,1,-1,-1],
-# #                 [1,1,1,1,-1],
-# #                 [1,1,1,1,1]])
-# # p = A.shape[0]
+# A = random.normal(size=(5,5))
 
+### Triangular
 
-# ### Block Diagonal
-
-
-# A = np.array([[np.sqrt(2/3),np.sqrt(1/3),0,0,0],
-#               [-np.sqrt(2/3),np.sqrt(1/3),0,0,0],
-#               [0,0,1.,0,0],
-#               [0,0,0,np.sqrt(2/3),np.sqrt(1/3)],
-#               [0,0,0,np.sqrt(2/3),-np.sqrt(1/3)]])
+# A = np.array([[1,0,0,0,0],
+#               [-np.sqrt(1/2),-np.sqrt(1/2),0,0,0],
+#               [np.sqrt(1/3),np.sqrt(1/3),np.sqrt(1/3),0,0],
+#               [-np.sqrt(1/4),-np.sqrt(1/4),-np.sqrt(1/4),-np.sqrt(1/4),0],
+#               [np.sqrt(1/5),np.sqrt(1/5),np.sqrt(1/5),np.sqrt(1/5),np.sqrt(1/5)]])
 # p = A.shape[0]
 
 
+## Full
+
+# A = np.ones((5,5))*np.sqrt(1/5)
+# A *= np.array([[1,-1,-1,-1,-1],
+#                 [1,1,-1,-1,-1],
+#                 [1,1,1,-1,-1],
+#                 [1,1,1,1,-1],
+#                 [1,1,1,1,1]])
+# p = A.shape[0]
 
 
-# # ### Diagonal
+### Block Diagonal
 
 
-# # p = 5
-# # A = np.identity(p)
+A = np.array([[np.sqrt(2/3),np.sqrt(1/3),0,0,0],
+              [-np.sqrt(2/3),np.sqrt(1/3),0,0,0],
+              [0,0,1.,0,0],
+              [0,0,0,np.sqrt(2/3),np.sqrt(1/3)],
+              [0,0,0,np.sqrt(2/3),-np.sqrt(1/3)]])
+p = A.shape[0]
 
 
 
-# phis = np.exp(np.linspace(np.log(5), np.log(25),5))
-# taus_sqrt_inv = np.array([1.,1.,1.,1.,1.]) 
+
+# ### Diagonal
 
 
-# ### generate rfs
-
-# Y_true, V_true = rNLMC(A,phis,taus_sqrt_inv,locs, retV=True)
-
-# Y_obs = Y_true[:,:n_obs]
-
-# # V_obs = V_true[:,:n_obs]
-# V_grid = V_true[:,n_obs:]
+# p = 5
+# A = np.identity(p)
 
 
-# ### showcase
 
-# # plt.plot(loc_grid,V_grid[0],loc_grid,V_grid[1])
-# # plt.show()
-# # plt.plot(loc_obs,V_obs[0],'o',c="tab:blue",markersize=2)
-# # plt.plot(loc_obs,V_obs[1],'o',c="tab:orange",markersize=2)
-# # plt.show()
+phis = np.exp(np.linspace(np.log(5), np.log(25),5))
+taus_sqrt_inv = np.array([1.,1.,1.,1.,1.]) 
 
 
-# locs1D = (np.arange(n_grid) + 0.5)/n_grid
-# xv, yv = np.meshgrid(locs1D, locs1D)
+### generate rfs
 
-# ### process 1
+Y_true, V_true = rNLMC(A,phis,taus_sqrt_inv,locs, retV=True)
 
-# fig, ax = plt.subplots()
-# ax.set_xlim(0,1)
-# ax.set_ylim(0,1)
-# ax.set_box_aspect(1)
+Y_obs = Y_true[:,:n_obs]
+
+# V_obs = V_true[:,:n_obs]
+V_grid = V_true[:,n_obs:]
 
 
-# vv = vec_inv(V_grid[0],n_grid)
-# ax.pcolormesh(xv, yv, vv, cmap = "Blues")
+### showcase
+
+# plt.plot(loc_grid,V_grid[0],loc_grid,V_grid[1])
 # plt.show()
-
-# ### process 2
-
-# fig, ax = plt.subplots()
-# ax.set_xlim(0,1)
-# ax.set_ylim(0,1)
-# ax.set_box_aspect(1)
-
-
-# vv = vec_inv(V_grid[1],n_grid)
-# ax.pcolormesh(xv, yv, vv, cmap = "Oranges")
-# plt.show()
-
-# ### process 3
-
-# fig, ax = plt.subplots()
-# ax.set_xlim(0,1)
-# ax.set_ylim(0,1)
-# ax.set_box_aspect(1)
-
-
-# vv = vec_inv(V_grid[2],n_grid)
-# ax.pcolormesh(xv, yv, vv, cmap = "Greens")
-# plt.show()
-
-# ### process 4
-
-# fig, ax = plt.subplots()
-# ax.set_xlim(0,1)
-# ax.set_ylim(0,1)
-# ax.set_box_aspect(1)
-
-
-# vv = vec_inv(V_grid[3],n_grid)
-# ax.pcolormesh(xv, yv, vv, cmap = "Reds")
-# plt.show()
-
-# ### process 5
-
-# fig, ax = plt.subplots()
-# ax.set_xlim(0,1)
-# ax.set_ylim(0,1)
-# ax.set_box_aspect(1)
-
-
-# vv = vec_inv(V_grid[4],n_grid)
-# ax.pcolormesh(xv, yv, vv, cmap = "Purples")
+# plt.plot(loc_obs,V_obs[0],'o',c="tab:blue",markersize=2)
+# plt.plot(loc_obs,V_obs[1],'o',c="tab:orange",markersize=2)
 # plt.show()
 
 
-# ### showcase crosscovariance
+locs1D = (np.arange(n_grid) + 0.5)/n_grid
+xv, yv = np.meshgrid(locs1D, locs1D)
 
-# max_d = 1
-# res = 100
+### process 1
 
-# ds = np.linspace(0,max_d,res)
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
 
-# def crossCov(d,A,phis,i,j):
-#     return(np.sum(A[i] * A[j] * np.exp(-d*phis)))
+
+vv = vec_inv(V_grid[0],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Blues")
+plt.show()
+
+### process 2
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+vv = vec_inv(V_grid[1],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Oranges")
+plt.show()
+
+### process 3
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+vv = vec_inv(V_grid[2],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Greens")
+plt.show()
+
+### process 4
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+vv = vec_inv(V_grid[3],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Reds")
+plt.show()
+
+### process 5
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+vv = vec_inv(V_grid[4],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Purples")
+plt.show()
+
+
+### showcase crosscovariance
+
+max_d = 1
+res = 100
+
+ds = np.linspace(0,max_d,res)
+
+def crossCov(d,A,phis,i,j):
+    return(np.sum(A[i] * A[j] * np.exp(-d*phis)))
     
-# cc = np.zeros(res)
+cc = np.zeros(res)
 
-# fig, axs = plt.subplots(5, 2, figsize=(8, 12))
+fig, axs = plt.subplots(5, 2, figsize=(8, 12))
 
-# i=0
-# j=1
+i=0
+j=1
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# axs[0, 0].plot(ds,cc, c="black")
-# axs[0, 0].set_title(str(i+1) + " and " + str(j+1))
+axs[0, 0].plot(ds,cc, c="black")
+axs[0, 0].set_title(str(i+1) + " and " + str(j+1))
 
-# i=0
-# j=2
+i=0
+j=2
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# axs[0, 1].plot(ds,cc, c="black")
-# axs[0, 1].set_title(str(i+1) + " and " + str(j+1))
+axs[0, 1].plot(ds,cc, c="black")
+axs[0, 1].set_title(str(i+1) + " and " + str(j+1))
 
-# i=0
-# j=3
+i=0
+j=3
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# axs[1, 0].plot(ds,cc, c="black")
-# axs[1, 0].set_title(str(i+1) + " and " + str(j+1))
+axs[1, 0].plot(ds,cc, c="black")
+axs[1, 0].set_title(str(i+1) + " and " + str(j+1))
 
-# i=0
-# j=4
+i=0
+j=4
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# axs[1, 1].plot(ds,cc, c="black")
-# axs[1, 1].set_title(str(i+1) + " and " + str(j+1))
+axs[1, 1].plot(ds,cc, c="black")
+axs[1, 1].set_title(str(i+1) + " and " + str(j+1))
 
-# i=1
-# j=2
+i=1
+j=2
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# axs[2, 0].plot(ds,cc, c="black")
-# axs[2, 0].set_title(str(i+1) + " and " + str(j+1))
+axs[2, 0].plot(ds,cc, c="black")
+axs[2, 0].set_title(str(i+1) + " and " + str(j+1))
 
-# i=1
-# j=3
+i=1
+j=3
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# axs[2, 1].plot(ds,cc, c="black")
-# axs[2, 1].set_title(str(i+1) + " and " + str(j+1))
+axs[2, 1].plot(ds,cc, c="black")
+axs[2, 1].set_title(str(i+1) + " and " + str(j+1))
 
-# i=1
-# j=4
+i=1
+j=4
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# axs[3, 0].plot(ds,cc, c="black")
-# axs[3, 0].set_title(str(i+1) + " and " + str(j+1))
+axs[3, 0].plot(ds,cc, c="black")
+axs[3, 0].set_title(str(i+1) + " and " + str(j+1))
 
-# i=2
-# j=3
+i=2
+j=3
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# axs[3, 1].plot(ds,cc, c="black")
-# axs[3, 1].set_title(str(i+1) + " and " + str(j+1))
+axs[3, 1].plot(ds,cc, c="black")
+axs[3, 1].set_title(str(i+1) + " and " + str(j+1))
 
-# i=2
-# j=4
+i=2
+j=4
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# axs[4, 0].plot(ds,cc, c="black")
-# axs[4, 0].set_title(str(i+1) + " and " + str(j+1))
+axs[4, 0].plot(ds,cc, c="black")
+axs[4, 0].set_title(str(i+1) + " and " + str(j+1))
 
 
-# i=3
-# j=4
+i=3
+j=4
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# axs[4, 1].plot(ds,cc, c="black")
-# axs[4, 1].set_title(str(i+1) + " and " + str(j+1))
+axs[4, 1].plot(ds,cc, c="black")
+axs[4, 1].set_title(str(i+1) + " and " + str(j+1))
 
 
-# # plt.savefig('crosscov.pdf') 
-# plt.tight_layout()
-# plt.show()
+# plt.savefig('crosscov.pdf') 
+plt.tight_layout()
+plt.show()
 
 
-# ### priors
-# sigma_A = 1.
-# mu_A = np.zeros((p,p))
-# # mu_A = np.array([[0.,0.,0.],
-# #                  [0.,0.,0.],
-# #                  [0.,0.,0.]])
+### priors
+sigma_A = 1.
+mu_A = np.zeros((p,p))
+# mu_A = np.array([[0.,0.,0.],
+#                  [0.,0.,0.],
+#                  [0.,0.,0.]])
 
-# min_phi = 3.
-# max_phi = 30.
-# range_phi = max_phi - min_phi
+min_phi = 3.
+max_phi = 30.
+range_phi = max_phi - min_phi
 
-# alphas = np.ones(p)
-# betas = np.ones(p)
+alphas = np.ones(p)
+betas = np.ones(p)
 
-# ### RJMCMC
+### RJMCMC
 
-# prob_one = 0.5
+prob_one = 0.5
 
-# ### RJMCMC
+### RJMCMC
 
 
 
-# n_ones_current = p**2
-# A_mask_current = np.ones((p,p))
+n_ones_current = p**2
+A_mask_current = np.ones((p,p))
 
 
         
-# A_ones_ind_current = pairs(p)
-# A_zeros_ind_current = []
+A_ones_ind_current = pairs(p)
+A_zeros_ind_current = []
 
-# ## tau
+## tau
 
-# a = 1
-# b = 1
+a = 1
+b = 1
 
-# ### proposals
-
-
-# phis_prop = np.ones(p)*2.0
-# sigma_slice = 10
+### proposals
 
 
-
-# n_jumps = p
-
-
-# ### samples
-
-# N = 2000
-# tail = 1000
-
-
-# ### global run containers
-# phis_run = np.zeros((N,p))
-# taus_run = np.zeros((N,p))
-# V_run = np.zeros((N,p,n_obs))
-# A_run = np.zeros((N,p,p))
-# V_grid_run = np.zeros((N,p,n_grid**2))
-# n_ones_run = np.zeros((N))
+phis_prop = np.ones(p)*2.0
+sigma_slice = 10
 
 
 
-# ### acc vector
-# acc_phis = np.zeros((p,N))
-
-# ### useful quantities 
-
-# ### distances
-
-# Dists_obs = distance_matrix(loc_obs,loc_obs)
-# Dists_obs_grid = distance_matrix(loc_obs,loc_grid)
-# Dists_grid = distance_matrix(loc_grid,loc_grid)
+n_jumps = p
 
 
-# ### init and current state
-# phis_current = np.repeat(10.,p)
-# Rs_current = np.array([ np.exp(-Dists_obs*phis_current[j]) for j in range(p) ])
-# Rs_inv_current = np.array([ np.linalg.inv(Rs_current[j]) for j in range(p) ])
+### samples
+
+N = 2000
+tail = 1000
 
 
-# V_current = random.normal(size=(p,n_obs))*1
-# VmY_current = V_current - Y_obs
-# VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
+### global run containers
+phis_run = np.zeros((N,p))
+taus_run = np.zeros((N,p))
+V_run = np.zeros((N,p,n_obs))
+A_run = np.zeros((N,p,p))
+V_grid_run = np.zeros((N,p,n_grid**2))
+n_ones_run = np.zeros((N))
 
 
-# A_current = random.normal(size=(p,p))
-# A_inv_current = np.linalg.inv(A_current)
 
-# A_invV_current = A_inv_current @ V_current
+### acc vector
+acc_phis = np.zeros((p,N))
 
-# taus_current = 1/taus_sqrt_inv**2
-# Dm1_current = np.diag(taus_current)
-# Dm1Y_current = Dm1_current @ Y_obs
+### useful quantities 
 
-# import time
+### distances
 
-# st = time.time()
+Dists_obs = distance_matrix(loc_obs,loc_obs)
+Dists_obs_grid = distance_matrix(loc_obs,loc_grid)
+Dists_grid = distance_matrix(loc_grid,loc_grid)
 
-# for i in range(N):
+
+### init and current state
+phis_current = np.repeat(10.,p)
+Rs_current = np.array([ np.exp(-Dists_obs*phis_current[j]) for j in range(p) ])
+Rs_inv_current = np.array([ np.linalg.inv(Rs_current[j]) for j in range(p) ])
+
+
+V_current = random.normal(size=(p,n_obs))*1
+VmY_current = V_current - Y_obs
+VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
+
+
+A_current = random.normal(size=(p,p))
+A_inv_current = np.linalg.inv(A_current)
+
+A_invV_current = A_inv_current @ V_current
+
+taus_current = 1/taus_sqrt_inv**2
+Dm1_current = np.diag(taus_current)
+Dm1Y_current = Dm1_current @ Y_obs
+
+import time
+
+st = time.time()
+
+for i in range(N):
     
     
-#     V_current, VmY_current, VmY_inner_rows_current, A_invV_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y_obs, V_current)
+    V_current, VmY_current, VmY_inner_rows_current, A_invV_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y_obs, V_current)
   
     
                         
-#     if RJMCMC:
+    if RJMCMC:
         
-#         A_current, A_inv_current, A_invV_current = A_move_slice_mask(A_current, A_invV_current, A_mask_current, Rs_inv_current, V_current, sigma_A, mu_A, sigma_slice)
+        A_current, A_inv_current, A_invV_current = A_move_slice_mask(A_current, A_invV_current, A_mask_current, Rs_inv_current, V_current, sigma_A, mu_A, sigma_slice)
     
-#     else:
+    else:
         
-#         A_current, A_inv_current, A_invV_current = A_move_slice(A_current, A_invV_current, Rs_inv_current, V_current, sigma_A, mu_A, sigma_slice)
+        A_current, A_inv_current, A_invV_current = A_move_slice(A_current, A_invV_current, Rs_inv_current, V_current, sigma_A, mu_A, sigma_slice)
     
         
         
-#     phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_current,Dists_obs,A_invV_current,Rs_current,Rs_inv_current)
+    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_current,Dists_obs,A_invV_current,Rs_current,Rs_inv_current)
 
-#     taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y_obs,a,b,n_obs)
+    taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y_obs,a,b,n_obs)
 
     
-#     if RJMCMC:
-#         ### reversible jumps
+    if RJMCMC:
+        ### reversible jumps
         
-#         A_current, A_inv_current, A_invV_current, n_ones_current, A_mask_current, A_ones_ind_current, A_zeros_ind_current = A_rjmcmc(Rs_inv_current, V_current, A_current, A_inv_current, A_invV_current, A_zeros_ind_current, A_ones_ind_current, A_mask_current, n_ones_current, prob_one, mu_A, sigma_A, n_jumps)
+        A_current, A_inv_current, A_invV_current, n_ones_current, A_mask_current, A_ones_ind_current, A_zeros_ind_current = A_rjmcmc(Rs_inv_current, V_current, A_current, A_inv_current, A_invV_current, A_zeros_ind_current, A_ones_ind_current, A_mask_current, n_ones_current, prob_one, mu_A, sigma_A, n_jumps)
     
-#     ### make pred cond on current phis, A
+    ### make pred cond on current phis, A
 
-#     V_grid_current = V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invV_current, n_grid)
+    V_grid_current = V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invV_current, n_grid)
     
-#     ###
+    ###
     
-#     V_run[i] = V_current
-#     taus_run[i] = taus_current
-#     V_grid_run[i] = V_grid_current
-#     phis_run[i] =  phis_current
-#     A_run[i] = A_current
-#     n_ones_run[i] = n_ones_current
+    V_run[i] = V_current
+    taus_run[i] = taus_current
+    V_grid_run[i] = V_grid_current
+    phis_run[i] =  phis_current
+    A_run[i] = A_current
+    n_ones_run[i] = n_ones_current
     
-#     if i % 100 == 0:
-#         print(i)
+    if i % 100 == 0:
+        print(i)
 
-# et = time.time()
+et = time.time()
 
-# print("TTIME:", (et-st)/60, "min")
+print("TTIME:", (et-st)/60, "min")
 
-# print('accept phi_1:',np.mean(acc_phis[0,tail:]))
-# print('accept phi_2:',np.mean(acc_phis[1,tail:]))
-# print('accept phi_3:',np.mean(acc_phis[2,tail:]))
-# print('accept phi_4:',np.mean(acc_phis[3,tail:]))
-# print('accept phi_5:',np.mean(acc_phis[4,tail:]))
+print('accept phi_1:',np.mean(acc_phis[0,tail:]))
+print('accept phi_2:',np.mean(acc_phis[1,tail:]))
+print('accept phi_3:',np.mean(acc_phis[2,tail:]))
+print('accept phi_4:',np.mean(acc_phis[3,tail:]))
+print('accept phi_5:',np.mean(acc_phis[4,tail:]))
 
-# plt.plot(phis_run[tail:,0])
-# plt.plot(phis_run[tail:,1])
-# plt.plot(phis_run[tail:,2])
-# plt.plot(phis_run[tail:,3])
-# plt.plot(phis_run[tail:,4])
-# plt.show()
+plt.plot(phis_run[tail:,0])
+plt.plot(phis_run[tail:,1])
+plt.plot(phis_run[tail:,2])
+plt.plot(phis_run[tail:,3])
+plt.plot(phis_run[tail:,4])
+plt.show()
 
-# plt.plot(taus_run[tail:,0])
-# plt.plot(taus_run[tail:,1])
-# plt.plot(taus_run[tail:,2])
-# plt.plot(taus_run[tail:,3])
-# plt.plot(taus_run[tail:,4])
-# plt.show()
+plt.plot(taus_run[tail:,0])
+plt.plot(taus_run[tail:,1])
+plt.plot(taus_run[tail:,2])
+plt.plot(taus_run[tail:,3])
+plt.plot(taus_run[tail:,4])
+plt.show()
 
-# plt.plot(n_ones_run[tail:])
-# plt.show()
-
-
-
-# print("MSE", np.mean([(V_grid_run[j] - V_grid)**2 for j in range(tail,N)]))
-# print("mean MSE", np.mean((np.mean(V_grid_run,axis=0) - V_grid)**2 ))
-
-# ### evaluate independencies
-
-# covariances = np.array([A_run[i]@np.transpose(A_run[i]) for i in range(tail,N)])
-
-# print("POSTERIOR MARGINAL COVARIANCE MEAN")
-# print(np.around(np.mean(covariances,axis=0), 2))
-
-# print("TRUE MARGINAL COVARIANCE")
-# print(np.around(A@np.transpose(A), 2))
-
-# indep_post = np.mean(covariances==0,axis=0)
-# print("POSTERIOR PROBABILITY OF MARGINAL INDEPENDENCE")
-# print(np.around(indep_post, 2))
-
-# ### showcase mean predictions
-
-# V_grid_mean = np.mean(V_grid_run,axis=0)
-
-# ### process 1
-
-# fig, ax = plt.subplots()
-# ax.set_xlim(0,1)
-# ax.set_ylim(0,1)
-# ax.set_box_aspect(1)
+plt.plot(n_ones_run[tail:])
+plt.show()
 
 
-# vv = vec_inv(V_grid_mean[0],n_grid)
-# ax.pcolormesh(xv, yv, vv, cmap = "Blues")
-# plt.show()
 
-# ### process 2
+print("MSE", np.mean([(V_grid_run[j] - V_grid)**2 for j in range(tail,N)]))
+print("mean MSE", np.mean((np.mean(V_grid_run,axis=0) - V_grid)**2 ))
 
-# fig, ax = plt.subplots()
-# ax.set_xlim(0,1)
-# ax.set_ylim(0,1)
-# ax.set_box_aspect(1)
+### evaluate independencies
 
+covariances = np.array([A_run[i]@np.transpose(A_run[i]) for i in range(tail,N)])
 
-# vv = vec_inv(V_grid_mean[1],n_grid)
-# ax.pcolormesh(xv, yv, vv, cmap = "Oranges")
-# plt.show()
+print("POSTERIOR MARGINAL COVARIANCE MEAN")
+print(np.around(np.mean(covariances,axis=0), 2))
 
-# ### process 3
+print("TRUE MARGINAL COVARIANCE")
+print(np.around(A@np.transpose(A), 2))
 
-# fig, ax = plt.subplots()
-# ax.set_xlim(0,1)
-# ax.set_ylim(0,1)
-# ax.set_box_aspect(1)
+indep_post = np.mean(covariances==0,axis=0)
+print("POSTERIOR PROBABILITY OF MARGINAL INDEPENDENCE")
+print(np.around(indep_post, 2))
 
+### showcase mean predictions
 
-# vv = vec_inv(V_grid_mean[2],n_grid)
-# ax.pcolormesh(xv, yv, vv, cmap = "Greens")
-# plt.show()
+V_grid_mean = np.mean(V_grid_run,axis=0)
 
-# ### process 4
+### process 1
 
-# fig, ax = plt.subplots()
-# ax.set_xlim(0,1)
-# ax.set_ylim(0,1)
-# ax.set_box_aspect(1)
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
 
 
-# vv = vec_inv(V_grid_mean[3],n_grid)
-# ax.pcolormesh(xv, yv, vv, cmap = "Reds")
-# plt.show()
+vv = vec_inv(V_grid_mean[0],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Blues")
+plt.show()
 
-# ### process 5
+### process 2
 
-# fig, ax = plt.subplots()
-# ax.set_xlim(0,1)
-# ax.set_ylim(0,1)
-# ax.set_box_aspect(1)
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
 
 
-# vv = vec_inv(V_grid_mean[4],n_grid)
-# ax.pcolormesh(xv, yv, vv, cmap = "Purples")
-# plt.show()
+vv = vec_inv(V_grid_mean[1],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Oranges")
+plt.show()
 
-# ### showcase infered crosscovariance
+### process 3
 
-# max_d = 1
-# res = 100
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
 
-# ds = np.linspace(0,max_d,res)
 
-# def crossCov(d,A,phis,i,j):
-#     return(np.sum(A[i] * A[j] * np.exp(-d*phis)))
+vv = vec_inv(V_grid_mean[2],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Greens")
+plt.show()
+
+### process 4
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+vv = vec_inv(V_grid_mean[3],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Reds")
+plt.show()
+
+### process 5
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+vv = vec_inv(V_grid_mean[4],n_grid)
+ax.pcolormesh(xv, yv, vv, cmap = "Purples")
+plt.show()
+
+### showcase infered crosscovariance
+
+max_d = 1
+res = 100
+
+ds = np.linspace(0,max_d,res)
+
+def crossCov(d,A,phis,i,j):
+    return(np.sum(A[i] * A[j] * np.exp(-d*phis)))
     
-# cc = np.zeros(res)
-# cc_obs = np.zeros((N-tail,res))
+cc = np.zeros(res)
+cc_obs = np.zeros((N-tail,res))
 
-# fig, axs = plt.subplots(5, 2, figsize=(8, 12))
+fig, axs = plt.subplots(5, 2, figsize=(8, 12))
 
-# i=0
-# j=1
+i=0
+j=1
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# for ns in range(tail,N):
-#     for r in range(res):
-#         cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+for ns in range(tail,N):
+    for r in range(res):
+        cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
         
-# axs[0, 0].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
-# axs[0, 0].plot(ds,np.median(cc_obs,axis=0), c="black")
-# axs[0, 0].plot(ds,cc)
-# axs[0, 0].set_title(str(i+1) + " and " + str(j+1))
+axs[0, 0].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
+axs[0, 0].plot(ds,np.median(cc_obs,axis=0), c="black")
+axs[0, 0].plot(ds,cc)
+axs[0, 0].set_title(str(i+1) + " and " + str(j+1))
     
 
-# i=0
-# j=2
+i=0
+j=2
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# for ns in range(tail,N):
-#     for r in range(res):
-#         cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+for ns in range(tail,N):
+    for r in range(res):
+        cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
         
-# axs[0, 1].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
-# axs[0, 1].plot(ds,np.median(cc_obs,axis=0), c="black")
-# axs[0, 1].plot(ds,cc)
-# axs[0, 1].set_title(str(i+1) + " and " + str(j+1))
+axs[0, 1].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
+axs[0, 1].plot(ds,np.median(cc_obs,axis=0), c="black")
+axs[0, 1].plot(ds,cc)
+axs[0, 1].set_title(str(i+1) + " and " + str(j+1))
 
-# i=0
-# j=3
+i=0
+j=3
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# for ns in range(tail,N):
-#     for r in range(res):
-#         cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+for ns in range(tail,N):
+    for r in range(res):
+        cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
         
-# axs[1, 0].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
-# axs[1, 0].plot(ds,np.median(cc_obs,axis=0), c="black")
-# axs[1, 0].plot(ds,cc)
-# axs[1, 0].set_title(str(i+1) + " and " + str(j+1))
+axs[1, 0].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
+axs[1, 0].plot(ds,np.median(cc_obs,axis=0), c="black")
+axs[1, 0].plot(ds,cc)
+axs[1, 0].set_title(str(i+1) + " and " + str(j+1))
     
 
-# i=0
-# j=4
+i=0
+j=4
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# for ns in range(tail,N):
-#     for r in range(res):
-#         cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+for ns in range(tail,N):
+    for r in range(res):
+        cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
         
-# axs[1, 1].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
-# axs[1, 1].plot(ds,np.median(cc_obs,axis=0), c="black")
-# axs[1, 1].plot(ds,cc)
-# axs[1, 1].set_title(str(i+1) + " and " + str(j+1))
+axs[1, 1].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
+axs[1, 1].plot(ds,np.median(cc_obs,axis=0), c="black")
+axs[1, 1].plot(ds,cc)
+axs[1, 1].set_title(str(i+1) + " and " + str(j+1))
 
-# i=1
-# j=2
+i=1
+j=2
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# for ns in range(tail,N):
-#     for r in range(res):
-#         cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+for ns in range(tail,N):
+    for r in range(res):
+        cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
         
-# axs[2, 0].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
-# axs[2, 0].plot(ds,np.median(cc_obs,axis=0), c="black")
-# axs[2, 0].plot(ds,cc)
-# axs[2, 0].set_title(str(i+1) + " and " + str(j+1))
+axs[2, 0].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
+axs[2, 0].plot(ds,np.median(cc_obs,axis=0), c="black")
+axs[2, 0].plot(ds,cc)
+axs[2, 0].set_title(str(i+1) + " and " + str(j+1))
 
-# i=1
-# j=3
+i=1
+j=3
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# for ns in range(tail,N):
-#     for r in range(res):
-#         cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+for ns in range(tail,N):
+    for r in range(res):
+        cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
         
-# axs[2, 1].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
-# axs[2, 1].plot(ds,np.median(cc_obs,axis=0), c="black")
-# axs[2, 1].plot(ds,cc)
-# axs[2, 1].set_title(str(i+1) + " and " + str(j+1))
+axs[2, 1].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
+axs[2, 1].plot(ds,np.median(cc_obs,axis=0), c="black")
+axs[2, 1].plot(ds,cc)
+axs[2, 1].set_title(str(i+1) + " and " + str(j+1))
 
-# i=1
-# j=4
+i=1
+j=4
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# for ns in range(tail,N):
-#     for r in range(res):
-#         cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+for ns in range(tail,N):
+    for r in range(res):
+        cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
         
-# axs[3, 0].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
-# axs[3, 0].plot(ds,np.median(cc_obs,axis=0), c="black")
-# axs[3, 0].plot(ds,cc)
-# axs[3, 0].set_title(str(i+1) + " and " + str(j+1))
+axs[3, 0].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
+axs[3, 0].plot(ds,np.median(cc_obs,axis=0), c="black")
+axs[3, 0].plot(ds,cc)
+axs[3, 0].set_title(str(i+1) + " and " + str(j+1))
 
-# i=2
-# j=3
+i=2
+j=3
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# for ns in range(tail,N):
-#     for r in range(res):
-#         cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+for ns in range(tail,N):
+    for r in range(res):
+        cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
         
-# axs[3, 1].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
-# axs[3, 1].plot(ds,np.median(cc_obs,axis=0), c="black")
-# axs[3, 1].plot(ds,cc)
-# axs[3, 1].set_title(str(i+1) + " and " + str(j+1))
+axs[3, 1].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
+axs[3, 1].plot(ds,np.median(cc_obs,axis=0), c="black")
+axs[3, 1].plot(ds,cc)
+axs[3, 1].set_title(str(i+1) + " and " + str(j+1))
 
 
-# i=2
-# j=4
+i=2
+j=4
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# for ns in range(tail,N):
-#     for r in range(res):
-#         cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+for ns in range(tail,N):
+    for r in range(res):
+        cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
         
-# axs[4, 0].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
-# axs[4, 0].plot(ds,np.median(cc_obs,axis=0), c="black")
-# axs[4, 0].plot(ds,cc)
-# axs[4, 0].set_title(str(i+1) + " and " + str(j+1))
+axs[4, 0].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
+axs[4, 0].plot(ds,np.median(cc_obs,axis=0), c="black")
+axs[4, 0].plot(ds,cc)
+axs[4, 0].set_title(str(i+1) + " and " + str(j+1))
 
 
 
-# i=3
-# j=4
+i=3
+j=4
 
-# for r in range(res):
-#     cc[r] = crossCov(ds[r],A,phis,i,j)
+for r in range(res):
+    cc[r] = crossCov(ds[r],A,phis,i,j)
     
-# for ns in range(tail,N):
-#     for r in range(res):
-#         cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
+for ns in range(tail,N):
+    for r in range(res):
+        cc_obs[ns-tail,r] = crossCov(ds[r],A_run[ns],phis_run[ns],i,j)
         
-# axs[4, 1].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
-# axs[4, 1].plot(ds,np.median(cc_obs,axis=0), c="black")
-# axs[4, 1].plot(ds,cc)
-# axs[4, 1].set_title(str(i+1) + " and " + str(j+1))
+axs[4, 1].fill_between(ds, np.quantile(cc_obs,0.05,axis=0), np.quantile(cc_obs,0.95,axis=0), color="silver")    
+axs[4, 1].plot(ds,np.median(cc_obs,axis=0), c="black")
+axs[4, 1].plot(ds,cc)
+axs[4, 1].set_title(str(i+1) + " and " + str(j+1))
 
 
-# # plt.savefig('crosscov.pdf') 
-# plt.tight_layout()
-# plt.show()
+# plt.savefig('crosscov.pdf') 
+plt.tight_layout()
+plt.show()
