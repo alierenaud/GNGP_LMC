@@ -10,7 +10,7 @@ Created on Mon Aug 28 15:12:40 2023
 import numpy as np
 from numpy import random
 
-from multiLMC_generation import rmultiLMC
+from noisyLMC_generation import rNLMC
 
 import matplotlib.pyplot as plt
 
@@ -40,11 +40,13 @@ mu = np.array([-0.5,0.5])
 A = np.array([[1.,0.5],
               [-1,0.5]])
 phis = np.array([5.,25.])
+taus_sqrt_inv = np.array([1.,2.]) * 0.1
 
 
+Y, V_true = rNLMC(A,phis,taus_sqrt_inv,locs, retV=True) 
 
-Y, Z_true, V_true = rmultiLMC(A,phis,mu,locs, retZV=True) 
-
+Y += np.outer(mu,np.ones(n))
+V_true += np.outer(mu,np.ones(n))
 
 ### priors
 sigma_A = 1.
@@ -86,7 +88,7 @@ Rs_current = np.array([ np.exp(-D*phis_current[j]) for j in range(p) ])
 Rs_inv_current = np.array([ np.linalg.inv(Rs_current[j]) for j in range(p) ])
 
 
-taus_current = np.array([1.,1.])
+taus_current = np.array([50.,50.])
 Dm1_current = np.diag(taus_current)
 Dm1Y_current = Dm1_current @ Y
 
@@ -111,7 +113,7 @@ tail = 500
 mu_run = np.zeros((N,p))
 A_run = np.zeros((N,p,p))
 phis_run = np.zeros((N,p))
-
+taus_run = np.zeros((N,p))
 
 
 
@@ -137,15 +139,16 @@ for i in range(N):
 
     A_current, A_inv_current, A_invVmmu1_current = A_move_slice(A_current, A_invVmmu1_current, Rs_inv_current, Vmmu1_current, sigma_A, mu_A, sigma_slice)
     
-    #### update Z
+    
 
-
-    # taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y,a,b,n)
+    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,D,A_invVmmu1_current,Rs_current,Rs_inv_current)
+    
+    taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y,a,b,n)
     
     mu_run[i] = mu_current
     A_run[i] = A_current
     phis_run[i] =  phis_current
-    
+    taus_run[i] = taus_current
     
     
     if i % 100 == 0:
@@ -169,7 +172,9 @@ plt.plot(mu_run[:,0])
 plt.plot(mu_run[:,1])
 plt.show()
 
-
+plt.plot(taus_run[:,0])
+plt.plot(taus_run[:,1])
+plt.show()
 
 
 print("Posterior Marginal Variance", np.mean([A_run[i]@np.transpose(A_run[i]) for i in range(tail,N)],axis=0))

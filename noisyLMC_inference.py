@@ -21,7 +21,7 @@ def M_comp(Rs_inv_current, A_inv_current, taus):
     n = Rs_inv_current.shape[1]
                         
     
-    M = np.sum([ np.kron( Rs_inv_current[j] , np.outer(A_inv_current[j],A_inv_current[j]) ) for j in range(p) ],axis=0) + np.kron( np.identity(n), np.diag(taus) )
+    M = np.sum([ np.kron( Rs_inv_current[j] , np.outer(A_inv_current[j],A_inv_current[j]) ) for j in range(p) ],axis=0) 
     
     M = M.reshape((p,n,p,n), order="F")
     
@@ -29,25 +29,29 @@ def M_comp(Rs_inv_current, A_inv_current, taus):
 
 
 
-def V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y, V_current):
+def V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y, V_current, Vmmu1_current, mu_current):
     
     p = Rs_inv_current.shape[0]
     n = Rs_inv_current.shape[1]
     
     M = M_comp(Rs_inv_current, A_inv_current, taus_current)
-    b = Dm1Y_current
+    
     
     for i in range(n):
         for j in range(p):
             
-            V_current[j,i] = np.sqrt(1/M[j,i,j,i]) * random.normal() + 1/M[j,i,j,i] * (b[j,i] - np.sum(M[j,i]*V_current) + M[j,i,j,i]*V_current[j,i])
-            
+            Vmmu1_current[j,i] = np.sqrt(1/(M[j,i,j,i]+taus_current[j])) * random.normal() + 1/(M[j,i,j,i]+taus_current[j]) * (Dm1Y_current[j,i] - np.sum(M[j,i]*Vmmu1_current) + M[j,i,j,i]*Vmmu1_current[j,i] - taus_current[j]*mu_current[j])
+    
+    V_current = Vmmu1_current + np.outer(mu_current,np.ones(n))   
+    
     VmY_current = V_current - Y
     VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
     
-    A_invV_current = A_inv_current @ V_current
+    A_invVmmu1_current = A_inv_current @ Vmmu1_current
     
-    return(V_current, VmY_current, VmY_inner_rows_current, A_invV_current)
+    return(V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current)
+
+
 
 # def V_move_conj(Rs_inv_current, A_inv_current, Dm1_current, Dm1Y_current, Y, V_current):
     

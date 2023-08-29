@@ -35,7 +35,7 @@ def A_move(A_current,A_inv_current,A_invV_current,A_prop,sigma_A,V,Rs_inv_curren
         return(A_current,A_inv_current,A_invV_current,0)
 
 
-def phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V,D,A_invV_current,Rs_current,Rs_inv_current):
+def phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,D,A_invV_current,Rs_current,Rs_inv_current):
     
     p = phis_current.shape[0]
     range_phi = max_phi - min_phi
