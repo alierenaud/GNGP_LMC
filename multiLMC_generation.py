@@ -29,7 +29,7 @@ def rmultiLMC(A, phis, mu, locs, retZV=False):
     
     Z = V + random.normal(size=(p,n))
     
-    Y = np.zeros(n)
+    Y = np.zeros(n,dtype=int)
     
     for i in range(n):
         Y[i] = mult(Z[:,i])
