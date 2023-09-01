@@ -28,6 +28,7 @@ from noisyLMC_inference import V_move_conj
 def Z_move(V_current,Z_current,Y):
     
     p = V_current.shape[0]
+    n = V_current.shape[1]
     
     for ii in range(n):
         
@@ -57,6 +58,8 @@ def Z_move(V_current,Z_current,Y):
 
 
 def mult_vec(Y,p):
+    
+    n = Y.shape[0]
     Y_vec = np.zeros((p,n))
     
     for i in range(n):
@@ -65,9 +68,12 @@ def mult_vec(Y,p):
     return(Y_vec)    
 
 
-def probs(V_true,V_current,bigN):
+def probs(V_true,V_current,bigN,locs):
     
-
+    order = np.argsort(locs[:,0])
+    
+    p = V_true.shape[0]
+    n = V_true.shape[1]
     
     Z_exs_infV = random.normal(size=(bigN,p,n)) + V_current
     Z_exs_trueV = random.normal(size=(bigN,p,n)) + V_true
@@ -91,17 +97,17 @@ def probs(V_true,V_current,bigN):
     probs_infV = np.mean(Y_vec_exs_infV,axis=0)
     probs_trueV = np.mean(Y_vec_exs_trueV,axis=0)
     
-    plt.plot(locs[:,0],probs_infV[0],c="tab:blue")
-    plt.plot(locs[:,0],probs_infV[1],c="tab:orange")
-    plt.plot(locs[:,0],probs_trueV[0],c="tab:blue", alpha=0.5)
-    plt.plot(locs[:,0],probs_trueV[1],c="tab:orange", alpha=0.5)
+    plt.plot(locs[order,0],probs_infV[0,order],c="tab:blue")
+    plt.plot(locs[order,0],probs_infV[1,order],c="tab:orange")
+    plt.plot(locs[order,0],probs_trueV[0,order],c="tab:blue", alpha=0.5)
+    plt.plot(locs[order,0],probs_trueV[1,order],c="tab:orange", alpha=0.5)
     plt.show()
 
 random.seed(2)
 
 
 ### global parameters
-n = 401
+n = 500
 p = 2
 
 
@@ -110,7 +116,7 @@ p = 2
 locs = np.transpose(np.array([np.linspace(0,1,n)]))
 
 
-mu = np.array([0,1])
+mu = np.array([0,0])
 A = np.array([[1.,0.5],
               [-1,0.5]])/np.sqrt(1.25)
 phis = np.array([5.,25.])
@@ -131,6 +137,7 @@ plt.show()
 sigma_A = 1.
 mu_A = np.zeros((p,p))
 
+
 min_phi = 3.
 max_phi = 30.
 range_phi = max_phi - min_phi
@@ -139,8 +146,9 @@ range_phi = max_phi - min_phi
 alphas = np.ones(p)
 betas = np.ones(p)
 
-a = 5
-b = 0.1
+sigma_mu = 1.
+mu_mu = np.zeros((p))
+
 
 
 
@@ -196,8 +204,8 @@ sigma_slice = 4
 
 ### samples
 
-N = 4000
-tail = 2000
+N = 2000
+tail = 1000
 
 ### global run containers
 mu_run = np.zeros((N,p))
@@ -225,7 +233,7 @@ for i in range(N):
     
     
     
-    mu_current, Vmmu1_current, A_invVmmu1_current = mu_move(A_inv_current,Rs_inv_current,V_current)
+    mu_current, Vmmu1_current, A_invVmmu1_current = mu_move(A_inv_current,Rs_inv_current,V_current,sigma_mu,mu_mu)
 
     A_current, A_inv_current, A_invVmmu1_current = A_move_slice(A_current, A_invVmmu1_current, Rs_inv_current, Vmmu1_current, sigma_A, mu_A, sigma_slice)
     
@@ -256,7 +264,7 @@ for i in range(N):
         
         # diagnostic using probabilities
         
-        probs(V_true,V_current,bigN=1000)
+        probs(V_true,V_current,1000,locs)
         
         
         

@@ -19,13 +19,13 @@ from noisyLMC_interweaved import A_move_slice
 from LMC_inference import phis_move
 
 
-def mu_move(A_inv_current,Rs_inv_current,V_current):
+def mu_move(A_inv_current,Rs_inv_current,V_current,sigma_mu,mu_mu):
     
     n = V_current.shape[1]
     p = V_current.shape[0]
     
-    M = np.sum([np.transpose([A_inv_current[j]])@np.ones((1,n))@Rs_inv_current[j]@np.ones((n,1))@np.array([A_inv_current[j]]) for j in range(p)],axis=0)
-    b = np.sum([np.transpose([A_inv_current[j]])@np.ones((1,n))@Rs_inv_current[j]@np.transpose(V_current)@np.transpose([A_inv_current[j]]) for j in range(p)],axis=0)
+    M = np.sum([np.transpose([A_inv_current[j]])@np.ones((1,n))@Rs_inv_current[j]@np.ones((n,1))@np.array([A_inv_current[j]]) for j in range(p)],axis=0) + np.identity(p)/sigma_mu
+    b = np.sum([np.transpose([A_inv_current[j]])@np.ones((1,n))@Rs_inv_current[j]@np.transpose(V_current)@np.transpose([A_inv_current[j]]) for j in range(p)],axis=0) + mu_mu/sigma_mu
     
     M_inv = np.linalg.inv(M)
     
