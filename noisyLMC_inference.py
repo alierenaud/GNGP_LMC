@@ -37,8 +37,8 @@ def V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y, V_
     M = M_comp(Rs_inv_current, A_inv_current, taus_current)
     
     
-    for i in range(n):
-        for j in range(p):
+    for i in random.permutation(range(n)):
+        for j in random.permutation(range(p)):
             
             Vmmu1_current[j,i] = np.sqrt(1/(M[j,i,j,i]+taus_current[j])) * random.normal() + 1/(M[j,i,j,i]+taus_current[j]) * (Dm1Y_current[j,i] - np.sum(M[j,i]*Vmmu1_current) + M[j,i,j,i]*Vmmu1_current[j,i] - taus_current[j]*mu_current[j])
     

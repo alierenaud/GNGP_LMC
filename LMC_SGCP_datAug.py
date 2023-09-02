@@ -163,8 +163,8 @@ sigma_slice = 4
 
 ### samples
 
-N = 4000
-tail = 2000
+N = 40000
+tail = 10000
 
 ### global run containers
 mu_run = np.zeros((N,p))
@@ -179,9 +179,7 @@ lam_run = np.zeros((N,p))
 acc_phis = np.zeros((p,N))
 
 
-### acc vector
 
-acc_phis = np.zeros((p,N))
 
 
 import time
@@ -192,17 +190,17 @@ for i in range(N):
     
     
     
-    V_current, Vmmu_current, VmZ_current, VmZ_inner_rows_current, A_invVmmu1_current = V_move_conj(Rs_inv_current, A_inv_current, taus, Z_current, Z_current, V_current, Vmmu_current, mu_current)
+    V_current, Vmmu_current, VmZ_current, VmZ_inner_rows_current, A_invVmmu_current = V_move_conj(Rs_inv_current, A_inv_current, taus, Z_current, Z_current, V_current, Vmmu_current, mu_current)
         
     
     
     
-    mu_current, Vmmu1_current, A_invVmmu1_current = mu_move(A_inv_current,Rs_inv_current,V_current,sigma_mu,mu_mu)
+    mu_current, Vmmu_current, A_invVmmu_current = mu_move(A_inv_current,Rs_inv_current,V_current,sigma_mu,mu_mu)
 
-    A_current, A_inv_current, A_invVmmu1_current = A_move_slice(A_current, A_invVmmu1_current, Rs_inv_current, Vmmu1_current, sigma_A, mu_A, sigma_slice)
+    A_current, A_inv_current, A_invVmmu_current = A_move_slice(A_current, A_invVmmu_current, Rs_inv_current, Vmmu_current, sigma_A, mu_A, sigma_slice)
     
     
-    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,D_current,A_invVmmu1_current,Rs_current,Rs_inv_current)
+    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,D_current,A_invVmmu_current,Rs_current,Rs_inv_current)
     
     
     Z_current,VmZ_current,VmZ_inner_rows_current = Z_move(V_current,Z_current,Y_current)
