@@ -25,18 +25,18 @@ from LMC_multi import probs
 random.seed(2)
 
 ### global parameters
-# lam = 800
-# n = random.poisson(lam)
-n = 500
+lam = 500
+n = random.poisson(lam)
+# n = 500
 p = 2
 
 
 ### generate random example
-# locs = random.uniform(0,1,(n,2))
-locs = np.transpose(np.array([np.linspace(0,1,n)]))
+locs = random.uniform(0,1,(n,2))
+# locs = np.transpose(np.array([np.linspace(0,1,n)]))
 
 
-mu = np.array([0,0])
+mu = np.array([-1,1])
 A = np.array([[1.,0.5],
               [-1,0.5]])/np.sqrt(1.25)
 phis = np.array([5.,25.])
@@ -64,6 +64,18 @@ V_1_true = V_true[:,Y!=0]
 
 
 V_true = np.concatenate((V_1_true,V_0_true),axis=1)
+
+
+### showcase
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+ax.scatter(X_1[Y_1==1,0],X_1[Y_1==1,1])
+ax.scatter(X_1[Y_1==2,0],X_1[Y_1==2,1])
+plt.show()
 
 ### priors
 sigma_A = 1.
@@ -163,8 +175,8 @@ sigma_slice = 4
 
 ### samples
 
-N = 40000
-tail = 10000
+N = 4000
+tail = 1000
 
 ### global run containers
 mu_run = np.zeros((N,p))
@@ -226,7 +238,7 @@ for i in range(N):
         
         # diagnostic using probabilities
         
-        probs(V_true,V_current,1000,X_current)
+        # probs(V_true,V_current,1000,X_current)
         
         
         
