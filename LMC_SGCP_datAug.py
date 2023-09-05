@@ -9,6 +9,7 @@ import numpy as np
 from numpy import random
 
 from multiLMC_generation import rmultiLMC
+from multiLMC_generation import mult
 from LMC_multi import mult_vec
 
 from scipy.spatial import distance_matrix
@@ -21,13 +22,19 @@ from LMC_mean import mu_move
 from noisyLMC_inference import V_move_conj
 from LMC_multi import Z_move
 from LMC_multi import probs
+from LMC_pred_rjmcmc import V_pred
 
-random.seed(2)
+
+def fct(x,alpha=0.3):
+    return(np.exp(-(x[0]**2+x[1]**2)/alpha))
+
+random.seed(3)
 
 ### global parameters
 lam = 500
 n = random.poisson(lam)
 # n = 500
+# p = 1
 p = 2
 
 
@@ -35,17 +42,31 @@ p = 2
 locs = random.uniform(0,1,(n,2))
 # locs = np.transpose(np.array([np.linspace(0,1,n)]))
 
+# obs = np.zeros(n,int)
 
-mu = np.array([-1,1])
+# for i in range(n):
+#     obs[i] = random.binomial(1,fct(locs[i]))
+
+
+
+mu = np.array([0,0])
 A = np.array([[1.,0.5],
-              [-1,0.5]])/np.sqrt(1.25)
+              [0.5,1.]])/np.sqrt(1.25)
 phis = np.array([5.,25.])
-
 
 
 
 Y, Z_true, V_true = rmultiLMC(A,phis,mu,locs, retZV=True) 
 
+
+
+### to add easily noticeable patern ###
+# obs = np.zeros(n,int)
+
+# for i in range(n):
+#     obs[i] = random.binomial(1,fct(locs[i]))
+    
+# Y = Y*obs
 
 n_0_true = np.sum(Y==0)
 n_1 = np.sum(Y!=0)
@@ -55,6 +76,7 @@ Y_1 = Y[Y!=0]
 
 X_0_true = locs[Y==0]
 X_1 = locs[Y!=0]
+
 
 Z_0_true = Z_true[:,Y==0]
 Z_1_true = Z_true[:,Y!=0]
@@ -96,7 +118,8 @@ betas = np.ones(p)
 a = 5
 b = 0.1
 
-
+a_lam = 500
+b_lam = 1
 
 
 ### useful quantities 
@@ -163,6 +186,8 @@ taus = np.array([1.,1.])
 Dm1_current = np.diag(taus)
 # Dm1Z_current = Dm1_current @ Z_current
 
+lam_current = lam
+
 
 # ### proposals
 
@@ -175,7 +200,7 @@ sigma_slice = 4
 
 ### samples
 
-N = 4000
+N = 2000
 tail = 1000
 
 ### global run containers
@@ -183,6 +208,7 @@ mu_run = np.zeros((N,p))
 A_run = np.zeros((N,p,p))
 phis_run = np.zeros((N,p))
 lam_run = np.zeros((N,p))
+n_0_run = np.zeros(N)
 
 
 
@@ -201,6 +227,52 @@ st = time.time()
 for i in range(N):
     
     
+    ### update X_0,Z_0,V_0
+    
+    
+    n_new = random.poisson(lam)
+    X_new = random.uniform(0,1,(n_new,2))
+    Y_new = np.zeros(n_new)
+    
+    D_0_new = distance_matrix(X_new,X_new)
+    D_current_0_new = distance_matrix(X_current,X_new)
+    
+    V_new = V_pred(D_0_new, D_current_0_new, phis_current, Rs_inv_current, A_current, A_invVmmu_current, n_new)
+    Z_new = V_new + random.normal(size=(p,n_new))
+    
+    for ii in range(n_new):
+        Y_new[ii] = mult(Z_new[:,ii])
+    
+    X_0_current = X_new[Y_new==0]
+    V_0_current = V_new[:,Y_new==0]
+    Z_0_current = Z_new[:,Y_new==0]
+    n_0_current = np.sum(Y_new==0)
+    Y_0_current = np.zeros(n_0_current,dtype=int)
+    
+    D_0_current = distance_matrix(X_0_current,X_0_current)
+    D_01_current = distance_matrix(X_0_current,X_1)
+    
+    D_current = np.block([[D_1,np.transpose(D_01_current)],[D_01_current,D_0_current]])
+    
+    X_current = np.concatenate((X_1,X_0_current),axis=0)
+    n_current = n_1 + n_0_current
+    Y_current = np.concatenate((Y_1,Y_0_current),axis=0)
+    
+    Z_current = np.concatenate((Z_1_current,Z_0_current),axis=1)
+    V_current = np.concatenate((V_1_current,V_0_current),axis=1)
+    
+    VmZ_current = V_current - Z_current
+    VmZ_inner_rows_current = np.array([ np.inner(VmZ_current[j], VmZ_current[j]) for j in range(p) ])
+
+    Vmmu_current = V_current - np.outer(mu_current,np.ones(n_current))
+    
+    A_invVmmu_current = A_inv_current @ Vmmu_current
+    
+    Rs_current = np.array([ np.exp(-D_current*phis_current[j]) for j in range(p) ])
+    
+    ### could be faster (possibly)
+    Rs_inv_current = np.array([ np.linalg.inv(Rs_current[j]) for j in range(p) ]) 
+    
     
     V_current, Vmmu_current, VmZ_current, VmZ_inner_rows_current, A_invVmmu_current = V_move_conj(Rs_inv_current, A_inv_current, taus, Z_current, Z_current, V_current, Vmmu_current, mu_current)
         
@@ -217,12 +289,14 @@ for i in range(N):
     
     Z_current,VmZ_current,VmZ_inner_rows_current = Z_move(V_current,Z_current,Y_current)
     
-    
+    lam_current = random.gamma(n_current + a_lam, 1/(b_lam + 1))
     
 
     mu_run[i] = mu_current
     A_run[i] = A_current
     phis_run[i] =  phis_current
+    n_0_run[i] = n_0_current
+    lam_run[i] = lam_current
     
     
     
@@ -239,7 +313,15 @@ for i in range(N):
         # diagnostic using probabilities
         
         # probs(V_true,V_current,1000,X_current)
-        
+        fig, ax = plt.subplots()
+        ax.set_xlim(0,1)
+        ax.set_ylim(0,1)
+        ax.set_box_aspect(1)
+
+        ax.scatter(X_1[Y_1==1,0],X_1[Y_1==1,1])
+        ax.scatter(X_1[Y_1==2,0],X_1[Y_1==2,1])
+        ax.scatter(X_0_current[:,0],X_0_current[:,1],c="grey")
+        plt.show()
         
         
         
@@ -270,6 +352,14 @@ plt.plot(A_run[:,0,1])
 plt.plot(A_run[:,1,0])
 plt.plot(A_run[:,1,1])
 plt.show()
+
+plt.plot(lam_run)
+plt.show()
+
+
+plt.plot(n_0_run)
+plt.show()
+
 
 
 
