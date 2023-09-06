@@ -28,10 +28,10 @@ from LMC_pred_rjmcmc import V_pred
 def fct(x,alpha=0.3):
     return(np.exp(-(x[0]**2+x[1]**2)/alpha))
 
-random.seed(3)
+random.seed(0)
 
 ### global parameters
-lam = 500
+lam = 1000
 n = random.poisson(lam)
 # n = 500
 # p = 1
@@ -49,9 +49,9 @@ locs = random.uniform(0,1,(n,2))
 
 
 
-mu = np.array([0,0])
-A = np.array([[1.,0.5],
-              [0.5,1.]])/np.sqrt(1.25)
+mu = np.array([-1,0])
+A = np.array([[-1.,0.5],
+              [1.,0.5]])/np.sqrt(1.25)
 phis = np.array([5.,25.])
 
 
@@ -118,7 +118,7 @@ betas = np.ones(p)
 a = 5
 b = 0.1
 
-a_lam = 500
+a_lam = 1000
 b_lam = 1
 
 
@@ -192,7 +192,7 @@ lam_current = lam
 # ### proposals
 
 
-phis_prop = np.ones(p)*0.5
+phis_prop = np.ones(p)*1
 sigma_slice = 4
 
 
