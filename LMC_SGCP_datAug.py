@@ -50,8 +50,8 @@ locs = random.uniform(0,1,(n,2))
 
 
 mu = np.array([0,0])
-A = np.array([[1.,0.5],
-              [0.5,1.]])/np.sqrt(1.25)
+A = np.array([[-1.,0.5],
+              [1.,0.5]])/np.sqrt(1.25)
 phis = np.array([5.,25.])
 
 
