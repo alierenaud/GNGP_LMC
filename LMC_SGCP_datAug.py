@@ -31,7 +31,7 @@ def fct(x,alpha=0.3):
 random.seed(0)
 
 ### global parameters
-lam = 1000
+lam = 500
 n = random.poisson(lam)
 # n = 500
 # p = 1
@@ -88,6 +88,20 @@ V_1_true = V_true[:,Y!=0]
 
 V_true = np.concatenate((V_1_true,V_0_true),axis=1)
 
+#### maple hickory examples
+
+# maple = np.loadtxt("maple.csv",delimiter=",")
+# hickory = np.loadtxt("hickory.csv",delimiter=",")
+
+# n_maple = maple.shape[0]
+# n_hickory = hickory.shape[0]
+
+# Y1 = np.ones(n_maple,dtype=int)
+# Y2 = np.ones(n_hickory,dtype=int)*2
+
+# Y_1 = np.concatenate((Y1,Y2))
+# X_1 = np.concatenate((maple,hickory))
+# n_1 = X_1.shape[0]
 
 ### showcase
 
@@ -125,7 +139,7 @@ b_lam = 1
 
 ### useful quantities 
 
-X_0_current = X_0_true
+X_0_current = random.uniform(size=(int(n_1/p),2))
 n_0_current = X_0_current.shape[0]
 Y_0_current = np.zeros(n_0_current,dtype=int)
 
@@ -141,21 +155,21 @@ X_current = np.concatenate((X_1,X_0_current),axis=0)
 n_current = n_1 + n_0_current
 Y_current = np.concatenate((Y_1,Y_0_current),axis=0)
 
-Z_0_current = Z_0_true
-Z_1_current = Z_1_true
+Z_0_current = (mult_vec(Y_0_current,p) - 0.5)*2
+Z_1_current = (mult_vec(Y_1,p) - 0.5)*2
 
-V_0_current = V_0_true
-V_1_current = V_1_true
+V_0_current = random.normal(size=(p,n_0_current))
+V_1_current = random.normal(size=(p,n_1))
 
 # Z_current = Z_true
 # Z_current = (mult_vec(Y,p) - 0.5)*4
-Z_current = (mult_vec(Y_current,p) - 0.5)*2
-# Z_current = np.concatenate((Z_1_current,Z_0_current),axis=1)
+# Z_current = (mult_vec(Y_current,p) - 0.5)*2
+Z_current = np.concatenate((Z_1_current,Z_0_current),axis=1)
 
 # V_current = V_true
 # V_current = (mult_vec(Y,p) - 0.5)*2
-V_current = random.normal(size=(p,n))
-# V_current = np.concatenate((V_1_current,V_0_current),axis=1)
+# V_current = random.normal(size=(p,n_current))
+V_current = np.concatenate((V_1_current,V_0_current),axis=1)
 VmZ_current = V_current - Z_current
 VmZ_inner_rows_current = np.array([ np.inner(VmZ_current[j], VmZ_current[j]) for j in range(p) ])
 
@@ -168,7 +182,7 @@ VmZ_inner_rows_current = np.array([ np.inner(VmZ_current[j], VmZ_current[j]) for
 
 # mu_current = mu
 mu_current = np.array([0.,0.])
-Vmmu_current = V_current - np.outer(mu_current,np.ones(n))
+Vmmu_current = V_current - np.outer(mu_current,np.ones(n_current))
 
 # A_current = A
 A_current = np.identity(p)
