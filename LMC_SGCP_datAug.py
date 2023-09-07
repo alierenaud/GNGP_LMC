@@ -31,7 +31,7 @@ def fct(x,alpha=0.3):
 random.seed(0)
 
 ### global parameters
-lam = 1000
+lam = 500
 n = random.poisson(lam)
 # n = 500
 # p = 1
@@ -50,7 +50,7 @@ locs = random.uniform(0,1,(n,2))
 
 
 
-mu = np.array([0,0])
+mu = np.array([-1,-1])
 A = np.array([[-1.,0.5],
               [1.,0.5]])/np.sqrt(1.25)
 phis = np.array([5.,25.])
