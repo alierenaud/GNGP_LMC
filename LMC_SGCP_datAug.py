@@ -31,7 +31,7 @@ def fct(x,alpha=0.3):
 random.seed(0)
 
 ### global parameters
-lam = 500
+lam = 1000
 n = random.poisson(lam)
 # n = 500
 # p = 1
@@ -201,8 +201,8 @@ sigma_slice = 4
 
 ### samples
 
-N = 2000
-tail = 1000
+N = 1000
+tail = 400
 
 ### global run containers
 mu_run = np.zeros((N,p))
