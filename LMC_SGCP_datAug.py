@@ -231,7 +231,7 @@ for i in range(N):
     ### update X_0,Z_0,V_0
     
     
-    n_new = random.poisson(lam)
+    n_new = random.poisson(lam_current)
     X_new = random.uniform(0,1,(n_new,2))
     Y_new = np.zeros(n_new)
     
