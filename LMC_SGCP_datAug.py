@@ -28,10 +28,10 @@ from LMC_pred_rjmcmc import V_pred
 def fct(x,alpha=0.3):
     return(np.exp(-(x[0]**2+x[1]**2)/alpha))
 
-random.seed(0)
+random.seed(10)
 
 ### global parameters
-lam = 500
+lam = 1000
 n = random.poisson(lam)
 # n = 500
 # p = 1
@@ -50,9 +50,9 @@ locs = random.uniform(0,1,(n,2))
 
 
 
-mu = np.array([-1,-1])
+mu = np.array([0.,0.])
 A = np.array([[-1.,0.5],
-              [1.,0.5]])/np.sqrt(1.25)
+              [1.,0.5]])/np.sqrt(1.25/2)
 phis = np.array([5.,25.])
 
 
@@ -86,33 +86,43 @@ V_0_true = V_true[:,Y==0]
 V_1_true = V_true[:,Y!=0]
 
 
-V_true = np.concatenate((V_1_true,V_0_true),axis=1)
+# V_true = np.concatenate((V_1_true,V_0_true),axis=1)
 
 #### maple hickory examples
 
-# maple = np.loadtxt("maple.csv",delimiter=",")
-# hickory = np.loadtxt("hickory.csv",delimiter=",")
+maple = np.loadtxt("maple.csv",delimiter=",")
+hickory = np.loadtxt("hickory.csv",delimiter=",")
 
-# n_maple = maple.shape[0]
-# n_hickory = hickory.shape[0]
+n_maple = maple.shape[0]
+n_hickory = hickory.shape[0]
 
-# Y1 = np.ones(n_maple,dtype=int)
-# Y2 = np.ones(n_hickory,dtype=int)*2
+Y1 = np.ones(n_maple,dtype=int)
+Y2 = np.ones(n_hickory,dtype=int)*2
 
-# Y_1 = np.concatenate((Y1,Y2))
-# X_1 = np.concatenate((maple,hickory))
-# n_1 = X_1.shape[0]
+Y_1 = np.concatenate((Y1,Y2))
+X_1 = np.concatenate((maple,hickory))
+n_1 = X_1.shape[0]
 
-### showcase
+### showcase 2D
 
-fig, ax = plt.subplots()
-ax.set_xlim(0,1)
-ax.set_ylim(0,1)
-ax.set_box_aspect(1)
+# fig, ax = plt.subplots()
+# ax.set_xlim(0,1)
+# ax.set_ylim(0,1)
+# ax.set_box_aspect(1)
 
-ax.scatter(X_1[Y_1==1,0],X_1[Y_1==1,1])
-ax.scatter(X_1[Y_1==2,0],X_1[Y_1==2,1])
-plt.show()
+# ax.scatter(X_1[Y_1==1,0],X_1[Y_1==1,1])
+# ax.scatter(X_1[Y_1==2,0],X_1[Y_1==2,1])
+# plt.show()
+
+### showcase 1D
+
+# fig, ax = plt.subplots()
+
+# # order = np.argsort(locs[:,0])
+
+# ax.plot(locs[:,0],V_true[0,:],"o")
+# ax.plot(locs[:,0],V_true[1,:],"o")
+# plt.show()
 
 ### priors
 sigma_A = 1.
@@ -139,7 +149,8 @@ b_lam = 1
 
 ### useful quantities 
 
-X_0_current = random.uniform(size=(int(n_1/p),2))
+# X_0_current = X_0_true
+X_0_current = random.uniform(size=(int(n_1/p),p))
 n_0_current = X_0_current.shape[0]
 Y_0_current = np.zeros(n_0_current,dtype=int)
 
@@ -157,9 +168,14 @@ Y_current = np.concatenate((Y_1,Y_0_current),axis=0)
 
 Z_0_current = (mult_vec(Y_0_current,p) - 0.5)*2
 Z_1_current = (mult_vec(Y_1,p) - 0.5)*2
+# Z_0_current = Z_0_true
+# Z_1_current = Z_1_true
 
 V_0_current = random.normal(size=(p,n_0_current))
 V_1_current = random.normal(size=(p,n_1))
+
+# V_0_current = V_0_true
+# V_1_current = V_1_true
 
 # Z_current = Z_true
 # Z_current = (mult_vec(Y,p) - 0.5)*4
@@ -215,8 +231,8 @@ sigma_slice = 4
 
 ### samples
 
-N = 1000
-tail = 400
+N = 100
+tail = 40
 
 ### global run containers
 mu_run = np.zeros((N,p))
@@ -245,14 +261,17 @@ for i in range(N):
     ### update X_0,Z_0,V_0
     
     
+    Z_1_current = Z_current[:,:n_1]
+    V_1_current = V_current[:,:n_1]
+    
     n_new = random.poisson(lam_current)
     X_new = random.uniform(0,1,(n_new,2))
-    Y_new = np.zeros(n_new)
+    Y_new = np.zeros(n_new,dtype=int)
     
     D_0_new = distance_matrix(X_new,X_new)
     D_current_0_new = distance_matrix(X_current,X_new)
     
-    V_new = V_pred(D_0_new, D_current_0_new, phis_current, Rs_inv_current, A_current, A_invVmmu_current, n_new)
+    V_new = V_pred(D_0_new, D_current_0_new, phis_current, Rs_inv_current, A_current, A_invVmmu_current, mu_current, n_new)
     Z_new = V_new + random.normal(size=(p,n_new))
     
     for ii in range(n_new):
@@ -315,7 +334,7 @@ for i in range(N):
     
     
     
-    if i % 100 == 0:
+    if i % 1 == 0:
         print(i)
         ## showcase RFs
 
@@ -337,6 +356,17 @@ for i in range(N):
         ax.scatter(X_1[Y_1==2,0],X_1[Y_1==2,1])
         ax.scatter(X_0_current[:,0],X_0_current[:,1],c="grey")
         plt.show()
+        
+        # fig, ax = plt.subplots()
+
+        
+
+        
+        # ax.plot(X_current[:,0],V_current[0,:],"o",c="tab:blue")
+        # ax.plot(X_current[:,0],V_current[1,:],"o",c="tab:orange")
+        # ax.plot(locs[:,0],V_true[0,:],"o",alpha=0.5,c="blue")
+        # ax.plot(locs[:,0],V_true[1,:],"o",alpha=0.5,c="orange")
+        # plt.show()
         
         
         

@@ -145,7 +145,7 @@ def A_rjmcmc(Rs_inv_current, V_current, A_current, A_inv_current, A_invV_current
     return(A_current,A_inv_current,A_invV_current,n_ones_current,A_mask_current,A_ones_ind_current,A_zeros_ind_current)
 
 
-def V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invV_current, n_grid):
+def V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invV_current, mu_current,n_grid):
     
     p = A_current.shape[0]
     
@@ -156,7 +156,7 @@ def V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, 
     
     Cs = np.array([ np.linalg.cholesky(Rs_prime[j] - np.transpose(rs[j])@Rinvsrs[j]) for j in range(p) ])
     
-    V_grid_current = A_current @ np.array([ Cs[j]@random.normal(size=n_grid) + A_invV_current[j]@Rinvsrs[j] for j in range(p)])
+    V_grid_current = A_current @ np.array([ Cs[j]@random.normal(size=n_grid) + A_invV_current[j]@Rinvsrs[j]  for j in range(p)]) +  np.outer(mu_current,np.ones(n_grid))
     
     return(V_grid_current)
 
