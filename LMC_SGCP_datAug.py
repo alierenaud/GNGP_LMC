@@ -90,29 +90,29 @@ V_1_true = V_true[:,Y!=0]
 
 #### maple hickory examples
 
-maple = np.loadtxt("maple.csv",delimiter=",")
-hickory = np.loadtxt("hickory.csv",delimiter=",")
+# maple = np.loadtxt("maple.csv",delimiter=",")
+# hickory = np.loadtxt("hickory.csv",delimiter=",")
 
-n_maple = maple.shape[0]
-n_hickory = hickory.shape[0]
+# n_maple = maple.shape[0]
+# n_hickory = hickory.shape[0]
 
-Y1 = np.ones(n_maple,dtype=int)
-Y2 = np.ones(n_hickory,dtype=int)*2
+# Y1 = np.ones(n_maple,dtype=int)
+# Y2 = np.ones(n_hickory,dtype=int)*2
 
-Y_1 = np.concatenate((Y1,Y2))
-X_1 = np.concatenate((maple,hickory))
-n_1 = X_1.shape[0]
+# Y_1 = np.concatenate((Y1,Y2))
+# X_1 = np.concatenate((maple,hickory))
+# n_1 = X_1.shape[0]
 
 ### showcase 2D
 
-# fig, ax = plt.subplots()
-# ax.set_xlim(0,1)
-# ax.set_ylim(0,1)
-# ax.set_box_aspect(1)
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
 
-# ax.scatter(X_1[Y_1==1,0],X_1[Y_1==1,1])
-# ax.scatter(X_1[Y_1==2,0],X_1[Y_1==2,1])
-# plt.show()
+ax.scatter(X_1[Y_1==1,0],X_1[Y_1==1,1])
+ax.scatter(X_1[Y_1==2,0],X_1[Y_1==2,1])
+plt.show()
 
 ### showcase 1D
 
@@ -224,15 +224,15 @@ lam_current = lam
 
 
 phis_prop = np.ones(p)*1
-sigma_slice = 4
+sigma_slice = 1
 
 
 
 
 ### samples
 
-N = 100
-tail = 40
+N = 1000
+tail = 400
 
 ### global run containers
 mu_run = np.zeros((N,p))
@@ -334,7 +334,7 @@ for i in range(N):
     
     
     
-    if i % 1 == 0:
+    if i % 100 == 0:
         print(i)
         ## showcase RFs
 
