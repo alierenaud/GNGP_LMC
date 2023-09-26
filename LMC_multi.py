@@ -23,7 +23,8 @@ from LMC_inference import phis_move
 from LMC_mean import mu_move
 from noisyLMC_inference import V_move_conj
 
-
+tab_cols = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 'tab:brown', 'tab:pink', 'tab:gray', 'tab:olive', 'tab:cyan']
+    
 
 def Z_move(V_current,Z_current,Y):
     
@@ -39,10 +40,16 @@ def Z_move(V_current,Z_current,Y):
             else:
                 ### compute max Z_current[:,i]
                 
-                mini = np.max(np.delete(Z_current[:,ii], Y[ii]-1))
+                if p==1:
+                    mini=0
+                else:
                 
-                if mini < 0:
-                    mini = 0
+                    mini = np.max(np.delete(Z_current[:,ii], Y[ii]-1))
+                    
+                    if mini < 0:
+                        mini = 0
+                        
+                    
                 
                 for jj in random.permutation(range(p)):
                     if jj == Y[ii]-1:
@@ -97,10 +104,11 @@ def probs(V_true,V_current,bigN,locs):
     probs_infV = np.mean(Y_vec_exs_infV,axis=0)
     probs_trueV = np.mean(Y_vec_exs_trueV,axis=0)
     
-    plt.plot(locs[order,0],probs_infV[0,order],c="tab:blue")
-    plt.plot(locs[order,0],probs_infV[1,order],c="tab:orange")
-    plt.plot(locs[order,0],probs_trueV[0,order],c="tab:blue", alpha=0.5)
-    plt.plot(locs[order,0],probs_trueV[1,order],c="tab:orange", alpha=0.5)
+
+    for k in range(p):
+    
+        plt.plot(locs[order,0],probs_infV[k,order], c=tab_cols[k])
+        plt.plot(locs[order,0],probs_trueV[k,order], c=tab_cols[k], alpha=0.5)
     plt.show()
 
 # random.seed(2)
@@ -256,11 +264,11 @@ def probs(V_true,V_current,bigN,locs):
 #         print(i)
 #         ## showcase RFs
 
-#         # plt.plot(locs[:,0],V_current[0],c="tab:blue")
-#         # plt.plot(locs[:,0],V_current[1],c="tab:orange")
-#         # plt.plot(locs[:,0],V_true[0],c="tab:blue", alpha=0.5)
-#         # plt.plot(locs[:,0],V_true[1],c="tab:orange", alpha=0.5)
-#         # plt.show()
+#         plt.plot(locs[:,0],V_current[0],c="tab:blue")
+#         plt.plot(locs[:,0],V_current[1],c="tab:orange")
+#         plt.plot(locs[:,0],V_true[0],c="tab:blue", alpha=0.5)
+#         plt.plot(locs[:,0],V_true[1],c="tab:orange", alpha=0.5)
+#         plt.show()
         
 #         # diagnostic using probabilities
         
