@@ -52,8 +52,8 @@ def pcf(k,l,d,A,phis,mu,Ns):
 
 
 # want 100
-nds = 100
-lim = 0.8
+nds = 50
+lim = 0.5
 
 ds = (np.arange(nds)+1)/nds*lim
 
@@ -82,7 +82,7 @@ mu_run = np.load("mu_run.npy")
 N = A_run.shape[0]
 tail = 2000
 # want 100000
-Ns = 1000
+Ns = 100000
 # want 40
 jumps = 40
 
@@ -103,14 +103,20 @@ for i in range(tail,N,jumps):
 
 et = time.time()
 print((et-st)/60,"minutes")
+
+step=1
+lim=50
 mean_pcfs = np.mean(pcfs,axis=0)
-q05_pcfs = np.quantile(pcfs,0.05,axis=0)
-q95_pcfs = np.quantile(pcfs,0.95,axis=0)
-plt.plot(ds,mean_pcfs[:,0])
-plt.fill_between(ds, q05_pcfs[:,0], q95_pcfs[:,0], alpha=0.5)
-plt.plot(ds,mean_pcfs[:,1])
-plt.fill_between(ds, q05_pcfs[:,1], q95_pcfs[:,1], alpha=0.5)
-plt.plot(ds,mean_pcfs[:,2],c="grey")
-plt.fill_between(ds, q05_pcfs[:,2], q95_pcfs[:,2],color="grey", alpha=0.5)
+q05_pcfs = np.quantile(pcfs,0.025,axis=0)
+q95_pcfs = np.quantile(pcfs,0.975,axis=0)
+plt.plot(ds[:lim:step],mean_pcfs[:lim:step,0])
+plt.plot(ds[:lim:step],mean_pcfs[:lim:step,1])
+plt.plot(ds[:lim:step],mean_pcfs[:lim:step,2],c="grey")
+plt.fill_between(ds[:lim:step], q05_pcfs[:lim:step,0], q95_pcfs[:lim:step,0], alpha=0.5)
+plt.fill_between(ds[:lim:step], q05_pcfs[:lim:step,1], q95_pcfs[:lim:step,1], alpha=0.5)
+plt.fill_between(ds[:lim:step], q05_pcfs[:lim:step,2], q95_pcfs[:lim:step,2],color="grey", alpha=0.5)
 # plt.plot(ds,truepcf,c="grey")
-plt.show()
+plt.title("Pair Correlation Function")
+plt.legend(["maple", "hickory","cross"], loc ="upper right") 
+# plt.show()
+plt.savefig('pcfhickmap2.pdf', bbox_inches='tight')

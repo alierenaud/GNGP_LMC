@@ -593,7 +593,9 @@ vv = np.transpose(vec_inv(intensity_mean[1],n_grid))
 c = ax.pcolormesh(xv, yv, vv, cmap = "Blues")
 ax.scatter(X_1[Y_1==1,0],X_1[Y_1==1,1],c="black")
 plt.colorbar(c)
-plt.show()
+plt.title("Maple")
+# plt.show()
+plt.savefig('maple.pdf', bbox_inches='tight')
 
 ### process 2
 
@@ -607,7 +609,9 @@ vv = np.transpose(vec_inv(intensity_mean[2],n_grid))
 c = ax.pcolormesh(xv, yv, vv, cmap = "Oranges")
 ax.scatter(X_1[Y_1==2,0],X_1[Y_1==2,1],c="black")
 plt.colorbar(c)
-plt.show()
+plt.title("Hickory")
+# plt.show()
+plt.savefig('hickory.pdf', bbox_inches='tight')
 
 ### process thinned
 
