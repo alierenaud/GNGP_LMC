@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Tue Oct 24 14:21:57 2023
+Created on Thu Oct 26 15:57:06 2023
 
 @author: homeboy
 """
@@ -17,107 +17,138 @@ from talk_exs import matern_kernel
 from talk_exs import fct
 
 
-random.seed(0)
+n=800
+m=20
 
 n_grid = 200
-xlim = 10
+
+xlim=10
 
 grid_locs = np.linspace(-xlim,xlim,n_grid+1)
-f_grid = fct(grid_locs)
+
+locs = random.uniform(-xlim,xlim,n)
+locs = np.sort(locs)
+### distance function
+locst = np.transpose([locs])
+
+### parameters
+
+mu = np.ones(n)
+a = 0.1
+phi = 100
+tau = 10
+
+### neighbors
+
+Nei = np.zeros(n,dtype=object)
+
+for i in range(m):
+    Nei[i] = np.arange(i)
+    
+    
+    
+for j in range(m,n):
+    Nei[j] = np.arange(j-m,j)
+    
 
 
-n_obs = 200
+aNei = np.zeros(n,dtype=object)
+
+for i in range(n):
+    aNei[i] = np.array([],dtype = int)
+    for j in range(n):
+        if i in Nei[j]:
+            aNei[i] = np.append(aNei[i],j)
+            
+            
+# Nei
+# aNei      
 
 
-### locations
+### compute B,r,dists
 
-locs = random.uniform(size=n_obs)*20 - 10
+Dist = distance_matrix(locst, locst)
 
-f_locs = fct(locs)
-tau = 10.0
-y = f_locs + 1/np.sqrt(tau)*random.normal(size = n_obs)
+DistMats = np.zeros(n,dtype=object)
+B = np.zeros((n,n))
+r = np.zeros(n)
 
+for i in range(n):
+
+    
+    DistMat_temp = Dist[np.append(Nei[i], i)][:,np.append(Nei[i], i)]
+    
+    DistMats[i] =  DistMat_temp
+    
+    cov_mat_temp = matern_kernel(DistMat_temp,phi)
+    
+    nNei_temp = Nei[i].shape[0]
+    
+    R_inv_temp = np.linalg.inv(cov_mat_temp[:nNei_temp,:nNei_temp])
+    r_temp = cov_mat_temp[nNei_temp,:nNei_temp]
+
+    
+    b_temp = r_temp@R_inv_temp
+    
+
+    B[i][Nei[i]] = b_temp
+    
+    r[i] = 1-np.inner(b_temp,r_temp)
+
+
+### simulate an example y
+
+
+w_true = fct(locs)
+w_grid_true = fct(grid_locs)
+y = w_true + 1/np.sqrt(tau)*random.normal(size = n)
 ### showcase data
 
-plt.plot(grid_locs,f_grid)
 plt.scatter(locs,y, c="black", s=10)
-plt.show()
+plt.show()  
 
 
-### algorithm
+# w_current = w_true
+w_current = random.normal(size=n)
 
-mu_current = 1
-
-phi_current = 100.0
-a_current = 0.1
-tau_current = 10.0
-
-f_currrent = random.normal(n_obs)
-f_grid_current = random.normal(n_grid+1)
-
-### useful quantitites
-
-D = distance_matrix(np.transpose([locs]),np.transpose([locs]))
-
-R_current = matern_kernel(D,phi_current)
-R_inv_current = np.linalg.inv(R_current)
+# w_grid = w_grid_true
+w_grid = random.normal(size=n_grid+1)
 
 
-D_grid_obs = distance_matrix(np.transpose([grid_locs]),np.transpose([locs]))
-
-R_grid_obs_current = matern_kernel(D_grid_obs,phi_current)
-
-
-D_grid = distance_matrix(np.transpose([grid_locs]),np.transpose([grid_locs]))
-
-R_grid_current = matern_kernel(D_grid,phi_current)
-
-
-### containers
 
 N = 1000
-
-f_grid_run = np.zeros((N,n_grid+1))
-
 
 for i in range(N):
 
     
+    ## w update
+    
+    for ii in random.permutation(range(n)):
+    # for ii in range(n):
+        
+        
+        A_temp = a/r[ii] + tau + np.sum([a/r[jj]*B[jj,ii]**2 for jj in aNei[ii]])
+        
+        B_temp = a/r[ii]*(mu[ii] + np.inner(B[ii,Nei[ii]],w_current[Nei[ii]]-mu[Nei[ii]]) ) + tau*y[ii] + np.sum([a*B[jj,ii]/r[jj]*(w_current[jj] - mu[jj] - np.inner(B[jj,Nei[jj]],w_current[Nei[jj]] - mu[Nei[jj]]) + B[jj,ii]*w_current[ii] ) for jj in aNei[ii]])                    
+        
+        w_current[ii] = 1/np.sqrt(A_temp)*random.normal() + B_temp/A_temp
 
-    ### f update
-    
-    Sigma_f = np.linalg.inv(a_current*R_inv_current + tau_current*np.identity(n_obs))
-    
-    mu_f = Sigma_f@(a_current*R_inv_current@(mu_current*np.ones(n_obs)) + tau_current*y)
-    
-    f_current = np.linalg.cholesky(Sigma_f)@random.normal(size=n_obs) + mu_f
-    
-    
-    # ### f grid update
-    
-    
-    # R_grid_obs_current = matern_kernel(D_grid_obs,phi_current)
-    # R_grid_current = matern_kernel(D_grid,phi_current)
-    
-    
-    # tempMat = R_grid_obs_current@R_inv_current
-    
-    # mu_grid = tempMat@(f_current-mu_current) + mu_current
-    # Sigma_grid = R_grid_current - tempMat@np.transpose(R_grid_obs_current)
-    
-    # f_grid_current = np.linalg.cholesky(Sigma_grid)@random.normal(size=n_grid+1) + mu_grid
-    
-    # f_grid_run[i] = f_grid_current
-    
-    if i%100==0:
 
-        # plt.plot(grid_locs,f_grid)
-        # plt.plot(grid_locs,f_grid_current)
-        # # plt.scatter(locs,y, c="black", s=10)
-        # # plt.scatter(locs,f_current, c="tab:orange", s=10)
-        # plt.show()
-
+    if i % 100 ==0:
+        # plt.scatter(locs,y, c="black", s=10)
+        plt.plot(grid_locs,w_grid_true)
+        plt.scatter(locs,w_current, c="tab:orange", s=10)
+        plt.show() 
         print(i)
 
 
+    ## w grid update
+    
+    
 
+
+   
+            
+            
+            
+            
