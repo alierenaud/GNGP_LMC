@@ -16,6 +16,7 @@ from scipy.spatial import distance_matrix
 from talk_exs import matern_kernel
 from talk_exs import fct
 
+random.seed(0)
 
 n=800
 m=20
@@ -118,6 +119,10 @@ w_grid = random.normal(size=n_grid+1)
 
 N = 1000
 
+import time
+
+st = time.time()
+
 for i in range(N):
 
     
@@ -145,7 +150,9 @@ for i in range(N):
     ## w grid update
     
     
+et = time.time()
 
+print("Total Time:", (et-st)/60, "minutes")
 
    
             
