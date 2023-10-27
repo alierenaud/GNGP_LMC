@@ -16,6 +16,7 @@ from scipy.spatial import distance_matrix
 from talk_exs import matern_kernel
 from talk_exs import fct
 
+random.seed(0)
 
 n=800
 m=20
