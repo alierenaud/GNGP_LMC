@@ -70,7 +70,7 @@ for i in range(n):
 Dist = distance_matrix(locst, locst)
 
 DistMats = np.zeros(n,dtype=object)
-B = np.zeros((n,n))
+B = np.zeros(n,dtype=object)
 r = np.zeros(n)
 
 for i in range(n):
@@ -91,7 +91,7 @@ for i in range(n):
     b_temp = r_temp@R_inv_temp
     
 
-    B[i][Nei[i]] = b_temp
+    B[i] = b_temp
     
     r[i] = 1-np.inner(b_temp,r_temp)
 
@@ -118,6 +118,9 @@ w_grid = random.normal(size=n_grid+1)
 
 N = 1000
 
+import time
+st = time.time()
+
 for i in range(N):
 
     
@@ -127,9 +130,9 @@ for i in range(N):
     # for ii in range(n):
         
         
-        A_temp = a/r[ii] + tau + np.sum([a/r[jj]*B[jj,ii]**2 for jj in aNei[ii]])
+        A_temp = a/r[ii] + tau + np.sum([a/r[jj]*B[jj][Nei[jj]==ii]**2 for jj in aNei[ii]])
         
-        B_temp = a/r[ii]*(mu[ii] + np.inner(B[ii,Nei[ii]],w_current[Nei[ii]]-mu[Nei[ii]]) ) + tau*y[ii] + np.sum([a*B[jj,ii]/r[jj]*(w_current[jj] - mu[jj] - np.inner(B[jj,Nei[jj]],w_current[Nei[jj]] - mu[Nei[jj]]) + B[jj,ii]*w_current[ii] ) for jj in aNei[ii]])                    
+        B_temp = a/r[ii]*(mu[ii] + np.inner(B[ii],w_current[Nei[ii]]-mu[Nei[ii]]) ) + tau*y[ii] + np.sum([a*B[jj][Nei[jj]==ii]/r[jj]*(w_current[jj] - mu[jj] - np.inner(B[jj],w_current[Nei[jj]] - mu[Nei[jj]]) + B[jj][Nei[jj]==ii]*w_current[ii] ) for jj in aNei[ii]])                    
         
         w_current[ii] = 1/np.sqrt(A_temp)*random.normal() + B_temp/A_temp
 
@@ -145,7 +148,9 @@ for i in range(N):
     ## w grid update
     
     
+et = time.time()
 
+print("Total Time:", (et-st)/60, "minutes")
 
    
             
