@@ -246,8 +246,8 @@ def fct(s):
 # print("Accept rate phi:",np.mean(acc_phi))
 # ### trace plots
 
-# # plt.plot(phi_run[tail:])
-# # plt.show()
+# plt.plot(phi_run[tail:])
+# plt.show()
 
 # # plt.plot(mu_run[tail:])
 # # plt.show()
