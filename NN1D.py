@@ -49,64 +49,69 @@ tau = 10
 
 ### neighbors
 
-Nei = np.zeros(n,dtype=object)
+Nei = np.full((n,n),False)
 
 for i in range(m):
-    Nei[i] = np.arange(i)
+    Nei[i,:i] = True
     
     
     
 for j in range(m,n):
-    Nei[j] = np.arange(j-m,j)
+    Nei[j,j-m:j] = True
     
 
 
-aNei = np.zeros(n,dtype=object)
+aNei = np.full((n,n),False)
 
 for i in range(n):
-    aNei[i] = np.array([],dtype = int)
     for j in range(n):
-        if i in Nei[j]:
-            aNei[i] = np.append(aNei[i],j)
+        if Nei[j,i]:
+            aNei[i,j] = True
             
             
-# Nei
-# aNei      
+phi_current = phi     
 
 
 ### compute B,r,dists
 
 Dist = distance_matrix(locst, locst)
 
-DistMats = np.zeros(n,dtype=object)
+
 B = np.zeros((n,n))
 r = np.zeros(n)
 
 for i in range(n):
 
     
-    DistMat_temp = Dist[np.append(Nei[i], i)][:,np.append(Nei[i], i)]
+    ### NEED TO STOCK DISTANCE MATRICES
     
-    DistMats[i] =  DistMat_temp
+    DistMatNei = Dist[Nei[i]][:,Nei[i]]
+    DistMatLocNei = Dist[i,Nei[i]]
     
-    cov_mat_temp = matern_kernel(DistMat_temp,phi)
     
-    nNei_temp = Nei[i].shape[0]
     
-    R_inv_temp = np.linalg.inv(cov_mat_temp[:nNei_temp,:nNei_temp])
-    r_temp = cov_mat_temp[nNei_temp,:nNei_temp]
+    CovMatNei = matern_kernel(DistMatNei,phi_current)
+    invCovMatNei = np.linalg.inv(CovMatNei)
+    
+    CovMatLocNei = matern_kernel(DistMatLocNei,phi_current)
+    
+    
+    
+   
+    
+
 
     
-    b_temp = r_temp@R_inv_temp
+    bNei = CovMatLocNei@invCovMatNei
     
 
-    B[i][Nei[i]] = b_temp
+    B[i,Nei[i]] = bNei
     
-    r[i] = 1-np.inner(b_temp,r_temp)
+    r[i] = 1-np.inner(bNei,CovMatLocNei)
 
 ### compute grid neighbors
 
-gridNei = np.zeros(n_grid+1,dtype=object)
+gridNei = np.full((n_grid+1,n),False)
 
 Dist_grid = distance_matrix(grid_locst, locst)
 
@@ -115,35 +120,34 @@ Dist_grid = distance_matrix(grid_locst, locst)
 
 for i in range(n_grid+1):
     
-    gridNei[i] = np.sort(np.argpartition(Dist_grid[i],m)[:m])
+    gridNei[i,np.argpartition(Dist_grid[i],m)[:m]] = True
     
 
     
-DistMats_grid = np.zeros(n_grid+1,dtype=object)
+
 B_grid = np.zeros((n_grid+1,n))
 r_grid = np.zeros(n_grid+1)
 
 
 for i in range(n_grid+1):
+    
+    ### NEED TO STOCK DISTANCE MATRICES
+    
+    DistMatNei = Dist[gridNei[i]][:,gridNei[i]]
+    DistMatGridNei = Dist_grid[i,gridNei[i]]
+    
+    CovMatNei = matern_kernel(DistMatNei,phi_current)
+    invCovMatNei = np.linalg.inv(CovMatNei)
+    
+    CovMatGridNei = matern_kernel(DistMatGridNei,phi_current)
+    
+    
+    bNei = CovMatGridNei@invCovMatNei
+    
 
+    B_grid[i,gridNei[i]] = bNei
     
-    DistMatObs_temp = Dist[gridNei[i]][:,gridNei[i]]
-    DistMats_grid[i]  = DistMatObs_temp
-    CovMatObs_temp = matern_kernel(DistMatObs_temp,phi)
-    
-    R_inv_temp = np.linalg.inv(CovMatObs_temp)
-    
-    DistMatGridObs_temp = Dist_grid[i][gridNei[i]]
-    r_temp = matern_kernel(DistMatGridObs_temp,phi)
-    
-
-    
-    b_temp = r_temp@R_inv_temp
-    
-
-    B_grid[i][gridNei[i]] = b_temp
-    
-    r_grid[i] = 1-np.inner(b_temp,r_temp)
+    r_grid[i] = 1-np.inner(bNei,CovMatGridNei)
 
 
 
@@ -196,9 +200,9 @@ for i in range(N):
     # for ii in range(n):
         
         
-        A_temp = a/r[ii] + tau + np.sum([a/r[jj]*B[jj,ii]**2 for jj in aNei[ii]])
+        A_temp = a/r[ii] + tau + np.sum([a/r[jj]*B[jj,ii]**2 for jj in np.where(aNei[ii])[0]])
         
-        B_temp = a/r[ii]*(mu[ii] + np.inner(B[ii,Nei[ii]],w_current[Nei[ii]]-mu[Nei[ii]]) ) + tau*y[ii] + np.sum([a*B[jj,ii]/r[jj]*(w_current[jj] - mu[jj] - np.inner(B[jj,Nei[jj]],w_current[Nei[jj]] - mu[Nei[jj]]) + B[jj,ii]*w_current[ii] ) for jj in aNei[ii]])                    
+        B_temp = a/r[ii]*(mu[ii] + np.inner(B[ii,Nei[ii]],w_current[Nei[ii]]-mu[Nei[ii]]) ) + tau*y[ii] + np.sum([a*B[jj,ii]/r[jj]*(w_current[jj] - mu[jj] - np.inner(B[jj,Nei[jj]],w_current[Nei[jj]] - mu[Nei[jj]]) + B[jj,ii]*w_current[ii] ) for jj in np.where(aNei[ii])[0]])                    
         
         w_current[ii] = 1/np.sqrt(A_temp)*random.normal() + B_temp/A_temp
 
