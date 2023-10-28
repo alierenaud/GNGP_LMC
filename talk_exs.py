@@ -46,7 +46,7 @@ def fct(s):
 # f_grid = fct(grid_locs)
 
 
-# n_obs = 200
+# n_obs = 800
 
 # ### normal locs
 # # sd_locs = 4
@@ -76,7 +76,7 @@ def fct(s):
 # sigma2_mu = 1
 
 # alpha_phi = 1
-# beta_phi = 0.01
+# beta_phi = 0.001
 
 # alpha_a = 0.01
 # beta_a = 0.1
@@ -94,7 +94,7 @@ def fct(s):
 
 # mu_current = 1
 
-# phi_current = 100.0
+# phi_current = 1000.0
 # a_current = 0.1
 # tau_current = 10.0
 
@@ -122,7 +122,7 @@ def fct(s):
 
 # ### containers
 
-# N = 10000
+# N = 1000
 
 # f_grid_run = np.zeros((N,n_grid+1))
 # phi_run = np.zeros(N)
@@ -168,32 +168,32 @@ def fct(s):
     
 #     phi_run[i] = phi_current
     
-#     ### mu update
+#     # ### mu update
     
-#     sigma2_cond = 1/(a_current*np.sum(R_inv_current) + 1/sigma2_mu)
-#     mu_cond = sigma2_cond*np.inner(f_current@R_inv_current, np.ones(n_obs))
+#     # sigma2_cond = 1/(a_current*np.sum(R_inv_current) + 1/sigma2_mu)
+#     # mu_cond = sigma2_cond*np.inner(f_current@R_inv_current, np.ones(n_obs))
     
-#     mu_current = random.normal(mu_cond,sigma2_cond)
+#     # mu_current = random.normal(mu_cond,sigma2_cond)
     
-#     mu_run[i] = mu_current
+#     # mu_run[i] = mu_current
     
-#     ### a update
+#     # ### a update
     
-#     alpha_cond = n_obs/2+alpha_a
-#     beta_cond = np.transpose(f_current - mu_current)@R_inv_current@(f_current - mu_current)/2 + beta_a
+#     # alpha_cond = n_obs/2+alpha_a
+#     # beta_cond = np.transpose(f_current - mu_current)@R_inv_current@(f_current - mu_current)/2 + beta_a
     
-#     a_current = random.gamma(alpha_cond,1/beta_cond)
+#     # a_current = random.gamma(alpha_cond,1/beta_cond)
     
-#     a_run[i] = a_current
+#     # a_run[i] = a_current
     
-#     ### tau update
+#     # ### tau update
     
-#     alpha_cond = n_obs/2+alpha_tau
-#     beta_cond = np.inner(y-f_current,y-f_current)/2 + beta_tau
+#     # alpha_cond = n_obs/2+alpha_tau
+#     # beta_cond = np.inner(y-f_current,y-f_current)/2 + beta_tau
     
-#     tau_current = random.gamma(alpha_cond,1/beta_cond)
+#     # tau_current = random.gamma(alpha_cond,1/beta_cond)
     
-#     tau_run[i] = tau_current
+#     # tau_run[i] = tau_current
     
 #     ### f grid update
     
@@ -211,7 +211,7 @@ def fct(s):
     
 #     f_grid_run[i] = f_grid_current
     
-#     if i%1000==0:
+#     if i%100==0:
 
 #         # plt.plot(grid_locs,f_grid)
 #         # plt.plot(grid_locs,f_grid_current)
@@ -224,7 +224,7 @@ def fct(s):
 # et = time()
 # print("Time:",(et-st)/60,"minutes")
 
-# tail = 4000
+# tail = 400
 
 # f_grid_mean = np.mean(f_grid_run[tail:], axis=0)
 # f_grid_025 = np.quantile(f_grid_run[tail:], 0.025, axis=0)

@@ -16,6 +16,11 @@ from scipy.spatial import distance_matrix
 from talk_exs import matern_kernel
 from talk_exs import fct
 
+
+####
+# ARRAYS WITH VARIABLE DIMENSION SHOULD PROBABLY BE REMOVED (where possible) 
+####
+
 random.seed(0)
 
 n=800
@@ -26,6 +31,8 @@ n_grid = 200
 xlim=10
 
 grid_locs = np.linspace(-xlim,xlim,n_grid+1)
+grid_locst = np.transpose([grid_locs])
+
 
 locs = random.uniform(-xlim,xlim,n)
 locs = np.sort(locs)
@@ -35,8 +42,9 @@ locst = np.transpose([locs])
 ### parameters
 
 mu = np.ones(n)
+mu_grid = np.ones(n_grid+1)
 a = 0.1
-phi = 100
+phi = 1000
 tau = 10
 
 ### neighbors
@@ -96,6 +104,49 @@ for i in range(n):
     
     r[i] = 1-np.inner(b_temp,r_temp)
 
+### compute grid neighbors
+
+gridNei = np.zeros(n_grid+1,dtype=object)
+
+Dist_grid = distance_matrix(grid_locst, locst)
+
+
+
+
+for i in range(n_grid+1):
+    
+    gridNei[i] = np.sort(np.argpartition(Dist_grid[i],m)[:m])
+    
+
+    
+DistMats_grid = np.zeros(n_grid+1,dtype=object)
+B_grid = np.zeros((n_grid+1,n))
+r_grid = np.zeros(n_grid+1)
+
+
+for i in range(n_grid+1):
+
+    
+    DistMatObs_temp = Dist[gridNei[i]][:,gridNei[i]]
+    DistMats_grid[i]  = DistMatObs_temp
+    CovMatObs_temp = matern_kernel(DistMatObs_temp,phi)
+    
+    R_inv_temp = np.linalg.inv(CovMatObs_temp)
+    
+    DistMatGridObs_temp = Dist_grid[i][gridNei[i]]
+    r_temp = matern_kernel(DistMatGridObs_temp,phi)
+    
+
+    
+    b_temp = r_temp@R_inv_temp
+    
+
+    B_grid[i][gridNei[i]] = b_temp
+    
+    r_grid[i] = 1-np.inner(b_temp,r_temp)
+
+
+
 
 ### simulate an example y
 
@@ -119,12 +170,25 @@ w_grid = random.normal(size=n_grid+1)
 
 N = 1000
 
+w_grid_run = np.zeros((N,n_grid+1))
+
+
+
 import time
 
 st = time.time()
 
 for i in range(N):
-
+    
+    
+    
+    if i % 100 ==0:
+        # plt.scatter(locs,y, c="black", s=10)
+        plt.plot(grid_locs,w_grid_true)
+        plt.plot(grid_locs,w_grid)
+        # plt.scatter(locs,w_current, c="tab:orange", s=10)
+        plt.show() 
+        print(i)
     
     ## w update
     
@@ -139,22 +203,38 @@ for i in range(N):
         w_current[ii] = 1/np.sqrt(A_temp)*random.normal() + B_temp/A_temp
 
 
-    if i % 100 ==0:
-        # plt.scatter(locs,y, c="black", s=10)
-        plt.plot(grid_locs,w_grid_true)
-        plt.scatter(locs,w_current, c="tab:orange", s=10)
-        plt.show() 
-        print(i)
+    
 
 
     ## w grid update
     
+    for ii in range(n_grid+1):
+        
+        a_temp = r_grid[ii] / a
+        
+        w_grid[ii] = np.sqrt(r_grid[ii] / a)*random.normal() + mu_grid[ii] + np.inner(B_grid[ii][gridNei[ii]],w_current[gridNei[ii]] - mu[gridNei[ii]])
+        
+    w_grid_run[i] = w_grid
     
 et = time.time()
 
 print("Total Time:", (et-st)/60, "minutes")
 
-   
+tail = 400
+
+w_grid_mean = np.mean(w_grid_run[tail:], axis=0)
+w_grid_025 = np.quantile(w_grid_run[tail:], 0.025, axis=0)
+w_grid_975 = np.quantile(w_grid_run[tail:], 0.975, axis=0)
+
+
+plt.plot(grid_locs,w_grid_true)
+plt.plot(grid_locs,w_grid_mean)
+plt.show()
+
+plt.plot(grid_locs,w_grid_true)
+plt.plot(grid_locs,w_grid_mean)
+plt.fill_between(grid_locs, w_grid_025, w_grid_975, alpha=0.5,color="tab:orange")
+plt.show()
             
             
             
