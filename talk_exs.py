@@ -39,14 +39,14 @@ def fct(s):
 
 # random.seed(0)
 
-# n_grid = 200
+# n_grid = 10
 # xlim = 10
 
 # grid_locs = np.linspace(-xlim,xlim,n_grid+1)
 # f_grid = fct(grid_locs)
 
 
-# n_obs = 800
+# n_obs = 10
 
 # ### normal locs
 # # sd_locs = 4
@@ -75,8 +75,8 @@ def fct(s):
 
 # sigma2_mu = 1
 
-# alpha_phi = 1
-# beta_phi = 0.001
+# alpha_phi = 10
+# beta_phi = 0.01
 
 # alpha_a = 0.01
 # beta_a = 0.1
@@ -122,7 +122,7 @@ def fct(s):
 
 # ### containers
 
-# N = 1000
+# N = 4000
 
 # f_grid_run = np.zeros((N,n_grid+1))
 # phi_run = np.zeros(N)
@@ -224,7 +224,7 @@ def fct(s):
 # et = time()
 # print("Time:",(et-st)/60,"minutes")
 
-# tail = 400
+# tail = 2000
 
 # f_grid_mean = np.mean(f_grid_run[tail:], axis=0)
 # f_grid_025 = np.quantile(f_grid_run[tail:], 0.025, axis=0)
