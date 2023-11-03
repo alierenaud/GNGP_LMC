@@ -9,7 +9,7 @@ Created on Tue Oct 31 17:05:22 2023
 import numpy as np
 from scipy.special import gamma, kv
 
-def matern_kernel(r, phi = 1, v = 0.4):
+def matern_kernel(r, phi = 1, v = 0.5):
     r = np.abs(r)
     r[r == 0] = 1e-8
     part1 = 2 ** (1 - v) / gamma(v)

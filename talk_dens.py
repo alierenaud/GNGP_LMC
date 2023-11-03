@@ -98,13 +98,13 @@ beta_phi = 1
 
 ### proposals
 
-alpha_prop = 100
+alpha_prop = 400
 
 
 ### algorithm
 
 mu = 0
-a = 1.0
+a = 0.1
 tau = 1.0
 
 phi_current = 100.0
@@ -171,17 +171,7 @@ st = time()
 
 for i in range(N):
 
-    if i%1==0:
-
-        plt.plot(grid_locs, norm.cdf(f_grid), c="black")
-        # plt.scatter(x_1, np.zeros(n_1), s=10)
-        plt.scatter(x_0_current, np.zeros(n_0_current), c="tab:orange", marker="|")
-        
-        plt.scatter(x_1, norm.cdf(g_1_current), s=10, c="tab:blue")
-        plt.scatter(x_0_current, norm.cdf(g_0_current), s=10, c="tab:orange")
-        plt.show()
-
-        print(i)
+    
 
         
 
@@ -192,7 +182,7 @@ for i in range(N):
     while True:
         
         ### simulate n_1 new variables 
-        x_new = random.uniform(size=n_1) * 20 - 10
+        x_new = random.uniform(size=4*n_1) * 20 - 10
         
         D_new = distance_matrix(np.transpose([x_new]), np.transpose([x_new]))
         R_new = matern_kernel(D_new, phi_current)
@@ -203,8 +193,8 @@ for i in range(N):
         B_temp = R_new_obs@R_inv_current
         V_temp = R_new-B_temp @ np.transpose(R_new_obs)
         
-        g_new = np.linalg.cholesky(V_temp)@random.normal(size=n_1)+B_temp@(g_current-mu) + mu
-        y_new = g_new + random.normal(size=n_1)
+        g_new = np.linalg.cholesky(V_temp)/np.sqrt(a)@random.normal(size=4*n_1)+B_temp@(g_current-mu) + mu
+        y_new = g_new + random.normal(size=4*n_1)
         
         count += np.sum(y_new>0)
         
@@ -262,34 +252,37 @@ for i in range(N):
             # AA = R_inv_current - np.transpose(B_temp)@BB
             # R_inv_current = np.block([[AA,np.transpose(BB)],[BB,DD]])
             
-            ##
+            # #
             
-            DDDD_TEMP = distance_matrix(np.transpose([x_current]), np.transpose([x_current]))
-            RRRR_TEMP = matern_kernel(DDDD_TEMP,phi_current)
-            R_inv_current = np.linalg.inv(RRRR_TEMP)
+            D_current = distance_matrix(np.transpose([x_current]), np.transpose([x_current]))
+            R_current = matern_kernel(D_current,phi_current)
+            R_inv_current = np.linalg.inv(R_current)
             # print(R_inv_current @ RRRR_TEMP)
             
             print("hey")
             
 
 
-    # ### f update
+    ### f update
     
-    # Sigma_f = np.linalg.inv(a_current*R_inv_current + tau_current*np.identity(n_obs))
+    Sigma_f = np.linalg.inv(a*R_inv_current + tau*np.identity(n_current))
     
-    # mu_f = Sigma_f@(a_current*R_inv_current@(mu_current*np.ones(n_obs)) + tau_current*y)
+    mu_f = Sigma_f@(a*R_inv_current@(mu*np.ones(n_current)) + tau*y_current)
     
-    # f_current = np.linalg.cholesky(Sigma_f)@random.normal(size=n_obs) + mu_f
+    g_current = np.linalg.cholesky(Sigma_f)@random.normal(size=n_current) + mu_f
     
+    
+    g_0_current = g_current[n_1:]
+    g_1_current = g_current[:n_1]
     
     # ### phi update
     
     # phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
     
-    # R_new = matern_kernel(D,phi_new)
+    # R_new = matern_kernel(D_current,phi_new)
     # R_inv_new = np.linalg.inv(R_new)
     
-    # sus = np.exp( a_current/2 * np.transpose(f_current-mu_current)@(R_inv_current-R_inv_new)@(f_current-mu_current) )
+    # sus = np.exp( a/2 * np.transpose(g_current-mu)@(R_inv_current-R_inv_new)@(g_current-mu) )
     
     # # print("sus",sus)
     
@@ -361,7 +354,17 @@ for i in range(N):
     
     # f_grid_run[i] = f_grid_current
     
-    
+    if i%1==0:
+
+        plt.plot(grid_locs, norm.cdf(f_grid), c="black")
+        # plt.scatter(x_1, np.zeros(n_1), s=10)
+        plt.scatter(x_0_current, np.zeros(n_0_current), c="tab:orange", marker="|")
+        
+        plt.scatter(x_1, norm.cdf(g_1_current), s=10, c="tab:blue")
+        plt.scatter(x_0_current, norm.cdf(g_0_current), s=10, c="tab:orange")
+        plt.show()
+
+        print(i)
 
 et = time()
 
