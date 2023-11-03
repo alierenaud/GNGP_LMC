@@ -13,15 +13,14 @@ import matplotlib.pyplot as plt
 
 from scipy.spatial import distance_matrix
 
-from talk_exs import matern_kernel
-from talk_exs import fct
+from base import matern_kernel, fct
 
 
 
 
 random.seed(0)
 
-n=1000
+n=800
 m=20
 
 n_grid = 200
@@ -41,9 +40,19 @@ locst = np.transpose([locs])
 
 mu = np.ones(n)
 mu_grid = np.ones(n_grid+1)
-a = 0.1
-phi_current = 10000.0
+a = 1
+phi_current = 100.0
 tau = 10
+
+### priors
+
+alpha_phi = 100
+beta_phi = 1
+
+
+### proposals
+
+alpha_prop = 100
 
 ### neighbors
 
@@ -154,28 +163,19 @@ w_grid_true = fct(grid_locs)
 y = w_true + 1/np.sqrt(tau)*random.normal(size = n)
 ### showcase data
 
+plt.plot(grid_locs,w_grid_true)
 plt.scatter(locs,y, c="black", s=10)
 plt.show()  
 
 
-w_current = w_true
-# w_current = random.normal(size=n)
+# w_current = w_true
+w_current = random.normal(size=n) + 1
 
-# w_grid = w_grid_true
-w_grid = random.normal(size=n_grid+1)
+# w_grid = np.copy(w_grid_true)
+w_grid = random.normal(size=n_grid+1) + 1
 
 
-### priors
 
-# alpha_phi = 10
-# beta_phi = 0.001
-
-alpha_phi = (10000/2000)**2
-beta_phi = np.sqrt(alpha_phi)/2000
-
-### proposals
-
-alpha_prop = 10
 
 
 ### algorithm
@@ -226,6 +226,11 @@ for i in range(N):
     
     phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
     
+    # phi_new = phi_current + random.normal()*20
+    
+    B_new = np.zeros((n,n))
+    r_new = np.zeros(n)
+    
     for ii in range(n):
 
         
@@ -247,8 +252,23 @@ for i in range(N):
         
         r_new[ii] = 1-np.inner(b_temp,r_temp)
     
+    sus = np.exp(- a/2* np.sum([ (w_current[ii] - mu[ii] - np.inner(B_new[ii,Nei[ii]],w_current[Nei[ii]]-mu[Nei[ii]]))**2/r_new[ii] - (w_current[ii] - mu[ii] - np.inner(B_current[ii,Nei[ii]],w_current[Nei[ii]]-mu[Nei[ii]]))**2/r_current[ii] for ii in range(n)]))
     
-    ratio = np.exp(- a/2* np.sum([ (w_current[ii] - mu[ii] - np.inner(B_new[ii,Nei[ii]],w_current[Nei[ii]]-mu[Nei[ii]]))/r_new[ii] - (w_current[ii] - mu[ii] - np.inner(B_current[ii,Nei[ii]],w_current[Nei[ii]]-mu[Nei[ii]]))/r_current[ii] for ii in range(n)])) * np.prod([(r_current[ii]/r_new[ii])**(1/2) for ii in range(n)]) * np.exp(alpha_prop*(phi_new/phi_current - phi_current/phi_new)) * np.exp(beta_phi*(phi_current-phi_new)) * (phi_new/phi_current)**(alpha_phi-2*alpha_prop)
+    # print("sus",sus)
+    
+    pect = np.prod([(r_current[ii]/r_new[ii])**(1/2) for ii in range(n)])
+    
+    # print("pect",pect)
+    
+    prior = (phi_new/phi_current)**(alpha_phi-1) * np.exp(-beta_phi*(phi_new-phi_current))
+        
+    # print("prior",prior)
+    
+    trans = (phi_current/phi_new)**(alpha_prop-1) * np.exp(-alpha_prop*(phi_current/phi_new - phi_new/phi_current))
+    
+    # print("trans",trans)
+
+    ratio = sus * pect * prior * trans
     
     if random.uniform() < ratio:
         phi_current = phi_new
@@ -279,6 +299,7 @@ for i in range(N):
         
         acc_phi[i] = 1
         
+        
     phi_run[i] = phi_current
     
     ## w grid update
@@ -295,12 +316,15 @@ et = time.time()
 
 print("Total Time:", (et-st)/60, "minutes")
 
-tail = 0
+tail = 400
 
-print("Accept rate phi:",np.mean(acc_phi))
+print("Accept rate phi:",np.mean(acc_phi[tail:]))
 ### trace plots
 
 plt.plot(phi_run[tail:])
+plt.show()
+
+plt.boxplot(phi_run[tail:])
 plt.show()
 
 w_grid_mean = np.mean(w_grid_run[tail:], axis=0)
@@ -317,6 +341,8 @@ plt.plot(grid_locs,w_grid_mean)
 plt.fill_between(grid_locs, w_grid_025, w_grid_975, alpha=0.5,color="tab:orange")
 plt.show()
             
-            
-            
+plt.plot(grid_locs,w_grid_mean,c="tab:orange")
+plt.fill_between(grid_locs, w_grid_025, w_grid_975, alpha=0.5,color="tab:orange")
+plt.scatter(locs,y, c="black", s=10)        
+plt.show()     
             
