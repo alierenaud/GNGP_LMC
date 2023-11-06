@@ -19,10 +19,10 @@ from base import matern_kernel, fct
 
 random.seed(0)
 
-n_obs=2000
+n_obs=3000
 m=20
 
-n_grid = 200
+n_grid = 3000
 
 xlim=10
 
@@ -37,17 +37,17 @@ locst = np.transpose([locs])
 
 ### parameters
 
-mu = np.ones(n_obs)
-mu_grid = np.ones(n_grid+1)
+mu = np.zeros(n_obs)
+mu_grid = np.zeros(n_grid+1)
 a = 1
-phi_current = 100.0
+phi_current = 1.0
 tau = 10
 
 
 ### priors
 
-alpha_phi = 100
-beta_phi = 1
+alpha_phi = 10
+beta_phi = 10
 
 
 
@@ -186,12 +186,12 @@ plt.show()
 
 
 # w_current = w_true
-w_current = np.load("w_current.npy")
-# w_current = random.normal(size=n_obs) + 1
+# w_current = np.load("w_current.npy")
+w_current = random.normal(size=n_obs)
 
 # w_grid = np.copy(w_grid_true)
-w_grid = np.load("w_grid.npy")
-# w_grid = random.normal(size=n_grid+1) + 1
+# w_grid = np.load("w_grid.npy")
+w_grid = random.normal(size=n_grid+1)
 
 
 
@@ -199,7 +199,7 @@ w_grid = np.load("w_grid.npy")
 ### algorithm
 
 
-N = 4000
+N = 400
 
 w_grid_run = np.zeros((N,n_grid+1))
 w_current_run = np.zeros((N,n_obs))
@@ -224,7 +224,7 @@ for i in range(N):
     
     
     
-    if i % 100 ==0:
+    if i % 10 ==0:
         # plt.scatter(locs,y, c="black", s=10)
         plt.plot(grid_locs,w_grid_true)
         plt.plot(grid_locs,w_grid)
@@ -349,7 +349,7 @@ et = time.time()
 
 print("Total Time:", (et-st)/60, "minutes")
 
-tail = 1000
+tail = 300
 
 print("Accept rate phi:",np.mean(acc_phi))
 ### trace plots
@@ -390,4 +390,5 @@ plt.show()
 np.save("w_current",w_current_mean)
 np.save("w_grid",w_grid_mean)
 
-
+print("MSE:", np.mean((w_grid_true - w_grid_mean)**2))
+print("TMSE:", np.mean((w_grid_run[tail:] - w_grid_true)**2))

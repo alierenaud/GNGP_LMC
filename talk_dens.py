@@ -10,6 +10,7 @@ import numpy as np
 from numpy import random
 
 from scipy.spatial import distance_matrix
+from scipy.stats import truncnorm
 
 
 import matplotlib.pyplot as plt
@@ -18,6 +19,9 @@ import matplotlib.pyplot as plt
 from base import matern_kernel, fct
 
 from scipy.stats import norm
+
+# def is_pos_def(x):
+#     return np.all(np.linalg.eigvals(x) > 0)
 
 
 random.seed(0)
@@ -37,7 +41,7 @@ plt.plot(grid_locs,norm.cdf(f_grid))
 plt.show()
 
 
-n_1 = 100
+n_1 = 400
 
 
 ### generate data
@@ -72,7 +76,7 @@ y_0_true = y_true[y_true<0]
 y_1_true = y_true[y_true>0]
 
 ### showcase data        
-plt.hist(x_1,density=True,alpha=0.5)
+plt.hist(x_1,density=True,alpha=0.5,bins=20)
 # plt.plot(grid_locs,f_grid)
 plt.show()
 plt.violinplot(x_1)
@@ -87,7 +91,7 @@ plt.show()
 # sigma2_mu = 1
 
 alpha_phi = 100
-beta_phi = 1
+beta_phi = 100
 
 # alpha_a = 0.01
 # beta_a = 0.1
@@ -98,31 +102,34 @@ beta_phi = 1
 
 ### proposals
 
-alpha_prop = 400
+alpha_prop = 100
 
 
 ### algorithm
 
 mu = 0
-a = 0.1
+a = 1.0
 tau = 1.0
 
-phi_current = 100.0
+phi_current = 1
 
 
 ### initiiate point process
-# n_0_current = n_1
-# x_0_current = random.uniform(size=(n_1,1))
-# g_0_current = random.normal(size=n_0_current) + mu
-# y_0_current = -1/2*np.ones(n_0_current)
+n_0_current = n_1
+x_0_current = random.uniform(size=n_1) * 20 -10
+g_0_current = random.normal(size=n_0_current) + mu
+y_0_current = -np.ones(n_0_current)
 
-n_0_current = n_0_true
-x_0_current = x_0_true
-g_0_current = g_0_true
-y_0_current = y_0_true
+# n_0_current = n_0_true
+# x_0_current = x_0_true
+# g_0_current = g_0_true
+# y_0_current = y_0_true
 
-g_1_current = g_1_true
-y_1_current = y_1_true
+# g_1_current = g_1_true
+# y_1_current = y_1_true
+
+g_1_current = random.normal(size=n_1) + mu
+y_1_current = np.ones(n_1)
 
 
 n_current = n_1 + n_0_current 
@@ -131,6 +138,7 @@ g_current = np.append(g_1_current,g_0_current)
 y_current = np.append(y_1_current,y_0_current)
 
 g_grid_current = random.normal(size=n_grid+1)
+# g_grid_current = f_grid
 
 
 ### useful quantitites
@@ -181,21 +189,37 @@ for i in range(N):
     
     while True:
         
-        ### simulate n_1 new variables 
-        x_new = random.uniform(size=4*n_1) * 20 - 10
+        while True:
+            ### simulate n_1 new variables 
+            x_new = random.uniform(size=3*n_1) * 20 - 10
+            
+            D_new = distance_matrix(np.transpose([x_new]), np.transpose([x_new]))
+            # print("new",np.sum(D_new<1e-4 - D_new.shape[0]))
+            R_new = matern_kernel(D_new, phi_current)
+            
+            D_new_obs = distance_matrix(np.transpose([x_new]), np.transpose([x_current]))
+            # print("new_obs",np.sum(D_new_obs<1e-4))
+            R_new_obs = matern_kernel(D_new_obs, phi_current)
+            
+            
+            
+            B_temp = R_new_obs@R_inv_current
+            V_temp = R_new-B_temp @ np.transpose(R_new_obs)
+            
+            
+                
+            try:
+                C = np.linalg.cholesky(V_temp)
+                g_new = C/np.sqrt(a)@random.normal(size=3*n_1)+B_temp@(g_current-mu) + mu
+                y_new = g_new + random.normal(size=3*n_1)
+                break
+            except np.linalg.LinAlgError:
+                print("oof")
+            
+    
         
-        D_new = distance_matrix(np.transpose([x_new]), np.transpose([x_new]))
-        R_new = matern_kernel(D_new, phi_current)
-        
-        D_new_obs = distance_matrix(np.transpose([x_new]), np.transpose([x_current]))
-        R_new_obs = matern_kernel(D_new_obs, phi_current)
-        
-        B_temp = R_new_obs@R_inv_current
-        V_temp = R_new-B_temp @ np.transpose(R_new_obs)
-        
-        g_new = np.linalg.cholesky(V_temp)/np.sqrt(a)@random.normal(size=4*n_1)+B_temp@(g_current-mu) + mu
-        y_new = g_new + random.normal(size=4*n_1)
-        
+                
+                
         count += np.sum(y_new>0)
         
         if count >= n_1:
@@ -230,15 +254,18 @@ for i in range(N):
 
             R_current = matern_kernel(D_current,phi_current)
             R_inv_current = np.linalg.inv(R_current)
+            
+            
+            # print(np.prod(eigval>0))
 
 
             D_grid_obs_current = distance_matrix(np.transpose([grid_locs]),np.transpose([x_current]))
 
-            R_grid_obs_current = matern_kernel(D_grid_obs_current,phi_current)
+            # R_grid_obs_current = matern_kernel(D_grid_obs_current,phi_current)
 
 
             
-            R_grid_current = matern_kernel(D_grid,phi_current)
+            # R_grid_current = matern_kernel(D_grid,phi_current)
             
             
             break
@@ -259,7 +286,7 @@ for i in range(N):
             R_inv_current = np.linalg.inv(R_current)
             # print(R_inv_current @ RRRR_TEMP)
             
-            print("hey")
+            print("not enough points")
             
 
 
@@ -269,47 +296,67 @@ for i in range(N):
     
     mu_f = Sigma_f@(a*R_inv_current@(mu*np.ones(n_current)) + tau*y_current)
     
-    g_current = np.linalg.cholesky(Sigma_f)@random.normal(size=n_current) + mu_f
     
+    
+    try:
+        C = np.linalg.cholesky(Sigma_f)
+        g_current = C@random.normal(size=n_current) + mu_f
+    except np.linalg.LinAlgError:
+        print("oof g_current")
     
     g_0_current = g_current[n_1:]
     g_1_current = g_current[:n_1]
     
-    # ### phi update
-    
-    # phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
-    
-    # R_new = matern_kernel(D_current,phi_new)
-    # R_inv_new = np.linalg.inv(R_new)
-    
-    # sus = np.exp( a/2 * np.transpose(g_current-mu)@(R_inv_current-R_inv_new)@(g_current-mu) )
-    
-    # # print("sus",sus)
-    
-    # pect = np.linalg.det(R_current@R_inv_new)**(1/2)
-    
-    # # print("pect",pect)
-    
-    # prior = (phi_new/phi_current)**(alpha_phi-1) * np.exp(-beta_phi*(phi_new-phi_current))
-    
-    # # print("prior",prior)
-    
-    # trans = (phi_current/phi_new)**(alpha_prop-1) * np.exp(-alpha_prop*(phi_current/phi_new - phi_new/phi_current))
-    
-    # # print("trans",trans)
-    
-    # ratio = sus * pect * prior * trans
     
     
-    # if random.uniform() < ratio:
-    #     phi_current = phi_new
-    #     R_current = R_new
-    #     R_inv_current = R_inv_new
+    ### phi update
+    
+    phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
+    
+    R_new = matern_kernel(D_current,phi_new)
+    R_inv_new = np.linalg.inv(R_new)
+    
+    sus = np.exp( a/2 * np.transpose(g_current-mu)@(R_inv_current-R_inv_new)@(g_current-mu) )
+    
+    # print("sus",sus)
+    
+    pect = np.linalg.det(R_current@R_inv_new)**(1/2)
+    
+    # print("pect",pect)
+    
+    prior = (phi_new/phi_current)**(alpha_phi-1) * np.exp(-beta_phi*(phi_new-phi_current))
+    
+    # print("prior",prior)
+    
+    trans = (phi_current/phi_new)**(alpha_prop-1) * np.exp(-alpha_prop*(phi_current/phi_new - phi_new/phi_current))
+    
+    # print("trans",trans)
+    
+    ratio = sus * pect * prior * trans
+    
+    
+    if random.uniform() < ratio:
+        phi_current = phi_new
+        R_current = np.copy(R_new)
+        R_inv_current = np.copy(R_inv_new)
         
-    #     acc_phi[i] = 1
+        acc_phi[i] = 1
     
     
-    # phi_run[i] = phi_current
+    phi_run[i] = phi_current
+    
+    ### y_update
+    
+    for ii in range(n_1):
+        
+        y_current[ii] = truncnorm.rvs(a=-g_current[ii],b=np.inf,loc=g_current[ii])
+        
+    for ii in range(n_1,n_current):
+        
+        y_current[ii] = truncnorm.rvs(a=-np.inf,b=-g_current[ii],loc=g_current[ii])
+    
+    y_0_current = y_current[n_1:]
+    y_1_current = y_current[:n_1]
     
     # # ### mu update
     
@@ -338,40 +385,83 @@ for i in range(N):
     
     # # tau_run[i] = tau_current
     
-    # ### f grid update
+    ### f grid update
+    # print("grid_obs",np.sum(D_grid_obs_current<1e-4))
+    
+    R_grid_obs_current = matern_kernel(D_grid_obs_current,phi_current)
+    R_grid_current = matern_kernel(D_grid,phi_current)
     
     
-    # R_grid_obs_current = matern_kernel(D_grid_obs,phi_current)
-    # R_grid_current = matern_kernel(D_grid,phi_current)
+    tempMat = R_grid_obs_current@R_inv_current
     
+    mu_grid = tempMat@(g_current-mu) + mu
+    Sigma_grid = R_grid_current - tempMat@np.transpose(R_grid_obs_current)
     
-    # tempMat = R_grid_obs_current@R_inv_current
+    try:
+        C = np.linalg.cholesky(Sigma_grid)
+        g_grid_current = C/np.sqrt(a)@random.normal(size=n_grid+1) + mu_grid
+         
+    except np.linalg.LinAlgError:
+        print("oof g_grid")
     
-    # mu_grid = tempMat@(f_current-mu_current) + mu_current
-    # Sigma_grid = R_grid_current - tempMat@np.transpose(R_grid_obs_current)
+
+    g_grid_run[i] =g_grid_current
     
-    # f_grid_current = np.linalg.cholesky(Sigma_grid)@random.normal(size=n_grid+1) + mu_grid
-    
-    # f_grid_run[i] = f_grid_current
-    
-    if i%1==0:
+    if i%10==0:
 
         plt.plot(grid_locs, norm.cdf(f_grid), c="black")
         # plt.scatter(x_1, np.zeros(n_1), s=10)
-        plt.scatter(x_0_current, np.zeros(n_0_current), c="tab:orange", marker="|")
+        plt.scatter(x_0_current, np.zeros(n_0_current), c="black", marker="|")
+        plt.plot(grid_locs, norm.cdf(g_grid_current), c="tab:orange")
+        
         
         plt.scatter(x_1, norm.cdf(g_1_current), s=10, c="tab:blue")
         plt.scatter(x_0_current, norm.cdf(g_0_current), s=10, c="tab:orange")
+        
+        
         plt.show()
 
         print(i)
 
 et = time()
+print("Time:",(et-st)/60,"minutes")
+
+tail = 400
+
+Phi_g_grid_run = norm.cdf(g_grid_run)
+
+Phi_g_grid_mean = np.mean(Phi_g_grid_run[tail:], axis=0)
+Phi_g_grid_025 = np.quantile(Phi_g_grid_run[tail:], 0.05, axis=0)
+Phi_g_grid_975 = np.quantile(Phi_g_grid_run[tail:], 0.95, axis=0)
+
+
+plt.plot(grid_locs,norm.cdf(f_grid))
+plt.plot(grid_locs,Phi_g_grid_mean)
+plt.show()
 
 
 
 
+plt.plot(grid_locs,norm.cdf(f_grid))
+plt.plot(grid_locs,Phi_g_grid_mean)
+plt.fill_between(grid_locs, Phi_g_grid_025, Phi_g_grid_975, alpha=0.5,color="tab:orange")
+plt.show()
 
 
+
+print("Accept rate phi:",np.mean(acc_phi))
+### trace plots
+
+plt.plot(phi_run[tail:])
+plt.show()
+
+plt.boxplot(phi_run[tail:])
+plt.show()
+
+plt.hist(x_1,density=True,alpha=0.5,bins=20)
+plt.show()
+
+plt.violinplot(x_1,vert=False)
+plt.show()
      
         

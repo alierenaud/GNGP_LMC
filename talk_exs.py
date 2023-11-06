@@ -20,14 +20,14 @@ from base import matern_kernel, fct
 
 random.seed(0)
 
-n_grid = 200
+n_grid = 3000
 xlim = 10
 
 grid_locs = np.linspace(-xlim,xlim,n_grid+1)
 f_grid = fct(grid_locs)
 
 
-n_obs = 800
+n_obs = 3000
 
 ### normal locs
 # sd_locs = 4
@@ -56,8 +56,8 @@ plt.show()
 
 sigma2_mu = 1
 
-alpha_phi = 100
-beta_phi = 1
+alpha_phi = 10
+beta_phi = 10
 
 alpha_a = 0.01
 beta_a = 0.1
@@ -73,14 +73,14 @@ alpha_prop = 100
 
 ### algorithm
 
-mu_current = 1
+mu_current = 0
 
-phi_current = 100.0
+phi_current = 1.0
 a_current = 1
 tau_current = 10.0
 
-f_currrent = random.normal(size=n_obs) + 1
-f_grid_current = random.normal(size=n_grid+1) + 1
+f_currrent = random.normal(size=n_obs)
+f_grid_current = random.normal(size=n_grid+1)
 
 
 ### useful quantitites
@@ -103,7 +103,7 @@ R_grid_current = matern_kernel(D_grid,phi_current)
 
 ### containers
 
-N = 1000
+N = 100
 
 f_grid_run = np.zeros((N,n_grid+1))
 phi_run = np.zeros(N)
@@ -222,7 +222,7 @@ for i in range(N):
 et = time()
 print("Time:",(et-st)/60,"minutes")
 
-tail = 400
+tail = 0
 
 f_grid_mean = np.mean(f_grid_run[tail:], axis=0)
 f_grid_025 = np.quantile(f_grid_run[tail:], 0.025, axis=0)
@@ -280,7 +280,8 @@ plt.show()
 # # plt.ylim(-0.02, 0.22)
 # plt.show()
 
-
+print("MSE:", np.mean((f_grid - f_grid_mean)**2))
+print("TMSE:", np.mean((f_grid_run[tail:] - f_grid)**2))
 
 
 

@@ -20,7 +20,7 @@ from base import matern_kernel, fct
 
 random.seed(0)
 
-n=800
+n=2000
 m=20
 
 n_grid = 200
@@ -38,16 +38,16 @@ locst = np.transpose([locs])
 
 ### parameters
 
-mu = np.ones(n)
-mu_grid = np.ones(n_grid+1)
+mu = np.zeros(n)
+mu_grid = np.zeros(n_grid+1)
 a = 1
-phi_current = 100.0
+phi_current = 1.0
 tau = 10
 
 ### priors
 
 alpha_phi = 100
-beta_phi = 1
+beta_phi = 10
 
 
 ### proposals
@@ -169,10 +169,10 @@ plt.show()
 
 
 # w_current = w_true
-w_current = random.normal(size=n) + 1
+w_current = random.normal(size=n)
 
 # w_grid = np.copy(w_grid_true)
-w_grid = random.normal(size=n_grid+1) + 1
+w_grid = random.normal(size=n_grid+1)
 
 
 
@@ -316,7 +316,7 @@ et = time.time()
 
 print("Total Time:", (et-st)/60, "minutes")
 
-tail = 400
+tail = 600
 
 print("Accept rate phi:",np.mean(acc_phi[tail:]))
 ### trace plots
@@ -345,4 +345,8 @@ plt.plot(grid_locs,w_grid_mean,c="tab:orange")
 plt.fill_between(grid_locs, w_grid_025, w_grid_975, alpha=0.5,color="tab:orange")
 plt.scatter(locs,y, c="black", s=10)        
 plt.show()     
+
+
+print("MSE:", np.mean((w_grid_true - w_grid_mean)**2))
+print("TMSE:", np.mean((w_grid_run[tail:] - w_grid_true)**2))
             
