@@ -38,7 +38,7 @@ plt.plot(grid_locs,norm.cdf(f_grid))
 plt.show()
 
 
-n_1 = 100
+n_1 = 1000
 
 
 ### generate data
@@ -86,7 +86,7 @@ plt.show()
 ### priors
 
 alpha_phi = 100
-beta_phi = 100
+beta_phi = 10
 
 
 
@@ -98,30 +98,34 @@ alpha_prop = 100
 ### algorithm
 
 mu = 0
-mu_obs = np.ones(n_1)*mu
+
 mu_grid = np.ones(n_grid+1)*mu
 a = 1.0
 tau = 1.0
 
-phi_current = 1
+phi_current = 10
 
 
 ### initiiate point process
-# n_0_current = n_1
-# x_0_current = random.uniform(size=n_1) * 20 -10
-# g_0_current = random.normal(size=n_0_current) + mu
-# y_0_current = -np.ones(n_0_current)
 
-n_0_current = n_0_true
-x_0_current = x_0_true
-g_0_current = g_0_true
-y_0_current = y_0_true
+# n_0_current = n_0_true
+# x_0_current = x_0_true
+# g_0_current = g_0_true
+# y_0_current = y_0_true
 
-g_1_current = g_1_true
-y_1_current = y_1_true
 
-# g_1_current = random.normal(size=n_1) + mu
-# y_1_current = np.ones(n_1)
+n_0_current = n_1
+x_0_current = random.uniform(size=n_1) * 20 -10
+g_0_current = random.normal(size=n_0_current) + mu
+y_0_current = -np.ones(n_0_current)
+
+
+
+# g_1_current = g_1_true
+# y_1_current = y_1_true
+
+g_1_current = random.normal(size=n_1) + mu
+y_1_current = np.ones(n_1)
 
 
 n_current = n_1 + n_0_current 
@@ -129,8 +133,10 @@ x_current = np.append(x_1,x_0_current)
 g_current = np.append(g_1_current,g_0_current)
 y_current = np.append(y_1_current,y_0_current)
 
-# g_grid_current = random.normal(size=n_grid+1)
-g_grid_current = f_grid
+mu_obs = np.ones(n_current)*mu
+
+g_grid_current = random.normal(size=n_grid+1)
+# g_grid_current = np.copy(f_grid)
 
 
 ###### compute grid neighbors
@@ -252,7 +258,7 @@ for i in range(n_current):
 
 ### containers
 
-N = 1000
+N = 2000
 
 g_grid_run = np.zeros((N,n_grid+1))
 phi_run = np.zeros(N)
@@ -266,21 +272,27 @@ st = time()
 
 for i in range(N):
 
-    if i%1==0:
+    if i%100==0:
 
         plt.plot(grid_locs, norm.cdf(f_grid), c="black")
         # plt.scatter(x_1, np.zeros(n_1), s=10)
+        # plt.hist(x_1,density=True,alpha=0.5,bins=20)
         plt.scatter(x_0_current, np.zeros(n_0_current), c="black", marker="|")
         plt.plot(grid_locs, norm.cdf(g_grid_current), c="tab:orange")
+        
         
         
         plt.scatter(x_1, norm.cdf(g_1_current), s=10, c="tab:blue")
         plt.scatter(x_0_current, norm.cdf(g_0_current), s=10, c="tab:orange")
         
+        # for ii in range(n_current):
+        #     plt.text(x_current[ii],norm.cdf(g_current[ii]),ii)
+        
         
         plt.show()
 
         print(i)
+        print(phi_current)
 
         
 
@@ -292,11 +304,13 @@ for i in range(N):
     y_cont= []
     
     ogNei_cont = []
-    aogNei_cont = []
+    
+    
+    
     
     Distogs_cont = []
     
-    Bog_cont = []
+    Bog_cont = np.zeros(shape=(0,n_grid+1))
     rog_cont = []
     
     while True:
@@ -309,10 +323,7 @@ for i in range(N):
         ### compute obs neighbors on grid
 
         ogNei_new = np.zeros(n_new,dtype=object)
-        aogNei_new = np.zeros(n_grid+1,dtype=object)
-
-        for ii in range(n_grid+1):
-            aogNei_new[ii] = np.empty(0,dtype=int)
+        
 
         # Distog = distance_matrix(np.transpose([x_current]), np.transpose([grid_locs]))
 
@@ -339,8 +350,7 @@ for i in range(N):
             
             Distogs_new[ii] = distance_matrix([[x_new[ii]]], np.transpose([grid_locs[nei_temp]]))
             
-            for jj in np.arange(leftMostNei,rightMostNei):
-                aogNei_new[jj] = np.append(aogNei_new[jj],ii)
+            
             
 
             
@@ -376,7 +386,7 @@ for i in range(N):
                 
     
         for ii in range(n_new):
-            g_new[ii] = np.sqrt(rog_new[ii])*random.normal() + np.inner(Bog_new[ii,ogNei_new[ii]],g_grid_current[ogNei_new[ii]] - mu_grid[ogNei_new[ii]])
+            g_new[ii] = np.sqrt(rog_new[ii])*random.normal() + np.inner(Bog_new[ii,ogNei_new[ii]],g_grid_current[ogNei_new[ii]] - mu_grid[ogNei_new[ii]]) + mu
     
         y_new = g_new + random.normal(size=n_new)
         
@@ -386,11 +396,10 @@ for i in range(N):
         y_cont = np.append(y_cont, y_new) 
         
         ogNei_cont = np.append(ogNei_cont, ogNei_new)
-        aogNei_cont = np.append(aogNei_cont, aogNei_new)
         
         Distogs_cont = np.append(Distogs_cont, Distogs_new)
         
-        Bog_cont = np.append(Bog_cont, Bog_new)
+        Bog_cont = np.append(Bog_cont, Bog_new, axis=0)
         rog_cont = np.append(rog_cont, rog_new)
                 
         count += np.sum(y_new>0)
@@ -403,6 +412,14 @@ for i in range(N):
             g_cont = g_cont[:n_tail+1]
             y_cont = y_cont[:n_tail+1]
             
+            ogNei_cont = ogNei_cont[:n_tail+1]
+            
+            
+            Distogs_cont = Distogs_cont[:n_tail+1]
+            
+            Bog_cont = Bog_cont[:n_tail+1]
+            rog_cont = rog_cont[:n_tail+1]
+            
             thinned = y_cont < 0 
             
             
@@ -411,20 +428,34 @@ for i in range(N):
             g_0_current = g_cont[thinned]
             y_0_current = y_cont[thinned]
             
+            ogNei = np.append(ogNei[:n_1],ogNei_cont[thinned])
+            Distogs = np.append(Distogs[:n_1],Distogs_cont[thinned])
+            
+            
+            
+            Bog_current = np.append(Bog_current[:n_1],Bog_cont[thinned],axis=0)
+            rog_current = np.append(rog_current[:n_1],rog_cont[thinned])
+            
           
             n_current = n_1 + n_0_current 
             x_current = np.append(x_1,x_0_current)
             g_current = np.append(g_1_current,g_0_current)
             y_current = np.append(y_1_current,y_0_current)
             
+            mu_obs = mu*np.ones(n_current)
             
-            ogNei = np.append(ogNei[:n_1], ogNei_cont)
-            aogNei = np.append(aogNei[:n_1], aogNei_cont)
             
-            Distogs = np.append(Distogs[:n_1], Distogs_new)
+            for ii in range(n_grid+1):
+                aogNei[ii] = np.empty(0,dtype=int)
             
-            Bog_current = np.append(Bog_current[:n_1], Bog_new)
-            rog_current = np.append(rog_current[:n_1], rog_new)
+            for ii in range(n_current):
+                for jj in ogNei[ii]:
+                    aogNei[jj] = np.append(aogNei[jj],ii)
+                
+            
+            
+            
+            
             
             
             break
@@ -434,129 +465,144 @@ for i in range(N):
             
 
 
-    # ### f update
+    # w_grid update
     
-    # Sigma_f = np.linalg.inv(a*R_inv_current + tau*np.identity(n_current))
+    for ii in random.permutation(range(n_grid+1)):
+    # for ii in range(n_grid+1):
+        
+        
+        A_temp = a/rg_current[ii] + np.sum([a/rg_current[jj]*Bg_current[jj,ii]**2 for jj in agNei[ii]]) + np.sum([a/rog_current[jj]*Bog_current[jj,ii]**2 for jj in aogNei[ii]])
+        
+        B_temp = a/rg_current[ii]*(mu_grid[ii] + np.inner(Bg_current[ii,gNei[ii]],g_grid_current[gNei[ii]]-mu_grid[gNei[ii]]) ) + np.sum([a*Bg_current[jj,ii]/rg_current[jj]*(g_grid_current[jj] - mu_grid[jj] - np.inner(Bg_current[jj,gNei[jj]],g_grid_current[gNei[jj]] - mu_grid[gNei[jj]]) + Bg_current[jj,ii]*g_grid_current[ii] ) for jj in agNei[ii]])  +  np.sum([a*Bog_current[jj,ii]/rog_current[jj]*(g_current[jj] - mu_obs[jj] - np.inner(Bog_current[jj,ogNei[jj]],g_grid_current[ogNei[jj]] - mu_grid[ogNei[jj]]) + Bog_current[jj,ii]*g_grid_current[ii] ) for jj in aogNei[ii]])             
+        
+        g_grid_current[ii] = 1/np.sqrt(A_temp)*random.normal() + B_temp/A_temp
+
     
-    # mu_f = Sigma_f@(a*R_inv_current@(mu*np.ones(n_current)) + tau*y_current)
+    # w_obs update
+
+
+    for ii in range(n_current):
+        
+        a_temp = a/rog_current[ii] + tau 
+        b_temp = a/rog_current[ii]*(mu_obs[ii] + np.inner(Bog_current[ii,ogNei[ii]],g_grid_current[ogNei[ii]] - mu_grid[ogNei[ii]])) + tau*y_current[ii]
+        
+        g_current[ii] = 1/np.sqrt(a_temp)*random.normal() + b_temp/a_temp
+    
+    g_0_current = g_current[n_1:]
+    g_1_current = g_current[:n_1]
     
     
+    g_grid_run[i] = g_grid_current
+    # g_current_run[i] = g_current
     
-    # try:
-    #     C = np.linalg.cholesky(Sigma_f)
-    #     g_current = C@random.normal(size=n_current) + mu_f
-    # except np.linalg.LinAlgError:
-    #     print("oof g_current")
+    ### y_update
     
-    # g_0_current = g_current[n_1:]
-    # g_1_current = g_current[:n_1]
+    for ii in range(n_1):
+        
+        y_current[ii] = truncnorm.rvs(a=-g_current[ii],b=np.inf,loc=g_current[ii])
+        
+    for ii in range(n_1,n_current):
+        
+        y_current[ii] = truncnorm.rvs(a=-np.inf,b=-g_current[ii],loc=g_current[ii])
     
+    y_0_current = y_current[n_1:]
+    y_1_current = y_current[:n_1]
     
-    
-    # ### phi update
+    ### phi update
     
     # phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
     
-    # R_new = matern_kernel(D_current,phi_new)
-    # R_inv_new = np.linalg.inv(R_new)
+    phi_new = 1*random.normal() + phi_current
     
-    # sus = np.exp( a/2 * np.transpose(g_current-mu)@(R_inv_current-R_inv_new)@(g_current-mu) )
+    Bg_new = np.zeros((n_grid+1,n_grid+1))
+    rg_new= np.zeros(n_grid+1)
     
-    # # print("sus",sus)
+    for ii in range(n_grid+1):
+
+        
+        DistgMat_temp = DistgMats[ii]
+        
+        cov_mat_temp = matern_kernel(DistgMat_temp,phi_new)
+        
+        ngNei_temp = gNei[ii].shape[0]
+        
+        R_inv_temp = np.linalg.inv(cov_mat_temp[:ngNei_temp,:ngNei_temp])
+        r_temp = cov_mat_temp[ngNei_temp,:ngNei_temp]
+
+        
+        b_temp = r_temp@R_inv_temp
+        
+
+        Bg_new[ii][gNei[ii]] = b_temp
+        
+        rg_new[ii] = 1-np.inner(b_temp,r_temp)
     
-    # pect = np.linalg.det(R_current@R_inv_new)**(1/2)
+    Bog_new = np.zeros((n_current,n_grid+1))
+    rog_new = np.zeros(n_current)
     
-    # # print("pect",pect)
+    for ii in range(n_current):
+
+        
+        
+        CovMatgg_temp = matern_kernel(DistggMat,phi_new)
+        
+        R_inv_temp = np.linalg.inv(CovMatgg_temp)
+        
+        DistMatog_temp = Distogs[ii]
+        r_temp = matern_kernel(DistMatog_temp,phi_new)
+        
+
+        
+        b_temp = r_temp@R_inv_temp
+        
+
+        Bog_new[ii][ogNei[ii]] = b_temp
+        
+        rog_new[ii] = 1-np.inner(b_temp,r_temp)
     
-    # prior = (phi_new/phi_current)**(alpha_phi-1) * np.exp(-beta_phi*(phi_new-phi_current))
+    sus_grid = np.exp(- a/2* np.sum([ (g_grid_current[ii] - mu_grid[ii] - np.inner(Bg_new[ii,gNei[ii]],g_grid_current[gNei[ii]]-mu_grid[gNei[ii]]))**2/rg_new[ii] - (g_grid_current[ii] - mu_grid[ii] - np.inner(Bg_current[ii,gNei[ii]],g_grid_current[gNei[ii]]-mu_grid[gNei[ii]]))**2/rg_current[ii] for ii in range(n_grid+1)]))
     
-    # # print("prior",prior)
+    # print("sus grid",sus_grid)
+    
+    sus_obs = np.exp(- a/2* np.sum([ (g_current[ii] - mu_obs[ii] - np.inner(Bog_new[ii,ogNei[ii]],g_grid_current[ogNei[ii]]-mu_grid[ogNei[ii]]))**2/rog_new[ii] - (g_current[ii] - mu_obs[ii] - np.inner(Bog_current[ii,ogNei[ii]],g_grid_current[ogNei[ii]]-mu_grid[ogNei[ii]]))**2/rog_current[ii] for ii in range(n_current)]))
+    
+    # print("sus obs",sus_obs)
+    
+    pect_grid = np.prod([(rg_current[ii]/rg_new[ii])**(1/2) for ii in range(n_grid+1)])
+    
+    # print("pect grid",pect_grid)
+    
+    pect_obs = np.prod([(rog_current[ii]/rog_new[ii])**(1/2) for ii in range(n_current)])
+    
+    # print("pect obs",pect_obs)
+    
+    prior = (phi_new/phi_current)**(alpha_phi-1) * np.exp(-beta_phi*(phi_new-phi_current))
+        
+    # print("prior",prior)
     
     # trans = (phi_current/phi_new)**(alpha_prop-1) * np.exp(-alpha_prop*(phi_current/phi_new - phi_new/phi_current))
     
-    # # print("trans",trans)
-    
-    # ratio = sus * pect * prior * trans
-    
-    
-    # if random.uniform() < ratio:
-    #     phi_current = phi_new
-    #     R_current = np.copy(R_new)
-    #     R_inv_current = np.copy(R_inv_new)
-        
-    #     acc_phi[i] = 1
-    
-    
-    # phi_run[i] = phi_current
-    
-    # ### y_update
-    
-    # for ii in range(n_1):
-        
-    #     y_current[ii] = truncnorm.rvs(a=-g_current[ii],b=np.inf,loc=g_current[ii])
-        
-    # for ii in range(n_1,n_current):
-        
-    #     y_current[ii] = truncnorm.rvs(a=-np.inf,b=-g_current[ii],loc=g_current[ii])
-    
-    # y_0_current = y_current[n_1:]
-    # y_1_current = y_current[:n_1]
-    
-    # # ### mu update
-    
-    # # sigma2_cond = 1/(a_current*np.sum(R_inv_current) + 1/sigma2_mu)
-    # # mu_cond = sigma2_cond*np.inner(f_current@R_inv_current, np.ones(n_obs))
-    
-    # # mu_current = random.normal(mu_cond,sigma2_cond)
-    
-    # # mu_run[i] = mu_current
-    
-    # # ### a update
-    
-    # # alpha_cond = n_obs/2+alpha_a
-    # # beta_cond = np.transpose(f_current - mu_current)@R_inv_current@(f_current - mu_current)/2 + beta_a
-    
-    # # a_current = random.gamma(alpha_cond,1/beta_cond)
-    
-    # # a_run[i] = a_current
-    
-    # # ### tau update
-    
-    # # alpha_cond = n_obs/2+alpha_tau
-    # # beta_cond = np.inner(y-f_current,y-f_current)/2 + beta_tau
-    
-    # # tau_current = random.gamma(alpha_cond,1/beta_cond)
-    
-    # # tau_run[i] = tau_current
-    
-    ### f grid update
-    # print("grid_obs",np.sum(D_grid_obs_current<1e-4))
-    
-    # R_grid_obs_current = matern_kernel(D_grid_obs_current,phi_current)
-    # R_grid_current = matern_kernel(D_grid,phi_current)
-    
-    
-    # tempMat = R_grid_obs_current@R_inv_current
-    
-    # mu_grid = tempMat@(g_current-mu) + mu
-    # Sigma_grid = R_grid_current - tempMat@np.transpose(R_grid_obs_current)
-    
-    # try:
-    #     C = np.linalg.cholesky(Sigma_grid)
-    #     g_grid_current = C/np.sqrt(a)@random.normal(size=n_grid+1) + mu_grid
-         
-    # except np.linalg.LinAlgError:
-    #     print("oof g_grid")
-    
+    # print("trans",trans)
 
-    # g_grid_run[i] =g_grid_current
+    
+    ratio =  sus_grid * pect_grid * sus_obs * pect_obs * prior
+    
+    if random.uniform() < ratio:
+        phi_current = phi_new
+        Bg_current = np.copy(Bg_new)
+        rg_current = np.copy(rg_new)
+        Bog_current = np.copy(Bog_new)
+        rog_current = np.copy(rog_new)
+        acc_phi[i] = 1
+   
+    phi_run[i] = phi_current 
     
 
 
 et = time()
 print("Time:",(et-st)/60,"minutes")
 
-tail = 400
+tail = 1000
 
 Phi_g_grid_run = norm.cdf(g_grid_run)
 
@@ -593,3 +639,11 @@ plt.show()
 
 plt.violinplot(x_1,vert=False)
 plt.show()
+
+
+
+print("MSE:", np.mean((norm.cdf(f_grid) - Phi_g_grid_mean)**2))
+print("TMSE:", np.mean((Phi_g_grid_run[tail:] - norm.cdf(f_grid))**2))
+
+
+

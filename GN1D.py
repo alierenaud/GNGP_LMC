@@ -19,10 +19,10 @@ from base import matern_kernel, fct
 
 random.seed(0)
 
-n_obs=3000
+n_obs=200
 m=20
 
-n_grid = 3000
+n_grid = 200
 
 xlim=10
 
@@ -199,7 +199,7 @@ w_grid = random.normal(size=n_grid+1)
 ### algorithm
 
 
-N = 400
+N = 2000
 
 w_grid_run = np.zeros((N,n_grid+1))
 w_current_run = np.zeros((N,n_obs))
@@ -224,7 +224,7 @@ for i in range(N):
     
     
     
-    if i % 10 ==0:
+    if i % 100 ==0:
         # plt.scatter(locs,y, c="black", s=10)
         plt.plot(grid_locs,w_grid_true)
         plt.plot(grid_locs,w_grid)
@@ -260,7 +260,9 @@ for i in range(N):
     
     ### phi update
     
-    phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
+    # phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
+    phi_new = 0.1*random.normal() + phi_current
+    
     
     Bg_new = np.zeros((n_grid+1,n_grid+1))
     rg_new= np.zeros(n_grid+1)
@@ -328,12 +330,12 @@ for i in range(N):
         
     # print("prior",prior)
     
-    trans = (phi_current/phi_new)**(alpha_prop-1) * np.exp(-alpha_prop*(phi_current/phi_new - phi_new/phi_current))
+    # trans = (phi_current/phi_new)**(alpha_prop-1) * np.exp(-alpha_prop*(phi_current/phi_new - phi_new/phi_current))
     
     # print("trans",trans)
 
     
-    ratio =  sus_grid * pect_grid * sus_obs * pect_obs * np.exp(alpha_prop*(phi_new/phi_current - phi_current/phi_new)) * np.exp(beta_phi*(phi_current-phi_new)) * (phi_new/phi_current)**(alpha_phi-2*alpha_prop)
+    ratio =  sus_grid * pect_grid * sus_obs * pect_obs * prior 
     
     if random.uniform() < ratio:
         phi_current = phi_new
@@ -349,7 +351,7 @@ et = time.time()
 
 print("Total Time:", (et-st)/60, "minutes")
 
-tail = 300
+tail = 1000
 
 print("Accept rate phi:",np.mean(acc_phi))
 ### trace plots

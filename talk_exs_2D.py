@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Oct 23 11:13:27 2023
+Created on Wed Nov  8 14:09:58 2023
 
 @author: homeboy
 """
@@ -15,40 +15,65 @@ from scipy.spatial import distance_matrix
 import matplotlib.pyplot as plt
 
 
-from base import matern_kernel, fct
+from base import matern_kernel, fct2
 
+
+def vec_inv(A, nrow):
+    
+    N = A.shape[0]
+    ncol = N//nrow
+    
+    
+    return(np.reshape(A,newshape=(nrow,ncol),order='F'))
+
+def makeGrid(x,y):
+    return np.dstack(np.meshgrid(x,y)).reshape(-1, 2)
 
 random.seed(0)
 
-n_grid = 200
+n_grid = 20
 xlim = 10
 
-grid_locs = np.linspace(-xlim,xlim,n_grid+1)
-f_grid = fct(grid_locs)
+
+marg_grid = np.linspace(0,1,n_grid+1)
 
 
-n_obs = 100
 
-### normal locs
-# sd_locs = 4
-# locs = sd_locs*random.normal(size = n_obs)
+grid_locs = makeGrid(marg_grid,marg_grid)
+f_grid = fct2(grid_locs)
+
+
+n_obs = 400
+
+### showcase data
+
+xv, yv = np.meshgrid(marg_grid, marg_grid)
+
+
+
+fig, ax = plt.subplots()
+# ax.set_xlim(0,1)
+# ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+
+c = ax.pcolormesh(xv, yv, vec_inv(f_grid,n_grid+1), cmap = "Blues")
+plt.colorbar(c)
+plt.show()
 
 ### unif locs
 
-locs = random.uniform(size=n_obs)*20 - 10
+locs = random.uniform(size=(n_obs,2))
 
-f_locs = fct(locs)
+f_locs = fct2(locs)
 tau = 10.0
 y = f_locs + 1/np.sqrt(tau)*random.normal(size = n_obs)
 
 # np.prod(np.abs(locs)<10)
 # np.sum(np.abs(locs)>10)
 
-### showcase data
 
-plt.plot(grid_locs,f_grid)
-plt.scatter(locs,y, c="black", s=10)
-plt.show()
 
 
 
@@ -68,7 +93,7 @@ beta_tau = 0.1
 
 ### proposals
 
-alpha_prop = 100
+# alpha_prop = 100
 
 
 ### algorithm
@@ -80,23 +105,23 @@ a_current = 1
 tau_current = 10.0
 
 f_currrent = random.normal(size=n_obs)
-f_grid_current = random.normal(size=n_grid+1)
+f_grid_current = random.normal(size=(n_grid+1)**2)
 
 
 ### useful quantitites
 
-D = distance_matrix(np.transpose([locs]),np.transpose([locs]))
+D = distance_matrix(locs,locs)
 
 R_current = matern_kernel(D,phi_current)
 R_inv_current = np.linalg.inv(R_current)
 
 
-D_grid_obs = distance_matrix(np.transpose([grid_locs]),np.transpose([locs]))
+D_grid_obs = distance_matrix(grid_locs,locs)
 
 R_grid_obs_current = matern_kernel(D_grid_obs,phi_current)
 
 
-D_grid = distance_matrix(np.transpose([grid_locs]),np.transpose([grid_locs]))
+D_grid = distance_matrix(grid_locs,grid_locs)
 
 R_grid_current = matern_kernel(D_grid,phi_current)
 
@@ -105,7 +130,7 @@ R_grid_current = matern_kernel(D_grid,phi_current)
 
 N = 2000
 
-f_grid_run = np.zeros((N,n_grid+1))
+f_grid_run = np.zeros((N,(n_grid+1)**2))
 phi_run = np.zeros(N)
 mu_run = np.zeros(N)
 a_run = np.zeros(N)
@@ -121,10 +146,20 @@ for i in range(N):
 
     if i%100==0:
 
-        plt.plot(grid_locs,f_grid)
-        plt.plot(grid_locs,f_grid_current)
-        # plt.scatter(locs,y, c="black", s=10)
-        # plt.scatter(locs,f_current, c="tab:orange", s=10)
+        
+        
+
+
+
+        fig, ax = plt.subplots()
+        # ax.set_xlim(0,1)
+        # ax.set_ylim(0,1)
+        ax.set_box_aspect(1)
+
+
+
+        c = ax.pcolormesh(xv, yv, vec_inv(f_grid_current,n_grid+1), cmap = "Blues")
+        plt.colorbar(c)
         plt.show()
 
         print(i)
@@ -215,7 +250,7 @@ for i in range(N):
     mu_grid = tempMat@(f_current-mu_current) + mu_current
     Sigma_grid = R_grid_current - tempMat@np.transpose(R_grid_obs_current)
     
-    f_grid_current = np.sqrt(1/a_current)*np.linalg.cholesky(Sigma_grid)@random.normal(size=n_grid+1) + mu_grid
+    f_grid_current = np.sqrt(1/a_current)*np.linalg.cholesky(Sigma_grid)@random.normal(size=(n_grid+1)**2) + mu_grid
     
     f_grid_run[i] = f_grid_current
     
@@ -231,13 +266,16 @@ f_grid_025 = np.quantile(f_grid_run[tail:], 0.025, axis=0)
 f_grid_975 = np.quantile(f_grid_run[tail:], 0.975, axis=0)
 
 
-plt.plot(grid_locs,f_grid)
-plt.plot(grid_locs,f_grid_mean)
-plt.show()
 
-plt.plot(grid_locs,f_grid)
-plt.plot(grid_locs,f_grid_mean)
-plt.fill_between(grid_locs, f_grid_025, f_grid_975, alpha=0.5,color="tab:orange")
+fig, ax = plt.subplots()
+# ax.set_xlim(0,1)
+# ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+
+c = ax.pcolormesh(xv, yv, vec_inv(f_grid_mean,n_grid+1), cmap = "Blues")
+plt.colorbar(c)
 plt.show()
 
 

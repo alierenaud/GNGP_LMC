@@ -41,7 +41,7 @@ plt.plot(grid_locs,norm.cdf(f_grid))
 plt.show()
 
 
-n_1 = 400
+n_1 = 200
 
 
 ### generate data
@@ -90,8 +90,8 @@ plt.show()
 
 # sigma2_mu = 1
 
-alpha_phi = 100
-beta_phi = 100
+alpha_phi = 10
+beta_phi = 10
 
 # alpha_a = 0.01
 # beta_a = 0.1
@@ -165,7 +165,7 @@ R_grid_current = matern_kernel(D_grid,phi_current)
 
 ### containers
 
-N = 1000
+N = 2000
 
 g_grid_run = np.zeros((N,n_grid+1))
 phi_run = np.zeros(N)
@@ -311,7 +311,9 @@ for i in range(N):
     
     ### phi update
     
-    phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
+    # phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
+    
+    phi_new = 0.1*random.normal() + phi_current
     
     R_new = matern_kernel(D_current,phi_new)
     R_inv_new = np.linalg.inv(R_new)
@@ -328,11 +330,11 @@ for i in range(N):
     
     # print("prior",prior)
     
-    trans = (phi_current/phi_new)**(alpha_prop-1) * np.exp(-alpha_prop*(phi_current/phi_new - phi_new/phi_current))
+    # trans = (phi_current/phi_new)**(alpha_prop-1) * np.exp(-alpha_prop*(phi_current/phi_new - phi_new/phi_current))
     
     # print("trans",trans)
     
-    ratio = sus * pect * prior * trans
+    ratio = sus * pect * prior 
     
     
     if random.uniform() < ratio:
@@ -407,7 +409,7 @@ for i in range(N):
 
     g_grid_run[i] =g_grid_current
     
-    if i%10==0:
+    if i%100==0:
 
         plt.plot(grid_locs, norm.cdf(f_grid), c="black")
         # plt.scatter(x_1, np.zeros(n_1), s=10)
@@ -426,7 +428,7 @@ for i in range(N):
 et = time()
 print("Time:",(et-st)/60,"minutes")
 
-tail = 400
+tail = 1000
 
 Phi_g_grid_run = norm.cdf(g_grid_run)
 
@@ -463,5 +465,7 @@ plt.show()
 
 plt.violinplot(x_1,vert=False)
 plt.show()
-     
+   
+print("MSE:", np.mean((norm.cdf(f_grid) - Phi_g_grid_mean)**2))
+print("TMSE:", np.mean((Phi_g_grid_run[tail:] - norm.cdf(f_grid))**2))  
         
