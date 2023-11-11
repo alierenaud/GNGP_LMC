@@ -19,13 +19,13 @@ from scipy.stats import norm
 #     return part1 * part2 * part3 + (r<1e-7)*0.00001
 
 
-# def matern_kernel(r, phi = 1):
-    
-#     return np.exp(-(r/phi)**2) + (r==0)*0.00001
-
 def matern_kernel(r, phi = 1):
     
-    return np.exp(-(r/phi)) + (r<1e-7)*0.001
+    return np.exp(-(r/phi)**2) + (r==0)*0.001
+
+# def matern_kernel(r, phi = 1):
+    
+#     return np.exp(-(r/phi)) + (r==0)*0.001
 
 
 # def matern_kernel(r, phi = 1, alpha = 0.5):
@@ -66,4 +66,16 @@ def fct2(s):
     
     
 #     return(np.exp(-(s[:,0]**2+s[:,1]**2)))
+
+
+def vec_inv(A, nrow):
+    
+    N = A.shape[0]
+    ncol = N//nrow
+    
+    
+    return(np.reshape(A,newshape=(nrow,ncol),order='F'))
+
+def makeGrid(x,y):
+    return np.dstack(np.meshgrid(x,y)).reshape(-1, 2)
 

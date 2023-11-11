@@ -142,7 +142,7 @@ for i in range(N):
     
     # phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
     
-    phi_new = 0.1*random.normal() + phi_current
+    phi_new = 1*random.normal() + phi_current
     
     R_new = matern_kernel(D,phi_new)
     R_inv_new = np.linalg.inv(R_new)

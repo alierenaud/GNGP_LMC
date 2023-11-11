@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sun Oct 29 13:41:14 2023
+Created on Wed Nov  8 17:01:33 2023
 
 @author: homeboy
 """
-
 
 import numpy as np
 from numpy import random
@@ -14,66 +13,101 @@ import matplotlib.pyplot as plt
 
 from scipy.spatial import distance_matrix
 
-from base import matern_kernel, fct
-
+from base import matern_kernel, fct2, makeGrid, vec_inv
 
 random.seed(0)
 
-n_obs=100
-m=20
+n_obs=1000
+m=4
 
-n_grid = 200
+n_grid = 20
 
 xlim=10
 
-grid_locs = np.linspace(-xlim,xlim,n_grid+1)
-grid_locst = np.transpose([grid_locs])
+marg_grid = np.linspace(0,1,n_grid+1)
+grid_locs = makeGrid(marg_grid,marg_grid)
 
+locs = random.uniform(size = (n_obs,2))
 
-locs = random.uniform(-xlim,xlim,n_obs)
-locs = np.sort(locs)
 ### distance function
-locst = np.transpose([locs])
+
 
 ### parameters
 
 mu = np.zeros(n_obs)
-mu_grid = np.zeros(n_grid+1)
+mu_grid = np.zeros((n_grid+1)**2)
 a = 1
-phi_current = 10.0
+phi_current = 1.0
 tau = 10
 
 
 ### priors
 
-alpha_phi = 100
+alpha_phi = 10
 beta_phi = 10
 
 
 
 ### proposals
 
-# alpha_prop = 100
+alpha_prop = 100
 
 ### compute grid neighbors
 
-gNei = np.zeros(n_grid+1,dtype=object)
+gNei = np.zeros((n_grid+1)**2,dtype=object)
 
-for i in range(m):
-    gNei[i] = np.arange(i)
+
+
+
+
+
+for i in np.arange((n_grid+1)**2):
+    
+    row = i//(n_grid+1)
+    col = i%(n_grid+1)
     
     
+    # print(i)
+    gNei[i] = np.array([],dtype=int)
     
-for j in range(m,n_grid+1):
-    gNei[j] = np.arange(j-m,j)
+    
+
+    for j in np.arange(np.max([row-m,0]),row):
+        gNei[i] = np.append(gNei[i], np.arange(np.max([(n_grid+1)*j+col-m,(n_grid+1)*j]) ,(n_grid+1)*j+col+1,dtype=int))
+        
+      
+    gNei[i] = np.append(gNei[i],np.arange(np.max([i-m,i-col]),i,dtype=int)) 
+
+
+### showcase neighboring structure
 
 
 
-agNei = np.zeros(n_grid+1,dtype=object)
+# for i in range((n_grid+1)**2):
 
-for i in range(n_grid+1):
+
+#     fig, ax = plt.subplots()
+    
+#     ax.set_aspect(1)
+    
+#     # ax.set_xticks([])
+#     # ax.set_yticks([])
+    
+#     plt.scatter(grid_locs[:,0],grid_locs[:,1],c="black")
+#     plt.scatter(grid_locs[i,0],grid_locs[i,1],c="tab:orange")
+#     plt.scatter(grid_locs[gNei[i],0],grid_locs[gNei[i],1],c="tab:green")
+#     plt.show()
+
+
+
+
+
+
+agNei = np.zeros((n_grid+1)**2,dtype=object)
+
+for i in range((n_grid+1)**2):
     agNei[i] = np.array([],dtype = int)
-    for j in range(n_grid+1):
+    for j in range((n_grid+1)**2):
         if i in gNei[j]:
             agNei[i] = np.append(agNei[i],j)
 
@@ -82,13 +116,13 @@ for i in range(n_grid+1):
 
 ### compute B,r,dists
 
-Distg = distance_matrix(grid_locst, grid_locst)
+Distg = distance_matrix(grid_locs, grid_locs)
 
-DistgMats = np.zeros(n_grid+1,dtype=object)
-Bg_current = np.zeros((n_grid+1,n_grid+1))
-rg_current= np.zeros(n_grid+1)
+DistgMats = np.zeros((n_grid+1)**2,dtype=object)
+Bg_current = np.zeros(((n_grid+1)**2,(n_grid+1)**2))
+rg_current= np.zeros((n_grid+1)**2)
 
-for i in range(n_grid+1):
+for i in range((n_grid+1)**2):
 
     
     DistgMat_temp = Distg[np.append(gNei[i], i)][:,np.append(gNei[i], i)]
@@ -111,15 +145,23 @@ for i in range(n_grid+1):
     rg_current[i] = 1-np.inner(b_temp,r_temp)
 
 
+
+### check on structure
+
+# C = Bg_current+np.identity((n_grid+1)**2)
+# D = np.transpose(C)@C                    
+
+# print((D!=0)*1)
+
 ### compute obs neighbors on grid
 
 ogNei = np.zeros(n_obs,dtype=object)
-aogNei = np.zeros(n_grid+1,dtype=object)
+aogNei = np.zeros((n_grid+1)**2,dtype=object)
 
-for i in range(n_grid+1):
+for i in range((n_grid+1)**2):
     aogNei[i] = np.empty(0,dtype=int)
 
-Distog = distance_matrix(locst, grid_locst)
+Distog = distance_matrix(locs, grid_locs)
 
 
 
@@ -127,26 +169,62 @@ Distog = distance_matrix(locst, grid_locst)
 for i in range(n_obs):
     
     
+    left_col =  int(np.floor(locs[i,0]  * n_grid))
+    down_row =  int(np.floor(locs[i,1]  * n_grid))
     
     
     
-    leftNei = int(np.floor( (locs[i] + xlim)/(2*xlim) * n_grid))
     
-    off_left = -min(leftNei - m//2 + 1,0)
-    off_right = max(leftNei + m//2,n_grid) - n_grid
+    off_left = -min(left_col - m//2 + 1,0)
+    off_right = max(left_col + m//2,n_grid) - n_grid
     
-    leftMostNei = leftNei-m//2+1+off_left-off_right
-    rightMostNei = leftNei + m//2 + 1 + off_left - off_right
+    leftMostNei = left_col-m//2+1+off_left-off_right
+    rightMostNei = left_col + 1 + m//2 + off_left - off_right
     
-    ogNei[i] = np.arange(leftMostNei,rightMostNei)
+    hor_ind = np.arange(leftMostNei,rightMostNei)
     
-    for j in np.arange(leftMostNei,rightMostNei):
+    
+    off_down = -min(down_row - m//2 + 1,0)
+    off_up = max(down_row + m//2,n_grid) - n_grid
+    
+    downMostNei = down_row-m//2+1+off_down-off_up
+    upMostNei = down_row + m//2 + 1 + off_down - off_up
+    
+    ver_ind = np.arange(downMostNei,upMostNei)
+    
+    
+    ogNei[i] = np.array([],dtype=int)
+    
+    for v in ver_ind:
+        ogNei[i] = np.append(ogNei[i],v*(n_grid+1) + hor_ind)
+        
+    
+    
+    
+    
+    # fig, ax = plt.subplots()
+    
+    # ax.set_aspect(1)
+    
+    # # ax.set_xticks([])
+    # # ax.set_yticks([])
+    
+    # plt.scatter(grid_locs[:,0],grid_locs[:,1],c="black")
+    # plt.scatter(locs[i,0],locs[i,1],c="tab:orange")
+    # # plt.scatter(grid_locs[i,0],grid_locs[i,1],c="tab:orange")
+    # plt.scatter(grid_locs[ogNei[i],0],grid_locs[ogNei[i],1],c="tab:green")
+    # plt.show()
+    
+    
+    
+    
+    for j in ogNei[i]:
         aogNei[j] = np.append(aogNei[j],i)
     
 
     
 DistggMats = np.zeros(n_obs,dtype=object)
-Bog_current = np.zeros((n_obs,n_grid+1))
+Bog_current = np.zeros((n_obs,(n_grid+1)**2))
 rog_current = np.zeros(n_obs)
 
 
@@ -175,14 +253,25 @@ for i in range(n_obs):
 ### simulate an example y
 
 
-w_true = fct(locs)
-w_grid_true = fct(grid_locs)
+w_true = fct2(locs)
+w_grid_true = fct2(grid_locs)
 y = w_true + 1/np.sqrt(tau)*random.normal(size = n_obs)
 ### showcase data
 
-plt.plot(grid_locs,w_grid_true)
-plt.scatter(locs,y, c="black", s=10)
-plt.show()  
+xv, yv = np.meshgrid(marg_grid, marg_grid)
+
+
+
+fig, ax = plt.subplots()
+# ax.set_xlim(0,1)
+# ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+
+c = ax.pcolormesh(xv, yv, vec_inv(w_grid_true,n_grid+1), cmap = "Blues")
+plt.colorbar(c)
+plt.show()
 
 
 # w_current = w_true
@@ -191,7 +280,7 @@ w_current = random.normal(size=n_obs)
 
 # w_grid = np.copy(w_grid_true)
 # w_grid = np.load("w_grid.npy")
-w_grid = random.normal(size=n_grid+1)
+w_grid = random.normal(size=(n_grid+1)**2)
 
 
 
@@ -199,9 +288,9 @@ w_grid = random.normal(size=n_grid+1)
 ### algorithm
 
 
-N = 8000
+N = 2000
 
-w_grid_run = np.zeros((N,n_grid+1))
+w_grid_run = np.zeros((N,(n_grid+1)**2))
 w_current_run = np.zeros((N,n_obs))
 phi_run = np.zeros(N)
 
@@ -210,10 +299,10 @@ acc_phi = np.zeros(N)
 
 ### containers
 
-Bg_new = np.zeros((n_grid+1,n_grid+1))
-rg_new = np.zeros(n_grid+1)
+Bg_new = np.zeros(((n_grid+1)**2,(n_grid+1)**2))
+rg_new = np.zeros((n_grid+1)**2)
 
-Bog_new = np.zeros((n_obs,n_grid+1))
+Bog_new = np.zeros((n_obs,(n_grid+1)**2))
 rog_new = np.zeros(n_obs)
 
 import time
@@ -225,16 +314,21 @@ for i in range(N):
     
     
     if i % 100 ==0:
-        # plt.scatter(locs,y, c="black", s=10)
-        plt.plot(grid_locs,w_grid_true)
-        plt.plot(grid_locs,w_grid)
-        # plt.scatter(locs,w_current, c="tab:orange", s=10)
-        plt.show() 
+        fig, ax = plt.subplots()
+        # ax.set_xlim(0,1)
+        # ax.set_ylim(0,1)
+        ax.set_box_aspect(1)
+
+
+
+        c = ax.pcolormesh(xv, yv, vec_inv(w_grid,n_grid+1), cmap = "Blues")
+        plt.colorbar(c)
+        plt.show()
         print(i)
     
     # w_grid update
     
-    for ii in random.permutation(range(n_grid+1)):
+    for ii in random.permutation(range((n_grid+1)**2)):
     # for ii in range(n_grid+1):
         
         
@@ -261,13 +355,13 @@ for i in range(N):
     ### phi update
     
     # phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
-    phi_new = 1*random.normal() + phi_current
+    phi_new = 0.1*random.normal() + phi_current
     
     
-    Bg_new = np.zeros((n_grid+1,n_grid+1))
-    rg_new= np.zeros(n_grid+1)
+    Bg_new = np.zeros(((n_grid+1)**2,(n_grid+1)**2))
+    rg_new= np.zeros((n_grid+1)**2)
     
-    for ii in range(n_grid+1):
+    for ii in range((n_grid+1)**2):
 
         
         DistgMat_temp = DistgMats[ii]
@@ -287,7 +381,7 @@ for i in range(N):
         
         rg_new[ii] = 1-np.inner(b_temp,r_temp)
     
-    Bog_new = np.zeros((n_obs,n_grid+1))
+    Bog_new = np.zeros((n_obs,(n_grid+1)**2))
     rog_new = np.zeros(n_obs)
     
     for ii in range(n_obs):
@@ -310,7 +404,7 @@ for i in range(N):
         
         rog_new[ii] = 1-np.inner(b_temp,r_temp)
     
-    sus_grid = np.exp(- a/2* np.sum([ (w_grid[ii] - mu_grid[ii] - np.inner(Bg_new[ii,gNei[ii]],w_grid[gNei[ii]]-mu_grid[gNei[ii]]))**2/rg_new[ii] - (w_grid[ii] - mu_grid[ii] - np.inner(Bg_current[ii,gNei[ii]],w_grid[gNei[ii]]-mu_grid[gNei[ii]]))**2/rg_current[ii] for ii in range(n_grid+1)]))
+    sus_grid = np.exp(- a/2* np.sum([ (w_grid[ii] - mu_grid[ii] - np.inner(Bg_new[ii,gNei[ii]],w_grid[gNei[ii]]-mu_grid[gNei[ii]]))**2/rg_new[ii] - (w_grid[ii] - mu_grid[ii] - np.inner(Bg_current[ii,gNei[ii]],w_grid[gNei[ii]]-mu_grid[gNei[ii]]))**2/rg_current[ii] for ii in range((n_grid+1)**2)]))
     
     # print("sus grid",sus_grid)
     
@@ -318,7 +412,7 @@ for i in range(N):
     
     # print("sus obs",sus_obs)
     
-    pect_grid = np.prod([(rg_current[ii]/rg_new[ii])**(1/2) for ii in range(n_grid+1)])
+    pect_grid = np.prod([(rg_current[ii]/rg_new[ii])**(1/2) for ii in range((n_grid+1)**2)])
     
     # print("pect grid",pect_grid)
     
@@ -351,7 +445,7 @@ et = time.time()
 
 print("Total Time:", (et-st)/60, "minutes")
 
-tail = 4000
+tail = 1000
 
 print("Accept rate phi:",np.mean(acc_phi))
 ### trace plots
@@ -366,31 +460,23 @@ w_grid_mean = np.mean(w_grid_run[tail:], axis=0)
 w_grid_025 = np.quantile(w_grid_run[tail:], 0.025, axis=0)
 w_grid_975 = np.quantile(w_grid_run[tail:], 0.975, axis=0)
 
+fig, ax = plt.subplots()
+# ax.set_xlim(0,1)
+# ax.set_ylim(0,1)
+ax.set_box_aspect(1)
 
-plt.plot(grid_locs,w_grid_true)
-plt.plot(grid_locs,w_grid_mean)
+
+
+c = ax.pcolormesh(xv, yv, vec_inv(w_grid_mean,n_grid+1), cmap = "Blues")
+plt.colorbar(c)
 plt.show()
-
-plt.plot(grid_locs,w_grid_true)
-plt.plot(grid_locs,w_grid_mean)
-plt.fill_between(grid_locs, w_grid_025, w_grid_975, alpha=0.5,color="tab:orange")
-plt.show()
-
-plt.plot(grid_locs,w_grid_true)
-plt.plot(grid_locs,w_grid_mean,c="tab:orange")
-plt.fill_between(grid_locs, w_grid_025, w_grid_975, alpha=0.5,color="tab:orange")
-plt.scatter(locs,y, c="black", s=10)        
-plt.show()     
+ 
             
-w_current_mean = np.mean(w_current_run[tail:], axis=0)
 
-plt.plot(grid_locs,w_grid_true)
-plt.plot(grid_locs,w_grid_mean)
-plt.scatter(locs,w_current_mean, c="tab:orange", s=10)
-plt.show()
 
-np.save("w_current",w_current_mean)
-np.save("w_grid",w_grid_mean)
+
+
+
 
 print("MSE:", np.mean((w_grid_true - w_grid_mean)**2))
 print("TMSE:", np.mean((w_grid_run[tail:] - w_grid_true)**2))

@@ -15,19 +15,10 @@ from scipy.spatial import distance_matrix
 import matplotlib.pyplot as plt
 
 
-from base import matern_kernel, fct2
+from base import matern_kernel, fct2, makeGrid, vec_inv
 
 
-def vec_inv(A, nrow):
-    
-    N = A.shape[0]
-    ncol = N//nrow
-    
-    
-    return(np.reshape(A,newshape=(nrow,ncol),order='F'))
 
-def makeGrid(x,y):
-    return np.dstack(np.meshgrid(x,y)).reshape(-1, 2)
 
 random.seed(0)
 
@@ -43,7 +34,7 @@ grid_locs = makeGrid(marg_grid,marg_grid)
 f_grid = fct2(grid_locs)
 
 
-n_obs = 400
+n_obs = 2000
 
 ### showcase data
 
@@ -128,7 +119,7 @@ R_grid_current = matern_kernel(D_grid,phi_current)
 
 ### containers
 
-N = 2000
+N = 8000
 
 f_grid_run = np.zeros((N,(n_grid+1)**2))
 phi_run = np.zeros(N)
@@ -259,7 +250,7 @@ for i in range(N):
 et = time()
 print("Time:",(et-st)/60,"minutes")
 
-tail = 1000
+tail = 2000
 
 f_grid_mean = np.mean(f_grid_run[tail:], axis=0)
 f_grid_025 = np.quantile(f_grid_run[tail:], 0.025, axis=0)

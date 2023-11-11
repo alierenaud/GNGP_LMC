@@ -41,7 +41,32 @@ plt.plot(grid_locs,norm.cdf(f_grid))
 plt.show()
 
 
-n_1 = 200
+n_1 = 100
+
+mu = 0
+a = 1
+tau = 1.0
+
+phi_current = 10
+
+### priors
+
+# sigma2_mu = 1
+
+alpha_phi = 100
+beta_phi = 1
+
+# alpha_a = 0.01
+# beta_a = 0.1
+
+# alpha_tau = 1
+# beta_tau = 0.1
+
+
+### proposals
+
+# alpha_prop = 100
+sigma_prop = 1
 
 
 ### generate data
@@ -86,50 +111,33 @@ plt.show()
 
 
 
-### priors
-
-# sigma2_mu = 1
-
-alpha_phi = 10
-beta_phi = 10
-
-# alpha_a = 0.01
-# beta_a = 0.1
-
-# alpha_tau = 1
-# beta_tau = 0.1
-
-
-### proposals
-
-alpha_prop = 100
 
 
 ### algorithm
 
-mu = 0
-a = 1.0
-tau = 1.0
 
-phi_current = 1
 
 
 ### initiiate point process
-n_0_current = n_1
-x_0_current = random.uniform(size=n_1) * 20 -10
-g_0_current = random.normal(size=n_0_current) + mu
-y_0_current = -np.ones(n_0_current)
 
-# n_0_current = n_0_true
-# x_0_current = x_0_true
-# g_0_current = g_0_true
-# y_0_current = y_0_true
+n_0_current = n_0_true
+x_0_current = x_0_true
+# n_0_current = n_1
+# x_0_current = random.uniform(size=n_1) * 20 -10
 
-# g_1_current = g_1_true
-# y_1_current = y_1_true
 
-g_1_current = random.normal(size=n_1) + mu
-y_1_current = np.ones(n_1)
+# g_0_current = random.normal(size=n_0_current) + mu
+# y_0_current = -np.ones(n_0_current)
+
+
+g_0_current = g_0_true
+y_0_current = y_0_true
+
+g_1_current = g_1_true
+y_1_current = y_1_true
+
+# g_1_current = random.normal(size=n_1) + mu
+# y_1_current = np.ones(n_1)
 
 
 n_current = n_1 + n_0_current 
@@ -137,8 +145,8 @@ x_current = np.append(x_1,x_0_current)
 g_current = np.append(g_1_current,g_0_current)
 y_current = np.append(y_1_current,y_0_current)
 
-g_grid_current = random.normal(size=n_grid+1)
-# g_grid_current = f_grid
+# g_grid_current = random.normal(size=n_grid+1)
+g_grid_current = f_grid
 
 
 ### useful quantitites
@@ -169,6 +177,7 @@ N = 2000
 
 g_grid_run = np.zeros((N,n_grid+1))
 phi_run = np.zeros(N)
+n_0_run = np.zeros(N)
 
 acc_phi = np.zeros(N)
 
@@ -237,6 +246,10 @@ for i in range(N):
             
             
             n_0_current = np.sum(y_tail<0)
+            
+            n_0_run[i] = n_0_current
+            # print(n_0_current)
+            
             x_0_current = x_tail[y_tail<0]
             g_0_current = g_tail[y_tail<0]
             y_0_current = y_tail[y_tail<0]
@@ -288,7 +301,7 @@ for i in range(N):
             
             print("not enough points")
             
-
+            
 
     ### f update
     
@@ -308,45 +321,6 @@ for i in range(N):
     g_1_current = g_current[:n_1]
     
     
-    
-    ### phi update
-    
-    # phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
-    
-    phi_new = 0.1*random.normal() + phi_current
-    
-    R_new = matern_kernel(D_current,phi_new)
-    R_inv_new = np.linalg.inv(R_new)
-    
-    sus = np.exp( a/2 * np.transpose(g_current-mu)@(R_inv_current-R_inv_new)@(g_current-mu) )
-    
-    # print("sus",sus)
-    
-    pect = np.linalg.det(R_current@R_inv_new)**(1/2)
-    
-    # print("pect",pect)
-    
-    prior = (phi_new/phi_current)**(alpha_phi-1) * np.exp(-beta_phi*(phi_new-phi_current))
-    
-    # print("prior",prior)
-    
-    # trans = (phi_current/phi_new)**(alpha_prop-1) * np.exp(-alpha_prop*(phi_current/phi_new - phi_new/phi_current))
-    
-    # print("trans",trans)
-    
-    ratio = sus * pect * prior 
-    
-    
-    if random.uniform() < ratio:
-        phi_current = phi_new
-        R_current = np.copy(R_new)
-        R_inv_current = np.copy(R_inv_new)
-        
-        acc_phi[i] = 1
-    
-    
-    phi_run[i] = phi_current
-    
     ### y_update
     
     for ii in range(n_1):
@@ -359,6 +333,47 @@ for i in range(N):
     
     y_0_current = y_current[n_1:]
     y_1_current = y_current[:n_1]
+    
+    
+    # ### phi update
+    
+    # # phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
+    
+    # phi_new = sigma_prop*random.normal() + phi_current
+    
+    # R_new = matern_kernel(D_current,phi_new)
+    # R_inv_new = np.linalg.inv(R_new)
+    
+    # sus = np.exp( a/2 * np.transpose(g_current-mu)@(R_inv_current-R_inv_new)@(g_current-mu) )
+    
+    # # print("sus",sus)
+    
+    # pect = np.linalg.det(R_current@R_inv_new)**(1/2)
+    
+    # # print("pect",pect)
+    
+    # prior = (phi_new/phi_current)**(alpha_phi-1) * np.exp(-beta_phi*(phi_new-phi_current))
+    
+    # # print("prior",prior)
+    
+    # # trans = (phi_current/phi_new)**(alpha_prop-1) * np.exp(-alpha_prop*(phi_current/phi_new - phi_new/phi_current))
+    
+    # # print("trans",trans)
+    
+    # ratio = sus * pect * prior 
+    
+    
+    # if random.uniform() < ratio:
+    #     phi_current = phi_new
+    #     R_current = np.copy(R_new)
+    #     R_inv_current = np.copy(R_inv_new)
+        
+    #     acc_phi[i] = 1
+    
+    
+    # phi_run[i] = phi_current
+    
+    
     
     # # ### mu update
     
@@ -458,6 +473,12 @@ plt.plot(phi_run[tail:])
 plt.show()
 
 plt.boxplot(phi_run[tail:])
+plt.show()
+
+plt.plot(n_0_run[tail:])
+plt.show()
+
+plt.boxplot(n_0_run[tail:])
 plt.show()
 
 plt.hist(x_1,density=True,alpha=0.5,bins=20)
