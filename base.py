@@ -19,22 +19,22 @@ from scipy.stats import norm
 #     return part1 * part2 * part3 + (r<1e-7)*0.00001
 
 
-def matern_kernel(r, phi = 1):
-    
-    return np.exp(-(r/phi)**2) + (r==0)*0.001
-
 # def matern_kernel(r, phi = 1):
     
-#     return np.exp(-(r/phi)) + (r==0)*0.001
+#     return np.exp(-(r/phi)**2) + (r==0)*0.001
 
-
-# def matern_kernel(r, phi = 1, alpha = 0.5):
+def matern_kernel(r, phi = 1):
     
-#     return (1+(r/phi)**2)**(-alpha)
+    return np.exp(-(r/phi)) + (r==0)*0.001
 
-def fct(s):
+
+# def matern_kernel(r, phi = 1, alpha = 2):
     
-    return(2*np.sin(s)/(0.1*s**2+1))
+#     return (1+(r/phi)**2)**(-alpha) + (r==0)*0.001
+
+# def fct(s):
+    
+#     return(2*np.sin(s)/(0.1*s**2+1))
 
 # def fct(s):
     
@@ -43,9 +43,9 @@ def fct(s):
 #     return(norm.ppf(res))
 
 
-# def fct(s):
+def fct(s):
     
-#     return(2*np.sin(s))
+    return(2*np.sin(s))
 
 
 

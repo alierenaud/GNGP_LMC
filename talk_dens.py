@@ -47,14 +47,14 @@ mu = 0
 a = 1
 tau = 1.0
 
-phi_current = 10
+phi_current = 1
 
 ### priors
 
 # sigma2_mu = 1
 
-alpha_phi = 100
-beta_phi = 1
+alpha_phi = 10
+beta_phi = 10
 
 # alpha_a = 0.01
 # beta_a = 0.1
@@ -66,7 +66,7 @@ beta_phi = 1
 ### proposals
 
 # alpha_prop = 100
-sigma_prop = 1
+sigma_prop = 0.1
 
 
 ### generate data
@@ -173,7 +173,7 @@ R_grid_current = matern_kernel(D_grid,phi_current)
 
 ### containers
 
-N = 2000
+N = 4000
 
 g_grid_run = np.zeros((N,n_grid+1))
 phi_run = np.zeros(N)
@@ -335,43 +335,43 @@ for i in range(N):
     y_1_current = y_current[:n_1]
     
     
-    # ### phi update
+    ### phi update
     
-    # # phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
+    # phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
     
-    # phi_new = sigma_prop*random.normal() + phi_current
+    phi_new = sigma_prop*random.normal() + phi_current
     
-    # R_new = matern_kernel(D_current,phi_new)
-    # R_inv_new = np.linalg.inv(R_new)
+    R_new = matern_kernel(D_current,phi_new)
+    R_inv_new = np.linalg.inv(R_new)
     
-    # sus = np.exp( a/2 * np.transpose(g_current-mu)@(R_inv_current-R_inv_new)@(g_current-mu) )
+    sus = np.exp( a/2 * np.transpose(g_current-mu)@(R_inv_current-R_inv_new)@(g_current-mu) )
     
-    # # print("sus",sus)
+    # print("sus",sus)
     
-    # pect = np.linalg.det(R_current@R_inv_new)**(1/2)
+    pect = np.linalg.det(R_current@R_inv_new)**(1/2)
     
-    # # print("pect",pect)
+    # print("pect",pect)
     
-    # prior = (phi_new/phi_current)**(alpha_phi-1) * np.exp(-beta_phi*(phi_new-phi_current))
+    prior = (phi_new/phi_current)**(alpha_phi-1) * np.exp(-beta_phi*(phi_new-phi_current))
     
-    # # print("prior",prior)
+    # print("prior",prior)
     
-    # # trans = (phi_current/phi_new)**(alpha_prop-1) * np.exp(-alpha_prop*(phi_current/phi_new - phi_new/phi_current))
+    # trans = (phi_current/phi_new)**(alpha_prop-1) * np.exp(-alpha_prop*(phi_current/phi_new - phi_new/phi_current))
     
-    # # print("trans",trans)
+    # print("trans",trans)
     
-    # ratio = sus * pect * prior 
+    ratio = sus * pect * prior 
     
     
-    # if random.uniform() < ratio:
-    #     phi_current = phi_new
-    #     R_current = np.copy(R_new)
-    #     R_inv_current = np.copy(R_inv_new)
+    if random.uniform() < ratio:
+        phi_current = phi_new
+        R_current = np.copy(R_new)
+        R_inv_current = np.copy(R_inv_new)
         
-    #     acc_phi[i] = 1
+        acc_phi[i] = 1
     
     
-    # phi_run[i] = phi_current
+    phi_run[i] = phi_current
     
     
     
@@ -432,8 +432,8 @@ for i in range(N):
         plt.plot(grid_locs, norm.cdf(g_grid_current), c="tab:orange")
         
         
-        plt.scatter(x_1, norm.cdf(g_1_current), s=10, c="tab:blue")
-        plt.scatter(x_0_current, norm.cdf(g_0_current), s=10, c="tab:orange")
+        # plt.scatter(x_1, norm.cdf(g_1_current), s=10, c="tab:blue")
+        # plt.scatter(x_0_current, norm.cdf(g_0_current), s=10, c="tab:orange")
         
         
         plt.show()
@@ -443,7 +443,7 @@ for i in range(N):
 et = time()
 print("Time:",(et-st)/60,"minutes")
 
-tail = 1000
+tail = 2000
 
 Phi_g_grid_run = norm.cdf(g_grid_run)
 
