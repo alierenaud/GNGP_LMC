@@ -34,7 +34,7 @@ grid_locs = makeGrid(marg_grid,marg_grid)
 f_grid = fct2(grid_locs)
 
 
-n_obs = 500
+n_obs = 200
 
 ### showcase data
 
@@ -180,23 +180,23 @@ for i in range(N):
     R_new = matern_kernel(D,phi_new)
     R_inv_new = np.linalg.inv(R_new)
     
-    sus = np.exp( a_current/2 * np.transpose(f_current-mu_current)@(R_inv_current-R_inv_new)@(f_current-mu_current) )
+    sus = a_current/2 * np.transpose(f_current-mu_current)@(R_inv_current-R_inv_new)@(f_current-mu_current) 
     
-    print("sus",sus)
+    # print("sus",sus)
     
-    pect = np.linalg.det(R_current@R_inv_new)**(1/2)
+    pect = (1/2)*np.log(np.linalg.det(R_current@R_inv_new))
     
-    print("pect",pect)
+    # print("pect",pect)
     
-    prior = (phi_new/phi_current)**(alpha_phi-1) * np.exp(-beta_phi*(phi_new-phi_current))
+    prior = (alpha_phi-1)*np.log(phi_new/phi_current) + -beta_phi*(phi_new-phi_current)
     
-    print("prior",prior)
+    # print("prior",prior)
     
     # trans = (phi_current/phi_new)**(alpha_prop-1) * np.exp(-alpha_prop*(phi_current/phi_new - phi_new/phi_current))
     
     # print("trans",trans)
     
-    ratio = sus * pect * prior 
+    ratio = np.exp(sus + pect + prior) 
     
     
     if random.uniform() < ratio:
@@ -209,32 +209,32 @@ for i in range(N):
     
     phi_run[i] = phi_current
     
-    ### mu update
+    # ### mu update
     
-    sigma2_cond = 1/(a_current*np.sum(R_inv_current) + 1/sigma2_mu)
-    mu_cond = sigma2_cond*np.inner(f_current@R_inv_current, np.ones(n_obs))
+    # sigma2_cond = 1/(a_current*np.sum(R_inv_current) + 1/sigma2_mu)
+    # mu_cond = sigma2_cond*np.inner(f_current@R_inv_current, np.ones(n_obs))
     
-    mu_current = random.normal(mu_cond,sigma2_cond)
+    # mu_current = random.normal(mu_cond,sigma2_cond)
     
-    mu_run[i] = mu_current
+    # mu_run[i] = mu_current
     
-    ### a update
+    # ### a update
     
-    alpha_cond = n_obs/2+alpha_a
-    beta_cond = np.transpose(f_current - mu_current)@R_inv_current@(f_current - mu_current)/2 + beta_a
+    # alpha_cond = n_obs/2+alpha_a
+    # beta_cond = np.transpose(f_current - mu_current)@R_inv_current@(f_current - mu_current)/2 + beta_a
     
-    a_current = random.gamma(alpha_cond,1/beta_cond)
+    # a_current = random.gamma(alpha_cond,1/beta_cond)
     
-    a_run[i] = a_current
+    # a_run[i] = a_current
     
-    ### tau update
+    # ### tau update
     
-    alpha_cond = n_obs/2+alpha_tau
-    beta_cond = np.inner(y-f_current,y-f_current)/2 + beta_tau
+    # alpha_cond = n_obs/2+alpha_tau
+    # beta_cond = np.inner(y-f_current,y-f_current)/2 + beta_tau
     
-    tau_current = random.gamma(alpha_cond,1/beta_cond)
+    # tau_current = random.gamma(alpha_cond,1/beta_cond)
     
-    tau_run[i] = tau_current
+    # tau_run[i] = tau_current
     
     ### f grid update
     

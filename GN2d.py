@@ -17,7 +17,7 @@ from base import matern_kernel, fct2, makeGrid, vec_inv
 
 random.seed(0)
 
-n_obs=500
+n_obs=200
 m=4
 
 n_grid = 20
@@ -412,32 +412,32 @@ for i in range(N):
         
         rog_new[ii] = 1-np.inner(b_temp,r_temp)
     
-    sus_grid = np.exp(- a/2* np.sum([ (w_grid[ii] - mu_grid[ii] - np.inner(Bg_new[ii,gNei[ii]],w_grid[gNei[ii]]-mu_grid[gNei[ii]]))**2/rg_new[ii] - (w_grid[ii] - mu_grid[ii] - np.inner(Bg_current[ii,gNei[ii]],w_grid[gNei[ii]]-mu_grid[gNei[ii]]))**2/rg_current[ii] for ii in range((n_grid+1)**2)]))
+    sus_grid = - a/2* np.sum([ (w_grid[ii] - mu_grid[ii] - np.inner(Bg_new[ii,gNei[ii]],w_grid[gNei[ii]]-mu_grid[gNei[ii]]))**2/rg_new[ii] - (w_grid[ii] - mu_grid[ii] - np.inner(Bg_current[ii,gNei[ii]],w_grid[gNei[ii]]-mu_grid[gNei[ii]]))**2/rg_current[ii] for ii in range((n_grid+1)**2)])
     
-    print("sus grid",sus_grid)
+    # print("sus grid",sus_grid)
     
-    sus_obs = np.exp(- a/2* np.sum([ (w_current[ii] - mu[ii] - np.inner(Bog_new[ii,ogNei[ii]],w_grid[ogNei[ii]]-mu_grid[ogNei[ii]]))**2/rog_new[ii] - (w_current[ii] - mu[ii] - np.inner(Bog_current[ii,ogNei[ii]],w_grid[ogNei[ii]]-mu_grid[ogNei[ii]]))**2/rog_current[ii] for ii in range(n_obs)]))
+    sus_obs = - a/2* np.sum([ (w_current[ii] - mu[ii] - np.inner(Bog_new[ii,ogNei[ii]],w_grid[ogNei[ii]]-mu_grid[ogNei[ii]]))**2/rog_new[ii] - (w_current[ii] - mu[ii] - np.inner(Bog_current[ii,ogNei[ii]],w_grid[ogNei[ii]]-mu_grid[ogNei[ii]]))**2/rog_current[ii] for ii in range(n_obs)])
     
-    print("sus obs",sus_obs)
+    # print("sus obs",sus_obs)
     
-    pect_grid = np.prod([(rg_current[ii]/rg_new[ii])**(1/2) for ii in range((n_grid+1)**2)])
+    pect_grid = np.sum([(1/2)*np.log(rg_current[ii]/rg_new[ii]) for ii in range((n_grid+1)**2)])
     
-    print("pect grid",pect_grid)
+    # print("pect grid",pect_grid)
     
-    pect_obs = np.prod([(rog_current[ii]/rog_new[ii])**(1/2) for ii in range(n_obs)])
+    pect_obs = np.sum([(1/2)*np.log(rog_current[ii]/rog_new[ii]) for ii in range(n_obs)])
     
-    print("pect obs",pect_obs)
+    # print("pect obs",pect_obs)
     
-    prior = (phi_new/phi_current)**(alpha_phi-1) * np.exp(-beta_phi*(phi_new-phi_current))
+    prior = (alpha_phi-1)*np.log(phi_new/phi_current) -beta_phi*(phi_new-phi_current)
         
-    print("prior",prior)
+    # print("prior",prior)
     
     # trans = (phi_current/phi_new)**(alpha_prop-1) * np.exp(-alpha_prop*(phi_current/phi_new - phi_new/phi_current))
     
     # print("trans",trans)
 
     
-    ratio =  sus_grid * pect_grid * sus_obs * pect_obs * prior 
+    ratio =  np.exp(sus_grid + pect_grid + sus_obs + pect_obs + prior )
     
     if random.uniform() < ratio:
         phi_current = phi_new
