@@ -19,7 +19,7 @@ from base import matern_kernel, fct
 
 random.seed(0)
 
-n_obs=100
+n_obs=200
 m=20
 
 n_grid = 200
@@ -49,7 +49,7 @@ tau = 10
 alpha_phi = 100
 beta_phi = 10
 
-
+phi_prop = 1
 
 ### proposals
 
@@ -199,7 +199,7 @@ w_grid = random.normal(size=n_grid+1)
 ### algorithm
 
 
-N = 8000
+N = 1000
 
 w_grid_run = np.zeros((N,n_grid+1))
 w_current_run = np.zeros((N,n_obs))
@@ -231,6 +231,7 @@ for i in range(N):
         # plt.scatter(locs,w_current, c="tab:orange", s=10)
         plt.show() 
         print(i)
+        print(phi_current)
     
     # w_grid update
     
@@ -261,7 +262,10 @@ for i in range(N):
     ### phi update
     
     # phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
-    phi_new = 1*random.normal() + phi_current
+    while True:
+        phi_new = phi_prop*random.normal() + phi_current
+        if phi_new>0:
+            break
     
     
     Bg_new = np.zeros((n_grid+1,n_grid+1))
@@ -351,7 +355,7 @@ et = time.time()
 
 print("Total Time:", (et-st)/60, "minutes")
 
-tail = 4000
+tail = 0
 
 print("Accept rate phi:",np.mean(acc_phi))
 ### trace plots

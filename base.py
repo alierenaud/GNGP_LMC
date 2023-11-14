@@ -32,20 +32,20 @@ def matern_kernel(r, phi = 1):
     
 #     return (1+(r/phi)**2)**(-alpha) + (r==0)*0.001
 
-# def fct(s):
+def fct(s):
     
-#     return(2*np.sin(s)/(0.1*s**2+1))
+    return(2*np.sin(s)/(0.1*s**2+1))
 
 # def fct(s):
     
-#     res = 0.25*(s<-6) + 0.5*((s>=-6)*(s<-2)) + 0.75*((s>=-2)*(s<2)) + 0.5*((s>=2)*(s<6)) + 0.25*(s>=6)
+#     res = 0*(s<-8) + 0.5*((s>=-8)*(s<-4)) + 1*((s>=-4)*(s<4)) + 0.5*((s>=4)*(s<8)) + 0*(s>=8)
     
 #     return(norm.ppf(res))
 
 
-def fct(s):
+# def fct(s):
     
-    return(2*np.sin(s))
+#     return(2*np.sin(s))
 
 
 
@@ -57,7 +57,38 @@ def fct2(s):
     
     t = (12*r-np.pi)
     
-    return(np.sin(t))
+    return(2*np.sin(t))
+
+
+# def fct2(s):
+    
+    
+    
+#     return(-2*(s[:,0]+s[:,1])**2+2)
+
+
+# def fct2(s):
+    
+#     c = s - [0.5,0.5]
+    
+#     theta = np.pi/4
+    
+#     Rot = np.array([[np.cos(theta),-np.sin(theta)],[np.sin(theta),np.cos(theta)]])
+    
+#     cr = c@np.transpose(Rot) 
+    
+#     r = np.min(cr**2,axis=1)
+    
+#     t = (50*r+np.pi/2)
+    
+#     return(2*np.sin(t))
+
+
+# def fct2(s):
+    
+#     res = (s[:,0]<0.5)*(s[:,1]<0.5) * 2 + (s[:,0]>=0.5)*(s[:,1]>=0.5) * -2
+#     return res
+
 
 
 

@@ -17,7 +17,7 @@ from base import matern_kernel, fct2, makeGrid, vec_inv
 
 random.seed(0)
 
-n_obs=1000
+n_obs=500
 m=4
 
 n_grid = 20
@@ -37,20 +37,21 @@ locs = random.uniform(size = (n_obs,2))
 mu = np.zeros(n_obs)
 mu_grid = np.zeros((n_grid+1)**2)
 a = 1
-phi_current = 1.0
+phi_current = 1
 tau = 10
 
 
 ### priors
 
-alpha_phi = 10
-beta_phi = 10
+alpha_phi = 100
+beta_phi = 100
 
 
 
 ### proposals
 
-alpha_prop = 100
+# alpha_prop = 100
+sigma_prop = 0.1
 
 ### compute grid neighbors
 
@@ -276,11 +277,13 @@ plt.show()
 
 # w_current = w_true
 # w_current = np.load("w_current.npy")
-w_current = random.normal(size=n_obs)
+# w_current = random.normal(size=n_obs)
+w_current = np.zeros(shape=n_obs)
 
 # w_grid = np.copy(w_grid_true)
 # w_grid = np.load("w_grid.npy")
-w_grid = random.normal(size=(n_grid+1)**2)
+# w_grid = random.normal(size=(n_grid+1)**2)
+w_grid = np.zeros(shape=(n_grid+1)**2)
 
 
 
@@ -288,7 +291,7 @@ w_grid = random.normal(size=(n_grid+1)**2)
 ### algorithm
 
 
-N = 2000
+N = 1000
 
 w_grid_run = np.zeros((N,(n_grid+1)**2))
 w_current_run = np.zeros((N,n_obs))
@@ -325,6 +328,7 @@ for i in range(N):
         plt.colorbar(c)
         plt.show()
         print(i)
+        print(phi_current)
     
     # w_grid update
     
@@ -355,7 +359,11 @@ for i in range(N):
     ### phi update
     
     # phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
-    phi_new = 0.1*random.normal() + phi_current
+    
+    while True:
+        phi_new = sigma_prop*random.normal() + phi_current
+        if phi_new > 0:
+            break
     
     
     Bg_new = np.zeros(((n_grid+1)**2,(n_grid+1)**2))
@@ -406,23 +414,23 @@ for i in range(N):
     
     sus_grid = np.exp(- a/2* np.sum([ (w_grid[ii] - mu_grid[ii] - np.inner(Bg_new[ii,gNei[ii]],w_grid[gNei[ii]]-mu_grid[gNei[ii]]))**2/rg_new[ii] - (w_grid[ii] - mu_grid[ii] - np.inner(Bg_current[ii,gNei[ii]],w_grid[gNei[ii]]-mu_grid[gNei[ii]]))**2/rg_current[ii] for ii in range((n_grid+1)**2)]))
     
-    # print("sus grid",sus_grid)
+    print("sus grid",sus_grid)
     
     sus_obs = np.exp(- a/2* np.sum([ (w_current[ii] - mu[ii] - np.inner(Bog_new[ii,ogNei[ii]],w_grid[ogNei[ii]]-mu_grid[ogNei[ii]]))**2/rog_new[ii] - (w_current[ii] - mu[ii] - np.inner(Bog_current[ii,ogNei[ii]],w_grid[ogNei[ii]]-mu_grid[ogNei[ii]]))**2/rog_current[ii] for ii in range(n_obs)]))
     
-    # print("sus obs",sus_obs)
+    print("sus obs",sus_obs)
     
     pect_grid = np.prod([(rg_current[ii]/rg_new[ii])**(1/2) for ii in range((n_grid+1)**2)])
     
-    # print("pect grid",pect_grid)
+    print("pect grid",pect_grid)
     
     pect_obs = np.prod([(rog_current[ii]/rog_new[ii])**(1/2) for ii in range(n_obs)])
     
-    # print("pect obs",pect_obs)
+    print("pect obs",pect_obs)
     
     prior = (phi_new/phi_current)**(alpha_phi-1) * np.exp(-beta_phi*(phi_new-phi_current))
         
-    # print("prior",prior)
+    print("prior",prior)
     
     # trans = (phi_current/phi_new)**(alpha_prop-1) * np.exp(-alpha_prop*(phi_current/phi_new - phi_new/phi_current))
     
@@ -433,10 +441,10 @@ for i in range(N):
     
     if random.uniform() < ratio:
         phi_current = phi_new
-        Bg_current = Bg_new
-        rg_current = rg_new
-        Bog_current = Bog_new
-        rog_current = rog_new
+        Bg_current = np.copy(Bg_new)
+        rg_current = np.copy(rg_new)
+        Bog_current = np.copy(Bog_new)
+        rog_current = np.copy(rog_new)
         acc_phi[i] = 1
    
     phi_run[i] = phi_current 
@@ -445,7 +453,7 @@ et = time.time()
 
 print("Total Time:", (et-st)/60, "minutes")
 
-tail = 1000
+tail = 0
 
 print("Accept rate phi:",np.mean(acc_phi))
 ### trace plots

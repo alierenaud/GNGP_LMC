@@ -34,7 +34,7 @@ grid_locs = makeGrid(marg_grid,marg_grid)
 f_grid = fct2(grid_locs)
 
 
-n_obs = 2000
+n_obs = 500
 
 ### showcase data
 
@@ -72,8 +72,8 @@ y = f_locs + 1/np.sqrt(tau)*random.normal(size = n_obs)
 
 sigma2_mu = 1
 
-alpha_phi = 10
-beta_phi = 10
+alpha_phi = 100
+beta_phi = 100
 
 alpha_a = 0.01
 beta_a = 0.1
@@ -85,18 +85,21 @@ beta_tau = 0.1
 ### proposals
 
 # alpha_prop = 100
-
+phi_prop = 0.1
 
 ### algorithm
 
 mu_current = 0
 
-phi_current = 1.0
+phi_current = 1
 a_current = 1
 tau_current = 10.0
 
-f_currrent = random.normal(size=n_obs)
-f_grid_current = random.normal(size=(n_grid+1)**2)
+# f_currrent = random.normal(size=n_obs)
+# f_grid_current = random.normal(size=(n_grid+1)**2)
+
+f_currrent = np.zeros(shape=n_obs)
+f_grid_current = np.zeros(shape=(n_grid+1)**2)
 
 
 ### useful quantitites
@@ -119,7 +122,7 @@ R_grid_current = matern_kernel(D_grid,phi_current)
 
 ### containers
 
-N = 8000
+N = 1000
 
 f_grid_run = np.zeros((N,(n_grid+1)**2))
 phi_run = np.zeros(N)
@@ -154,6 +157,7 @@ for i in range(N):
         plt.show()
 
         print(i)
+        print(phi_current)
 
     ### f update
     
@@ -168,22 +172,25 @@ for i in range(N):
     
     # phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
     
-    phi_new = 0.1*random.normal() + phi_current
+    while True:
+        phi_new = phi_prop*random.normal() + phi_current
+        if phi_new > 0:
+            break
     
     R_new = matern_kernel(D,phi_new)
     R_inv_new = np.linalg.inv(R_new)
     
     sus = np.exp( a_current/2 * np.transpose(f_current-mu_current)@(R_inv_current-R_inv_new)@(f_current-mu_current) )
     
-    # print("sus",sus)
+    print("sus",sus)
     
     pect = np.linalg.det(R_current@R_inv_new)**(1/2)
     
-    # print("pect",pect)
+    print("pect",pect)
     
     prior = (phi_new/phi_current)**(alpha_phi-1) * np.exp(-beta_phi*(phi_new-phi_current))
     
-    # print("prior",prior)
+    print("prior",prior)
     
     # trans = (phi_current/phi_new)**(alpha_prop-1) * np.exp(-alpha_prop*(phi_current/phi_new - phi_new/phi_current))
     
@@ -194,40 +201,40 @@ for i in range(N):
     
     if random.uniform() < ratio:
         phi_current = phi_new
-        R_current = R_new
-        R_inv_current = R_inv_new
+        R_current = np.copy(R_new)
+        R_inv_current = np.copy(R_inv_new)
         
         acc_phi[i] = 1
     
     
     phi_run[i] = phi_current
     
-    # ### mu update
+    ### mu update
     
-    # sigma2_cond = 1/(a_current*np.sum(R_inv_current) + 1/sigma2_mu)
-    # mu_cond = sigma2_cond*np.inner(f_current@R_inv_current, np.ones(n_obs))
+    sigma2_cond = 1/(a_current*np.sum(R_inv_current) + 1/sigma2_mu)
+    mu_cond = sigma2_cond*np.inner(f_current@R_inv_current, np.ones(n_obs))
     
-    # mu_current = random.normal(mu_cond,sigma2_cond)
+    mu_current = random.normal(mu_cond,sigma2_cond)
     
-    # mu_run[i] = mu_current
+    mu_run[i] = mu_current
     
-    # ### a update
+    ### a update
     
-    # alpha_cond = n_obs/2+alpha_a
-    # beta_cond = np.transpose(f_current - mu_current)@R_inv_current@(f_current - mu_current)/2 + beta_a
+    alpha_cond = n_obs/2+alpha_a
+    beta_cond = np.transpose(f_current - mu_current)@R_inv_current@(f_current - mu_current)/2 + beta_a
     
-    # a_current = random.gamma(alpha_cond,1/beta_cond)
+    a_current = random.gamma(alpha_cond,1/beta_cond)
     
-    # a_run[i] = a_current
+    a_run[i] = a_current
     
-    # ### tau update
+    ### tau update
     
-    # alpha_cond = n_obs/2+alpha_tau
-    # beta_cond = np.inner(y-f_current,y-f_current)/2 + beta_tau
+    alpha_cond = n_obs/2+alpha_tau
+    beta_cond = np.inner(y-f_current,y-f_current)/2 + beta_tau
     
-    # tau_current = random.gamma(alpha_cond,1/beta_cond)
+    tau_current = random.gamma(alpha_cond,1/beta_cond)
     
-    # tau_run[i] = tau_current
+    tau_run[i] = tau_current
     
     ### f grid update
     
@@ -250,7 +257,7 @@ for i in range(N):
 et = time()
 print("Time:",(et-st)/60,"minutes")
 
-tail = 2000
+tail = 0
 
 f_grid_mean = np.mean(f_grid_run[tail:], axis=0)
 f_grid_025 = np.quantile(f_grid_run[tail:], 0.025, axis=0)

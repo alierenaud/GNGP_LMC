@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Nov  1 14:55:05 2023
+Created on Sun Nov 12 16:33:50 2023
 
 @author: homeboy
 """
@@ -16,7 +16,7 @@ from scipy.stats import truncnorm
 import matplotlib.pyplot as plt
 
 
-from base import matern_kernel, fct
+from base import matern_kernel, fct2, makeGrid, vec_inv
 
 from scipy.stats import norm
 
@@ -26,25 +26,38 @@ from scipy.stats import norm
 
 random.seed(0)
 
-n_grid = 200
-xlim = 10
+n_grid = 20
 
-grid_locs = np.linspace(-xlim,xlim,n_grid+1)
-f_grid = fct(grid_locs)
 
-### illustrate function
-plt.plot(grid_locs,f_grid)
-plt.show()
+marg_grid = np.linspace(0,1,n_grid+1)
 
-### illustrate prop dens
-plt.plot(grid_locs,norm.cdf(f_grid))
+
+
+grid_locs = makeGrid(marg_grid,marg_grid)
+f_grid = fct2(grid_locs)
+
+### showcase data
+
+xv, yv = np.meshgrid(marg_grid, marg_grid)
+
+
+
+fig, ax = plt.subplots()
+# ax.set_xlim(0,1)
+# ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+
+c = ax.pcolormesh(xv, yv, vec_inv(f_grid,n_grid+1), cmap = "Blues")
+plt.colorbar(c)
 plt.show()
 
 
 n_1 = 500
 
 mu = 0
-a = 1
+a = 0.1
 tau = 1.0
 
 phi_current = 1
@@ -53,8 +66,8 @@ phi_current = 1
 
 # sigma2_mu = 1
 
-alpha_phi = 10
-beta_phi = 10
+alpha_phi = 100
+beta_phi = 100
 
 # alpha_a = 0.01
 # beta_a = 0.1
@@ -66,22 +79,22 @@ beta_phi = 10
 ### proposals
 
 # alpha_prop = 100
-sigma_prop = 0.2
+sigma_prop = 0.1
 
 
 ### generate data
 
-x_true = np.array([])
+x_true = np.zeros((0,2))
 g_true = np.array([])
 y_true = np.array([])
 
 r=0
 while r < n_1:
-    x = random.uniform() * 20 - 10
-    g = fct(x)
-    y = fct(x) + random.normal()
+    x = random.uniform(size=(1,2))
+    g = fct2(x)
+    y = fct2(x) + random.normal()
     
-    x_true = np.append(x_true,x)
+    x_true = np.append(x_true,x,axis=0)
     g_true = np.append(g_true,g)
     y_true = np.append(y_true,y)
     
@@ -100,15 +113,20 @@ g_1_true = g_true[y_true>0]
 y_0_true = y_true[y_true<0]
 y_1_true = y_true[y_true>0]
 
-### showcase data        
-plt.hist(x_1,density=True,alpha=0.5,bins=20)
-# plt.plot(grid_locs,f_grid)
+
+
+
+fig, ax = plt.subplots()
+# ax.set_xlim(0,1)
+# ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+
+c = ax.pcolormesh(xv, yv, norm.cdf(vec_inv(f_grid,n_grid+1)), cmap = "Blues")
+ax.scatter(x_1[:,0],x_1[:,1],c="black")
+plt.colorbar(c)
 plt.show()
-plt.violinplot(x_1)
-plt.show()   
-
-
-
 
 
 
@@ -120,14 +138,21 @@ plt.show()
 
 ### initiiate point process
 
+n_0_current = 0
+x_0_current = np.zeros(shape=(0,2))
+
+
+g_0_current = np.zeros(shape=n_0_current) + mu
+y_0_current = -np.ones(n_0_current)
+
 # n_0_current = n_0_true
 # x_0_current = x_0_true
-n_0_current = n_1
-x_0_current = random.uniform(size=n_1) * 20 -10
+# n_0_current = n_1
+# x_0_current = random.uniform(size=(n_1,2))
 
 
-g_0_current = random.normal(size=n_0_current) + mu
-y_0_current = -np.ones(n_0_current)
+# g_0_current = random.normal(size=n_0_current) + mu
+# y_0_current = -np.ones(n_0_current)
 
 
 # g_0_current = g_0_true
@@ -136,24 +161,28 @@ y_0_current = -np.ones(n_0_current)
 # g_1_current = g_1_true
 # y_1_current = y_1_true
 
-g_1_current = random.normal(size=n_1) + mu
+
+g_1_current = np.zeros(shape=n_1) + mu
+# g_1_current = random.normal(size=n_1) + mu
 y_1_current = np.ones(n_1)
 
 
 n_current = n_1 + n_0_current 
-x_current = np.append(x_1,x_0_current)
+x_current = np.append(x_1,x_0_current,axis=0)
 g_current = np.append(g_1_current,g_0_current)
 y_current = np.append(y_1_current,y_0_current)
 
-g_grid_current = random.normal(size=n_grid+1)
+
+g_grid_current = np.zeros(shape=(n_grid+1)**2)
+# g_grid_current = random.normal(size=(n_grid+1)**2)
 # g_grid_current = f_grid
 
 
 ### useful quantitites
 
-D_0_current = distance_matrix(np.transpose([x_0_current]),np.transpose([x_0_current]))
-D_01_current = distance_matrix(np.transpose([x_0_current]),np.transpose([x_1]))
-D_1 = distance_matrix(np.transpose([x_1]),np.transpose([x_1]))
+D_0_current = distance_matrix(x_0_current,x_0_current)
+D_01_current = distance_matrix(x_0_current,x_1)
+D_1 = distance_matrix(x_1,x_1)
 
 D_current = np.block([[D_1,np.transpose(D_01_current)],[D_01_current,D_0_current]])
 
@@ -161,12 +190,12 @@ R_current = matern_kernel(D_current,phi_current)
 R_inv_current = np.linalg.inv(R_current)
 
 
-D_grid_obs_current = distance_matrix(np.transpose([grid_locs]),np.transpose([x_current]))
+D_grid_obs_current = distance_matrix(grid_locs,x_current)
 
 R_grid_obs_current = matern_kernel(D_grid_obs_current,phi_current)
 
 
-D_grid = distance_matrix(np.transpose([grid_locs]),np.transpose([grid_locs]))
+D_grid = distance_matrix(grid_locs,grid_locs)
 
 R_grid_current = matern_kernel(D_grid,phi_current)
 
@@ -175,7 +204,7 @@ R_grid_current = matern_kernel(D_grid,phi_current)
 
 N = 2000
 
-g_grid_run = np.zeros((N,n_grid+1))
+g_grid_run = np.zeros((N,(n_grid+1)**2))
 phi_run = np.zeros(N)
 n_0_run = np.zeros(N)
 
@@ -190,16 +219,16 @@ for i in range(N):
 
     if i%100==0:
 
-        plt.plot(grid_locs, norm.cdf(f_grid), c="black")
-        # plt.scatter(x_1, np.zeros(n_1), s=10)
-        plt.scatter(x_0_current, np.zeros(n_0_current), c="black", marker="|")
-        plt.plot(grid_locs, norm.cdf(g_grid_current), c="tab:orange")
-        
-        
-        # plt.scatter(x_1, norm.cdf(g_1_current), s=10, c="tab:blue")
-        # plt.scatter(x_0_current, norm.cdf(g_0_current), s=10, c="tab:orange")
-        
-        
+        fig, ax = plt.subplots()
+        # ax.set_xlim(0,1)
+        # ax.set_ylim(0,1)
+        ax.set_box_aspect(1)
+
+
+
+        c = ax.pcolormesh(xv, yv, norm.cdf(vec_inv(g_grid_current,n_grid+1)), cmap = "Blues")
+        ax.scatter(x_0_current[:,0],x_0_current[:,1],c="black")
+        plt.colorbar(c)
         plt.show()
 
         print(i)
@@ -214,13 +243,13 @@ for i in range(N):
         
         while True:
             ### simulate n_1 new variables 
-            x_new = random.uniform(size=3*n_1) * 20 - 10
+            x_new = random.uniform(size=(3*n_1,2))
             
-            D_new = distance_matrix(np.transpose([x_new]), np.transpose([x_new]))
+            D_new = distance_matrix(x_new, x_new)
             # print("new",np.sum(D_new<1e-4 - D_new.shape[0]))
             R_new = matern_kernel(D_new, phi_current)
             
-            D_new_obs = distance_matrix(np.transpose([x_new]), np.transpose([x_current]))
+            D_new_obs = distance_matrix(x_new, x_current)
             # print("new_obs",np.sum(D_new_obs<1e-4))
             R_new_obs = matern_kernel(D_new_obs, phi_current)
             
@@ -248,7 +277,7 @@ for i in range(N):
         if count >= n_1:
             
             
-            x_current = np.append(x_current,x_new)
+            x_current = np.append(x_current,x_new,axis=0)
             g_current = np.append(g_current,g_new)
             y_current = np.append(y_current,y_new)
             
@@ -269,13 +298,13 @@ for i in range(N):
             y_0_current = y_tail[y_tail<0]
             
             n_current = n_1 + n_0_current 
-            x_current = np.append(x_1,x_0_current)
+            x_current = np.append(x_1,x_0_current,axis=0)
             g_current = np.append(g_1_current,g_0_current)
             y_current = np.append(y_1_current,y_0_current)
             
             
-            D_0_current = distance_matrix(np.transpose([x_0_current]),np.transpose([x_0_current]))
-            D_01_current = distance_matrix(np.transpose([x_0_current]),np.transpose([x_1]))
+            D_0_current = distance_matrix(x_0_current,x_0_current)
+            D_01_current = distance_matrix(x_0_current,x_1)
             
             D_current = np.block([[D_1,np.transpose(D_01_current)],[D_01_current,D_0_current]])
 
@@ -286,7 +315,7 @@ for i in range(N):
             # print(np.prod(eigval>0))
 
 
-            D_grid_obs_current = distance_matrix(np.transpose([grid_locs]),np.transpose([x_current]))
+            D_grid_obs_current = distance_matrix(grid_locs,x_current)
 
             # R_grid_obs_current = matern_kernel(D_grid_obs_current,phi_current)
 
@@ -297,7 +326,7 @@ for i in range(N):
             
             break
         else:
-            x_current = np.append(x_current,x_new)
+            x_current = np.append(x_current,x_new,axis=0)
             g_current = np.append(g_current,g_new)
             y_current = np.append(y_current,y_new)
             
@@ -308,7 +337,7 @@ for i in range(N):
             
             # #
             
-            D_current = distance_matrix(np.transpose([x_current]), np.transpose([x_current]))
+            D_current = distance_matrix(x_current, x_current)
             R_current = matern_kernel(D_current,phi_current)
             R_inv_current = np.linalg.inv(R_current)
             # print(R_inv_current @ RRRR_TEMP)
@@ -434,7 +463,7 @@ for i in range(N):
     
     try:
         C = np.linalg.cholesky(Sigma_grid)
-        g_grid_current = C/np.sqrt(a)@random.normal(size=n_grid+1) + mu_grid
+        g_grid_current = C/np.sqrt(a)@random.normal(size=(n_grid+1)**2) + mu_grid
          
     except np.linalg.LinAlgError:
         print("oof g_grid")
@@ -462,16 +491,15 @@ Phi_g_grid_025 = np.quantile(Phi_g_grid_run[tail:], 0.05, axis=0)
 Phi_g_grid_975 = np.quantile(Phi_g_grid_run[tail:], 0.95, axis=0)
 
 
-plt.plot(grid_locs,norm.cdf(f_grid))
-plt.plot(grid_locs,Phi_g_grid_mean)
-plt.show()
+fig, ax = plt.subplots()
+# ax.set_xlim(0,1)
+# ax.set_ylim(0,1)
+ax.set_box_aspect(1)
 
 
 
-
-plt.plot(grid_locs,norm.cdf(f_grid))
-plt.plot(grid_locs,Phi_g_grid_mean)
-plt.fill_between(grid_locs, Phi_g_grid_025, Phi_g_grid_975, alpha=0.5,color="tab:orange")
+c = ax.pcolormesh(xv, yv, vec_inv(Phi_g_grid_mean,n_grid+1), cmap = "Blues")
+plt.colorbar(c)
 plt.show()
 
 
@@ -491,12 +519,7 @@ plt.show()
 plt.boxplot(n_0_run[tail:])
 plt.show()
 
-plt.hist(x_1,density=True,alpha=0.5,bins=20)
-plt.show()
 
-plt.violinplot(x_1,vert=False)
-plt.show()
    
 print("MSE:", np.mean((norm.cdf(f_grid) - Phi_g_grid_mean)**2))
-print("TMSE:", np.mean((Phi_g_grid_run[tail:] - norm.cdf(f_grid))**2))  
-        
+print("TMSE:", np.mean((Phi_g_grid_run[tail:] - norm.cdf(f_grid))**2)) 

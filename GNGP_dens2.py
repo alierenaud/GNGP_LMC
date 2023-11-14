@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sun Nov  5 18:58:30 2023
+Created on Sun Nov 12 18:22:00 2023
 
 @author: homeboy
 """
@@ -16,44 +16,57 @@ from scipy.stats import truncnorm
 import matplotlib.pyplot as plt
 
 
-from base import matern_kernel, fct
+from base import matern_kernel, fct2, makeGrid, vec_inv
 
 from scipy.stats import norm
 
 random.seed(0)
 
-n_grid = 200
-m = 20
-xlim = 10
+n_grid = 20
+m = 4
 
-grid_locs = np.linspace(-xlim,xlim,n_grid+1)
-f_grid = fct(grid_locs)
 
-### illustrate function
-plt.plot(grid_locs,f_grid)
+marg_grid = np.linspace(0,1,n_grid+1)
+
+
+
+grid_locs = makeGrid(marg_grid,marg_grid)
+f_grid = fct2(grid_locs)
+
+### showcase data
+
+xv, yv = np.meshgrid(marg_grid, marg_grid)
+
+
+
+fig, ax = plt.subplots()
+# ax.set_xlim(0,1)
+# ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+
+c = ax.pcolormesh(xv, yv, vec_inv(f_grid,n_grid+1), cmap = "Blues")
+plt.colorbar(c)
 plt.show()
 
-### illustrate prop dens
-plt.plot(grid_locs,norm.cdf(f_grid))
-plt.show()
 
-
-n_1 = 200
+n_1 = 2000
 
 
 ### generate data
 
-x_true = np.array([])
+x_true = np.zeros((0,2))
 g_true = np.array([])
 y_true = np.array([])
 
 r=0
 while r < n_1:
-    x = random.uniform() * 20 - 10
-    g = fct(x)
-    y = fct(x) + random.normal()
+    x = random.uniform(size=(1,2))
+    g = fct2(x)
+    y = fct2(x) + random.normal()
     
-    x_true = np.append(x_true,x)
+    x_true = np.append(x_true,x,axis=0)
     g_true = np.append(g_true,g)
     y_true = np.append(y_true,y)
     
@@ -72,12 +85,20 @@ g_1_true = g_true[y_true>0]
 y_0_true = y_true[y_true<0]
 y_1_true = y_true[y_true>0]
 
-### showcase data        
-plt.hist(x_1,density=True,alpha=0.5,bins=20)
-# plt.plot(grid_locs,f_grid)
+
+
+
+fig, ax = plt.subplots()
+# ax.set_xlim(0,1)
+# ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+
+c = ax.pcolormesh(xv, yv, norm.cdf(vec_inv(f_grid,n_grid+1)), cmap = "Blues")
+# ax.scatter(x_1[:,0],x_1[:,1],c="black")
+plt.colorbar(c)
 plt.show()
-plt.violinplot(x_1)
-plt.show()   
 
 
 
@@ -85,21 +106,21 @@ plt.show()
 
 ### priors
 
-alpha_phi = 1
-beta_phi = 1
+alpha_phi = 100
+beta_phi = 100
 
 
 
 ### proposals
 
 # alpha_prop = 100
-sigma_prop = 0.1
+sigma_prop = 0.05
 
 ### algorithm
 
 mu = 0
 
-mu_grid = np.ones(n_grid+1)*mu
+mu_grid = np.ones((n_grid+1)**2)*mu
 a = 0.1
 tau = 1.0
 
@@ -114,12 +135,14 @@ phi_current = 1
 # y_0_current = y_0_true
 
 
+
 n_0_current = 0
-x_0_current = np.zeros(n_0_current)
-g_0_current = np.zeros(n_0_current) + mu
+x_0_current = np.zeros(shape=(0,2))
+g_0_current = np.zeros(shape=(0,2)) + mu
+
 
 # n_0_current = n_1
-# x_0_current = random.uniform(size=n_1) * 20 -10
+# x_0_current = random.uniform(size=(n_1,2))
 # g_0_current = random.normal(size=n_0_current) + mu
 y_0_current = -np.ones(n_0_current)
 
@@ -128,55 +151,95 @@ y_0_current = -np.ones(n_0_current)
 # g_1_current = g_1_true
 # y_1_current = y_1_true
 
-g_1_current = np.zeros(n_1) + mu
 
+g_1_current = np.zeros(n_1) + mu
 # g_1_current = random.normal(size=n_1) + mu
 y_1_current = np.ones(n_1)
 
 
 n_current = n_1 + n_0_current 
-x_current = np.append(x_1,x_0_current)
+x_current = np.append(x_1,x_0_current,axis=0)
 g_current = np.append(g_1_current,g_0_current)
 y_current = np.append(y_1_current,y_0_current)
 
 mu_obs = np.ones(n_current)*mu
 
-g_grid_current = np.zeros(n_grid+1)
-# g_grid_current = random.normal(size=n_grid+1)
+g_grid_current = np.zeros((n_grid+1)**2)
+# g_grid_current = random.normal(size=(n_grid+1)**2)
 # g_grid_current = np.copy(f_grid)
 
 
-###### compute grid neighbors
+### compute grid neighbors
 
-gNei = np.zeros(n_grid+1,dtype=object)
+gNei = np.zeros((n_grid+1)**2,dtype=object)
 
-for i in range(m):
-    gNei[i] = np.arange(i)
+
+
+
+
+
+for i in np.arange((n_grid+1)**2):
+    
+    row = i//(n_grid+1)
+    col = i%(n_grid+1)
     
     
+    # print(i)
+    gNei[i] = np.array([],dtype=int)
     
-for j in range(m,n_grid+1):
-    gNei[j] = np.arange(j-m,j)
+    
+
+    for j in np.arange(np.max([row-m,0]),row):
+        gNei[i] = np.append(gNei[i], np.arange(np.max([(n_grid+1)*j+col-m,(n_grid+1)*j]) ,(n_grid+1)*j+col+1,dtype=int))
+        
+      
+    gNei[i] = np.append(gNei[i],np.arange(np.max([i-m,i-col]),i,dtype=int)) 
+
+
+### showcase neighboring structure
 
 
 
-agNei = np.zeros(n_grid+1,dtype=object)
+# for i in range((n_grid+1)**2):
 
-for i in range(n_grid+1):
+
+#     fig, ax = plt.subplots()
+    
+#     ax.set_aspect(1)
+    
+#     # ax.set_xticks([])
+#     # ax.set_yticks([])
+    
+#     plt.scatter(grid_locs[:,0],grid_locs[:,1],c="black")
+#     plt.scatter(grid_locs[i,0],grid_locs[i,1],c="tab:orange")
+#     plt.scatter(grid_locs[gNei[i],0],grid_locs[gNei[i],1],c="tab:green")
+#     plt.show()
+
+
+
+
+
+
+agNei = np.zeros((n_grid+1)**2,dtype=object)
+
+for i in range((n_grid+1)**2):
     agNei[i] = np.array([],dtype = int)
-    for j in range(n_grid+1):
+    for j in range((n_grid+1)**2):
         if i in gNei[j]:
             agNei[i] = np.append(agNei[i],j)
 
+
+
+
 ### compute B,r,dists
 
-Distg = distance_matrix(np.transpose([grid_locs]), np.transpose([grid_locs]))
+Distg = distance_matrix(grid_locs, grid_locs)
 
-DistgMats = np.zeros(n_grid+1,dtype=object)
-Bg_current = np.zeros((n_grid+1,n_grid+1))
-rg_current= np.zeros(n_grid+1)
+DistgMats = np.zeros((n_grid+1)**2,dtype=object)
+Bg_current = np.zeros(((n_grid+1)**2,(n_grid+1)**2))
+rg_current= np.zeros((n_grid+1)**2)
 
-for i in range(n_grid+1):
+for i in range((n_grid+1)**2):
 
     
     DistgMat_temp = Distg[np.append(gNei[i], i)][:,np.append(gNei[i], i)]
@@ -199,46 +262,89 @@ for i in range(n_grid+1):
     rg_current[i] = 1-np.inner(b_temp,r_temp)
 
 
+
+### check on structure
+
+# C = Bg_current+np.identity((n_grid+1)**2)
+# D = np.transpose(C)@C                    
+
+# print((D!=0)*1)
+
 ### compute obs neighbors on grid
 
-ogNei = np.zeros((n_current,m),dtype=int)
-aogNei = np.zeros(n_grid+1,dtype=object)
+ogNei = np.zeros((n_current,m**2),dtype=int)
+aogNei = np.zeros((n_grid+1)**2,dtype=object)
 
-for i in range(n_grid+1):
+for i in range((n_grid+1)**2):
     aogNei[i] = np.empty(0,dtype=int)
 
-# Distog = distance_matrix(np.transpose([x_current]), np.transpose([grid_locs]))
+Distogs = np.zeros((n_current,m**2))
 
-Distogs = np.zeros((n_current,m))
+
 
 
 for i in range(n_current):
     
     
+    left_col =  int(np.floor(x_current[i,0]  * n_grid))
+    down_row =  int(np.floor(x_current[i,1]  * n_grid))
     
     
     
-    leftNei = int(np.floor( (x_current[i] + xlim)/(2*xlim) * n_grid))
     
-    off_left = -min(leftNei - m//2 + 1,0)
-    off_right = max(leftNei + m//2,n_grid) - n_grid
+    off_left = -min(left_col - m//2 + 1,0)
+    off_right = max(left_col + m//2,n_grid) - n_grid
     
-    leftMostNei = leftNei-m//2+1+off_left-off_right
-    rightMostNei = leftNei + m//2 + 1 + off_left - off_right
+    leftMostNei = left_col-m//2+1+off_left-off_right
+    rightMostNei = left_col + 1 + m//2 + off_left - off_right
     
-    nei_temp = np.arange(leftMostNei,rightMostNei)
+    hor_ind = np.arange(leftMostNei,rightMostNei)
     
-    ogNei[i] = nei_temp
     
-    Distogs[i] = distance_matrix([[x_current[i]]], np.transpose([grid_locs[nei_temp]]))
+    off_down = -min(down_row - m//2 + 1,0)
+    off_up = max(down_row + m//2,n_grid) - n_grid
     
-    for j in np.arange(leftMostNei,rightMostNei):
+    downMostNei = down_row-m//2+1+off_down-off_up
+    upMostNei = down_row + m//2 + 1 + off_down - off_up
+    
+    ver_ind = np.arange(downMostNei,upMostNei)
+    
+    
+    
+    
+    cs = 0
+    for v in ver_ind:
+        ogNei[i,np.arange(cs*m,cs*m+m)] = v*(n_grid+1) + hor_ind
+        cs+=1
+        
+    
+    Distogs[i] = distance_matrix([x_current[i]], grid_locs[ogNei[i]])
+    
+    
+    # fig, ax = plt.subplots()
+    
+    # ax.set_aspect(1)
+    
+    # # ax.set_xticks([])
+    # # ax.set_yticks([])
+    
+    # plt.scatter(grid_locs[:,0],grid_locs[:,1],c="black")
+    
+    # # plt.scatter(grid_locs[i,0],grid_locs[i,1],c="tab:orange")
+    # plt.scatter(grid_locs[ogNei[i],0],grid_locs[ogNei[i],1],c="tab:green")
+    # plt.scatter(x_current[i,0],x_current[i,1],c="tab:orange")
+    # plt.show()
+    
+    
+    
+    
+    for j in ogNei[i]:
         aogNei[j] = np.append(aogNei[j],i)
     
 
     
-DistggMat = Distg[:m][:,:m]
-Bog_current = np.zeros((n_current,n_grid+1))
+DistggMat = Distg[ogNei[0]][:,ogNei[0]]
+Bog_current = np.zeros((n_current,(n_grid+1)**2))
 rog_current = np.zeros(n_current)
 
 
@@ -263,12 +369,15 @@ for i in range(n_current):
     rog_current[i] = 1-np.inner(b_temp,r_temp)
 
 
+
+
 ### containers
 
-N = 1000
+N = 2000
 
-g_grid_run = np.zeros((N,n_grid+1))
+g_grid_run = np.zeros((N,(n_grid+1)**2))
 phi_run = np.zeros(N)
+n_0_run = np.zeros(N)
 
 acc_phi = np.zeros(N)
 
@@ -281,32 +390,21 @@ for i in range(N):
 
     if i%100==0:
 
-        plt.plot(grid_locs, norm.cdf(f_grid), c="black")
-        # plt.scatter(x_1, np.zeros(n_1), s=10)
-        # plt.hist(x_1,density=True,alpha=0.5,bins=20)
-        plt.scatter(x_0_current, np.zeros(n_0_current), c="black", marker="|")
-        plt.plot(grid_locs, norm.cdf(g_grid_current), c="tab:orange")
+        fig, ax = plt.subplots()
+        # ax.set_xlim(0,1)
+        # ax.set_ylim(0,1)
+        ax.set_box_aspect(1)
+
+
+
+        c = ax.pcolormesh(xv, yv, norm.cdf(vec_inv(g_grid_current,n_grid+1)), cmap = "Blues")
+        ax.scatter(x_0_current[:,0],x_0_current[:,1],c="black")
+        plt.colorbar(c)
         plt.show()
-        
-        
-        # plt.scatter(x_1, norm.cdf(g_1_current), s=10, c="tab:blue")
-        # plt.scatter(x_0_current, norm.cdf(g_0_current), s=10, c="tab:orange")
-        
-        # for ii in range(n_current):
-        #     plt.text(x_current[ii],norm.cdf(g_current[ii]),ii)
-        
-        ### GP level diag
-        
-        # plt.plot(grid_locs, f_grid, c="black")
-        # # plt.scatter(x_1, np.zeros(n_1), s=10)
-        # # plt.hist(x_1,density=True,alpha=0.5,bins=20)
-        # # plt.scatter(x_0_current, np.zeros(n_0_current), c="black", marker="|")
-        # plt.plot(grid_locs, g_grid_current, c="tab:orange")
-        
-        
-        # plt.show()
 
         print(i)
+
+        
         print(phi_current)
         
         
@@ -428,35 +526,35 @@ for i in range(N):
     ## point process (update x_0,g_0,y_0)
     
     count = 0
-    x_cont= []
+    x_cont= np.zeros(shape=(0,2))
     g_cont= []
     y_cont= []
     
-    ogNei_cont = np.zeros(shape=(0,m),dtype=int)
+    ogNei_cont = np.zeros(shape=(0,m**2),dtype=int)
     
     
     
     
-    Distogs_cont = np.zeros(shape=(0,m))
+    Distogs_cont = np.zeros(shape=(0,m**2))
     
-    Bog_cont = np.zeros(shape=(0,n_grid+1))
+    Bog_cont = np.zeros(shape=(0,(n_grid+1)**2))
     rog_cont = []
     
     while True:
         
         
         ### simulate n_1 new variables 
-        x_new = random.uniform(size=3*n_1) * 20 - 10
+        x_new = random.uniform(size=(3*n_1,2))
         n_new = x_new.shape[0]
         
         ### compute obs neighbors on grid
 
-        ogNei_new = np.zeros(shape=(n_new,m),dtype=int)
+        ogNei_new = np.zeros(shape=(n_new,m**2),dtype=int)
         
 
         # Distog = distance_matrix(np.transpose([x_current]), np.transpose([grid_locs]))
 
-        Distogs_new = np.zeros(shape=(n_new,m))
+        Distogs_new = np.zeros(shape=(n_new,m**2))
 
 
         for ii in range(n_new):
@@ -465,26 +563,45 @@ for i in range(N):
             
             
             
-            leftNei = int(np.floor( (x_new[ii] + xlim)/(2*xlim) * n_grid))
             
-            off_left = -min(leftNei - m//2 + 1,0)
-            off_right = max(leftNei + m//2,n_grid) - n_grid
             
-            leftMostNei = leftNei-m//2+1+off_left-off_right
-            rightMostNei = leftNei + m//2 + 1 + off_left - off_right
-            
-            nei_temp = np.arange(leftMostNei,rightMostNei)
-            
-            ogNei_new[ii] = nei_temp
-            
-            Distogs_new[ii] = distance_matrix([[x_new[ii]]], np.transpose([grid_locs[nei_temp]]))
+            left_col =  int(np.floor(x_new[ii,0]  * n_grid))
+            down_row =  int(np.floor(x_new[ii,1]  * n_grid))
             
             
             
+            
+            off_left = -min(left_col - m//2 + 1,0)
+            off_right = max(left_col + m//2,n_grid) - n_grid
+            
+            leftMostNei = left_col-m//2+1+off_left-off_right
+            rightMostNei = left_col + 1 + m//2 + off_left - off_right
+            
+            hor_ind = np.arange(leftMostNei,rightMostNei)
+            
+            
+            off_down = -min(down_row - m//2 + 1,0)
+            off_up = max(down_row + m//2,n_grid) - n_grid
+            
+            downMostNei = down_row-m//2+1+off_down-off_up
+            upMostNei = down_row + m//2 + 1 + off_down - off_up
+            
+            ver_ind = np.arange(downMostNei,upMostNei)
+            
+            
+            
+            
+            cs = 0
+            for v in ver_ind:
+                ogNei_new[ii,np.arange(cs*m,cs*m+m)] = v*(n_grid+1) + hor_ind
+                cs+=1
+                
+            
+            Distogs_new[ii] = distance_matrix([x_new[ii]], grid_locs[ogNei_new[ii]])
 
             
         
-        Bog_new = np.zeros((n_new,n_grid+1))
+        Bog_new = np.zeros((n_new,(n_grid+1)**2))
         rog_new = np.zeros(n_new)
 
 
@@ -520,7 +637,7 @@ for i in range(N):
         y_new = g_new + random.normal(size=n_new)
         
 
-        x_cont = np.append(x_cont, x_new)  
+        x_cont = np.append(x_cont, x_new, axis=0)  
         g_cont = np.append(g_cont, g_new) 
         y_cont = np.append(y_cont, y_new) 
         
@@ -553,6 +670,9 @@ for i in range(N):
             
             
             n_0_current = np.sum(thinned)
+            
+            n_0_run[i] = n_0_current
+            
             x_0_current = x_cont[thinned]
             g_0_current = g_cont[thinned]
             y_0_current = y_cont[thinned]
@@ -574,7 +694,7 @@ for i in range(N):
             mu_obs = mu*np.ones(n_current)
             
             
-            for ii in range(n_grid+1):
+            for ii in range((n_grid+1)**2):
                 aogNei[ii] = np.empty(0,dtype=int)
             
             for ii in range(n_current):
@@ -596,7 +716,7 @@ for i in range(N):
 
     # w_grid update
     
-    for ii in random.permutation(range(n_grid+1)):
+    for ii in random.permutation(range((n_grid+1)**2)):
     # for ii in range(n_grid+1):
         
         
@@ -648,10 +768,10 @@ for i in range(N):
             break
         
     
-    Bg_new = np.zeros((n_grid+1,n_grid+1))
-    rg_new= np.zeros(n_grid+1)
+    Bg_new = np.zeros(((n_grid+1)**2,(n_grid+1)**2))
+    rg_new= np.zeros((n_grid+1)**2)
     
-    for ii in range(n_grid+1):
+    for ii in range((n_grid+1)**2):
 
         
         DistgMat_temp = DistgMats[ii]
@@ -671,7 +791,7 @@ for i in range(N):
         
         rg_new[ii] = 1-np.inner(b_temp,r_temp)
     
-    Bog_new = np.zeros((n_current,n_grid+1))
+    Bog_new = np.zeros((n_current,(n_grid+1)**2))
     rog_new = np.zeros(n_current)
     
     for ii in range(n_current):
@@ -736,7 +856,7 @@ for i in range(N):
 et = time()
 print("Time:",(et-st)/60,"minutes")
 
-tail = 0
+tail = 1000
 
 Phi_g_grid_run = norm.cdf(g_grid_run)
 maxes = np.max(Phi_g_grid_run,axis=1)
@@ -750,22 +870,16 @@ Phi_g_grid_025 = np.quantile(Phi_g_grid_run[tail:], 0.05, axis=0)
 Phi_g_grid_975 = np.quantile(Phi_g_grid_run[tail:], 0.95, axis=0)
 
 
-plt.plot(grid_locs,norm.cdf(f_grid))
-plt.plot(grid_locs,Phi_g_grid_mean)
+fig, ax = plt.subplots()
+# ax.set_xlim(0,1)
+# ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+
+c = ax.pcolormesh(xv, yv, vec_inv(Phi_g_grid_mean,n_grid+1), cmap = "Blues")
+plt.colorbar(c)
 plt.show()
-
-
-plt.plot(grid_locs,norm.cdf(f_grid)/np.max(norm.cdf(f_grid)))
-plt.plot(grid_locs,Phi_g_grid_mean/np.max(Phi_g_grid_mean))
-plt.show()
-
-
-
-plt.plot(grid_locs,norm.cdf(f_grid))
-plt.plot(grid_locs,Phi_g_grid_mean)
-plt.fill_between(grid_locs, Phi_g_grid_025, Phi_g_grid_975, alpha=0.5,color="tab:orange")
-plt.show()
-
 
 
 print("Accept rate phi:",np.mean(acc_phi))
@@ -777,11 +891,12 @@ plt.show()
 plt.boxplot(phi_run[tail:])
 plt.show()
 
-plt.hist(x_1,density=True,alpha=0.5,bins=20)
+plt.plot(n_0_run[tail:])
 plt.show()
 
-plt.violinplot(x_1,vert=False)
+plt.boxplot(n_0_run[tail:])
 plt.show()
+
 
 
 

@@ -27,7 +27,7 @@ grid_locs = np.linspace(-xlim,xlim,n_grid+1)
 f_grid = fct(grid_locs)
 
 
-n_obs = 100
+n_obs = 200
 
 ### normal locs
 # sd_locs = 4
@@ -56,7 +56,7 @@ plt.show()
 
 sigma2_mu = 1
 
-alpha_phi = 10
+alpha_phi = 100
 beta_phi = 10
 
 alpha_a = 0.01
@@ -68,20 +68,24 @@ beta_tau = 0.1
 
 ### proposals
 
-alpha_prop = 100
+# alpha_prop = 100
+# phi_prop = 10
 
+phi_prop = 1
 
 ### algorithm
 
 mu_current = 0
 
-phi_current = 1.0
+phi_current = 10.0
 a_current = 1
 tau_current = 10.0
 
-f_currrent = random.normal(size=n_obs)
-f_grid_current = random.normal(size=n_grid+1)
+# f_currrent = random.normal(size=n_obs)
+# f_grid_current = random.normal(size=n_grid+1)
 
+f_currrent = np.zeros(shape=n_obs)
+f_grid_current = np.zeros(shape=n_grid+1)
 
 ### useful quantitites
 
@@ -142,7 +146,11 @@ for i in range(N):
     
     # phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
     
-    phi_new = 1*random.normal() + phi_current
+    
+    while True:
+        phi_new = phi_prop*random.normal() + phi_current
+        if phi_new > 0:
+            break
     
     R_new = matern_kernel(D,phi_new)
     R_inv_new = np.linalg.inv(R_new)
@@ -224,7 +232,7 @@ for i in range(N):
 et = time()
 print("Time:",(et-st)/60,"minutes")
 
-tail = 1000
+tail = 0
 
 f_grid_mean = np.mean(f_grid_run[tail:], axis=0)
 f_grid_025 = np.quantile(f_grid_run[tail:], 0.025, axis=0)
@@ -238,9 +246,16 @@ plt.show()
 plt.plot(grid_locs,f_grid)
 plt.plot(grid_locs,f_grid_mean)
 plt.fill_between(grid_locs, f_grid_025, f_grid_975, alpha=0.5,color="tab:orange")
+plt.title("n=250, MSE=0.0146, Time=0.2888 min")
+# plt.savefig("lin1D250.pdf")
 plt.show()
 
 
+
+# nsss = np.array([250,500,1000,2000])
+# tsss = np.array([0.288,1.0992,5.6082,38.5860])
+
+# plt.plot(nsss,tsss)
 
 
 print("Accept rate phi:",np.mean(acc_phi))
