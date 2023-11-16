@@ -34,7 +34,7 @@ grid_locs = makeGrid(marg_grid,marg_grid)
 f_grid = fct2(grid_locs)
 
 
-n_obs = 200
+n_obs = 2000
 
 ### showcase data
 
@@ -85,7 +85,7 @@ beta_tau = 0.1
 ### proposals
 
 # alpha_prop = 100
-phi_prop = 0.1
+phi_prop = 0.02
 
 ### algorithm
 
@@ -122,7 +122,7 @@ R_grid_current = matern_kernel(D_grid,phi_current)
 
 ### containers
 
-N = 1000
+N = 2000
 
 f_grid_run = np.zeros((N,(n_grid+1)**2))
 phi_run = np.zeros(N)
@@ -257,14 +257,14 @@ for i in range(N):
 et = time()
 print("Time:",(et-st)/60,"minutes")
 
-tail = 0
+tail = 1000
 
 f_grid_mean = np.mean(f_grid_run[tail:], axis=0)
 f_grid_025 = np.quantile(f_grid_run[tail:], 0.025, axis=0)
 f_grid_975 = np.quantile(f_grid_run[tail:], 0.975, axis=0)
 
 
-
+plt.figure(figsize=(4,4))
 fig, ax = plt.subplots()
 # ax.set_xlim(0,1)
 # ax.set_ylim(0,1)
@@ -274,6 +274,8 @@ ax.set_box_aspect(1)
 
 c = ax.pcolormesh(xv, yv, vec_inv(f_grid_mean,n_grid+1), cmap = "Blues")
 plt.colorbar(c)
+plt.title("GP")
+# plt.savefig("mean_GP_2000.pdf", bbox_inches='tight')
 plt.show()
 
 
@@ -322,4 +324,4 @@ print("MSE:", np.mean((f_grid - f_grid_mean)**2))
 print("TMSE:", np.mean((f_grid_run[tail:] - f_grid)**2))
 
 
-
+# np.save("phi_run_2000_GP",phi_run)

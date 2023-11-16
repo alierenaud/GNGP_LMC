@@ -27,6 +27,10 @@ def matern_kernel(r, phi = 1):
     
     return np.exp(-(r/phi)) + (r==0)*0.001
 
+# def matern_kernel(r, phi = 1):
+    
+#     return (1+np.sqrt(3)*r/phi)*np.exp(-(np.sqrt(3)*r/phi)) + (r==0)*0.001
+
 
 # def matern_kernel(r, phi = 1, alpha = 2):
     
@@ -49,15 +53,15 @@ def fct(s):
 
 
 
-def fct2(s):
+# def fct2(s):
     
-    c = s - [0.5,0.5]
+#     c = s - [0.5,0.5]
     
-    r = np.sqrt(c[:,0]**2+c[:,1]**2)
+#     r = np.sqrt(c[:,0]**2+c[:,1]**2)
     
-    t = (12*r-np.pi)
+#     t = (12*r-np.pi)
     
-    return(2*np.sin(t))
+#     return(2*np.sin(t))
 
 
 # def fct2(s):
@@ -84,13 +88,20 @@ def fct2(s):
 #     return(2*np.sin(t))
 
 
+def fct2(s):
+    
+    res = (s[:,0]<0.5)*(s[:,1]<0.5) * 2 + (s[:,0]>=0.5)*(s[:,1]>=0.5) * -2
+    return res
+
+# def fct2(s):
+    # return np.zeros(s.shape[0])
+
+
 # def fct2(s):
     
-#     res = (s[:,0]<0.5)*(s[:,1]<0.5) * 2 + (s[:,0]>=0.5)*(s[:,1]>=0.5) * -2
-#     return res
-
-
-
+    
+    
+#     return(2*(s[:,0]+s[:,1])-2)
 
 # def fct2(s):
     

@@ -46,9 +46,26 @@ y = f_locs + 1/np.sqrt(tau)*random.normal(size = n_obs)
 
 ### showcase data
 
+plt.figure(figsize=(5,3.5))
 plt.plot(grid_locs,f_grid)
 plt.scatter(locs,y, c="black", s=10)
+# plt.savefig("datShow.pdf", bbox_inches='tight')
 plt.show()
+
+
+### exp correlations
+
+# ds = np.linspace(0,1,401)
+
+# plt.figure(figsize=(5,3.5))
+# plt.plot(ds,np.exp(-ds*3),label="phi=1/3")
+# plt.plot(ds,np.exp(-ds*30),label="phi=1/30")
+# plt.xlabel("distance")
+# plt.ylabel("correlation")
+# plt.legend(loc='upper right')
+# # plt.savefig("covShow.pdf", bbox_inches='tight')
+# plt.show()
+
 
 
 
@@ -57,7 +74,7 @@ plt.show()
 sigma2_mu = 1
 
 alpha_phi = 100
-beta_phi = 10
+beta_phi = 1
 
 alpha_a = 0.01
 beta_a = 0.1
@@ -71,13 +88,13 @@ beta_tau = 0.1
 # alpha_prop = 100
 # phi_prop = 10
 
-phi_prop = 1
+phi_prop = 10
 
 ### algorithm
 
 mu_current = 0
 
-phi_current = 10.0
+phi_current = 100.0
 a_current = 1
 tau_current = 10.0
 
@@ -123,13 +140,15 @@ st = time()
 
 for i in range(N):
 
-    if i%100==0:
-
+    if i%500==0:
+        
+        plt.figure(figsize=(5,3.5))
         plt.plot(grid_locs,f_grid)
         plt.plot(grid_locs,f_grid_current)
         # plt.scatter(locs,y, c="black", s=10)
         # plt.scatter(locs,f_current, c="tab:orange", s=10)
-        plt.show()
+        plt.savefig("proc"+str(i)+".pdf", bbox_inches='tight')
+        # plt.show()
 
         print(i)
 
@@ -232,22 +251,25 @@ for i in range(N):
 et = time()
 print("Time:",(et-st)/60,"minutes")
 
-tail = 0
+tail = 1000
 
 f_grid_mean = np.mean(f_grid_run[tail:], axis=0)
 f_grid_025 = np.quantile(f_grid_run[tail:], 0.025, axis=0)
 f_grid_975 = np.quantile(f_grid_run[tail:], 0.975, axis=0)
 
 
+plt.figure(figsize=(5,3.5))
 plt.plot(grid_locs,f_grid)
 plt.plot(grid_locs,f_grid_mean)
+# plt.savefig("procMean.pdf", bbox_inches='tight')
 plt.show()
 
+plt.figure(figsize=(5,3.5))
 plt.plot(grid_locs,f_grid)
 plt.plot(grid_locs,f_grid_mean)
 plt.fill_between(grid_locs, f_grid_025, f_grid_975, alpha=0.5,color="tab:orange")
-plt.title("n=250, MSE=0.0146, Time=0.2888 min")
-# plt.savefig("lin1D250.pdf")
+# plt.title("n=250, MSE=0.0131, Time=0.3308 min")
+plt.savefig("procInt.pdf", bbox_inches='tight')
 plt.show()
 
 

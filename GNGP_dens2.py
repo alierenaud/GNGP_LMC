@@ -51,7 +51,7 @@ plt.colorbar(c)
 plt.show()
 
 
-n_1 = 2000
+n_1 = 500
 
 
 ### generate data
@@ -87,7 +87,7 @@ y_1_true = y_true[y_true>0]
 
 
 
-
+plt.figure(figsize=(4,4))
 fig, ax = plt.subplots()
 # ax.set_xlim(0,1)
 # ax.set_ylim(0,1)
@@ -96,10 +96,12 @@ ax.set_box_aspect(1)
 
 
 c = ax.pcolormesh(xv, yv, norm.cdf(vec_inv(f_grid,n_grid+1)), cmap = "Blues")
-# ax.scatter(x_1[:,0],x_1[:,1],c="black")
+ax.scatter(x_1[:,0],x_1[:,1],c="black")
 plt.colorbar(c)
-plt.show()
 
+plt.title("Observations")
+# plt.savefig("obs_GNGP_mass_500.pdf", bbox_inches='tight')
+plt.show()
 
 
 
@@ -114,7 +116,7 @@ beta_phi = 100
 ### proposals
 
 # alpha_prop = 100
-sigma_prop = 0.05
+sigma_prop = 0.1
 
 ### algorithm
 
@@ -200,21 +202,32 @@ for i in np.arange((n_grid+1)**2):
 
 
 
-# for i in range((n_grid+1)**2):
+# ordd = np.argsort(1.00000001*grid_locs[:,0]+grid_locs[:,1])
 
+# for j in range(76):
 
-#     fig, ax = plt.subplots()
+    
+#     i = ordd[j]    
+#     fig, ax = plt.subplots(figsize=(4,4))
     
 #     ax.set_aspect(1)
     
 #     # ax.set_xticks([])
 #     # ax.set_yticks([])
-    
 #     plt.scatter(grid_locs[:,0],grid_locs[:,1],c="black")
 #     plt.scatter(grid_locs[i,0],grid_locs[i,1],c="tab:orange")
 #     plt.scatter(grid_locs[gNei[i],0],grid_locs[gNei[i],1],c="tab:green")
+#     plt.title("Grid")
+#     plt.savefig("gridNei"+str(j)+".pdf", bbox_inches='tight')
 #     plt.show()
 
+# for j in range(76):
+    
+#     print(r"\begin{frame}{Neighboring Structure}")
+#     print(r"\begin{minipage}{0.3\textwidth}")
+#     print(r"\includegraphics[scale=0.4]{gridNei"+str(j)+".pdf}")
+#     print(r"\end{minipage}")
+#     print(r"\end{frame}")
 
 
 
@@ -268,7 +281,25 @@ for i in range((n_grid+1)**2):
 # C = Bg_current+np.identity((n_grid+1)**2)
 # D = np.transpose(C)@C                    
 
-# print((D!=0)*1)
+# mat = (D!=0)*1
+
+# marg_graph = np.linspace(0,1,(n_grid+1)**2)
+
+# xv_graph, yv_graph = np.meshgrid(marg_graph, marg_graph)
+
+
+# fig, ax = plt.subplots()
+# # ax.set_xlim(0,1)
+# # ax.set_ylim(0,1)
+# ax.set_box_aspect(1)
+
+# plt.tick_params(left = False, right = False , labelleft = False , 
+#                 labelbottom = False, bottom = False)
+
+
+# c = ax.pcolormesh(xv_graph, yv_graph, np.flip(mat,axis=0), cmap = "Blues")
+# plt.savefig("mbdiagStruc.pdf", bbox_inches='tight')
+# # plt.show()
 
 ### compute obs neighbors on grid
 
@@ -321,10 +352,15 @@ for i in range(n_current):
     Distogs[i] = distance_matrix([x_current[i]], grid_locs[ogNei[i]])
     
     
-    # fig, ax = plt.subplots()
+    
+    
+    # fig, ax = plt.subplots(figsize=(4,4))
     
     # ax.set_aspect(1)
     
+    
+    # Drawing_colored_circle = plt.Circle(x_current[i], np.max(Distogs[i]),fill=False ,color="tab:blue")
+    # ax.add_artist( Drawing_colored_circle )
     # # ax.set_xticks([])
     # # ax.set_yticks([])
     
@@ -333,7 +369,9 @@ for i in range(n_current):
     # # plt.scatter(grid_locs[i,0],grid_locs[i,1],c="tab:orange")
     # plt.scatter(grid_locs[ogNei[i],0],grid_locs[ogNei[i],1],c="tab:green")
     # plt.scatter(x_current[i,0],x_current[i,1],c="tab:orange")
-    # plt.show()
+    # plt.title("observations")
+    # plt.savefig("ogNeic3.pdf", bbox_inches='tight')
+    # # plt.show()
     
     
     
@@ -390,6 +428,7 @@ for i in range(N):
 
     if i%100==0:
 
+        plt.figure(figsize=(4,4))
         fig, ax = plt.subplots()
         # ax.set_xlim(0,1)
         # ax.set_ylim(0,1)
@@ -398,14 +437,19 @@ for i in range(N):
 
 
         c = ax.pcolormesh(xv, yv, norm.cdf(vec_inv(g_grid_current,n_grid+1)), cmap = "Blues")
-        ax.scatter(x_0_current[:,0],x_0_current[:,1],c="black")
+        ax.scatter(x_0_current[:,0],x_0_current[:,1],c="grey")
         plt.colorbar(c)
+        plt.title("Rejections")
+        # plt.savefig("rej_GNGP_mass_500.pdf", bbox_inches='tight')
         plt.show()
 
         print(i)
 
         
         print(phi_current)
+        
+        
+        
         
         
     # ## point process (update x_0,g_0,y_0)    
@@ -757,7 +801,7 @@ for i in range(N):
     y_0_current = y_current[n_1:]
     y_1_current = y_current[:n_1]
     
-    ### phi update
+    ## phi update
     
     # phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
     
@@ -814,23 +858,23 @@ for i in range(N):
         
         rog_new[ii] = 1-np.inner(b_temp,r_temp)
     
-    sus_grid = np.exp(- a/2* np.sum([ (g_grid_current[ii] - mu_grid[ii] - np.inner(Bg_new[ii,gNei[ii]],g_grid_current[gNei[ii]]-mu_grid[gNei[ii]]))**2/rg_new[ii] - (g_grid_current[ii] - mu_grid[ii] - np.inner(Bg_current[ii,gNei[ii]],g_grid_current[gNei[ii]]-mu_grid[gNei[ii]]))**2/rg_current[ii] for ii in range(n_grid+1)]))
+    sus_grid = - a/2* np.sum([ (g_grid_current[ii] - mu_grid[ii] - np.inner(Bg_new[ii,gNei[ii]],g_grid_current[gNei[ii]]-mu_grid[gNei[ii]]))**2/rg_new[ii] - (g_grid_current[ii] - mu_grid[ii] - np.inner(Bg_current[ii,gNei[ii]],g_grid_current[gNei[ii]]-mu_grid[gNei[ii]]))**2/rg_current[ii] for ii in range(n_grid+1)])
     
     # print("sus grid",sus_grid)
     
-    sus_obs = np.exp(- a/2* np.sum([ (g_current[ii] - mu_obs[ii] - np.inner(Bog_new[ii,ogNei[ii]],g_grid_current[ogNei[ii]]-mu_grid[ogNei[ii]]))**2/rog_new[ii] - (g_current[ii] - mu_obs[ii] - np.inner(Bog_current[ii,ogNei[ii]],g_grid_current[ogNei[ii]]-mu_grid[ogNei[ii]]))**2/rog_current[ii] for ii in range(n_current)]))
+    sus_obs = - a/2* np.sum([ (g_current[ii] - mu_obs[ii] - np.inner(Bog_new[ii,ogNei[ii]],g_grid_current[ogNei[ii]]-mu_grid[ogNei[ii]]))**2/rog_new[ii] - (g_current[ii] - mu_obs[ii] - np.inner(Bog_current[ii,ogNei[ii]],g_grid_current[ogNei[ii]]-mu_grid[ogNei[ii]]))**2/rog_current[ii] for ii in range(n_current)])
     
     # print("sus obs",sus_obs)
     
-    pect_grid = np.prod([(rg_current[ii]/rg_new[ii])**(1/2) for ii in range(n_grid+1)])
+    pect_grid = np.prod([(1/2)*(np.log(rg_current[ii])-np.log(rg_new[ii])) for ii in range(n_grid+1)])
     
     # print("pect grid",pect_grid)
     
-    pect_obs = np.prod([(rog_current[ii]/rog_new[ii])**(1/2) for ii in range(n_current)])
+    pect_obs = np.sum([(1/2)*(np.log(rog_current[ii])-np.log(rog_new[ii])) for ii in range(n_current)])
     
     # print("pect obs",pect_obs)
     
-    prior = (phi_new/phi_current)**(alpha_phi-1) * np.exp(-beta_phi*(phi_new-phi_current))
+    prior = (alpha_phi-1)*(np.log(phi_new)-np.log(phi_current)) - beta_phi*(phi_new-phi_current)
         
     # print("prior",prior)
     
@@ -839,7 +883,7 @@ for i in range(N):
     # print("trans",trans)
 
     
-    ratio =  sus_grid * pect_grid * sus_obs * pect_obs * prior
+    ratio =  np.exp(sus_grid + pect_grid + sus_obs + pect_obs + prior)
     
     if random.uniform() < ratio:
         phi_current = phi_new
@@ -870,6 +914,7 @@ Phi_g_grid_025 = np.quantile(Phi_g_grid_run[tail:], 0.05, axis=0)
 Phi_g_grid_975 = np.quantile(Phi_g_grid_run[tail:], 0.95, axis=0)
 
 
+plt.figure(figsize=(4,4))
 fig, ax = plt.subplots()
 # ax.set_xlim(0,1)
 # ax.set_ylim(0,1)
@@ -879,7 +924,11 @@ ax.set_box_aspect(1)
 
 c = ax.pcolormesh(xv, yv, vec_inv(Phi_g_grid_mean,n_grid+1), cmap = "Blues")
 plt.colorbar(c)
+plt.title("Mean")
+# plt.savefig("mean_GNGP_mass_500.pdf", bbox_inches='tight')
 plt.show()
+
+
 
 
 print("Accept rate phi:",np.mean(acc_phi))

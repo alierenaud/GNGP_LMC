@@ -115,7 +115,7 @@ y_1_true = y_true[y_true>0]
 
 
 
-
+plt.figure(figsize=(4,4))
 fig, ax = plt.subplots()
 # ax.set_xlim(0,1)
 # ax.set_ylim(0,1)
@@ -126,6 +126,7 @@ ax.set_box_aspect(1)
 c = ax.pcolormesh(xv, yv, norm.cdf(vec_inv(f_grid,n_grid+1)), cmap = "Blues")
 ax.scatter(x_1[:,0],x_1[:,1],c="black")
 plt.colorbar(c)
+plt.savefig("donutData.pdf", bbox_inches='tight')
 plt.show()
 
 
@@ -217,18 +218,21 @@ st = time()
 
 for i in range(N):
 
-    if i%100==0:
-
+    if i%500==0:
+        
+        plt.figure(figsize=(4,4))
         fig, ax = plt.subplots()
         # ax.set_xlim(0,1)
         # ax.set_ylim(0,1)
         ax.set_box_aspect(1)
 
 
-
+        
+        # fig.set_size_inches(4, 4)
         c = ax.pcolormesh(xv, yv, norm.cdf(vec_inv(g_grid_current,n_grid+1)), cmap = "Blues")
-        ax.scatter(x_0_current[:,0],x_0_current[:,1],c="black")
+        plt.scatter(x_0_current[:,0],x_0_current[:,1],c="grey")
         plt.colorbar(c)
+        plt.savefig("dance"+str(i)+".pdf", bbox_inches='tight')
         plt.show()
 
         print(i)
@@ -491,6 +495,7 @@ Phi_g_grid_025 = np.quantile(Phi_g_grid_run[tail:], 0.05, axis=0)
 Phi_g_grid_975 = np.quantile(Phi_g_grid_run[tail:], 0.95, axis=0)
 
 
+plt.figure(figsize=(4,4))
 fig, ax = plt.subplots()
 # ax.set_xlim(0,1)
 # ax.set_ylim(0,1)
@@ -500,7 +505,10 @@ ax.set_box_aspect(1)
 
 c = ax.pcolormesh(xv, yv, vec_inv(Phi_g_grid_mean,n_grid+1), cmap = "Blues")
 plt.colorbar(c)
+plt.savefig("donutMean.pdf", bbox_inches='tight')
 plt.show()
+
+
 
 
 

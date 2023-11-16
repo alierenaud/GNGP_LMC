@@ -17,7 +17,7 @@ from base import matern_kernel, fct2, makeGrid, vec_inv
 
 random.seed(0)
 
-n_obs=200
+n_obs=2000
 m=4
 
 n_grid = 20
@@ -51,7 +51,7 @@ beta_phi = 100
 ### proposals
 
 # alpha_prop = 100
-sigma_prop = 0.1
+sigma_prop = 0.02
 
 ### compute grid neighbors
 
@@ -263,6 +263,7 @@ xv, yv = np.meshgrid(marg_grid, marg_grid)
 
 
 
+plt.figure(figsize=(4,4))
 fig, ax = plt.subplots()
 # ax.set_xlim(0,1)
 # ax.set_ylim(0,1)
@@ -272,6 +273,8 @@ ax.set_box_aspect(1)
 
 c = ax.pcolormesh(xv, yv, vec_inv(w_grid_true,n_grid+1), cmap = "Blues")
 plt.colorbar(c)
+plt.title("True")
+# plt.savefig("True_1000.pdf", bbox_inches='tight')
 plt.show()
 
 
@@ -291,7 +294,7 @@ w_grid = np.zeros(shape=(n_grid+1)**2)
 ### algorithm
 
 
-N = 1000
+N = 2000
 
 w_grid_run = np.zeros((N,(n_grid+1)**2))
 w_current_run = np.zeros((N,n_obs))
@@ -453,7 +456,7 @@ et = time.time()
 
 print("Total Time:", (et-st)/60, "minutes")
 
-tail = 0
+tail = 1000
 
 print("Accept rate phi:",np.mean(acc_phi))
 ### trace plots
@@ -468,6 +471,7 @@ w_grid_mean = np.mean(w_grid_run[tail:], axis=0)
 w_grid_025 = np.quantile(w_grid_run[tail:], 0.025, axis=0)
 w_grid_975 = np.quantile(w_grid_run[tail:], 0.975, axis=0)
 
+plt.figure(figsize=(4,4))
 fig, ax = plt.subplots()
 # ax.set_xlim(0,1)
 # ax.set_ylim(0,1)
@@ -477,6 +481,8 @@ ax.set_box_aspect(1)
 
 c = ax.pcolormesh(xv, yv, vec_inv(w_grid_mean,n_grid+1), cmap = "Blues")
 plt.colorbar(c)
+plt.title("GNGP")
+# plt.savefig("mean_GNGP_2000.pdf", bbox_inches='tight')
 plt.show()
  
             
@@ -488,3 +494,24 @@ plt.show()
 
 print("MSE:", np.mean((w_grid_true - w_grid_mean)**2))
 print("TMSE:", np.mean((w_grid_run[tail:] - w_grid_true)**2))
+
+
+# np.save("phi_run_2000_GNGP",phi_run)
+
+# #### compare both distributions
+
+tail=1000
+
+phi_run_2000_GNGP = np.load("phi_run_2000_GNGP.npy")
+phi_run_2000_GP = np.load("phi_run_2000_GP.npy")
+
+my_dict = {'GP': phi_run_2000_GP[tail:], 'GNGP': phi_run_2000_GNGP[tail:]}
+plt.boxplot(my_dict.values(), labels=my_dict.keys())
+plt.title("Posterior Distribution of Phi")
+# plt.savefig("post_lin_2000.pdf", bbox_inches='tight')
+plt.show()
+
+
+
+
+
