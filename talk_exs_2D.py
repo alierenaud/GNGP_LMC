@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Oct 23 11:13:27 2023
+Created on Wed Nov  8 14:09:58 2023
 
 @author: homeboy
 """
@@ -15,56 +15,55 @@ from scipy.spatial import distance_matrix
 import matplotlib.pyplot as plt
 
 
-from base import matern_kernel, fct
+from base import matern_kernel, fct2, makeGrid, vec_inv
+
+
 
 
 random.seed(0)
 
-n_grid = 200
+n_grid = 20
 xlim = 10
 
-grid_locs = np.linspace(-xlim,xlim,n_grid+1)
-f_grid = fct(grid_locs)
+
+marg_grid = np.linspace(0,1,n_grid+1)
 
 
-n_obs = 200
 
-### normal locs
-# sd_locs = 4
-# locs = sd_locs*random.normal(size = n_obs)
+grid_locs = makeGrid(marg_grid,marg_grid)
+f_grid = fct2(grid_locs)
+
+
+n_obs = 2000
+
+### showcase data
+
+xv, yv = np.meshgrid(marg_grid, marg_grid)
+
+
+
+fig, ax = plt.subplots()
+# ax.set_xlim(0,1)
+# ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+
+c = ax.pcolormesh(xv, yv, vec_inv(f_grid,n_grid+1), cmap = "Blues")
+plt.colorbar(c)
+plt.show()
 
 ### unif locs
 
-locs = random.uniform(size=n_obs)*20 - 10
+locs = random.uniform(size=(n_obs,2))
 
-f_locs = fct(locs)
+f_locs = fct2(locs)
 tau = 10.0
 y = f_locs + 1/np.sqrt(tau)*random.normal(size = n_obs)
 
 # np.prod(np.abs(locs)<10)
 # np.sum(np.abs(locs)>10)
 
-### showcase data
-
-plt.figure(figsize=(5,3.5))
-plt.plot(grid_locs,f_grid)
-plt.scatter(locs,y, c="black", s=10)
-# plt.savefig("datShow.pdf", bbox_inches='tight')
-plt.show()
-
-
-### exp correlations
-
-# ds = np.linspace(0,1,401)
-
-# plt.figure(figsize=(5,3.5))
-# plt.plot(ds,np.exp(-ds*3),label="phi=1/3")
-# plt.plot(ds,np.exp(-ds*30),label="phi=1/30")
-# plt.xlabel("distance")
-# plt.ylabel("correlation")
-# plt.legend(loc='upper right')
-# # plt.savefig("covShow.pdf", bbox_inches='tight')
-# plt.show()
 
 
 
@@ -74,7 +73,7 @@ plt.show()
 sigma2_mu = 1
 
 alpha_phi = 100
-beta_phi = 1
+beta_phi = 100
 
 alpha_a = 0.01
 beta_a = 0.1
@@ -86,38 +85,37 @@ beta_tau = 0.1
 ### proposals
 
 # alpha_prop = 100
-# phi_prop = 10
-
-phi_prop = 10
+phi_prop = 0.02
 
 ### algorithm
 
 mu_current = 0
 
-phi_current = 100.0
+phi_current = 1
 a_current = 1
 tau_current = 10.0
 
 # f_currrent = random.normal(size=n_obs)
-# f_grid_current = random.normal(size=n_grid+1)
+# f_grid_current = random.normal(size=(n_grid+1)**2)
 
 f_currrent = np.zeros(shape=n_obs)
-f_grid_current = np.zeros(shape=n_grid+1)
+f_grid_current = np.zeros(shape=(n_grid+1)**2)
+
 
 ### useful quantitites
 
-D = distance_matrix(np.transpose([locs]),np.transpose([locs]))
+D = distance_matrix(locs,locs)
 
 R_current = matern_kernel(D,phi_current)
 R_inv_current = np.linalg.inv(R_current)
 
 
-D_grid_obs = distance_matrix(np.transpose([grid_locs]),np.transpose([locs]))
+D_grid_obs = distance_matrix(grid_locs,locs)
 
 R_grid_obs_current = matern_kernel(D_grid_obs,phi_current)
 
 
-D_grid = distance_matrix(np.transpose([grid_locs]),np.transpose([grid_locs]))
+D_grid = distance_matrix(grid_locs,grid_locs)
 
 R_grid_current = matern_kernel(D_grid,phi_current)
 
@@ -126,7 +124,7 @@ R_grid_current = matern_kernel(D_grid,phi_current)
 
 N = 2000
 
-f_grid_run = np.zeros((N,n_grid+1))
+f_grid_run = np.zeros((N,(n_grid+1)**2))
 phi_run = np.zeros(N)
 mu_run = np.zeros(N)
 a_run = np.zeros(N)
@@ -140,17 +138,26 @@ st = time()
 
 for i in range(N):
 
-    if i%500==0:
+    if i%100==0:
+
         
-        plt.figure(figsize=(5,3.5))
-        plt.plot(grid_locs,f_grid)
-        plt.plot(grid_locs,f_grid_current)
-        # plt.scatter(locs,y, c="black", s=10)
-        # plt.scatter(locs,f_current, c="tab:orange", s=10)
-        plt.savefig("proc"+str(i)+".pdf", bbox_inches='tight')
-        # plt.show()
+        
+
+
+
+        fig, ax = plt.subplots()
+        # ax.set_xlim(0,1)
+        # ax.set_ylim(0,1)
+        ax.set_box_aspect(1)
+
+
+
+        c = ax.pcolormesh(xv, yv, vec_inv(f_grid_current,n_grid+1), cmap = "Blues")
+        plt.colorbar(c)
+        plt.show()
 
         print(i)
+        print(phi_current)
 
     ### f update
     
@@ -165,7 +172,6 @@ for i in range(N):
     
     # phi_new = random.gamma(alpha_prop,1/alpha_prop) * phi_current
     
-    
     while True:
         phi_new = phi_prop*random.normal() + phi_current
         if phi_new > 0:
@@ -174,15 +180,15 @@ for i in range(N):
     R_new = matern_kernel(D,phi_new)
     R_inv_new = np.linalg.inv(R_new)
     
-    sus = np.exp( a_current/2 * np.transpose(f_current-mu_current)@(R_inv_current-R_inv_new)@(f_current-mu_current) )
+    sus = a_current/2 * np.transpose(f_current-mu_current)@(R_inv_current-R_inv_new)@(f_current-mu_current) 
     
     # print("sus",sus)
     
-    pect = np.linalg.det(R_current@R_inv_new)**(1/2)
+    pect = (1/2)*np.log(np.linalg.det(R_current@R_inv_new))
     
     # print("pect",pect)
     
-    prior = (phi_new/phi_current)**(alpha_phi-1) * np.exp(-beta_phi*(phi_new-phi_current))
+    prior = (alpha_phi-1)*np.log(phi_new/phi_current) + -beta_phi*(phi_new-phi_current)
     
     # print("prior",prior)
     
@@ -190,13 +196,13 @@ for i in range(N):
     
     # print("trans",trans)
     
-    ratio = sus * pect * prior 
+    ratio = np.exp(sus + pect + prior) 
     
     
     if random.uniform() < ratio:
         phi_current = phi_new
-        R_current = R_new
-        R_inv_current = R_inv_new
+        R_current = np.copy(R_new)
+        R_inv_current = np.copy(R_inv_new)
         
         acc_phi[i] = 1
     
@@ -242,7 +248,7 @@ for i in range(N):
     mu_grid = tempMat@(f_current-mu_current) + mu_current
     Sigma_grid = R_grid_current - tempMat@np.transpose(R_grid_obs_current)
     
-    f_grid_current = np.sqrt(1/a_current)*np.linalg.cholesky(Sigma_grid)@random.normal(size=n_grid+1) + mu_grid
+    f_grid_current = np.sqrt(1/a_current)*np.linalg.cholesky(Sigma_grid)@random.normal(size=(n_grid+1)**2) + mu_grid
     
     f_grid_run[i] = f_grid_current
     
@@ -258,26 +264,21 @@ f_grid_025 = np.quantile(f_grid_run[tail:], 0.025, axis=0)
 f_grid_975 = np.quantile(f_grid_run[tail:], 0.975, axis=0)
 
 
-plt.figure(figsize=(5,3.5))
-plt.plot(grid_locs,f_grid)
-plt.plot(grid_locs,f_grid_mean)
-# plt.savefig("procMean.pdf", bbox_inches='tight')
+plt.figure(figsize=(4,4))
+fig, ax = plt.subplots()
+# ax.set_xlim(0,1)
+# ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+
+
+c = ax.pcolormesh(xv, yv, vec_inv(f_grid_mean,n_grid+1), cmap = "Blues")
+plt.colorbar(c)
+plt.title("GP")
+# plt.savefig("mean_GP_2000.pdf", bbox_inches='tight')
 plt.show()
 
-plt.figure(figsize=(5,3.5))
-plt.plot(grid_locs,f_grid)
-plt.plot(grid_locs,f_grid_mean)
-plt.fill_between(grid_locs, f_grid_025, f_grid_975, alpha=0.5,color="tab:orange")
-# plt.title("n=250, MSE=0.0131, Time=0.3308 min")
-plt.savefig("procInt.pdf", bbox_inches='tight')
-plt.show()
 
-
-
-# nsss = np.array([250,500,1000,2000])
-# tsss = np.array([0.288,1.0992,5.6082,38.5860])
-
-# plt.plot(nsss,tsss)
 
 
 print("Accept rate phi:",np.mean(acc_phi))
@@ -323,4 +324,4 @@ print("MSE:", np.mean((f_grid - f_grid_mean)**2))
 print("TMSE:", np.mean((f_grid_run[tail:] - f_grid)**2))
 
 
-
+# np.save("phi_run_2000_GP",phi_run)
