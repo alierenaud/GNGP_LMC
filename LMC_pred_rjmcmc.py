@@ -52,8 +52,8 @@ def A_move_slice_mask(A_current, A_invV_current, A_mask_current, Rs_inv_current,
         A_inv_prop = np.linalg.inv(A_prop)
         A_invV_prop = A_inv_prop @ V_current
         
-        acc = z < -1/2 * np.sum( [A_invV_prop[j] @ Rs_inv_current[j] @ A_invV_prop[j] for j in range(p) ] ) - n * np.log( np.abs(np.linalg.det(A_prop))) - 1/2/sigma_A**2 * np.sum((A_prop-mu_A)**2) 
-            
+        tresh = -1/2 * np.sum( [A_invV_prop[j] @ Rs_inv_current[j] @ A_invV_prop[j] for j in range(p) ] ) - n * np.log( np.abs(np.linalg.det(A_prop))) - 1/2/sigma_A**2 * np.sum((A_prop-mu_A)**2) 
+        acc = z < tresh
         if acc:
             return(A_prop,A_inv_prop,A_invV_prop)
         else:
@@ -63,7 +63,6 @@ def A_move_slice_mask(A_current, A_invV_current, A_mask_current, Rs_inv_current,
                         L[ii,jj] = A_prop[ii,jj]
                     else:
                         U[ii,jj] = A_prop[ii,jj]
-
 
 
 

@@ -42,8 +42,7 @@ n_obs = Y_obs.shape[1]
 p = Y_obs.shape[0]
 
 #### centered
-Y_obs = Y_obs - np.outer(np.mean(Y_obs,axis=1),np.ones(n_obs))
-
+# Y_obs = Y_obs - np.outer(np.mean(Y_obs,axis=1),np.ones(n_obs))
 
 
 
@@ -94,7 +93,7 @@ sigma_mu = 10
 ### proposals
 
 
-phis_prop = np.ones(p)*0.5
+phis_prop = np.ones(p)*1
 sigma_slice = 10
 
 
@@ -110,6 +109,7 @@ def ins_prob(n_ones,p):
 n_jumps = p
 
 ### global run containers
+mu_run = np.zeros((N,p))
 phis_run = np.zeros((N,p))
 taus_run = np.zeros((N,p))
 V_run = np.zeros((N,p,n_obs))
@@ -155,10 +155,11 @@ Vmmu1_current = V_current
 
 A_current = random.normal(size=(p,p))
 A_inv_current = np.linalg.inv(A_current)
+A_invVmmu1_current = A_inv_current @ Vmmu1_current
 
-A_invV_current = A_inv_current @ V_current
 
-taus_current = np.ones(p)*14
+
+taus_current = np.ones(p)
 Dm1_current = np.diag(taus_current)
 Dm1Y_current = Dm1_current @ Y_obs
 
@@ -167,23 +168,31 @@ st = time.time()
 for i in range(N):
     
     
-    V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invV_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, mu_current)                
-    
+    V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, mu_current)
         
-    A_current, A_inv_current, A_invV_current = A_move_slice_mask(A_current, A_invV_current, A_mask_current, Rs_inv_current, V_current, sigma_A, mu_A, sigma_slice)
     
-        
-    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,Dists_obs,A_invV_current,Rs_current,Rs_inv_current)
+    
+    
+    mu_current, Vmmu1_current, A_invVmmu1_current = mu_move(A_inv_current,Rs_inv_current,V_current,sigma_mu,mu_mu)
 
+    
+    
+    A_current, A_inv_current, A_invVmmu1_current = A_move_slice_mask(A_current, A_invVmmu1_current, A_mask_current, Rs_inv_current, Vmmu1_current, sigma_A, mu_A, sigma_slice)
+    
+    
+    
+    
+    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,Dists_obs,A_invVmmu1_current,Rs_current,Rs_inv_current)
+    
     taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y_obs,a,b,n_obs)
 
     
     
         
-    A_current, A_inv_current, A_invV_current, n_ones_current, A_mask_current, A_ones_ind_current, A_zeros_ind_current = A_rjmcmc(Rs_inv_current, V_current, A_current, A_inv_current, A_invV_current, A_zeros_ind_current, A_ones_ind_current, A_mask_current, n_ones_current, prob_one, mu_A, sigma_A, n_jumps)
+    A_current, A_inv_current, A_invVmmu1_current, n_ones_current, A_mask_current, A_ones_ind_current, A_zeros_ind_current = A_rjmcmc(Rs_inv_current, Vmmu1_current, A_current, A_inv_current, A_invVmmu1_current, A_zeros_ind_current, A_ones_ind_current, A_mask_current, n_ones_current, prob_one, mu_A, sigma_A, n_jumps)
     
 
-    
+    mu_run[i] = mu_current
     V_run[i] = V_current
     taus_run[i] = taus_current
     phis_run[i] =  phis_current
@@ -200,6 +209,62 @@ print("Time Elapsed", (et-st)/60, "min")
 print("Accept Rate for phis",np.mean(acc_phis,axis=1))
 
 
+plt.plot(n_comps_run[tail:])
+plt.show()
 
+Sigmas0 = np.array([A_run[i]@np.transpose(A_run[i]) for i in range(tail,N)])
+np.median(Sigmas0,axis=0)
+
+
+
+
+np.mean(Sigmas0==0,axis=0)
+
+
+reso = 200
+dist_cov = np.linspace(0,1,reso)
+
+i = 0
+j = 0
+
+
+C_ij = np.array([[A_run[k,i]*A_run[k,j]*np.exp(-phis_run[k] * d) for k in range(tail,N)] for d in dist_cov])
+
+C_ij.shape
+
+# plt.plot(Sigmas0[:,0,0])
+# plt.show()
+# plt.plot(Sigmas0[:,0,1])
+# plt.show()
+# plt.plot(Sigmas0[:,0,2])
+# plt.show()
+# plt.plot(Sigmas0[:,1,1])
+# plt.show()
+# plt.plot(Sigmas0[:,1,2])
+# plt.show()
+# plt.plot(Sigmas0[:,2,2])
+# plt.show()
+
+# plt.plot(mu_run[tail:,0])
+# plt.show()
+# plt.plot(mu_run[tail:,1])
+# plt.show()
+# plt.plot(mu_run[tail:,2])
+# plt.show()
+
+# plt.plot(phis_run[tail:,0])
+# plt.show()
+# plt.plot(phis_run[tail:,1])
+# plt.show()
+# plt.plot(phis_run[tail:,2])
+# plt.show()
+
+
+# plt.plot(taus_run[tail:,0])
+# plt.show()
+# plt.plot(taus_run[tail:,1])
+# plt.show()
+# plt.plot(taus_run[tail:,2])
+# plt.show()
 
 
