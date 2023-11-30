@@ -51,7 +51,7 @@ tail = 1000
 
 ### generate uniform locations
 # loc_obs = random.uniform(0,1,(n_obs,2))
-loc_obs = beta.rvs(5, 5, size=(n_obs,2))
+loc_obs = beta.rvs(1, 1, size=(n_obs,2))
 ### grid locations
 loc_grid = makeGrid(n_grid)
 ### all locations
