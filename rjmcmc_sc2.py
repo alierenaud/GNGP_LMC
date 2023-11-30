@@ -35,19 +35,19 @@ import time
 random.seed(0)
 
 ### number of points 
-n_obs=400
+n_obs=100
 n_grid=20  ### 2D Grid
 
 ### repetitions per category
-reps = 20
+reps = 10
 
 ### markov chain + tail length
 N = 2000
 tail = 1000
 
 ### generate uniform locations
-# loc_obs = random.uniform(0,1,(n_obs,2))
-loc_obs = beta.rvs(5, 5, size=(n_obs,2))
+loc_obs = random.uniform(0,1,(n_obs,2))
+# loc_obs = beta.rvs(5, 5, size=(n_obs,2))
 ### grid locations
 loc_grid = makeGrid(n_grid)
 ### all locations
@@ -167,6 +167,7 @@ Dists_grid = distance_matrix(loc_grid,loc_grid)
 
 MSES = np.zeros((n_exes,2,reps))
 n_comps = np.zeros((n_exes,reps,N-tail))
+indMat = np.zeros((n_exes,reps,p,p))
 
 STG = time.time()
 
@@ -201,6 +202,8 @@ for ex in range(n_exes):
         VmY_current = V_current - Y_obs
         VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
         
+        mu_current = np.zeros(p)
+        Vmmu1_current = V_current
         
         A_current = random.normal(size=(p,p))
         A_inv_current = np.linalg.inv(A_current)
@@ -216,7 +219,7 @@ for ex in range(n_exes):
         for i in range(N):
             
             
-            V_current, VmY_current, VmY_inner_rows_current, A_invV_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y_obs, V_current)
+            V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invV_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, mu_current)
           
             
                                 
@@ -225,7 +228,7 @@ for ex in range(n_exes):
             A_current, A_inv_current, A_invV_current = A_move_slice_mask(A_current, A_invV_current, A_mask_current, Rs_inv_current, V_current, sigma_A, mu_A, sigma_slice)
             
                 
-            phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_current,Dists_obs,A_invV_current,Rs_current,Rs_inv_current)
+            phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,Dists_obs,A_invV_current,Rs_current,Rs_inv_current)
     
             taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y_obs,a,b,n_obs)
     
@@ -236,7 +239,7 @@ for ex in range(n_exes):
             
             ### make pred cond on current phis, A
     
-            V_grid_current = V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invV_current, n_grid)
+            V_grid_current = V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invV_current, mu_current, n_grid**2)
             
             ###
             
@@ -257,6 +260,10 @@ for ex in range(n_exes):
         
         print("Accept Rate for phis",np.mean(acc_phis,axis=1))
         
+        indMat[ex,rep] = np.mean([A_run[j]@np.transpose(A_run[j])==0 for j in range(tail,N)],axis=0)
+        
+        print("Indep Matrix", indMat[ex,rep])
+        
         MSES[ex,0,rep] = np.mean([(V_grid_run[j] - V_grid)**2 for j in range(tail,N)])
         n_comps[ex,rep] = n_comps_run[tail:N]
         
@@ -270,6 +277,8 @@ for ex in range(n_exes):
         VmY_current = V_current - Y_obs
         VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
         
+        mu_current = np.zeros(p)
+        Vmmu1_current = V_current
         
         A_current = random.normal(size=(p,p))
         A_inv_current = np.linalg.inv(A_current)
@@ -285,14 +294,14 @@ for ex in range(n_exes):
         for i in range(N):
             
             
-            V_current, VmY_current, VmY_inner_rows_current, A_invV_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y_obs, V_current)
+            V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invV_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, mu_current)
           
             
             A_current, A_inv_current, A_invV_current = A_move_slice(A_current, A_invV_current, Rs_inv_current, V_current, sigma_A, mu_A, sigma_slice)
             
                 
                 
-            phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,V_current,Dists_obs,A_invV_current,Rs_current,Rs_inv_current)
+            phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,Dists_obs,A_invV_current,Rs_current,Rs_inv_current)
 
             taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y_obs,a,b,n_obs)
 
@@ -300,7 +309,7 @@ for ex in range(n_exes):
             
             ### make pred cond on current phis, A
 
-            V_grid_current = V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invV_current, n_grid)
+            V_grid_current = V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invV_current, mu_current, n_grid**2)
             
             ###
             

@@ -1,10 +1,10 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jul  3 14:09:47 2023
+Created on Fri Nov 24 17:03:46 2023
 
-@author: homeboy
+@author: alier
 """
+
 
 import numpy as np
 from numpy import random
@@ -43,55 +43,65 @@ n_obs=100
 n_grid=20  ### 2D Grid
 
 ### repetitions per category
-reps = 2
+reps = 40
 
 ### markov chain + tail length
 N = 2000
 tail = 1000
 
 ### generate uniform locations
-loc_obs = random.uniform(0,1,(n_obs,2))
-# loc_obs = beta.rvs(5, 5, size=(n_obs,2))
+# loc_obs = random.uniform(0,1,(n_obs,2))
+loc_obs = beta.rvs(5, 5, size=(n_obs,2))
 ### grid locations
 loc_grid = makeGrid(n_grid)
 ### all locations
 locs = np.concatenate((loc_obs,loc_grid), axis=0)
 
+### showcase locations
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+
+ax.scatter(loc_obs[:,0],loc_obs[:,1],color="black")
+plt.show()
+
 
 
 ### 5D examples
-p = 5
-
-### Triangular
-
-A1 = np.array([[1,0,0,0,0],
-              [-np.sqrt(1/2),-np.sqrt(1/2),0,0,0],
-              [np.sqrt(1/3),np.sqrt(1/3),np.sqrt(1/3),0,0],
-              [-np.sqrt(1/4),-np.sqrt(1/4),-np.sqrt(1/4),-np.sqrt(1/4),0],
-              [np.sqrt(1/5),np.sqrt(1/5),np.sqrt(1/5),np.sqrt(1/5),np.sqrt(1/5)]])
+p = 2
 
 
 
 ### Full
 
-A2 = np.ones((5,5))*np.sqrt(1/5)
-A2 *= np.array([[1,-1,-1,-1,-1],
-                [1,1,-1,-1,-1],
-                [1,1,1,-1,-1],
-                [1,1,1,1,-1],
-                [1,1,1,1,1]])
+A2 = np.ones((p,p))*np.sqrt(1/p)
+# A2 *= np.array([[1,-1,-1,-1,-1],
+#                 [1,1,-1,-1,-1],
+#                 [1,1,1,-1,-1],
+#                 [1,1,1,1,-1],
+#                 [1,1,1,1,1]])
+
+
+fac = np.ones((p,p))
 
 
 
-### Block Diagonal
+for i in range(p):
+    for j in range(i+1,p):
+        fac[i,j] = -1 
 
-A3 = np.array([[np.sqrt(2/3),np.sqrt(1/3),0,0,0],
-              [-np.sqrt(2/3),np.sqrt(1/3),0,0,0],
-              [0,0,1.,0,0],
-              [0,0,0,np.sqrt(2/3),np.sqrt(1/3)],
-              [0,0,0,np.sqrt(2/3),-np.sqrt(1/3)]])
+A2 *= fac
 
 
+### Triangular
+
+A3 = np.zeros((p,p))
+
+for i in range(p):
+    for j in range(i+1):
+        A3[i,j] = (-1)**(i)*1/np.sqrt(i+1)
 
 
 ### Diagonal
@@ -100,15 +110,15 @@ A3 = np.array([[np.sqrt(2/3),np.sqrt(1/3),0,0,0],
 A4 = np.identity(p)
 
 
-phis = np.exp(np.linspace(np.log(5), np.log(25),5))
-taus_sqrt_inv = np.array([1.,1.,1.,1.,1.]) 
+phis = np.exp(np.linspace(np.log(5), np.log(25),p))
+taus_sqrt_inv = np.ones(p)*0.1
 
 
 
-As = np.array([A1,A2,A3,A4])
-Sigmas = np.array([A1@np.transpose(A1),A2@np.transpose(A2),A3@np.transpose(A3),A4@np.transpose(A4)])
+As = np.array([A2,A3,A4])
+Sigmas = np.array([A2@np.transpose(A2),A3@np.transpose(A3),A4@np.transpose(A4)])
 D0p1 = np.diag(np.exp(-phis*0.1))
-Sigmas0p1 = np.array([A1@D0p1@np.transpose(A1),A2@D0p1@np.transpose(A2),A3@D0p1@np.transpose(A3),A4@D0p1@np.transpose(A4)])
+Sigmas0p1 = np.array([A2@D0p1@np.transpose(A2),A3@D0p1@np.transpose(A3),A4@D0p1@np.transpose(A4)])
 n_exes = As.shape[0]
 
 
@@ -129,7 +139,7 @@ betas = np.ones(p)
 
 ### RJMCMC
 
-prob_one = 0.1
+prob_one = 1/2
 
 ## tau
 
@@ -139,7 +149,7 @@ b = 1
 ### proposals
 
 
-phis_prop = np.ones(p)*2.0
+phis_prop = np.ones(p)*0.5
 sigma_slice = 10
 
 
@@ -179,7 +189,11 @@ Dists_grid = distance_matrix(loc_grid,loc_grid)
 
 MSES = np.zeros((n_exes,2,reps,N-tail,p,n_grid**2))
 n_comps = np.zeros((n_exes,reps,N-tail))
+As_exp = np.zeros((n_exes,2,reps,N-tail,p,p))
+Sigmas_exp = np.zeros((n_exes,2,reps,N-tail,p,p))
+Sigmas0p1_exp = np.zeros((n_exes,2,reps,N-tail,p,p))
 Wnorms = np.zeros((n_exes,2,reps,N-tail))
+Wnorms0p1 = np.zeros((n_exes,2,reps,N-tail))
 # fnorms0p1 = np.zeros((n_exes,2,reps,N-tail))
 
 STG = time.time()
@@ -282,8 +296,13 @@ for ex in range(n_exes):
         
         MSES[ex,0,rep] = np.array([(V_grid_run[j] - V_grid)**2 for j in range(tail,N)])
         Wnorms[ex,0,rep] = np.array([ WassDist(A_run[j]@np.transpose(A_run[j]),Sigmas[ex]) for j in range(tail,N)])
+        Wnorms0p1[ex,0,rep] = [ WassDist(A_run[j]@np.diag(np.exp(-phis_run[j]*0.1))@np.transpose(A_run[j]),Sigmas0p1[ex]) for j in range(tail,N)]
         # fnorms0p1[ex,0,rep] = [ np.sum((A_run[j]@np.diag(np.exp(-phis_run[j]*0.1))@np.transpose(A_run[j]) - Sigmas0p1[ex])**2) for j in range(tail,N)]
         n_comps[ex,rep] = n_comps_run[tail:N]
+        As_exp[ex,0,rep] = A_run[tail:N]
+        Sigmas_exp[ex,0,rep] = [A_run[j]@np.transpose(A_run[j]) for j in range(tail,N)]
+        
+        Sigmas0p1_exp[ex,0,rep] = [A_run[j]@np.diag(np.exp(-phis_run[j]*0.1))@np.transpose(A_run[j]) for j in range(tail,N)]
         
         ### init and current state
         phis_current = np.repeat(10.,p)
@@ -349,8 +368,14 @@ for ex in range(n_exes):
         
         MSES[ex,1,rep] = [(V_grid_run[j] - V_grid)**2 for j in range(tail,N)]
         Wnorms[ex,1,rep] = [ WassDist(A_run[j]@np.transpose(A_run[j]),Sigmas[ex]) for j in range(tail,N)]
+        Wnorms0p1[ex,1,rep] = [ WassDist(A_run[j]@np.diag(np.exp(-phis_run[j]*0.1))@np.transpose(A_run[j]),Sigmas0p1[ex]) for j in range(tail,N)]
         # fnorms0p1[ex,1,rep] = [ np.sum((A_run[j]@np.diag(np.exp(-phis_run[j]*0.1))@np.transpose(A_run[j]) - Sigmas0p1[ex])**2) for j in range(tail,N)]
- 
+        
+        As_exp[ex,1,rep] = A_run[tail:N]
+        Sigmas_exp[ex,1,rep] = [A_run[j]@np.transpose(A_run[j]) for j in range(tail,N)]
+        
+        Sigmas0p1_exp[ex,1,rep] = [A_run[j]@np.diag(np.exp(-phis_run[j]*0.1))@np.transpose(A_run[j]) for j in range(tail,N)]
+        
 ETG = time.time()
 
 print("GLOBAL TIME", (ETG-STG)/60, "min")
@@ -360,6 +385,7 @@ print("GLOBAL TIME", (ETG-STG)/60, "min")
 
 dMSE = np.sqrt(np.mean(MSES,axis=(3,4,5)))[:,0,:] - np.sqrt(np.mean(MSES,axis=(3,4,5)))[:,1,:]
 dWnorms = np.sqrt(np.mean(Wnorms,axis=3))[:,0,:] - np.sqrt(np.mean(Wnorms,axis=3))[:,1,:]
+dWnorms0p1 = np.sqrt(np.mean(Wnorms0p1,axis=3))[:,0,:] - np.sqrt(np.mean(Wnorms0p1,axis=3))[:,1,:]
 
 # dMSE = MSES[:,0,:] - MSES[:,1,:]
         
@@ -368,3 +394,91 @@ np.savetxt("dWnorms.csv", dWnorms, delimiter=",")
 np.save("n_comps.npy", n_comps)
 # np.save("fnorms.npy", fnorms)
 # np.save("fnorms0p1.npy", fnorms0p1)
+
+
+np.mean(n_comps,axis=2)
+np.mean(n_comps,axis=(1,2))
+np.mean(MSES,axis=(3,4,5))
+np.mean(MSES,axis=(2,3,4,5))
+np.mean(Wnorms,axis=3)
+np.mean(Wnorms0p1,axis=3)
+np.mean(Wnorms,axis=(2,3))
+np.mean(Wnorms0p1,axis=(2,3))
+
+np.round(Sigmas,2)
+
+
+np.median(np.round(np.median(Sigmas_exp,axis=3),2)[0,0],axis=0)
+np.median(np.round(np.median(Sigmas_exp,axis=3),2)[0,1],axis=0)
+
+np.median(np.round(np.median(Sigmas_exp,axis=3),2)[1,0],axis=0)
+np.median(np.round(np.median(Sigmas_exp,axis=3),2)[1,1],axis=0)
+
+np.median(np.round(np.median(Sigmas_exp,axis=3),2)[2,0],axis=0)
+np.median(np.round(np.median(Sigmas_exp,axis=3),2)[2,1],axis=0)
+
+
+
+np.round(Sigmas0p1,2)
+
+np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[0,0],axis=0)
+np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[0,1],axis=0)
+
+np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[1,0],axis=0)
+np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[1,1],axis=0)
+
+np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[2,0],axis=0)
+np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[2,1],axis=0)
+
+### MSE plots
+
+my_dict = {'Full': dMSE[0], 'Triangular': dMSE[1], 'Diagonal': dMSE[2]}
+
+fig, ax = plt.subplots()
+ax.boxplot(my_dict.values())
+ax.set_xticklabels(my_dict.keys())
+plt.show()
+
+
+plt.boxplot(dMSE[0])
+plt.show()
+plt.boxplot(dMSE[1])
+plt.show()
+plt.boxplot(dMSE[2])
+plt.show()
+
+
+### Wnorms plots
+
+my_dict = {'Full': dWnorms[0], 'Triangular': dWnorms[1], 'Diagonal': dWnorms[2]}
+
+fig, ax = plt.subplots()
+ax.boxplot(my_dict.values())
+ax.set_xticklabels(my_dict.keys())
+plt.show()
+
+
+plt.boxplot(dWnorms[0])
+plt.show()
+plt.boxplot(dWnorms[1])
+plt.show()
+plt.boxplot(dWnorms[2])
+plt.show()
+
+my_dict = {'Full': dWnorms0p1[0], 'Triangular': dWnorms0p1[1], 'Diagonal': dWnorms0p1[2]}
+
+fig, ax = plt.subplots()
+ax.boxplot(my_dict.values())
+ax.set_xticklabels(my_dict.keys())
+plt.show()
+
+
+plt.boxplot(dWnorms0p1[0])
+plt.show()
+plt.boxplot(dWnorms0p1[1])
+plt.show()
+plt.boxplot(dWnorms0p1[2])
+plt.show()
+
+
+
