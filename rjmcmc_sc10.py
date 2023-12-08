@@ -43,15 +43,17 @@ n_obs=100
 n_grid=20  ### 2D Grid
 
 ### repetitions per category
-reps = 40
+reps = 100
 
 ### markov chain + tail length
 N = 2000
 tail = 1000
 
 ### generate uniform locations
+
+conc = 1
 # loc_obs = random.uniform(0,1,(n_obs,2))
-loc_obs = beta.rvs(1, 1, size=(n_obs,2))
+loc_obs = beta.rvs(conc, conc, size=(n_obs,2))
 ### grid locations
 loc_grid = makeGrid(n_grid)
 ### all locations
@@ -70,7 +72,7 @@ plt.show()
 
 
 ### 5D examples
-p = 2
+p = 5
 
 
 
@@ -111,7 +113,8 @@ A4 = np.identity(p)
 
 
 phis = np.exp(np.linspace(np.log(5), np.log(25),p))
-taus_sqrt_inv = np.ones(p)*0.1
+noise_sd = 1
+taus_sqrt_inv = np.ones(p)*noise_sd
 
 
 
@@ -139,7 +142,7 @@ betas = np.ones(p)
 
 ### RJMCMC
 
-prob_one = 1/2
+prob_one = 1/p
 
 ## tau
 
@@ -149,7 +152,7 @@ b = 1
 ### proposals
 
 
-phis_prop = np.ones(p)*0.5
+phis_prop = np.ones(p)*1
 sigma_slice = 10
 
 
@@ -194,6 +197,7 @@ Sigmas_exp = np.zeros((n_exes,2,reps,N-tail,p,p))
 Sigmas0p1_exp = np.zeros((n_exes,2,reps,N-tail,p,p))
 Wnorms = np.zeros((n_exes,2,reps,N-tail))
 Wnorms0p1 = np.zeros((n_exes,2,reps,N-tail))
+times_all = np.zeros((n_exes,2,reps))
 # fnorms0p1 = np.zeros((n_exes,2,reps,N-tail))
 
 STG = time.time()
@@ -293,7 +297,7 @@ for ex in range(n_exes):
         
         
         
-        
+        times_all[ex,0,rep] = (et-st)
         MSES[ex,0,rep] = np.array([(V_grid_run[j] - V_grid)**2 for j in range(tail,N)])
         Wnorms[ex,0,rep] = np.array([ WassDist(A_run[j]@np.transpose(A_run[j]),Sigmas[ex]) for j in range(tail,N)])
         Wnorms0p1[ex,0,rep] = [ WassDist(A_run[j]@np.diag(np.exp(-phis_run[j]*0.1))@np.transpose(A_run[j]),Sigmas0p1[ex]) for j in range(tail,N)]
@@ -366,6 +370,7 @@ for ex in range(n_exes):
         
         print("Accept Rate for phis",np.mean(acc_phis,axis=1))
         
+        times_all[ex,1,rep] = (et-st)
         MSES[ex,1,rep] = [(V_grid_run[j] - V_grid)**2 for j in range(tail,N)]
         Wnorms[ex,1,rep] = [ WassDist(A_run[j]@np.transpose(A_run[j]),Sigmas[ex]) for j in range(tail,N)]
         Wnorms0p1[ex,1,rep] = [ WassDist(A_run[j]@np.diag(np.exp(-phis_run[j]*0.1))@np.transpose(A_run[j]),Sigmas0p1[ex]) for j in range(tail,N)]
@@ -389,11 +394,22 @@ dWnorms0p1 = np.sqrt(np.mean(Wnorms0p1,axis=3))[:,0,:] - np.sqrt(np.mean(Wnorms0
 
 # dMSE = MSES[:,0,:] - MSES[:,1,:]
         
-np.savetxt("dMSE.csv", dMSE, delimiter=",")  
-np.savetxt("dWnorms.csv", dWnorms, delimiter=",")  
-np.save("n_comps.npy", n_comps)
+# np.savetxt("dMSE.csv", dMSE, delimiter=",")  
+# np.savetxt("dWnorms.csv", dWnorms, delimiter=",")  
+# np.save("n_comps.npy", n_comps)
 # np.save("fnorms.npy", fnorms)
 # np.save("fnorms0p1.npy", fnorms0p1)
+
+np.save("1MSES"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd),"prob_one="+str(prob_one),MSES)
+np.save("1n_comps"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd),"prob_one="+str(prob_one),n_comps)
+np.save("1As_exp"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd),"prob_one="+str(prob_one),As_exp)
+np.save("1Sigmas_exp"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd),"prob_one="+str(prob_one),Sigmas_exp)
+np.save("1Sigmas0p1_exp"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd),"prob_one="+str(prob_one),Sigmas0p1_exp)
+np.save("1Wnorms"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd),"prob_one="+str(prob_one),Wnorms)
+np.save("1Wnorms0p1"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd),"prob_one="+str(prob_one),Wnorms0p1)
+np.save("1times_all"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd),"prob_one="+str(prob_one),times_all)
+
+
 
 
 np.mean(n_comps,axis=2)
@@ -405,28 +421,32 @@ np.mean(Wnorms0p1,axis=3)
 np.mean(Wnorms,axis=(2,3))
 np.mean(Wnorms0p1,axis=(2,3))
 
-np.round(Sigmas,2)
 
 
+np.round(Sigmas,2)[0]
 np.median(np.round(np.median(Sigmas_exp,axis=3),2)[0,0],axis=0)
 np.median(np.round(np.median(Sigmas_exp,axis=3),2)[0,1],axis=0)
 
+np.round(Sigmas,2)[1]
 np.median(np.round(np.median(Sigmas_exp,axis=3),2)[1,0],axis=0)
 np.median(np.round(np.median(Sigmas_exp,axis=3),2)[1,1],axis=0)
 
+np.round(Sigmas,2)[2]
 np.median(np.round(np.median(Sigmas_exp,axis=3),2)[2,0],axis=0)
 np.median(np.round(np.median(Sigmas_exp,axis=3),2)[2,1],axis=0)
 
 
 
-np.round(Sigmas0p1,2)
 
+np.round(Sigmas0p1,2)[0]
 np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[0,0],axis=0)
 np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[0,1],axis=0)
 
+np.round(Sigmas0p1,2)[1]
 np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[1,0],axis=0)
 np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[1,1],axis=0)
 
+np.round(Sigmas0p1,2)[2]
 np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[2,0],axis=0)
 np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[2,1],axis=0)
 
@@ -437,6 +457,7 @@ my_dict = {'Full': dMSE[0], 'Triangular': dMSE[1], 'Diagonal': dMSE[2]}
 fig, ax = plt.subplots()
 ax.boxplot(my_dict.values())
 ax.set_xticklabels(my_dict.keys())
+plt.title("p="+str(p)+", conc="+str(conc)+", noise_sd="+str(noise_sd)+", prob_one="+str(prob_one))
 plt.show()
 
 
