@@ -72,7 +72,7 @@ plt.show()
 
 
 ### 5D examples
-p = 4
+p = 6
 
 
 
@@ -198,7 +198,7 @@ Sigmas0p1_exp = np.zeros((n_exes,2,reps,N-tail,p,p))
 Wnorms = np.zeros((n_exes,2,reps,N-tail))
 Wnorms0p1 = np.zeros((n_exes,2,reps,N-tail))
 times_all = np.zeros((n_exes,2,reps))
-# fnorms0p1 = np.zeros((n_exes,2,reps,N-tail))
+waic = np.zeros((n_exes,2,reps))
 
 STG = time.time()
 
@@ -212,24 +212,27 @@ for ex in range(n_exes):
         Y_true, V_true = rNLMC(As[ex],phis,taus_sqrt_inv,locs, retV=True)
         
         Y_obs = Y_true[:,:n_obs]
+        V_obs = V_true[:,:n_obs]
         V_grid = V_true[:,n_obs:]
         
         
         ### current values
         
-        n_ones_current = p**2
-        A_mask_current = np.ones((p,p))
+        n_ones_current = np.sum(As[ex]!=0)
+        A_mask_current = (As[ex]!=0)*1
                 
-        A_ones_ind_current = pairs(p)
-        A_zeros_ind_current = []
+        
+        
+        A_ones_ind_current = [(np.where(As[ex]!=0)[0][j],np.where(As[ex]!=0)[1][j]) for j in range(np.where(As[ex]!=0)[0].shape[0])]
+        A_zeros_ind_current = [(np.where(As[ex]==0)[0][j],np.where(As[ex]==0)[1][j]) for j in range(np.where(As[ex]==0)[0].shape[0])]
         
         ### init and current state
-        phis_current = np.repeat(10.,p)
+        phis_current = np.copy(phis)
         Rs_current = np.array([ np.exp(-Dists_obs*phis_current[j]) for j in range(p) ])
         Rs_inv_current = np.array([ np.linalg.inv(Rs_current[j]) for j in range(p) ])
         
         
-        V_current = random.normal(size=(p,n_obs))*1
+        V_current = np.copy(V_obs)
         VmY_current = V_current - Y_obs
         VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
         
@@ -239,7 +242,7 @@ for ex in range(n_exes):
         
         
         
-        A_current = random.normal(size=(p,p))
+        A_current = np.copy(As[ex])
         A_inv_current = np.linalg.inv(A_current)
         
         A_invV_current = A_inv_current @ V_current
@@ -308,20 +311,27 @@ for ex in range(n_exes):
         
         Sigmas0p1_exp[ex,0,rep] = [A_run[j]@np.diag(np.exp(-phis_run[j]*0.1))@np.transpose(A_run[j]) for j in range(tail,N)]
         
+        likes = np.array([np.sqrt(np.diag(taus_run[j])/2/np.pi)@np.exp(-1/2*np.diag(taus_run[j])@(Y_obs-V_run[j])**2) for j in range(tail,N)])
+        
+        waic[ex,0,rep] = - np.mean(np.log(np.mean(likes,axis=0))) + np.mean(np.var(np.log(likes),axis=0))
+        
         ### init and current state
-        phis_current = np.repeat(10.,p)
+        phis_current = np.copy(phis)
         Rs_current = np.array([ np.exp(-Dists_obs*phis_current[j]) for j in range(p) ])
         Rs_inv_current = np.array([ np.linalg.inv(Rs_current[j]) for j in range(p) ])
         
         
-        V_current = random.normal(size=(p,n_obs))*1
+        V_current = np.copy(V_obs)
         VmY_current = V_current - Y_obs
         VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
         
         mu_current = np.zeros(p)
         Vmmu1_current = V_current
         
-        A_current = random.normal(size=(p,p))
+        
+        
+        
+        A_current = np.copy(As[ex])
         A_inv_current = np.linalg.inv(A_current)
         
         A_invV_current = A_inv_current @ V_current
@@ -381,6 +391,11 @@ for ex in range(n_exes):
         
         Sigmas0p1_exp[ex,1,rep] = [A_run[j]@np.diag(np.exp(-phis_run[j]*0.1))@np.transpose(A_run[j]) for j in range(tail,N)]
         
+        likes = np.array([np.sqrt(np.diag(taus_run[j])/2/np.pi)@np.exp(-1/2*np.diag(taus_run[j])@(Y_obs-V_run[j])**2) for j in range(tail,N)])
+        
+        waic[ex,1,rep] = - np.mean(np.log(np.mean(likes,axis=0))) + np.mean(np.var(np.log(likes),axis=0))
+        
+        
 ETG = time.time()
 
 print("GLOBAL TIME", (ETG-STG)/60, "min")
@@ -389,6 +404,7 @@ print("GLOBAL TIME", (ETG-STG)/60, "min")
 ### differences in RMSE
 
 dMSE = np.sqrt(np.mean(MSES,axis=(3,4,5)))[:,0,:] - np.sqrt(np.mean(MSES,axis=(3,4,5)))[:,1,:]
+dWAIC = waic[:,0,:] - waic[:,1,:]
 dWnorms = np.sqrt(np.mean(Wnorms,axis=3))[:,0,:] - np.sqrt(np.mean(Wnorms,axis=3))[:,1,:]
 dWnorms0p1 = np.sqrt(np.mean(Wnorms0p1,axis=3))[:,0,:] - np.sqrt(np.mean(Wnorms0p1,axis=3))[:,1,:]
 
@@ -402,14 +418,15 @@ np.mean(dMSE<0,axis=1)
 # np.save("fnorms.npy", fnorms)
 # np.save("fnorms0p1.npy", fnorms0p1)
 
-np.save("1MSES"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd)+"prob_one="+str(prob_one),MSES)
-np.save("1n_comps"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd)+"prob_one="+str(prob_one),n_comps)
-np.save("1As_exp"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd)+"prob_one="+str(prob_one),As_exp)
-np.save("1Sigmas_exp"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd)+"prob_one="+str(prob_one),Sigmas_exp)
-np.save("1Sigmas0p1_exp"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd)+"prob_one="+str(prob_one),Sigmas0p1_exp)
-np.save("1Wnorms"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd)+"prob_one="+str(prob_one),Wnorms)
-np.save("1Wnorms0p1"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd)+"prob_one="+str(prob_one),Wnorms0p1)
-np.save("1times_all"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd)+"prob_one="+str(prob_one),times_all)
+np.save("1mMSES"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd)+"prob_one="+str(prob_one),MSES)
+np.save("1mn_comps"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd)+"prob_one="+str(prob_one),n_comps)
+np.save("1mAs_exp"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd)+"prob_one="+str(prob_one),As_exp)
+np.save("1mSigmas_exp"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd)+"prob_one="+str(prob_one),Sigmas_exp)
+np.save("1mSigmas0p1_exp"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd)+"prob_one="+str(prob_one),Sigmas0p1_exp)
+np.save("1mWnorms"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd)+"prob_one="+str(prob_one),Wnorms)
+np.save("1mWnorms0p1"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd)+"prob_one="+str(prob_one),Wnorms0p1)
+np.save("1mtimes_all"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd)+"prob_one="+str(prob_one),times_all)
+np.save("1mwaic"+"p="+str(p)+"conc="+str(conc)+"noise_sd="+str(noise_sd)+"prob_one="+str(prob_one),waic)
 
 
 
@@ -469,6 +486,24 @@ plt.boxplot(dMSE[1])
 plt.show()
 plt.boxplot(dMSE[2])
 plt.show()
+
+### Waic plots
+
+my_dict = {'Full': dWAIC[0], 'Triangular': dWAIC[1], 'Diagonal': dWAIC[2]}
+
+fig, ax = plt.subplots()
+ax.boxplot(my_dict.values())
+ax.set_xticklabels(my_dict.keys())
+plt.show()
+
+
+plt.boxplot(dWAIC[0])
+plt.show()
+plt.boxplot(dWAIC[1])
+plt.show()
+plt.boxplot(dWAIC[2])
+plt.show()
+
 
 
 ### Wnorms plots
