@@ -39,10 +39,22 @@ loc_obs = air_data[:,4:6]
 Y_obs = np.transpose(np.log(air_data[:,:4]))
 
 ###
-np.mean(Y_obs,axis=1)
+esp = np.mean(Y_obs)
 np.cov(Y_obs)
+va = np.var(Y_obs)
 
+### simulate a dumby Y
 n_obs = Y_obs.shape[1]
+
+### distances
+
+Dists_obs = distance_matrix(loc_obs,loc_obs)
+dumby_spat_cov = np.exp(-Dists_obs*10)
+
+Y_dumb = np.sqrt(va)*np.linalg.cholesky(dumby_spat_cov)@random.normal(size=n_obs) + esp 
+
+Y_obs = np.concatenate((Y_obs,[Y_dumb]),axis=0)
+
 p = Y_obs.shape[0]
 
 #### centered
@@ -58,8 +70,8 @@ p = Y_obs.shape[0]
 
 
 ### markov chain + tail length
-N = 150000
-tail = 50000
+N = 200000
+tail = 100000
 
 ### showcase locations
 
@@ -136,9 +148,7 @@ acc_phis = np.zeros((p,N))
 
 ### useful quantities 
 
-### distances
 
-Dists_obs = distance_matrix(loc_obs,loc_obs)
 
 
 ### current values
@@ -289,6 +299,13 @@ C_03 = np.array([[A_run[k,i]*A_run[k,j]*np.exp(-phis_run[k] * d) for k in range(
 
 print(i,j)
 
+i = 0
+j = 4
+
+C_04 = np.array([[A_run[k,i]*A_run[k,j]*np.exp(-phis_run[k] * d) for k in range(tail,N)] for d in dist_cov])
+
+print(i,j)
+
 i = 1
 j = 1
 
@@ -310,6 +327,13 @@ C_13 = np.array([[A_run[k,i]*A_run[k,j]*np.exp(-phis_run[k] * d) for k in range(
 
 print(i,j)
 
+i = 1
+j = 4
+
+C_14 = np.array([[A_run[k,i]*A_run[k,j]*np.exp(-phis_run[k] * d) for k in range(tail,N)] for d in dist_cov])
+
+print(i,j)
+
 i = 2
 j = 2
 
@@ -324,10 +348,31 @@ C_23 = np.array([[A_run[k,i]*A_run[k,j]*np.exp(-phis_run[k] * d) for k in range(
 
 print(i,j)
 
+i = 2
+j = 4
+
+C_24 = np.array([[A_run[k,i]*A_run[k,j]*np.exp(-phis_run[k] * d) for k in range(tail,N)] for d in dist_cov])
+
+print(i,j)
+
 i = 3
 j = 3
 
 C_33 = np.array([[A_run[k,i]*A_run[k,j]*np.exp(-phis_run[k] * d) for k in range(tail,N)] for d in dist_cov])
+
+print(i,j)
+
+i = 3
+j = 4
+
+C_34 = np.array([[A_run[k,i]*A_run[k,j]*np.exp(-phis_run[k] * d) for k in range(tail,N)] for d in dist_cov])
+
+print(i,j)
+
+i = 4
+j = 4
+
+C_44 = np.array([[A_run[k,i]*A_run[k,j]*np.exp(-phis_run[k] * d) for k in range(tail,N)] for d in dist_cov])
 
 print(i,j)
 
@@ -336,12 +381,17 @@ C_00 = np.sum(C_00,axis=2)
 C_01 = np.sum(C_01,axis=2)
 C_02 = np.sum(C_02,axis=2)
 C_03 = np.sum(C_03,axis=2)
+C_04 = np.sum(C_04,axis=2)
 C_11 = np.sum(C_11,axis=2)
 C_12 = np.sum(C_12,axis=2)
 C_13 = np.sum(C_13,axis=2)
+C_14 = np.sum(C_14,axis=2)
 C_22 = np.sum(C_22,axis=2)
 C_23 = np.sum(C_23,axis=2)
+C_24 = np.sum(C_24,axis=2)
 C_33 = np.sum(C_33,axis=2)
+C_34 = np.sum(C_34,axis=2)
+C_44 = np.sum(C_44,axis=2)
 
 
 # np.save("C_00_air.npy",C_00)
@@ -382,6 +432,10 @@ C_03_med = np.median(C_03,axis=1)
 C_03_05 = np.quantile(C_03,0.05,axis=1)
 C_03_95 = np.quantile(C_03,0.95,axis=1)
 
+C_04_med = np.median(C_04,axis=1)
+C_04_05 = np.quantile(C_04,0.05,axis=1)
+C_04_95 = np.quantile(C_04,0.95,axis=1)
+
 C_11_med = np.median(C_11,axis=1)
 C_11_05 = np.quantile(C_11,0.05,axis=1)
 C_11_95 = np.quantile(C_11,0.95,axis=1)
@@ -394,6 +448,10 @@ C_13_med = np.median(C_13,axis=1)
 C_13_05 = np.quantile(C_13,0.05,axis=1)
 C_13_95 = np.quantile(C_13,0.95,axis=1)
 
+C_14_med = np.median(C_14,axis=1)
+C_14_05 = np.quantile(C_14,0.05,axis=1)
+C_14_95 = np.quantile(C_14,0.95,axis=1)
+
 C_22_med = np.median(C_22,axis=1)
 C_22_05 = np.quantile(C_22,0.05,axis=1)
 C_22_95 = np.quantile(C_22,0.95,axis=1)
@@ -402,9 +460,21 @@ C_23_med = np.median(C_23,axis=1)
 C_23_05 = np.quantile(C_23,0.05,axis=1)
 C_23_95 = np.quantile(C_23,0.95,axis=1)
 
+C_24_med = np.median(C_24,axis=1)
+C_24_05 = np.quantile(C_24,0.05,axis=1)
+C_24_95 = np.quantile(C_24,0.95,axis=1)
+
 C_33_med = np.median(C_33,axis=1)
 C_33_05 = np.quantile(C_33,0.05,axis=1)
 C_33_95 = np.quantile(C_33,0.95,axis=1)
+
+C_34_med = np.median(C_34,axis=1)
+C_34_05 = np.quantile(C_34,0.05,axis=1)
+C_34_95 = np.quantile(C_34,0.95,axis=1)
+
+C_44_med = np.median(C_44,axis=1)
+C_44_05 = np.quantile(C_44,0.05,axis=1)
+C_44_95 = np.quantile(C_44,0.95,axis=1)
 
 
 
@@ -424,6 +494,10 @@ plt.plot(dist_cov,C_33_med)
 plt.fill_between(dist_cov,C_33_05,C_33_95,alpha=0.5)
 plt.show()
 
+plt.plot(dist_cov,C_44_med)
+plt.fill_between(dist_cov,C_44_05,C_44_95,alpha=0.5)
+plt.show()
+
 
 plt.plot(dist_cov,C_01_med,c="grey")
 plt.fill_between(dist_cov,C_01_05,C_01_95,alpha=0.5,color="grey")
@@ -437,6 +511,10 @@ plt.plot(dist_cov,C_03_med,c="grey")
 plt.fill_between(dist_cov,C_03_05,C_03_95,alpha=0.5,color="grey")
 plt.show()
 
+plt.plot(dist_cov,C_04_med,c="grey")
+plt.fill_between(dist_cov,C_04_05,C_04_95,alpha=0.5,color="grey")
+plt.show()
+
 plt.plot(dist_cov,C_12_med,c="grey")
 plt.fill_between(dist_cov,C_12_05,C_12_95,alpha=0.5,color="grey")
 plt.show()
@@ -445,12 +523,24 @@ plt.plot(dist_cov,C_13_med,c="grey")
 plt.fill_between(dist_cov,C_13_05,C_13_95,alpha=0.5,color="grey")
 plt.show()
 
+plt.plot(dist_cov,C_14_med,c="grey")
+plt.fill_between(dist_cov,C_14_05,C_14_95,alpha=0.5,color="grey")
+plt.show()
+
 plt.plot(dist_cov,C_23_med,c="grey")
 plt.fill_between(dist_cov,C_23_05,C_23_95,alpha=0.5,color="grey")
 plt.show()
 
+plt.plot(dist_cov,C_24_med,c="grey")
+plt.fill_between(dist_cov,C_24_05,C_24_95,alpha=0.5,color="grey")
+plt.show()
 
-fig, axs = plt.subplots(3, 2, figsize=(9,11), layout='constrained')
+plt.plot(dist_cov,C_34_med,c="grey")
+plt.fill_between(dist_cov,C_34_05,C_34_95,alpha=0.5,color="grey")
+plt.show()
+
+
+fig, axs = plt.subplots(5, 2, figsize=(9,5/3*11), layout='constrained')
 
 
 axs[0,0].plot(dist_cov,C_00_med,label="C_11")
@@ -506,6 +596,40 @@ axs[2,1].set_title("NO_2 (3) and O_3 (4)")
 # axs[2,1].set_xlabel("Distance")
 # axs[2,1].set_ylabel("Covariance")
 axs[2,1].legend()
+
+axs[3,0].plot(dist_cov,C_00_med,label="C_11")
+axs[3,0].plot(dist_cov,C_44_med,label="C_55")
+axs[3,0].plot(dist_cov,C_04_med,label="C_15")
+axs[3,0].set_title("CO (1) and Dumby (5)")
+# axs[2,0].set_xlabel("Distance")
+# axs[2,0].set_ylabel("Covariance")
+axs[3,0].legend()
+# plt.show()
+
+axs[3,1].plot(dist_cov,C_11_med,label="C_22")
+axs[3,1].plot(dist_cov,C_44_med,label="C_55")
+axs[3,1].plot(dist_cov,C_14_med,label="C_25")
+axs[3,1].set_title("NO (2) and Dumby (5)")
+# axs[2,1].set_xlabel("Distance")
+# axs[2,1].set_ylabel("Covariance")
+axs[3,1].legend()
+
+axs[4,0].plot(dist_cov,C_22_med,label="C_33")
+axs[4,0].plot(dist_cov,C_44_med,label="C_55")
+axs[4,0].plot(dist_cov,C_24_med,label="C_35")
+axs[4,0].set_title("NO_2 (3) and Dumby (5)")
+# axs[2,0].set_xlabel("Distance")
+# axs[2,0].set_ylabel("Covariance")
+axs[4,0].legend()
+# plt.show()
+
+axs[4,1].plot(dist_cov,C_33_med,label="C_44")
+axs[4,1].plot(dist_cov,C_44_med,label="C_55")
+axs[4,1].plot(dist_cov,C_34_med,label="C_45")
+axs[4,1].set_title("O_3 (4) and Dumby (5)")
+# axs[2,1].set_xlabel("Distance")
+# axs[2,1].set_ylabel("Covariance")
+axs[4,1].legend()
 
 
 

@@ -280,7 +280,13 @@ interSampCov010 = apply(interCov010, 2, effectiveSize)
 interCov0p110 = read.csv("intercov0p110.csv",header=F)
 interSampCov0p110 = apply(interCov0p110, 2, effectiveSize)
 
+white = cbind(whiteSampCov00p1,whiteSampCov0p10p1,whiteSampCov01,whiteSampCov0p11,whiteSampCov010,whiteSampCov0p110)
+center = cbind(centerSampCov00p1,centerSampCov0p10p1,centerSampCov01,centerSampCov0p11,centerSampCov010,centerSampCov0p110)
+inter = cbind(interSampCov00p1,interSampCov0p10p1,interSampCov01,interSampCov0p11,interSampCov010,interSampCov0p110)
 
+write.csv(white, "effWhite.csv", row.names=FALSE)
+write.csv(center, "effCenter.csv", row.names=FALSE)
+write.csv(inter, "effInter.csv", row.names=FALSE)
 
 ### format data
 
