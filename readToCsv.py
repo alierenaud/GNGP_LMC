@@ -9,7 +9,7 @@ Created on Thu May 11 15:02:31 2023
 import numpy as np
 
 
-arr = np.load("results.npy")
+arr = np.load("mresults.npy")
 
 
 

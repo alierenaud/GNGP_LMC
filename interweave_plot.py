@@ -43,5 +43,5 @@ axs[2,1].set_title("C_12(0.1) (StN=10)")
 
 fig.supylabel('Effective Sample Size')
 
-# plt.savefig("effSamp2.pdf", format="pdf", bbox_inches="tight")
-plt.show()
+plt.savefig("meffSamp2.pdf", format="pdf", bbox_inches="tight")
+# plt.show()
