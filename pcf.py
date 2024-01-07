@@ -36,6 +36,9 @@ def pcf(k,l,d,A,phis,mu,Ns):
         pcf_k[ii] = (int((np.argmax(y[:,0]) == k-1) & (y[k-1,0] > 0)) )
         pcf_l[ii] = (int((np.argmax(y[:,1]) == l-1) & (y[l-1,1] > 0) ))
         
+        # y = rLMC(A, phis, np.array([[0],[d]])) + np.outer(mu,np.ones(2)) + random.normal(size=(2,2))
+        
+        
         pcf_kl[ii] = int((np.argmax(y[:,0]) == k-1) & (y[k-1,0] > 0) & (np.argmax(y[:,1]) == l-1) & (y[l-1,1] > 0) )
         pcf_kk[ii] = int((np.argmax(y[:,0]) == k-1) & (y[k-1,0] > 0) & (np.argmax(y[:,1]) == k-1) & (y[k-1,1] > 0) )
         pcf_ll[ii] = int((np.argmax(y[:,0]) == l-1) & (y[l-1,0] > 0) & (np.argmax(y[:,1]) == l-1) & (y[l-1,1] > 0) )
@@ -107,8 +110,8 @@ print((et-st)/60,"minutes")
 step=1
 lim=50
 mean_pcfs = np.mean(pcfs,axis=0)
-q05_pcfs = np.quantile(pcfs,0.025,axis=0)
-q95_pcfs = np.quantile(pcfs,0.975,axis=0)
+q05_pcfs = np.quantile(pcfs,0.05,axis=0)
+q95_pcfs = np.quantile(pcfs,0.95,axis=0)
 plt.plot(ds[:lim:step],mean_pcfs[:lim:step,0])
 plt.plot(ds[:lim:step],mean_pcfs[:lim:step,1])
 plt.plot(ds[:lim:step],mean_pcfs[:lim:step,2],c="grey")
@@ -118,5 +121,5 @@ plt.fill_between(ds[:lim:step], q05_pcfs[:lim:step,2], q95_pcfs[:lim:step,2],col
 # plt.plot(ds,truepcf,c="grey")
 plt.title("Pair Correlation Function")
 plt.legend(["maple", "hickory","cross"], loc ="upper right") 
-# plt.show()
-plt.savefig('pcfhickmap2.pdf', bbox_inches='tight')
+plt.show()
+# plt.savefig('pcfhickmap2.pdf', bbox_inches='tight')
