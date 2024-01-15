@@ -113,9 +113,10 @@ for patch in bplot['boxes']:
         patch.set_facecolor("white")
 ax.set_xticklabels(my_dict.keys())
 plt.xlim([0.5, 5.5])
+plt.xlabel("p")
 plt.title("Difference in RMSE")
 plt.savefig("full_diff.pdf", bbox_inches='tight')
-# plt.show()
+plt.show()
 
 d=0.1
 n_comp_med = np.median(n_comps_glob,axis=2)[:,0]
@@ -129,9 +130,10 @@ for i in range(5):
     plt.plot([xs[i]-0.1,xs[i]+0.1],[n_comp_95[i],n_comp_95[i]],c="black")
 plt.plot(xs,n_comp_med)
 plt.xticks(xs)
+plt.xlabel("p")
 plt.title("Number of Non-Zero Components")
 plt.savefig("full_ncomp.pdf", bbox_inches='tight')
-# plt.show()
+plt.show()
 
 # my_dict = {'2': n_comps_glob[0,0], '3': n_comps_glob[1,0], '4': n_comps_glob[2,0], '5': n_comps_glob[3,0], '6': n_comps_glob[4,0]}
 
@@ -169,9 +171,10 @@ for patch in bplot['boxes']:
         patch.set_facecolor("white")
 ax.set_xticklabels(my_dict.keys())
 plt.xlim([0.5, 5.5])
+plt.xlabel("p")
 plt.title("Difference in RMSE")
 plt.savefig("diag_diff.pdf", bbox_inches='tight')
-# plt.show()
+plt.show()
 
 d=0.1
 n_comp_med = np.median(n_comps_glob,axis=2)[:,2]
@@ -185,9 +188,10 @@ for i in range(5):
     plt.plot([xs[i]-0.1,xs[i]+0.1],[n_comp_95[i],n_comp_95[i]],c="black")
 plt.plot(xs,n_comp_med)
 plt.xticks(xs)
+plt.xlabel("p")
 plt.title("Number of Non-Zero Components")
 plt.savefig("diag_ncomp.pdf", bbox_inches='tight')
-# plt.show()
+plt.show()
 
 # my_dict = {'2': n_comps_glob[0,2], '3': n_comps_glob[1,2], '4': n_comps_glob[2,2], '5': n_comps_glob[3,2], '6': n_comps_glob[4,2]}
 
