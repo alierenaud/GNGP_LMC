@@ -87,7 +87,7 @@ tail = 2000
 # want 100000
 Ns = 200000
 # want 40
-jumps = 40
+jumps = 100
 
 pcfs = np.zeros(((N-tail)//jumps,nds,3))
 

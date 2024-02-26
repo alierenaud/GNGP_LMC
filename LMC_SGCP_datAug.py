@@ -312,7 +312,7 @@ sigma_slice = 10
 
 ### samples
 
-N = 6000
+N = 10000
 tail = 2000
 
 ### global run containers
@@ -424,7 +424,7 @@ for i in range(N):
     
     
     
-    if i % 1 == 0:
+    if i % 100 == 0:
         print(i)
         
         
@@ -594,8 +594,8 @@ c = ax.pcolormesh(xv, yv, vv, cmap = "Blues")
 ax.scatter(X_1[Y_1==1,0],X_1[Y_1==1,1],c="black")
 plt.colorbar(c)
 plt.title("Maple")
-# plt.show()
-plt.savefig('maple.pdf', bbox_inches='tight')
+plt.show()
+# plt.savefig('maple.pdf', bbox_inches='tight')
 
 ### process 2
 
@@ -610,8 +610,8 @@ c = ax.pcolormesh(xv, yv, vv, cmap = "Oranges")
 ax.scatter(X_1[Y_1==2,0],X_1[Y_1==2,1],c="black")
 plt.colorbar(c)
 plt.title("Hickory")
-# plt.show()
-plt.savefig('hickory.pdf', bbox_inches='tight')
+plt.show()
+# plt.savefig('hickory.pdf', bbox_inches='tight')
 
 ### process thinned
 
