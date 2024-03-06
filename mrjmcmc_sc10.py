@@ -20,12 +20,12 @@ from scipy.spatial import distance_matrix
 from LMC_pred_rjmcmc import A_move_slice_mask
 from LMC_pred_rjmcmc import A_rjmcmc
 from LMC_pred_rjmcmc import V_pred
-from LMC_pred_rjmcmc import pairs
+
 
 
 from noisyLMC_interweaved import A_move_slice
 from noisyLMC_interweaved import makeGrid
-from noisyLMC_interweaved import vec_inv
+
 
 from noisyLMC_inference import V_move_conj, taus_move
 
@@ -48,7 +48,6 @@ reps = 100
 ### markov chain + tail length
 N = 2000
 tail = 1000
-
 ### generate uniform locations
 
 conc = 2
@@ -72,7 +71,7 @@ plt.show()
 
 
 ### 5D examples
-p = 6
+p = 4
 
 
 
@@ -97,13 +96,13 @@ for i in range(p):
 A2 *= fac
 
 
-### Triangular
+# ### Triangular
 
-A3 = np.zeros((p,p))
+# A3 = np.zeros((p,p))
 
-for i in range(p):
-    for j in range(i+1):
-        A3[i,j] = (-1)**(i)*1/np.sqrt(i+1)
+# for i in range(p):
+#     for j in range(i+1):
+#         A3[i,j] = (-1)**(i)*1/np.sqrt(i+1)
 
 
 ### Diagonal
@@ -118,16 +117,16 @@ taus_sqrt_inv = np.ones(p)*noise_sd
 
 
 
-As = np.array([A2,A3,A4])
-Sigmas = np.array([A2@np.transpose(A2),A3@np.transpose(A3),A4@np.transpose(A4)])
+As = np.array([A2,A4])
+Sigmas = np.array([A2@np.transpose(A2),A4@np.transpose(A4)])
 D0p1 = np.diag(np.exp(-phis*0.1))
-Sigmas0p1 = np.array([A2@D0p1@np.transpose(A2),A3@D0p1@np.transpose(A3),A4@D0p1@np.transpose(A4)])
+Sigmas0p1 = np.array([A2@D0p1@np.transpose(A2),A4@D0p1@np.transpose(A4)])
 n_exes = As.shape[0]
 
 
 
 ### priors
-sigma_A = 1.
+sigma_A = 1
 mu_A = np.zeros((p,p))
 # mu_A = np.array([[0.,0.,0.],
 #                  [0.,0.,0.],
@@ -450,9 +449,9 @@ np.round(Sigmas,2)[1]
 np.median(np.round(np.median(Sigmas_exp,axis=3),2)[1,0],axis=0)
 np.median(np.round(np.median(Sigmas_exp,axis=3),2)[1,1],axis=0)
 
-np.round(Sigmas,2)[2]
-np.median(np.round(np.median(Sigmas_exp,axis=3),2)[2,0],axis=0)
-np.median(np.round(np.median(Sigmas_exp,axis=3),2)[2,1],axis=0)
+# np.round(Sigmas,2)[2]
+# np.median(np.round(np.median(Sigmas_exp,axis=3),2)[2,0],axis=0)
+# np.median(np.round(np.median(Sigmas_exp,axis=3),2)[2,1],axis=0)
 
 
 
@@ -465,13 +464,13 @@ np.round(Sigmas0p1,2)[1]
 np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[1,0],axis=0)
 np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[1,1],axis=0)
 
-np.round(Sigmas0p1,2)[2]
-np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[2,0],axis=0)
-np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[2,1],axis=0)
+# np.round(Sigmas0p1,2)[2]
+# np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[2,0],axis=0)
+# np.median(np.round(np.median(Sigmas0p1_exp,axis=3),2)[2,1],axis=0)
 
 ### MSE plots
 
-my_dict = {'Full': dMSE[0], 'Triangular': dMSE[1], 'Diagonal': dMSE[2]}
+my_dict = {'Full': dMSE[0], 'Diagonal': dMSE[1]}
 
 fig, ax = plt.subplots()
 ax.boxplot(my_dict.values())
@@ -484,12 +483,12 @@ plt.boxplot(dMSE[0])
 plt.show()
 plt.boxplot(dMSE[1])
 plt.show()
-plt.boxplot(dMSE[2])
-plt.show()
+# plt.boxplot(dMSE[2])
+# plt.show()
 
 ### Waic plots
 
-my_dict = {'Full': dWAIC[0], 'Triangular': dWAIC[1], 'Diagonal': dWAIC[2]}
+my_dict = {'Full': dWAIC[0], 'Diagonal': dWAIC[1]}
 
 fig, ax = plt.subplots()
 ax.boxplot(my_dict.values())
@@ -501,14 +500,14 @@ plt.boxplot(dWAIC[0])
 plt.show()
 plt.boxplot(dWAIC[1])
 plt.show()
-plt.boxplot(dWAIC[2])
-plt.show()
+# plt.boxplot(dWAIC[2])
+# plt.show()
 
 
 
 ### Wnorms plots
 
-my_dict = {'Full': dWnorms[0], 'Triangular': dWnorms[1], 'Diagonal': dWnorms[2]}
+my_dict = {'Full': dWnorms[0], 'Diagonal': dWnorms[1]}
 
 fig, ax = plt.subplots()
 ax.boxplot(my_dict.values())
@@ -520,10 +519,10 @@ plt.boxplot(dWnorms[0])
 plt.show()
 plt.boxplot(dWnorms[1])
 plt.show()
-plt.boxplot(dWnorms[2])
-plt.show()
+# plt.boxplot(dWnorms[2])
+# plt.show()
 
-my_dict = {'Full': dWnorms0p1[0], 'Triangular': dWnorms0p1[1], 'Diagonal': dWnorms0p1[2]}
+my_dict = {'Full': dWnorms0p1[0], 'Diagonal': dWnorms0p1[1]}
 
 fig, ax = plt.subplots()
 ax.boxplot(my_dict.values())
@@ -535,8 +534,8 @@ plt.boxplot(dWnorms0p1[0])
 plt.show()
 plt.boxplot(dWnorms0p1[1])
 plt.show()
-plt.boxplot(dWnorms0p1[2])
-plt.show()
+# plt.boxplot(dWnorms0p1[2])
+# plt.show()
 
 
 
