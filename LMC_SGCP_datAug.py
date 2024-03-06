@@ -8,24 +8,20 @@ Created on Thu Aug 31 13:36:37 2023
 import numpy as np
 from numpy import random
 
-from multiLMC_generation import rmultiLMC
+
 from multiLMC_generation import mult
 from LMC_multi import mult_vec
 
 from scipy.spatial import distance_matrix
-
 import matplotlib.pyplot as plt
 
 from noisyLMC_interweaved import A_move_slice
-from noisyLMC_interweaved import A_move_white
 from LMC_inference import phis_move
 from LMC_mean import mu_move
 from noisyLMC_inference import V_move_conj
 from LMC_multi import Z_move
-from LMC_multi import probs
 from LMC_pred_rjmcmc import V_pred
 from noisyLMC_interweaved import vec_inv
-from LMC_generation import rLMC
 
 
 from noisyLMC_interweaved import makeGrid
@@ -199,7 +195,7 @@ plt.show()
 # plt.show()
 
 ### priors
-sigma_A = 1.
+sigma_A = 1
 mu_A = np.zeros((p,p))
 
 sigma_mu = 1.
@@ -506,9 +502,13 @@ plt.show()
 plt.plot(n_0_run[tail:])
 plt.show()
 
-
-
-
+Sigma_run = np.array([A_run[i]@np.transpose(A_run[i]) for i in range(tail,N)])
+plt.plot(Sigma_run[:,0,0])
+plt.show()
+plt.plot(Sigma_run[:,0,1])
+plt.show()
+plt.plot(Sigma_run[:,1,1])
+plt.show()
 print("Posterior Marginal Variance", np.mean([A_run[i]@np.transpose(A_run[i]) for i in range(tail,N)],axis=0))
 # print("True Marginal Variance", A@np.transpose(A))
 

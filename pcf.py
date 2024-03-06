@@ -85,9 +85,9 @@ mu_run = np.load("mu_run.npy")
 N = A_run.shape[0]
 tail = 2000
 # want 100000
-Ns = 200000
+Ns = 100000
 # want 40
-jumps = 100
+jumps = 80
 
 pcfs = np.zeros(((N-tail)//jumps,nds,3))
 
