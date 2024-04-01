@@ -18,9 +18,9 @@ from base import matern_kernel, fct2, makeGrid, vec_inv
 random.seed(0)
 
 n_obs=2000
-m=4
+m=3
 
-n_grid = 20
+n_grid = 15
 
 xlim=10
 
@@ -84,6 +84,98 @@ for i in np.arange((n_grid+1)**2):
 
 
 
+fig, ax = plt.subplots()
+
+ax.set_aspect(1)
+
+# ax.set_xticks([])
+# ax.set_yticks([])
+
+
+
+aw = 0.02
+al = 0.03
+
+
+
+for i in range((n_grid+1)**2):
+
+    # if (grid_locs[i,0] < 1) & (grid_locs[i,1] < 1) :
+    #     plt.arrow(grid_locs[i,0], grid_locs[i,1], 1/n_grid, 1/n_grid,length_includes_head=True,head_width=aw,head_length=al,color="tab:blue")
+    if (grid_locs[i,1] < 1) :
+        plt.arrow(grid_locs[i,0], grid_locs[i,1], 0, 1/n_grid,length_includes_head=True,head_width=aw,head_length=al,color="tab:blue")
+    if (grid_locs[i,0] < 1) :
+        plt.arrow(grid_locs[i,0], grid_locs[i,1], 1/n_grid, 0,length_includes_head=True,head_width=aw,head_length=al,color="tab:blue")
+
+plt.scatter(grid_locs[:,0],grid_locs[:,1],c="black")
+
+# plt.show()
+plt.savefig("grid_points.pdf", bbox_inches='tight')
+
+
+
+i = 4
+
+fig, ax = plt.subplots()
+
+ax.set_aspect(1)
+
+# ax.set_xticks([])
+# ax.set_yticks([])
+
+plt.scatter(grid_locs[:,0],grid_locs[:,1],c="black")
+plt.scatter(grid_locs[i,0],grid_locs[i,1],c="tab:orange")
+plt.scatter(grid_locs[gNei[i],0],grid_locs[gNei[i],1],c="tab:green")
+plt.savefig("NeiA.pdf", bbox_inches='tight')
+# plt.show()
+
+i = 33
+
+fig, ax = plt.subplots()
+
+ax.set_aspect(1)
+
+# ax.set_xticks([])
+# ax.set_yticks([])
+
+plt.scatter(grid_locs[:,0],grid_locs[:,1],c="black")
+plt.scatter(grid_locs[i,0],grid_locs[i,1],c="tab:orange")
+plt.scatter(grid_locs[gNei[i],0],grid_locs[gNei[i],1],c="tab:green")
+plt.savefig("NeiB.pdf", bbox_inches='tight')
+# plt.show()
+
+i = 184
+
+fig, ax = plt.subplots()
+
+ax.set_aspect(1)
+
+# ax.set_xticks([])
+# ax.set_yticks([])
+
+plt.scatter(grid_locs[:,0],grid_locs[:,1],c="black")
+plt.scatter(grid_locs[i,0],grid_locs[i,1],c="tab:orange")
+plt.scatter(grid_locs[gNei[i],0],grid_locs[gNei[i],1],c="tab:green")
+plt.savefig("NeiC.pdf", bbox_inches='tight')
+# plt.show()
+
+i = 242
+
+fig, ax = plt.subplots()
+
+ax.set_aspect(1)
+
+# ax.set_xticks([])
+# ax.set_yticks([])
+
+plt.scatter(grid_locs[:,0],grid_locs[:,1],c="black")
+plt.scatter(grid_locs[i,0],grid_locs[i,1],c="tab:orange")
+plt.scatter(grid_locs[gNei[i],0],grid_locs[gNei[i],1],c="tab:green")
+plt.savefig("NeiD.pdf", bbox_inches='tight')
+# plt.show()
+
+
+
 # for i in range((n_grid+1)**2):
 
 
@@ -100,8 +192,27 @@ for i in np.arange((n_grid+1)**2):
 #     plt.show()
 
 
+#### NODE COLOURING
 
+fig, ax = plt.subplots()
 
+ax.set_aspect(1)
+
+# ax.set_xticks([])
+# ax.set_yticks([])
+
+for i in range((n_grid+1)**2):
+    
+    if (grid_locs[i,0]*(n_grid) % ((m+1)*2) < (m+1)) & (grid_locs[i,1]*(n_grid) % ((m+1)*2) < (m+1)):
+        plt.scatter(grid_locs[i,0],grid_locs[i,1],c="tab:blue")
+    if (grid_locs[i,0]*(n_grid) % ((m+1)*2) < (m+1)) & (grid_locs[i,1]*(n_grid) % ((m+1)*2) >= (m+1)):
+        plt.scatter(grid_locs[i,0],grid_locs[i,1],c="tab:orange")
+    if (grid_locs[i,0]*(n_grid) % ((m+1)*2) >= (m+1)) & (grid_locs[i,1]*(n_grid) % ((m+1)*2) < (m+1)):
+        plt.scatter(grid_locs[i,0],grid_locs[i,1],c="tab:green")
+    if (grid_locs[i,0]*(n_grid) % ((m+1)*2) >= (m+1)) & (grid_locs[i,1]*(n_grid) % ((m+1)*2) >= (m+1)):
+        plt.scatter(grid_locs[i,0],grid_locs[i,1],c="tab:purple")        
+
+plt.show()
 
 
 agNei = np.zeros((n_grid+1)**2,dtype=object)
