@@ -20,7 +20,7 @@ random.seed(0)
 n_obs=2000
 m=3
 
-n_grid = 15
+n_grid = 11
 
 xlim=10
 
@@ -113,8 +113,25 @@ plt.scatter(grid_locs[:,0],grid_locs[:,1],c="black")
 plt.savefig("grid_points.pdf", bbox_inches='tight')
 
 
+### order
 
-i = 4
+fig, ax = plt.subplots()
+
+ax.set_aspect(1)
+
+
+plt.scatter(grid_locs[:,0],grid_locs[:,1],c="white")
+
+for i in range((n_grid+1)**2):
+    plt.text(grid_locs[i,0],grid_locs[i,1], str(i+1),color="black", fontsize=8, ha="center", va = "center")
+
+
+# plt.show()
+plt.savefig("grid_order.pdf", bbox_inches='tight')
+
+
+
+i = 27
 
 fig, ax = plt.subplots()
 
@@ -129,7 +146,7 @@ plt.scatter(grid_locs[gNei[i],0],grid_locs[gNei[i],1],c="tab:green")
 plt.savefig("NeiA.pdf", bbox_inches='tight')
 # plt.show()
 
-i = 33
+i = 35
 
 fig, ax = plt.subplots()
 
@@ -144,7 +161,7 @@ plt.scatter(grid_locs[gNei[i],0],grid_locs[gNei[i],1],c="tab:green")
 plt.savefig("NeiB.pdf", bbox_inches='tight')
 # plt.show()
 
-i = 184
+i = 102
 
 fig, ax = plt.subplots()
 
@@ -159,7 +176,7 @@ plt.scatter(grid_locs[gNei[i],0],grid_locs[gNei[i],1],c="tab:green")
 plt.savefig("NeiC.pdf", bbox_inches='tight')
 # plt.show()
 
-i = 242
+i = 134
 
 fig, ax = plt.subplots()
 
@@ -174,6 +191,46 @@ plt.scatter(grid_locs[gNei[i],0],grid_locs[gNei[i],1],c="tab:green")
 plt.savefig("NeiD.pdf", bbox_inches='tight')
 # plt.show()
 
+
+### neighboring patterns 
+
+
+fig, ax = plt.subplots()
+
+ax.set_aspect(1)
+
+plt.scatter(grid_locs[:,0],grid_locs[:,1],c="black")
+
+topRight = (grid_locs[:,0] > 0.2) & (grid_locs[:,1] > 0.2)
+
+plt.scatter(grid_locs[topRight,0],grid_locs[topRight,1],c="tab:orange")
+
+plt.savefig("topRight.pdf", bbox_inches='tight')
+# plt.show()
+
+
+
+fig, ax = plt.subplots()
+
+ax.set_aspect(1)
+
+plt.scatter(grid_locs[:,0],grid_locs[:,1],c="black")
+
+
+
+plt.scatter(grid_locs[0,0],grid_locs[0,1],c="tab:orange")
+plt.scatter(grid_locs[1,0],grid_locs[1,1],c="tab:orange")
+plt.scatter(grid_locs[2,0],grid_locs[2,1],c="tab:orange")
+plt.scatter(grid_locs[3,0],grid_locs[3,1],c="tab:orange")
+plt.scatter(grid_locs[13,0],grid_locs[13,1],c="tab:orange")
+plt.scatter(grid_locs[14,0],grid_locs[14,1],c="tab:orange")
+plt.scatter(grid_locs[15,0],grid_locs[15,1],c="tab:orange")
+plt.scatter(grid_locs[26,0],grid_locs[26,1],c="tab:orange")
+plt.scatter(grid_locs[27,0],grid_locs[27,1],c="tab:orange")
+plt.scatter(grid_locs[39,0],grid_locs[39,1],c="tab:orange")
+
+plt.savefig("triangle.pdf", bbox_inches='tight')
+plt.show()
 
 
 # for i in range((n_grid+1)**2):
