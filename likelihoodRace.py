@@ -27,8 +27,8 @@ def matern_kernel(r, phi = 1):
     
     return np.exp(-r/phi)
 
-n = 1000
-m = 20
+n = 10
+m = 4
 
 locs = np.linspace(0,1,n+1)
 
@@ -165,7 +165,7 @@ print("Total Time:", (et-st)/60, "minutes")
 #### WITH GRID LOCATIONS
 
 
-n_obs = 1000
+n_obs = 10
 loc_obs = random.uniform(size=n_obs)
 
 ### compute grid neighbors
@@ -188,15 +188,15 @@ for i in range(n_obs):
         
         
     
-# for i in range(n_obs):
+for i in range(n_obs):
     
-#     fig, ax = plt.subplots()
+    fig, ax = plt.subplots()
 
-#     ax.set_aspect(1)
-#     plt.scatter(locs[:],np.ones(n+1)*0.5, c="black")
-#     plt.scatter(loc_obs[i],0.5, c="tab:orange")
-#     plt.scatter(locs[gNei[i]],np.ones(m)*0.5, c="tab:green")
-#     plt.show()    
+    ax.set_aspect(1)
+    plt.scatter(locs[:],np.ones(n+1)*0.5, c="black")
+    plt.scatter(loc_obs[i],0.5, c="tab:orange")
+    plt.scatter(locs[gNei[i]],np.ones(m)*0.5, c="tab:green")
+    plt.show()    
     
 
 

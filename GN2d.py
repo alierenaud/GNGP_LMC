@@ -17,7 +17,7 @@ from base import matern_kernel, fct2, makeGrid, vec_inv
 
 random.seed(0)
 
-n_obs=2000
+n_obs=100
 m=3
 
 n_grid = 11
@@ -321,6 +321,107 @@ for i in range((n_grid+1)**2):
 # D = np.transpose(C)@C                    
 
 # print((D!=0)*1)
+
+### alternative neighbor compute
+
+ogNei = np.zeros((n_obs,(m+1)**2),dtype=int)
+
+xNei = np.zeros(m+1)
+yNei = np.zeros(m+1)
+
+def ell(s,n_grid,m):
+    
+    if s*n_grid < (m+1)/2:
+        return(0)
+    elif s*n_grid > n_grid - (m+1)/2:
+        return(n_grid-m)
+    else:
+        return(np.ceil(s*n_grid)- (m+1)/2)
+    
+    
+
+for i in range(n_obs):
+    
+    # left_nei = np.floor(locs[i,0]*n_grid)
+    
+    # left_lim = left_nei-(m+1)/2+1
+    # right_lim = left_nei+(m+1)/2+1
+    
+    # if left_lim < 0:
+    #     xNei = np.arange(0,m+1)
+    # elif right_lim > n_grid+1:
+    #     xNei = np.arange(n_grid+1-m-1,n_grid+1)
+    # else:
+    #     xNei = np.arange(left_lim,right_lim)
+        
+    left_lim = ell(locs[i,0],n_grid,m)
+    xNei = np.arange(left_lim,left_lim+m+1) 
+        
+    # down_nei = np.floor(locs[i,1]*n_grid)
+    
+    # down_lim = down_nei-(m+1)/2+1
+    # up_lim = down_nei+(m+1)/2+1
+    
+    # if down_lim < 0:
+    #     yNei = np.arange(0,m+1)
+    # elif up_lim > n_grid+1:
+    #     yNei = np.arange(n_grid+1-m-1,n_grid+1)
+    # else:
+    #     yNei = np.arange(down_lim,up_lim)
+    
+    down_lim = ell(locs[i,1],n_grid,m)
+    yNei = np.arange(down_lim,down_lim+m+1) 
+
+    
+    ogNei[i] = [ii*(n_grid+1)+jj for ii in yNei for jj in xNei]
+    
+
+
+for i in range(n_obs):
+
+    fig, ax = plt.subplots()
+    
+    ax.set_aspect(1)
+    
+    
+    plt.scatter(grid_locs[:,0],grid_locs[:,1],c="black")
+    plt.scatter(grid_locs[ogNei[i],0],grid_locs[ogNei[i],1],c="tab:green")
+    plt.scatter(locs[i,0],locs[i,1],c="tab:orange")
+    
+    plt.title(str(i))
+    
+    plt.show()
+
+
+i = 93
+
+fig, ax = plt.subplots()
+
+ax.set_aspect(1)
+
+
+plt.scatter(grid_locs[:,0],grid_locs[:,1],c="black")
+plt.scatter(grid_locs[ogNei[i],0],grid_locs[ogNei[i],1],c="tab:green")
+plt.scatter(locs[i,0],locs[i,1],c="tab:orange")
+
+plt.savefig("gridNeiA.pdf", bbox_inches='tight')
+# plt.show()
+
+
+i = 99
+
+fig, ax = plt.subplots()
+
+ax.set_aspect(1)
+
+
+plt.scatter(grid_locs[:,0],grid_locs[:,1],c="black")
+plt.scatter(grid_locs[ogNei[i],0],grid_locs[ogNei[i],1],c="tab:green")
+plt.scatter(locs[i,0],locs[i,1],c="tab:orange")
+
+
+plt.savefig("gridNeiB.pdf", bbox_inches='tight')
+# plt.show()
 
 ### compute obs neighbors on grid
 
