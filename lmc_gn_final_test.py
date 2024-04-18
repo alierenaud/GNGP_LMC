@@ -1,0 +1,362 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Apr 16 20:26:25 2024
+
+@author: alier
+"""
+
+from numpy import random
+import numpy as np
+
+from scipy.stats import beta
+from scipy.spatial import distance_matrix
+
+import matplotlib.pyplot as plt
+
+from base import makeGrid
+from noisyLMC_generation import rNLMC_mu
+
+# random.seed(0)
+
+### number of points 
+n_obs=200
+n_grid=11
+
+### number of dimensions
+p = 2
+
+### number of neighbors
+
+m = 3
+
+### markov chain + tail length
+N = 4000
+tail = 2000
+
+
+### generate uniform locations
+
+conc = 1
+loc_obs = beta.rvs(conc, conc, size=(n_obs,2))
+
+### grid locations
+marg_grid = np.linspace(0,1,n_grid+1)
+loc_grid = makeGrid(marg_grid, marg_grid)
+### all locations
+locs = np.concatenate((loc_obs,loc_grid), axis=0)
+
+### showcase locations
+
+# fig, ax = plt.subplots()
+# ax.set_xlim(0,1)
+# ax.set_ylim(0,1)
+# ax.set_box_aspect(1)
+
+# ax.scatter(loc_obs[:,0],loc_obs[:,1],color="black")
+# plt.show()
+
+
+### parameters
+
+# A #
+
+A = np.ones((p,p))*np.sqrt(1/p)
+fac = np.ones((p,p))
+for i in range(p):
+    for j in range(i+1,p):
+        fac[i,j] = -1 
+A *= fac
+
+# print(A)
+
+
+phis = np.exp(np.linspace(np.log(5), np.log(25),p))
+mu = A@np.ones(p)
+
+noise_sd = 0.5
+taus_sqrt_inv = np.ones(p)*noise_sd
+taus = 1/taus_sqrt_inv**2
+
+
+### generate LMC
+
+Y, V_true = rNLMC_mu(A,phis,taus_sqrt_inv,mu,locs, retV=True) 
+
+Y_obs = Y[:,:n_obs]
+
+V_true_obs = V_true[:,:n_obs]
+V_true_grid = V_true[:,n_obs:]
+
+
+### illustrate processes
+
+# for i in range(p):
+
+#     xv, yv = np.meshgrid(marg_grid, marg_grid)
+    
+    
+    
+#     fig, ax = plt.subplots()
+#     # ax.set_xlim(0,1)
+#     # ax.set_ylim(0,1)
+#     ax.set_box_aspect(1)
+    
+    
+    
+#     c = ax.pcolormesh(xv, yv, vec_inv(V_true_grid[i],n_grid+1), cmap = cols[i])
+#     plt.colorbar(c)
+#     # plt.savefig("aaaaa.pdf", bbox_inches='tight')
+#     plt.show()
+
+
+
+
+
+
+### priors
+
+# A #
+sigma_A = 1.
+mu_A = np.zeros((p,p))
+
+# phi #
+min_phi = 3.
+max_phi = 30.
+range_phi = max_phi - min_phi
+
+alphas = np.ones(p)
+betas = np.ones(p)
+
+## tau
+a = 1
+b = 1
+
+### mu 
+
+mu_mu = np.zeros(p)
+sigma_mu = 1
+
+
+### proposals
+
+
+phis_prop = np.ones(p)*1
+sigma_slice = 10
+
+
+
+### global run containers
+mu_run = np.zeros((N,p))
+phis_run = np.zeros((N,p))
+taus_run = np.zeros((N,p))
+V_run = np.zeros((N,p,n_obs))
+A_run = np.zeros((N,p,p))
+V_grid_run = np.zeros((N,p,(n_grid+1)**2))
+
+
+### acc vector
+acc_phis = np.zeros((p,N))
+
+### neighbors
+
+gNei = np.zeros((n_grid+1)**2,dtype=object)
+ogNei = np.zeros((n_obs,(m+1)**2),dtype=int)
+
+### neighbors grid
+
+for j in range(n_grid+1):
+    for i in range(n_grid+1):
+        
+        xNei = np.arange(np.max([0,i-m]),i+1)
+        yNei = np.arange(np.max([0,j-m]),j+1)
+    
+        gNei[j*(n_grid+1)+i] = [jj*(n_grid+1)+ii for jj in yNei for ii in xNei if (ii != i) | (jj != j )]
+        
+### showcase grid neighbors
+
+# for j in range(n_grid+1):
+#     for i in range(n_grid+1):
+        
+#         ind = j*(n_grid+1)+i
+
+#         fig, ax = plt.subplots()
+        
+#         ax.set_aspect(1)
+        
+        
+#         plt.scatter(loc_grid[:,0],loc_grid[:,1],c="black")
+#         plt.scatter(loc_grid[gNei[ind],0],loc_grid[gNei[ind],1],c="tab:green")
+#         plt.scatter(loc_grid[ind,0],loc_grid[ind,1],c="tab:orange")
+        
+#         # plt.title(str(i))
+        
+#         plt.show()
+
+### neihgbors obs-grid
+
+def ell(s,n_grid,m):
+    
+    if s*n_grid < (m+1)/2:
+        return(0)
+    elif s*n_grid > n_grid - (m+1)/2:
+        return(n_grid-m)
+    else:
+        return(np.ceil(s*n_grid)- (m+1)/2)
+    
+    
+
+for i in range(n_obs):
+        
+    left_lim = ell(loc_obs[i,0],n_grid,m)
+    xNei = np.arange(left_lim,left_lim+m+1) 
+    
+    down_lim = ell(loc_obs[i,1],n_grid,m)
+    yNei = np.arange(down_lim,down_lim+m+1) 
+
+    
+    ogNei[i] = [ii*(n_grid+1)+jj for ii in yNei for jj in xNei]
+    
+### showcase obs-grid neighbors
+
+# for i in range(n_obs):
+
+#     fig, ax = plt.subplots()
+    
+#     ax.set_aspect(1)
+    
+    
+#     plt.scatter(loc_grid[:,0],loc_grid[:,1],c="black")
+#     plt.scatter(loc_grid[ogNei[i],0],loc_grid[ogNei[i],1],c="tab:green")
+#     plt.scatter(loc_obs[i,0],loc_obs[i,1],c="tab:orange")
+    
+#     # plt.title(str(i))
+    
+#     plt.show()
+
+
+### corresponding single index in 1:npat to vertical and horizontal indices i,j
+
+
+
+    
+
+### distances
+
+npat = (m+1)*(m+2)//2
+
+dist_nei_grid = np.zeros(npat,dtype=object)
+dist_pnei_grid = np.zeros(npat,dtype=object)
+
+init = 0
+
+for j in range(m+1):
+    for i in range(j,m+1):
+        
+        ind = j*(n_grid+1) + i
+        
+        # print(ind)
+        
+        dist_nei_grid[init] = distance_matrix(loc_grid[gNei[ind]],loc_grid[gNei[ind]])
+        dist_pnei_grid[init] = distance_matrix([loc_grid[ind]],loc_grid[gNei[ind]])[0]
+        
+        # print(dist_nei_grid[init]@dist_pnei_grid[init])
+        
+        init += 1
+
+
+dist_nei_ogrid = distance_matrix(loc_grid[ogNei[0]],loc_grid[ogNei[0]])
+dist_pnei_ogrid = np.zeros(((n_obs,(m+1)**2)))
+
+
+for i in range(n_obs):
+    
+    dist_pnei_ogrid[i] = distance_matrix([loc_obs[i]],loc_grid[ogNei[i]])[0]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 2 indices correspondance
+
+# def kay2c(j,i,m):
+    
+    
+#     if (i > m) & (j > m):
+#         return(m,m)
+#     elif (i > m) & (j <= m):
+#         return(j,m)
+#     elif (i <= m) & (j > m):
+#         return(m,i)
+#     else:
+#         return(j,i)
+
+
+
+# ### showcase kay correspondance function
+
+# for j in range(n_grid+1):
+#     for i in range(n_grid+1):
+        
+#         ind = j*(n_grid+1)+i
+        
+#         jc,ic = kay2c(j,i,m)
+#         indc = jc*(n_grid+1)+ic
+
+#         fig, ax = plt.subplots(1,2)
+        
+#         ax[0].set_aspect(1)
+        
+        
+#         ax[0].scatter(loc_grid[:,0],loc_grid[:,1],c="black")
+#         ax[0].scatter(loc_grid[gNei[ind],0],loc_grid[gNei[ind],1],c="tab:green")
+#         ax[0].scatter(loc_grid[ind,0],loc_grid[ind,1],c="tab:orange")
+        
+#         ax[1].set_aspect(1)
+        
+        
+#         ax[1].scatter(loc_grid[:,0],loc_grid[:,1],c="black")
+#         ax[1].scatter(loc_grid[gNei[indc],0],loc_grid[gNei[indc],1],c="tab:green")
+#         ax[1].scatter(loc_grid[indc,0],loc_grid[indc,1],c="tab:orange")
+        
+#         plt.show()
+
+# ### single index correspodance
+
+# def kay1c(j,i,m):
+    
+#     if j>i:
+#         return(kay1c(i,j,m))
+#     if (i > m) & (j > m):
+#         return(m*(m+1)+m-m*(m+1)//2)
+#     elif (i > m) & (j <= m):
+#         return(j*(m+1)+m-j*(j+1)//2)
+#     else:
+#         return(j*(m+1)+i-j*(j+1)//2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

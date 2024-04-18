@@ -23,6 +23,20 @@ def rNLMC(A, phis, taus, locs, retV=False):
         return(Y,V)
     else:
         return(Y)
+    
+def rNLMC_mu(A, phis, taus, mu, locs, retV=False):
+    
+    p = A.shape[0]
+    n = locs.shape[0]
+    
+    V = rLMC(A, phis, locs)  +  np.outer(mu,np.ones(n))
+    
+    Y = V + random.normal(size=(p,n))*np.outer(taus,np.ones(n))
+    
+    if retV:
+        return(Y,V)
+    else:
+        return(Y)
 
 
 #### showcase example
