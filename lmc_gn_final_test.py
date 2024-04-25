@@ -16,6 +16,49 @@ import matplotlib.pyplot as plt
 from base import makeGrid
 from noisyLMC_generation import rNLMC_mu
 
+def phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,A_invV_current,gNei,ogNei,dist_nei_grid,dist_pnei_grid,dist_nei_ogrid,dist_pnei_ogrid,gbs,grs,ogbs,ogrs):
+    
+    p = phis_current.shape[0]
+    range_phi = max_phi - min_phi
+    
+    acc_phis = np.zeros(p)
+    
+    gbs_new = np.zeros((p,npat),dtype=object)
+    grs_new = np.zeros((p,npat))
+
+    ogbs_new = np.zeros((p,n_obs,(m+1)**2))
+    ogrs_new = np.zeros((p,n_obs))
+    
+    for j in range(p):
+        
+        phis_new = phis_current[j] + phis_prop[j]*random.normal()
+        
+        if (phis_new > min_phi)  &  (phis_new < max_phi):
+            
+            ### compute likelihood quants
+            
+            
+            phis_new_star_j = (phis_new - min_phi)/range_phi
+            phis_current_star_j = (phis_current[j] - min_phi)/range_phi
+            
+            
+            
+            
+            rat = np.exp( -1/2 * ( A_invV_current[j] @ ( Rs_inv_new - Rs_inv_current[j] ) @ A_invV_current[j] ) ) * np.linalg.det( Rs_inv_new @ Rs_current[j] ) **(1/2) * (phis_new_star_j/phis_current_star_j)**(alphas[j]-1) * ((1-phis_new_star_j)/(1-phis_current_star_j))**(betas[j]-1)                             
+            
+            
+            if random.uniform() < rat:
+                phis_current[j] = phis_new
+                
+                gbs[j] = gbs_new[j]
+                grs[j] = grs_new[j]
+                ogbs[j] = ogbs_new[j]
+                ogrs[j] = ogrs_new[j]
+                
+                acc_phis[j] = 1
+                
+    return(phis_current,gbs,grs,ogbs,ogrs,acc_phis)
+
 
 cols = ["Blues","Oranges","Greens","Reds","Purples"]
 
