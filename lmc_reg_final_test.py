@@ -208,18 +208,11 @@ VmY_current = V_current - Y_obs
 VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
 
 
-
 Vmmu1_current = V_current-np.outer(mu_current,np.ones(n_obs))
-
-
-
-
 
 
 A_inv_current = np.linalg.inv(A_current)
 A_invVmmu1_current = A_inv_current @ Vmmu1_current
-
-
 
 
 Dm1_current = np.diag(taus_current)

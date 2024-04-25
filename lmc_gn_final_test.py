@@ -16,10 +16,13 @@ import matplotlib.pyplot as plt
 from base import makeGrid
 from noisyLMC_generation import rNLMC_mu
 
+
+cols = ["Blues","Oranges","Greens","Reds","Purples"]
+
 # random.seed(0)
 
 ### number of points 
-n_obs=200
+n_obs=100
 n_grid=11
 
 ### number of dimensions
@@ -69,8 +72,10 @@ A *= fac
 
 # print(A)
 
+lower = 5
+upper = 25
 
-phis = np.exp(np.linspace(np.log(5), np.log(25),p))
+phis = np.exp(np.linspace(np.log(lower), np.log(upper),p))
 mu = A@np.ones(p)
 
 noise_sd = 0.5
@@ -242,15 +247,17 @@ for i in range(n_obs):
 
 ### distances
 
-npat = (m+1)*(m+2)//2
+npat = (m+1)**2
 
 dist_nei_grid = np.zeros(npat,dtype=object)
 dist_pnei_grid = np.zeros(npat,dtype=object)
 
+
+
 init = 0
 
 for j in range(m+1):
-    for i in range(j,m+1):
+    for i in range(m+1):
         
         ind = j*(n_grid+1) + i
         
@@ -274,31 +281,78 @@ for i in range(n_obs):
 
 
 
+### init 
+
+# True #
+
+phis_current = np.copy(phis)
+V_current = np.copy(V_true_obs)
+mu_current = np.copy(mu)
+V_grid_current = np.copy(V_true_grid)
+taus_current = np.copy(taus)
+A_current = np.copy(A)
+
+# Random #
+
+# phis_current = np.repeat(10.,p)
+# V_current = random.normal(size=(p,n_obs))*1
+# mu_current = np.zeros(p)
+# V_grid_current = random.normal(size=(p,(n_grid+1)**2))*1
+# taus_current = np.ones(p)
+# A_current = random.normal(size=(p,p))
+
+### likelihood quantities
+
+gbs = np.zeros((p,npat),dtype=object)
+grs = np.zeros((p,npat))
+
+for i in range(npat):
+    for j in range(p):
+        
+        R_j_Ni_inv = np.linalg.inv(np.exp(-dist_nei_grid[i]*phis_current[j]))
+        r_j_Nii = np.exp(-dist_pnei_grid[i]*phis_current[j])
+        
+        gb = R_j_Ni_inv@r_j_Nii
+        
+        gbs[j,i] = gb
+        grs[j,i] = 1 - np.inner(r_j_Nii,gb)
+    
+
+ogbs = np.zeros((p,n_obs,(m+1)**2))
+ogrs = np.zeros((p,n_obs))
 
 
-
-
-
-
-
-
-
-
-
-
-### 2 indices correspondance
-
-# def kay2c(j,i,m):
+for j in range(p):
+    
+    R_j_N_inv = np.linalg.inv(np.exp(-dist_nei_ogrid*phis_current[j]))
     
     
-#     if (i > m) & (j > m):
-#         return(m,m)
-#     elif (i > m) & (j <= m):
-#         return(j,m)
-#     elif (i <= m) & (j > m):
-#         return(m,i)
-#     else:
-#         return(j,i)
+    for i in range(n_obs):
+    
+        r_j_Nii = np.exp(-dist_pnei_ogrid[i]*phis_current[j])
+    
+        ogb = R_j_N_inv@r_j_Nii
+        
+        ogbs[j,i] = ogb
+        ogrs[j,i] = 1 - np.inner(r_j_Nii,ogb)
+        
+
+
+
+
+## 2 indices correspondance
+
+def kay2c(j,i,m):
+    
+    
+    if (i > m) & (j > m):
+        return(m,m)
+    elif (i > m) & (j <= m):
+        return(j,m)
+    elif (i <= m) & (j > m):
+        return(m,i)
+    else:
+        return(j,i)
 
 
 
@@ -329,6 +383,27 @@ for i in range(n_obs):
 #         ax[1].scatter(loc_grid[indc,0],loc_grid[indc,1],c="tab:orange")
         
 #         plt.show()
+        
+        
+        
+### unchanged quantities from exact
+
+
+VmY_current = V_current - Y_obs
+VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
+
+
+Vmmu1_current = V_current-np.outer(mu_current,np.ones(n_obs))
+
+
+A_inv_current = np.linalg.inv(A_current)
+A_invVmmu1_current = A_inv_current @ Vmmu1_current
+
+
+Dm1_current = np.diag(taus_current)
+Dm1Y_current = Dm1_current @ Y_obs        
+
+
 
 # ### single index correspodance
 
