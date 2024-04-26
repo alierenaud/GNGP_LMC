@@ -35,13 +35,42 @@ def phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,A_invV_current
         
         if (phis_new > min_phi)  &  (phis_new < max_phi):
             
-            ### compute likelihood quants
+            ### prior
             
             
             phis_new_star_j = (phis_new - min_phi)/range_phi
             phis_current_star_j = (phis_current[j] - min_phi)/range_phi
             
+            ### grid
+
+            for i in range(npat):
+                
+                    
+                R_j_Ni_inv = np.linalg.inv(np.exp(-dist_nei_grid[i]*phis_new[j]))
+                r_j_Nii = np.exp(-dist_pnei_grid[i]*phis_new[j])
+                
+                gb = R_j_Ni_inv@r_j_Nii
+                
+                gbs_new[j,i] = gb
+                grs_new[j,i] = 1 - np.inner(r_j_Nii,gb)
+                
+
             
+            ### obs
+            
+            R_j_N_inv = np.linalg.inv(np.exp(-dist_nei_ogrid*phis_new[j]))
+            
+            
+            for i in range(n_obs):
+            
+                r_j_Nii = np.exp(-dist_pnei_ogrid[i]*phis_new[j])
+            
+                ogb = R_j_N_inv@r_j_Nii
+                
+                ogbs[j,i] = ogb
+                ogrs[j,i] = 1 - np.inner(r_j_Nii,ogb)
+                    
+
             
             
             rat = np.exp( -1/2 * ( A_invV_current[j] @ ( Rs_inv_new - Rs_inv_current[j] ) @ A_invV_current[j] ) ) * np.linalg.det( Rs_inv_new @ Rs_current[j] ) **(1/2) * (phis_new_star_j/phis_current_star_j)**(alphas[j]-1) * ((1-phis_new_star_j)/(1-phis_current_star_j))**(betas[j]-1)                             
@@ -383,19 +412,19 @@ for j in range(p):
 
 
 
-## 2 indices correspondance
+## 1 index correspondance
 
-def kay2c(j,i,m):
+def kay1c(j,i,m,n_grid):
     
     
     if (i > m) & (j > m):
-        return(m,m)
+        return(m*(n_grid+1)+m)
     elif (i > m) & (j <= m):
-        return(j,m)
+        return(j*(n_grid+1)+m)
     elif (i <= m) & (j > m):
-        return(m,i)
+        return(m*(n_grid+1)+i)
     else:
-        return(j,i)
+        return(j*(n_grid+1)+i)
 
 
 
@@ -406,8 +435,7 @@ def kay2c(j,i,m):
         
 #         ind = j*(n_grid+1)+i
         
-#         jc,ic = kay2c(j,i,m)
-#         indc = jc*(n_grid+1)+ic
+#         indc = kay1c(j,i,m,n_grid)
 
 #         fig, ax = plt.subplots(1,2)
         
@@ -448,18 +476,7 @@ Dm1Y_current = Dm1_current @ Y_obs
 
 
 
-# ### single index correspodance
 
-# def kay1c(j,i,m):
-    
-#     if j>i:
-#         return(kay1c(i,j,m))
-#     if (i > m) & (j > m):
-#         return(m*(m+1)+m-m*(m+1)//2)
-#     elif (i > m) & (j <= m):
-#         return(j*(m+1)+m-j*(j+1)//2)
-#     else:
-#         return(j*(m+1)+i-j*(j+1)//2)
 
 
 
