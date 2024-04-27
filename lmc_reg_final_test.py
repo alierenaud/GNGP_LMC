@@ -33,15 +33,15 @@ from LMC_pred_rjmcmc import V_pred
 cols = ["Blues","Oranges","Greens","Reds","Purples"]
 
 ### number of points 
-n_obs=200
-n_grid=10
+n_obs=1000
+n_grid=21
 
 ### number of dimensions
 p = 2
 
 ### markov chain + tail length
-N = 4000
-tail = 2000
+N = 2000
+tail = 1000
 
 
 ### generate uniform locations
