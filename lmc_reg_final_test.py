@@ -33,7 +33,7 @@ from LMC_pred_rjmcmc import V_pred
 cols = ["Blues","Oranges","Greens","Reds","Purples"]
 
 ### number of points 
-n_obs=1000
+n_obs=2000
 n_grid=21
 
 ### number of dimensions
@@ -154,8 +154,8 @@ sigma_mu = 1
 ### proposals
 
 
-phis_prop = np.ones(p)*1
-sigma_slice = 10
+phis_prop = np.ones(p)*0.5
+sigma_slice = 1
 
 
 
@@ -234,7 +234,7 @@ for i in range(N):
 
     
     
-    # A_current, A_inv_current, A_invVmmu1_current = A_move_slice(A_current, A_invVmmu1_current, Rs_inv_current, Vmmu1_current, sigma_A, mu_A, sigma_slice)
+    A_current, A_inv_current, A_invVmmu1_current = A_move_slice(A_current, A_invVmmu1_current, Rs_inv_current, Vmmu1_current, sigma_A, mu_A, sigma_slice)
     
     
     phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,Dists_obs,A_invVmmu1_current,Rs_current,Rs_inv_current)

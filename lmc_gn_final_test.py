@@ -18,9 +18,30 @@ import time
 from base import makeGrid, vec_inv
 from noisyLMC_generation import rNLMC_mu
 
+## 1 index correspondance
+
+def kay1c(j,i,m):
+    
+    
+    if (i > m) & (j > m):
+        return(m*(m+1)+m)
+    elif (i > m) & (j <= m):
+        return(j*(m+1)+m)
+    elif (i <= m) & (j > m):
+        return(m*(m+1)+i)
+    else:
+        return(j*(m+1)+i)
+
+
 def phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,A_invVmmu1_current,A_invV_gridmmu1_current,gNei,ogNei,dist_nei_grid,dist_pnei_grid,dist_nei_ogrid,dist_pnei_ogrid,gbs,grs,ogbs,ogrs):
     
     p = phis_current.shape[0]
+    npat = dist_nei_grid.shape[0]
+    n_obs = dist_pnei_ogrid.shape[0]
+    
+    m = int(np.sqrt(ogNei.shape[1]) - 1)
+    n_grid = int(np.sqrt(gNei.shape[0])-1)
+    
     range_phi = max_phi - min_phi
     
     acc_phis = np.zeros(p)
@@ -109,16 +130,65 @@ def phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,A_invVmmu1_cur
     return(phis_current,gbs,grs,ogbs,ogrs,acc_phis)
 
 
+def A_move_slice(A_current, A_invVmmu1_current, A_invV_gridmmu1_current, Vmmu1_current, V_gridmmu1_current, gNei, ogNei, gbs, grs, ogbs, ogrs, sigma_A, mu_A, sigma_slice):
+
+    
+    p = A_current.shape[0] 
+    n_obs = A_invVmmu1_current.shape[1]
+    n_grid = int(np.sqrt(A_invV_gridmmu1_current.shape[1])-1)
+    
+    m = int(np.sqrt(ogNei.shape[1]) - 1)
+    
+    ### threshold
+    
+    log_rat_grid = -1/2 * np.sum([[[  (A_invV_gridmmu1_current[j,jc*(n_grid+1) + ic] - np.inner(A_invV_gridmmu1_current[j,gNei[jc*(n_grid+1) + ic]],gbs[j,kay1c(jc, ic, m)]))**2/ grs[j,kay1c(jc, ic, m)]  for ic in range(n_grid+1) ]  for jc in range(n_grid+1)  ] for j in range(p)])  - (n_grid+1)**2 * np.log( np.abs(np.linalg.det(A_current)))
+    log_rat_obs = -1/2 * np.sum([[  (A_invVmmu1_current[j,ic] - np.inner(A_invV_gridmmu1_current[j,ogNei[ic]],ogbs[j,ic]))**2/ ogrs[j,ic]  for ic in range(n_obs) ] for j in range(p)] ) - n_obs * np.log( np.abs(np.linalg.det(A_current)))
+    
+    log_rat_pior = - 1/2 * 1/sigma_A**2 * np.sum((A_current-mu_A)**2)
+    
+    z =  log_rat_grid + log_rat_obs + log_rat_pior - random.exponential(1,1)
+    
+    L = A_current - random.uniform(0,sigma_slice,(p,p))
+    # L[0] = np.maximum(L[0],0)
+    
+    U = L + sigma_slice
+        
+    while True:
+    
+        
+        
+        A_prop = random.uniform(L,U)
+        A_inv_prop = np.linalg.inv(A_prop)
+        A_invVmmu1_prop = A_inv_prop @ Vmmu1_current
+        A_invV_gridmmu1_prop = A_inv_prop @ V_gridmmu1_current
+        
+        log_rat_grid_prop = -1/2 * np.sum([[[  (A_invV_gridmmu1_prop[j,jc*(n_grid+1) + ic] - np.inner(A_invV_gridmmu1_prop[j,gNei[jc*(n_grid+1) + ic]],gbs[j,kay1c(jc, ic, m)]))**2/ grs[j,kay1c(jc, ic, m)] for ic in range(n_grid+1) ]  for jc in range(n_grid+1)  ] for j in range(p)])  - (n_grid+1)**2 * np.log( np.abs(np.linalg.det(A_prop)))
+        log_rat_obs_prop = -1/2 * np.sum([[  (A_invVmmu1_prop[j,ic] - np.inner(A_invV_gridmmu1_prop[j,ogNei[ic]],ogbs[j,ic]))**2/ ogrs[j,ic] for ic in range(n_obs) ] for j in range(p)] ) - n_obs * np.log( np.abs(np.linalg.det(A_prop)))
+        
+        log_rat_pior_prop = - 1/2 * 1/sigma_A**2 * np.sum((A_prop-mu_A)**2)
+        
+        acc = z < log_rat_grid_prop + log_rat_obs_prop + log_rat_pior_prop
+            
+        if acc:
+            return(A_prop,A_inv_prop,A_invVmmu1_prop,A_invV_gridmmu1_prop)
+        else:
+            for ii in range(p):
+                for jj in range(p):
+                    if A_prop[ii,jj] < A_current[ii,jj]:
+                        L[ii,jj] = A_prop[ii,jj]
+                    else:
+                        U[ii,jj] = A_prop[ii,jj]
+
 cols = ["Blues","Oranges","Greens","Reds","Purples"]
 
 # random.seed(0)
 
 ### number of points 
-n_obs=1000
+n_obs=2000
 n_grid=21
 
 ### number of dimensions
-p = 4
+p = 2
 
 ### number of neighbors
 
@@ -237,8 +307,8 @@ sigma_mu = 1
 ### proposals
 
 
-phis_prop = np.ones(p)*1
-sigma_slice = 10
+phis_prop = np.ones(p)*0.5
+sigma_slice = 1
 
 
 
@@ -432,49 +502,9 @@ for j in range(p):
 
 
 
-## 1 index correspondance
-
-def kay1c(j,i,m):
-    
-    
-    if (i > m) & (j > m):
-        return(m*(m+1)+m)
-    elif (i > m) & (j <= m):
-        return(j*(m+1)+m)
-    elif (i <= m) & (j > m):
-        return(m*(m+1)+i)
-    else:
-        return(j*(m+1)+i)
 
 
 
-# ### showcase kay correspondance function
-
-# for j in range(n_grid+1):
-#     for i in range(n_grid+1):
-        
-#         ind = j*(n_grid+1)+i
-        
-#         indc = kay1c(j,i,m,n_grid)
-
-#         fig, ax = plt.subplots(1,2)
-        
-#         ax[0].set_aspect(1)
-        
-        
-#         ax[0].scatter(loc_grid[:,0],loc_grid[:,1],c="black")
-#         ax[0].scatter(loc_grid[gNei[ind],0],loc_grid[gNei[ind],1],c="tab:green")
-#         ax[0].scatter(loc_grid[ind,0],loc_grid[ind,1],c="tab:orange")
-        
-#         ax[1].set_aspect(1)
-        
-        
-#         ax[1].scatter(loc_grid[:,0],loc_grid[:,1],c="black")
-#         ax[1].scatter(loc_grid[gNei[indc],0],loc_grid[gNei[indc],1],c="tab:green")
-#         ax[1].scatter(loc_grid[indc,0],loc_grid[indc,1],c="tab:orange")
-        
-#         plt.show()
-        
         
         
 ### unchanged quantities from exact
@@ -513,11 +543,9 @@ for i in range(N):
 
     
     
-    # A_current, A_inv_current, A_invVmmu1_current = A_move_slice(A_current, A_invVmmu1_current, Rs_inv_current, Vmmu1_current, sigma_A, mu_A, sigma_slice)
-    
-    
-    # phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,Dists_obs,A_invVmmu1_current,Rs_current,Rs_inv_current)
-    
+
+    A_current,A_inv_current,A_invVmmu1_current,A_invV_gridmmu1_current = A_move_slice(A_current, A_invVmmu1_current, A_invV_gridmmu1_current, Vmmu1_current, V_gridmmu1_current, gNei, ogNei, gbs, grs, ogbs, ogrs, sigma_A, mu_A, sigma_slice)
+
     phis_current,gbs,grs,ogbs,ogrs,acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,A_invVmmu1_current,A_invV_gridmmu1_current,gNei,ogNei,dist_nei_grid,dist_pnei_grid,dist_nei_ogrid,dist_pnei_ogrid,gbs,grs,ogbs,ogrs)
     
     # taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y_obs,a,b,n_obs)
