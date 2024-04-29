@@ -184,7 +184,7 @@ cols = ["Blues","Oranges","Greens","Reds","Purples"]
 # random.seed(0)
 
 ### number of points 
-n_obs=2000
+n_obs=5000
 n_grid=21
 
 ### number of dimensions
@@ -244,6 +244,10 @@ noise_sd = 0.5
 taus_sqrt_inv = np.ones(p)*noise_sd
 taus = 1/taus_sqrt_inv**2
 
+
+Sigma = A@np.transpose(A)
+Sigma_0p1 = A@np.diag(np.exp(-phis*0.1))@np.transpose(A)
+Sigma_1 = A@np.diag(np.exp(-phis*1))@np.transpose(A)
 
 ### generate LMC
 
@@ -603,34 +607,34 @@ for i in range(p):
 plt.show()
 
 
-## covariance
+# covariance
 
-# Sigma_run = np.array([A_run[i]@np.transpose(A_run[i]) for i in range(N)])
-# print("True Sigma\n",Sigma)
-# print("Post Mean Sigma\n",np.mean(Sigma_run[tail:],axis=0))
+Sigma_run = np.array([A_run[i]@np.transpose(A_run[i]) for i in range(N)])
+print("True Sigma\n",Sigma)
+print("Post Mean Sigma\n",np.mean(Sigma_run[tail:],axis=0))
 
-# for i in range(p):
-#     for j in range(i,p):
-#         plt.plot(Sigma_run[tail:,i,j])
-# plt.show()
+for i in range(p):
+    for j in range(i,p):
+        plt.plot(Sigma_run[tail:,i,j])
+plt.show()
 
-# Sigma_0p1_run = np.array([A_run[i]@np.diag(np.exp(-phis_run[i]*0.1))@np.transpose(A_run[i]) for i in range(N)])
-# print("True Sigma 0.1\n",Sigma_0p1)
-# print("Post Mean Sigma 0.1\n",np.mean(Sigma_0p1_run[tail:],axis=0))
+Sigma_0p1_run = np.array([A_run[i]@np.diag(np.exp(-phis_run[i]*0.1))@np.transpose(A_run[i]) for i in range(N)])
+print("True Sigma 0.1\n",Sigma_0p1)
+print("Post Mean Sigma 0.1\n",np.mean(Sigma_0p1_run[tail:],axis=0))
 
-# for i in range(p):
-#     for j in range(i,p):
-#         plt.plot(Sigma_0p1_run[tail:,i,j])
-# plt.show()
+for i in range(p):
+    for j in range(i,p):
+        plt.plot(Sigma_0p1_run[tail:,i,j])
+plt.show()
 
-# Sigma_1_run = np.array([A_run[i]@np.diag(np.exp(-phis_run[i]*1))@np.transpose(A_run[i]) for i in range(N)])
-# print("True Sigma 1\n",Sigma_1)
-# print("Post Mean Sigma 1\n",np.mean(Sigma_1_run[tail:],axis=0))
+Sigma_1_run = np.array([A_run[i]@np.diag(np.exp(-phis_run[i]*1))@np.transpose(A_run[i]) for i in range(N)])
+print("True Sigma 1\n",Sigma_1)
+print("Post Mean Sigma 1\n",np.mean(Sigma_1_run[tail:],axis=0))
 
-# for i in range(p):
-#     for j in range(i,p):
-#         plt.plot(Sigma_1_run[tail:,i,j])
-# plt.show()
+for i in range(p):
+    for j in range(i,p):
+        plt.plot(Sigma_1_run[tail:,i,j])
+plt.show()
 
 
 
