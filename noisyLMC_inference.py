@@ -15,18 +15,41 @@ import matplotlib.pyplot as plt
 
 from scipy.spatial import distance_matrix
 
-def M_comp(Rs_inv_current, A_inv_current, taus):
+# def M_comp(Rs_inv_current, A_inv_current, taus):
     
-    p = Rs_inv_current.shape[0]
-    n = Rs_inv_current.shape[1]
+#     p = Rs_inv_current.shape[0]
+#     n = Rs_inv_current.shape[1]
                         
     
-    M = np.sum([ np.kron( Rs_inv_current[j] , np.outer(A_inv_current[j],A_inv_current[j]) ) for j in range(p) ],axis=0) 
+#     M = np.sum([ np.kron( Rs_inv_current[j] , np.outer(A_inv_current[j],A_inv_current[j]) ) for j in range(p) ],axis=0) 
     
-    M = M.reshape((p,n,p,n), order="F")
+#     M = M.reshape((p,n,p,n), order="F")
     
-    return(M)
+#     return(M)
 
+
+
+# def V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y, V_current, Vmmu1_current, mu_current):
+    
+#     p = Rs_inv_current.shape[0]
+#     n = Rs_inv_current.shape[1]
+    
+#     M = M_comp(Rs_inv_current, A_inv_current, taus_current)
+    
+    
+#     for i in random.permutation(range(n)):
+#         for j in random.permutation(range(p)):
+            
+#             Vmmu1_current[j,i] = np.sqrt(1/(M[j,i,j,i]+taus_current[j])) * random.normal() + 1/(M[j,i,j,i]+taus_current[j]) * (Dm1Y_current[j,i] - np.sum(M[j,i]*Vmmu1_current) + M[j,i,j,i]*Vmmu1_current[j,i] - taus_current[j]*mu_current[j])
+    
+#     V_current = Vmmu1_current + np.outer(mu_current,np.ones(n))   
+    
+#     VmY_current = V_current - Y
+#     VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
+    
+#     A_invVmmu1_current = A_inv_current @ Vmmu1_current
+    
+#     return(V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current)
 
 
 def V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y, V_current, Vmmu1_current, mu_current):
@@ -34,15 +57,19 @@ def V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y, V_
     p = Rs_inv_current.shape[0]
     n = Rs_inv_current.shape[1]
     
-    M = M_comp(Rs_inv_current, A_inv_current, taus_current)
+    outsies = np.array([np.outer(A_inv_current[j],A_inv_current[j]) for j in range(p)])
+    Dm1 = np.diag(taus_current)
     
     
     for i in random.permutation(range(n)):
-        for j in random.permutation(range(p)):
-            
-            Vmmu1_current[j,i] = np.sqrt(1/(M[j,i,j,i]+taus_current[j])) * random.normal() + 1/(M[j,i,j,i]+taus_current[j]) * (Dm1Y_current[j,i] - np.sum(M[j,i]*Vmmu1_current) + M[j,i,j,i]*Vmmu1_current[j,i] - taus_current[j]*mu_current[j])
+        M = np.sum([Rs_inv_current[j,i,i]*outsies[j] for j in range(p)],axis=0) + Dm1
+        Minv = np.linalg.inv(M)
+        gamma = np.array([np.sum([Rs_inv_current[j,i,k]*(V_current[:,k]-mu_current) for k in range(n) if k != i],axis=0) for j in range(p)])
+        b = Dm1Y_current[:,i] - np.sum([ outsies[j]@(gamma[j] - Rs_inv_current[j,i,i]*mu_current) for j in range(p)],axis=0) 
     
-    V_current = Vmmu1_current + np.outer(mu_current,np.ones(n))   
+        V_current[:,i] = np.linalg.cholesky(Minv)@random.normal(size=p) + Minv@b
+
+    Vmmu1_current = V_current - np.outer(mu_current,np.ones(n))   
     
     VmY_current = V_current - Y
     VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
@@ -50,6 +77,9 @@ def V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y, V_
     A_invVmmu1_current = A_inv_current @ Vmmu1_current
     
     return(V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current)
+
+
+
 
 
 

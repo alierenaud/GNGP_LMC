@@ -33,15 +33,15 @@ from LMC_pred_rjmcmc import V_pred
 cols = ["Blues","Oranges","Greens","Reds","Purples"]
 
 ### number of points 
-n_obs=1000
+n_obs=500
 n_grid=21
 
 ### number of dimensions
-p = 2
+p = 50
 
 ### markov chain + tail length
-N = 2000
-tail = 1000
+N = 1
+tail = 0
 
 
 ### generate uniform locations
@@ -225,7 +225,7 @@ st = time.time()
 for i in range(N):
     
     
-    # V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, mu_current)
+    V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, mu_current)
         
     
     
@@ -234,15 +234,15 @@ for i in range(N):
 
     
     
-    A_current, A_inv_current, A_invVmmu1_current = A_move_slice(A_current, A_invVmmu1_current, Rs_inv_current, Vmmu1_current, sigma_A, mu_A, sigma_slice)
+    # A_current, A_inv_current, A_invVmmu1_current = A_move_slice(A_current, A_invVmmu1_current, Rs_inv_current, Vmmu1_current, sigma_A, mu_A, sigma_slice)
     
     
-    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,Dists_obs,A_invVmmu1_current,Rs_current,Rs_inv_current)
+    # phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,Dists_obs,A_invVmmu1_current,Rs_current,Rs_inv_current)
     
     # taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y_obs,a,b,n_obs)
 
     
-    # V_grid_current = V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invVmmu1_current, mu_current, (n_grid+1)**2)
+    V_grid_current = V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invVmmu1_current, mu_current, (n_grid+1)**2)
     
         
 
@@ -255,7 +255,7 @@ for i in range(N):
     V_grid_run[i] = V_grid_current 
 
     
-    if i % 100 == 0:
+    if i % 1 == 0:
         print(i)
 
 et = time.time()
@@ -347,7 +347,7 @@ for i in range(p):
     
     
     
-    c = ax.pcolormesh(xv, yv, vec_inv(V_true_grid[i],n_grid+1), cmap = cols[i])
+    c = ax.pcolormesh(xv, yv, vec_inv(V_true_grid[i],n_grid+1), cmap = cols[i%5])
     plt.colorbar(c)
     # plt.savefig("aaaaa.pdf", bbox_inches='tight')
     plt.show()
@@ -363,7 +363,7 @@ for i in range(p):
     
     
     
-    c = ax.pcolormesh(xv, yv, vec_inv(V_grid_mean[i],n_grid+1), cmap = cols[i])
+    c = ax.pcolormesh(xv, yv, vec_inv(V_grid_mean[i],n_grid+1), cmap = cols[i%5])
     plt.colorbar(c)
     # plt.savefig("aaaaa.pdf", bbox_inches='tight')
     plt.show()
