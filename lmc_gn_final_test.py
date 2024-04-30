@@ -179,16 +179,58 @@ def A_move_slice(A_current, A_invVmmu1_current, A_invV_gridmmu1_current, Vmmu1_c
                     else:
                         U[ii,jj] = A_prop[ii,jj]
 
+def mu_move(A_inv_current,gNei,ogNei,gbs,grs,ogbs,ogrs,V_current,V_grid_current,sigma_mu,mu_mu):
+    
+    n_obs = V_current.shape[1]
+    n_grid = int(np.sqrt(V_grid_current.shape[1])-1)
+    m = int(np.sqrt(ogNei.shape[1])-1)
+    p = V_current.shape[0]
+    npat = gbs.shape[1]
+    
+    ms_grid = np.zeros((p,npat)) 
+    
+    for i in range(npat):
+        for j in range(p):
+            ms_grid[j,i] = np.sum(gbs[j,i])
+    
+    ms_obs = np.sum(ogbs,axis=2)
+    
+    
+    M_grid = np.sum([[[ (1-ms_grid[j,kay1c(jc, ic, m)])**2 / grs[j,kay1c(jc, ic, m)] * np.outer(A_inv_current[j],A_inv_current[j]) for ic in range(n_grid+1)] for jc in range(n_grid+1)] for j in range(p)], axis=(0,1,2))
+    M_obs = np.sum([[ (1-ms_obs[j,i])**2 / ogrs[j,i] * np.outer(A_inv_current[j],A_inv_current[j]) for i in range(n_obs)] for j in range(p)], axis=(0,1))
+    M_prior = np.identity(p)/sigma_mu
+    
+    M = M_grid + M_obs + M_prior
+    
+    
+    b_grid = np.sum([[[ (1-ms_grid[j,kay1c(jc, ic, m)]) / grs[j,kay1c(jc, ic, m)] * np.inner(A_inv_current[j],V_grid_current[:,jc*(n_grid+1) + ic] - V_grid_current[:,gNei[jc*(n_grid+1) + ic]]@gbs[j,kay1c(jc, ic, m)]) * A_inv_current[j]  for ic in range(n_grid+1)] for jc in range(n_grid+1)] for j in range(p)], axis=(0,1,2))
+    b_obs = np.sum([[ (1-ms_obs[j,i]) / ogrs[j,i] * np.inner(A_inv_current[j],V_current[:,i] - V_grid_current[:,ogNei[i]]@ogbs[j,i]) * A_inv_current[j]  for i in range(n_obs)] for j in range(p)], axis=(0,1))
+    b_prior = mu_mu/sigma_mu
+    
+    b = b_grid + b_obs + b_prior
+    
+    M_inv = np.linalg.inv(M)
+    
+    mu_current = np.linalg.cholesky(M_inv)@random.normal(size=p) + np.transpose(M_inv@b)
+    
+    Vmmu1_current = V_current - np.outer(mu_current,np.ones(n_obs))
+    A_invVmmu1_current = A_inv_current @ Vmmu1_current
+    
+    V_gridmmu1_current = V_grid_current - np.outer(mu_current,np.ones((n_grid+1)**2))
+    A_invV_gridmmu1_current = A_inv_current @ V_gridmmu1_current
+    
+    return(mu_current, Vmmu1_current, V_gridmmu1_current, A_invVmmu1_current, A_invV_gridmmu1_current)
+
 cols = ["Blues","Oranges","Greens","Reds","Purples"]
 
 # random.seed(0)
 
 ### number of points 
-n_obs=5000
+n_obs=1000
 n_grid=21
 
 ### number of dimensions
-p = 2
+p = 4
 
 ### number of neighbors
 
@@ -311,7 +353,7 @@ sigma_mu = 1
 ### proposals
 
 
-phis_prop = np.ones(p)*0.5
+phis_prop = np.ones(p)*1
 sigma_slice = 1
 
 
@@ -543,14 +585,12 @@ for i in range(N):
     
     
     
-    # mu_current, Vmmu1_current, A_invVmmu1_current = mu_move(A_inv_current,Rs_inv_current,V_current,sigma_mu,mu_mu)
+    mu_current, Vmmu1_current, V_gridmmu1_current, A_invVmmu1_current, A_invV_gridmmu1_current = mu_move(A_inv_current,gNei,ogNei,gbs,grs,ogbs,ogrs,V_current,V_grid_current,sigma_mu,mu_mu)
 
     
-    
+    # A_current,A_inv_current,A_invVmmu1_current,A_invV_gridmmu1_current = A_move_slice(A_current, A_invVmmu1_current, A_invV_gridmmu1_current, Vmmu1_current, V_gridmmu1_current, gNei, ogNei, gbs, grs, ogbs, ogrs, sigma_A, mu_A, sigma_slice)
 
-    A_current,A_inv_current,A_invVmmu1_current,A_invV_gridmmu1_current = A_move_slice(A_current, A_invVmmu1_current, A_invV_gridmmu1_current, Vmmu1_current, V_gridmmu1_current, gNei, ogNei, gbs, grs, ogbs, ogrs, sigma_A, mu_A, sigma_slice)
-
-    phis_current,gbs,grs,ogbs,ogrs,acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,A_invVmmu1_current,A_invV_gridmmu1_current,gNei,ogNei,dist_nei_grid,dist_pnei_grid,dist_nei_ogrid,dist_pnei_ogrid,gbs,grs,ogbs,ogrs)
+    # phis_current,gbs,grs,ogbs,ogrs,acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,A_invVmmu1_current,A_invV_gridmmu1_current,gNei,ogNei,dist_nei_grid,dist_pnei_grid,dist_nei_ogrid,dist_pnei_ogrid,gbs,grs,ogbs,ogrs)
     
     # taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y_obs,a,b,n_obs)
 

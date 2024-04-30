@@ -33,7 +33,7 @@ from LMC_pred_rjmcmc import V_pred
 cols = ["Blues","Oranges","Greens","Reds","Purples"]
 
 ### number of points 
-n_obs=2000
+n_obs=1000
 n_grid=21
 
 ### number of dimensions
@@ -154,7 +154,7 @@ sigma_mu = 1
 ### proposals
 
 
-phis_prop = np.ones(p)*0.5
+phis_prop = np.ones(p)*1
 sigma_slice = 1
 
 
