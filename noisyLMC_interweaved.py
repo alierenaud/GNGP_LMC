@@ -6,7 +6,7 @@ from numpy import random
 from noisyLMC_generation import rNLMC
 
 from LMC_inference import phis_move
-from noisyLMC_inference import V_move_conj, taus_move
+# from noisyLMC_inference import V_move_conj, taus_move
 
 import matplotlib.pyplot as plt
 

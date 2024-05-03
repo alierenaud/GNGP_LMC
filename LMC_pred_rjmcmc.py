@@ -20,7 +20,7 @@ from noisyLMC_interweaved import A_move_slice
 from noisyLMC_interweaved import makeGrid
 from noisyLMC_interweaved import vec_inv
 
-from noisyLMC_inference import V_move_conj, taus_move
+# from noisyLMC_inference import V_move_conj, taus_move
 
 from verif import verif
 

@@ -33,14 +33,14 @@ random.seed(0)
 cols = ["Blues","Oranges","Greens","Reds","Purples"]
 
 ### number of points 
-n_obs=4000
+n_obs=1000
 n_grid=20
 
 ### number of dimensions
-p = 5
+p = 20
 
 ### markov chain + tail length
-N = 10
+N = 1
 tail = 0
 
 
@@ -225,8 +225,8 @@ st = time.time()
 for i in range(N):
     
     
-    V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj_uni(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, mu_current)
-    V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj_kron(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, mu_current)
+    # V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj_uni(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, mu_current)
+    # V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj_kron(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, mu_current)
     V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj_scale(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, mu_current)
       
     
@@ -270,30 +270,30 @@ print("Accept Rate for phis",np.mean(acc_phis,axis=1))
 ### trace plots
 
 
-for i in range(p):
-    plt.plot(mu_run[tail:,i])
-plt.show()
+# for i in range(p):
+#     plt.plot(mu_run[tail:,i])
+# plt.show()
 
-print("True mu ",mu)
-print("Post Mean mu ",np.mean(mu_run[tail:],axis=0))
+# print("True mu ",mu)
+# print("Post Mean mu ",np.mean(mu_run[tail:],axis=0))
 
-for i in range(p):
-    plt.plot(taus_run[tail:,i])
-plt.show()
+# for i in range(p):
+#     plt.plot(taus_run[tail:,i])
+# plt.show()
 
-print("True taus ",taus)
-print("Post Mean taus ",np.mean(taus_run[tail:],axis=0))
-
-
-for i in range(p):
-    plt.plot(phis_run[tail:,i])
-plt.show()
+# print("True taus ",taus)
+# print("Post Mean taus ",np.mean(taus_run[tail:],axis=0))
 
 
-for i in range(p):
-    for j in range(p):
-        plt.plot(A_run[tail:,i,j])
-plt.show()
+# for i in range(p):
+#     plt.plot(phis_run[tail:,i])
+# plt.show()
+
+
+# for i in range(p):
+#     for j in range(p):
+#         plt.plot(A_run[tail:,i,j])
+# plt.show()
 
 
 ## covariance
@@ -330,45 +330,45 @@ plt.show()
 
 ### mean processes
 
-V_grid_mean = np.mean(V_grid_run[tail:],axis=0)
+# V_grid_mean = np.mean(V_grid_run[tail:],axis=0)
 
 
-for i in range(p):
+# for i in range(p):
     
     
 
 
-    xv, yv = np.meshgrid(marg_grid, marg_grid)
+#     xv, yv = np.meshgrid(marg_grid, marg_grid)
     
     
     
-    fig, ax = plt.subplots()
-    # ax.set_xlim(0,1)
-    # ax.set_ylim(0,1)
-    ax.set_box_aspect(1)
+#     fig, ax = plt.subplots()
+#     # ax.set_xlim(0,1)
+#     # ax.set_ylim(0,1)
+#     ax.set_box_aspect(1)
     
     
     
-    c = ax.pcolormesh(xv, yv, vec_inv(V_true_grid[i],n_grid+1), cmap = cols[i%5])
-    plt.colorbar(c)
-    # plt.savefig("aaaaa.pdf", bbox_inches='tight')
-    plt.show()
+#     c = ax.pcolormesh(xv, yv, vec_inv(V_true_grid[i],n_grid+1), cmap = cols[i%5])
+#     plt.colorbar(c)
+#     # plt.savefig("aaaaa.pdf", bbox_inches='tight')
+#     plt.show()
 
-    xv, yv = np.meshgrid(marg_grid, marg_grid)
+#     xv, yv = np.meshgrid(marg_grid, marg_grid)
     
     
     
-    fig, ax = plt.subplots()
-    # ax.set_xlim(0,1)
-    # ax.set_ylim(0,1)
-    ax.set_box_aspect(1)
+#     fig, ax = plt.subplots()
+#     # ax.set_xlim(0,1)
+#     # ax.set_ylim(0,1)
+#     ax.set_box_aspect(1)
     
     
     
-    c = ax.pcolormesh(xv, yv, vec_inv(V_grid_mean[i],n_grid+1), cmap = cols[i%5])
-    plt.colorbar(c)
-    # plt.savefig("aaaaa.pdf", bbox_inches='tight')
-    plt.show()
+#     c = ax.pcolormesh(xv, yv, vec_inv(V_grid_mean[i],n_grid+1), cmap = cols[i%5])
+#     plt.colorbar(c)
+#     # plt.savefig("aaaaa.pdf", bbox_inches='tight')
+#     plt.show()
 
 
 
