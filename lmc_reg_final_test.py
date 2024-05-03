@@ -23,24 +23,24 @@ import time
 from base import makeGrid, vec_inv
 from noisyLMC_generation import rNLMC_mu
 from noisyLMC_interweaved import A_move_slice
-from noisyLMC_inference import V_move_conj, taus_move
+from noisyLMC_inference import V_move_conj_uni, V_move_conj_kron, V_move_conj_scale, taus_move
 from LMC_inference import phis_move
 from LMC_mean import mu_move
 from LMC_pred_rjmcmc import V_pred
 
-# random.seed(0)
+random.seed(0)
 
 cols = ["Blues","Oranges","Greens","Reds","Purples"]
 
 ### number of points 
-n_obs=500
-n_grid=21
+n_obs=4000
+n_grid=20
 
 ### number of dimensions
-p = 50
+p = 5
 
 ### markov chain + tail length
-N = 1
+N = 10
 tail = 0
 
 
@@ -225,8 +225,10 @@ st = time.time()
 for i in range(N):
     
     
-    V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, mu_current)
-        
+    V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj_uni(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, mu_current)
+    V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj_kron(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, mu_current)
+    V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj_scale(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, mu_current)
+      
     
     
     
@@ -242,7 +244,7 @@ for i in range(N):
     # taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y_obs,a,b,n_obs)
 
     
-    V_grid_current = V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invVmmu1_current, mu_current, (n_grid+1)**2)
+    # V_grid_current = V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invVmmu1_current, mu_current, (n_grid+1)**2)
     
         
 
@@ -296,32 +298,32 @@ plt.show()
 
 ## covariance
 
-Sigma_run = np.array([A_run[i]@np.transpose(A_run[i]) for i in range(N)])
-print("True Sigma\n",Sigma)
-print("Post Mean Sigma\n",np.mean(Sigma_run[tail:],axis=0))
+# Sigma_run = np.array([A_run[i]@np.transpose(A_run[i]) for i in range(N)])
+# print("True Sigma\n",Sigma)
+# print("Post Mean Sigma\n",np.mean(Sigma_run[tail:],axis=0))
 
-for i in range(p):
-    for j in range(i,p):
-        plt.plot(Sigma_run[tail:,i,j])
-plt.show()
+# for i in range(p):
+#     for j in range(i,p):
+#         plt.plot(Sigma_run[tail:,i,j])
+# plt.show()
 
-Sigma_0p1_run = np.array([A_run[i]@np.diag(np.exp(-phis_run[i]*0.1))@np.transpose(A_run[i]) for i in range(N)])
-print("True Sigma 0.1\n",Sigma_0p1)
-print("Post Mean Sigma 0.1\n",np.mean(Sigma_0p1_run[tail:],axis=0))
+# Sigma_0p1_run = np.array([A_run[i]@np.diag(np.exp(-phis_run[i]*0.1))@np.transpose(A_run[i]) for i in range(N)])
+# print("True Sigma 0.1\n",Sigma_0p1)
+# print("Post Mean Sigma 0.1\n",np.mean(Sigma_0p1_run[tail:],axis=0))
 
-for i in range(p):
-    for j in range(i,p):
-        plt.plot(Sigma_0p1_run[tail:,i,j])
-plt.show()
+# for i in range(p):
+#     for j in range(i,p):
+#         plt.plot(Sigma_0p1_run[tail:,i,j])
+# plt.show()
 
-Sigma_1_run = np.array([A_run[i]@np.diag(np.exp(-phis_run[i]*1))@np.transpose(A_run[i]) for i in range(N)])
-print("True Sigma 1\n",Sigma_1)
-print("Post Mean Sigma 1\n",np.mean(Sigma_1_run[tail:],axis=0))
+# Sigma_1_run = np.array([A_run[i]@np.diag(np.exp(-phis_run[i]*1))@np.transpose(A_run[i]) for i in range(N)])
+# print("True Sigma 1\n",Sigma_1)
+# print("Post Mean Sigma 1\n",np.mean(Sigma_1_run[tail:],axis=0))
 
-for i in range(p):
-    for j in range(i,p):
-        plt.plot(Sigma_1_run[tail:,i,j])
-plt.show()
+# for i in range(p):
+#     for j in range(i,p):
+#         plt.plot(Sigma_1_run[tail:,i,j])
+# plt.show()
 
 
 
