@@ -222,13 +222,44 @@ def mu_move(A_inv_current,gNei,ogNei,gbs,grs,ogbs,ogrs,V_current,V_grid_current,
     
     return(mu_current, Vmmu1_current, V_gridmmu1_current, A_invVmmu1_current, A_invV_gridmmu1_current)
 
+def V_move_conj_scale(ogbs, ogrs, ogNei, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y, V_current, V_grid_current, Vmmu1_current, V_gridmmu1_current, A_invVmmu1_current, A_invV_gridmmu1_current, mu_current):
+    
+    p = A_inv_current.shape[0]
+    n = ogbs.shape[1]
+    
+    outsies = np.array([np.outer(A_inv_current[j],A_inv_current[j]) for j in range(p)])
+    
+    
+    
+    for i in range(n):
+        delta_i = np.sum([outsies[j]/ogrs[j,i] for j in range(p)],axis=0)
+        M = delta_i + Dm1_current
+        Minv = np.linalg.inv(M)
+
+        b = Dm1Y_current[:,i] + delta_i@mu_current + np.sum([np.inner(A_invV_gridmmu1_current[j,ogNei[i]],ogbs[j,i])/ogrs[j,i]*A_inv_current[j]  for j in range(p)],axis=0)
+        
+        V_current[:,i] = np.linalg.cholesky(Minv)@random.normal(size=p) + Minv@b
+        Vmmu1_current[:,i] = V_current[:,i] - mu_current
+        A_invVmmu1_current[:,i] = A_inv_current@Vmmu1_current[:,i]
+
+  
+    
+    VmY_current = V_current - Y
+    VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
+    
+
+    
+    return(V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current)
+
+
+
 cols = ["Blues","Oranges","Greens","Reds","Purples"]
 
 # random.seed(0)
 
 ### number of points 
-n_obs=500
-n_grid=21
+n_obs=1000
+n_grid=20
 
 ### number of dimensions
 p = 4
@@ -238,8 +269,8 @@ p = 4
 m = 3
 
 ### markov chain + tail length
-N = 2000
-tail = 1000
+N = 15000
+tail = 5000
 
 
 ### generate uniform locations
@@ -584,7 +615,7 @@ for i in range(N):
     # V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj(Rs_inv_current, A_inv_current, taus_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, mu_current)
         
     
-    
+    V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj_scale(ogbs, ogrs, ogNei, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y_obs, V_current, V_grid_current, Vmmu1_current, V_gridmmu1_current, A_invVmmu1_current, A_invV_gridmmu1_current, mu_current)
     
     mu_current, Vmmu1_current, V_gridmmu1_current, A_invVmmu1_current, A_invV_gridmmu1_current = mu_move(A_inv_current,gNei,ogNei,gbs,grs,ogbs,ogrs,V_current,V_grid_current,sigma_mu,mu_mu)
 

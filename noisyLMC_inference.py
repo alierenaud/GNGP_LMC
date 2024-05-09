@@ -52,7 +52,36 @@ def V_move_conj_uni(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm
     return(V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current)
 
 
-def V_move_conj_scale(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y, V_current, Vmmu1_current, mu_current):
+# def V_move_conj_scale(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y, V_current, Vmmu1_current, A_invVmmu1_current, mu_current):
+    
+#     p = Rs_inv_current.shape[0]
+#     n = Rs_inv_current.shape[1]
+    
+#     outsies = np.array([np.outer(A_inv_current[j],A_inv_current[j]) for j in range(p)])
+    
+    
+    
+#     for i in random.permutation(range(n)):
+#         delta_i = np.sum([Rs_inv_current[j,i,i]*outsies[j] for j in range(p)],axis=0)
+#         M = delta_i + Dm1_current
+#         Minv = np.linalg.inv(M)
+
+#         gamma = np.array([np.sum(Rs_inv_current[j,i]*(V_current-np.outer(mu_current,np.ones(n))),axis=1) - Rs_inv_current[j,i,i]*(V_current[:,i]-mu_current) for j in range(p)])
+        
+#         b = Dm1Y_current[:,i] + delta_i@mu_current - np.sum([ outsies[j]@gamma[j] for j in range(p)],axis=0) 
+        
+#         V_current[:,i] = np.linalg.cholesky(Minv)@random.normal(size=p) + Minv@b
+
+#     Vmmu1_current = V_current - np.outer(mu_current,np.ones(n))   
+    
+#     VmY_current = V_current - Y
+#     VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
+    
+#     A_invVmmu1_current = A_inv_current @ Vmmu1_current
+    
+#     return(V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current)
+
+def V_move_conj_scale(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y, V_current, Vmmu1_current, A_invVmmu1_current, mu_current):
     
     p = Rs_inv_current.shape[0]
     n = Rs_inv_current.shape[1]
@@ -65,20 +94,21 @@ def V_move_conj_scale(Rs_inv_current, A_inv_current, taus_current, Dm1_current, 
         delta_i = np.sum([Rs_inv_current[j,i,i]*outsies[j] for j in range(p)],axis=0)
         M = delta_i + Dm1_current
         Minv = np.linalg.inv(M)
-        gamma = np.array([np.sum([Rs_inv_current[j,i,k]*(V_current[:,k]-mu_current) for k in range(n) if k != i],axis=0) for j in range(p)])
-        b = Dm1Y_current[:,i] + delta_i@mu_current - np.sum([ outsies[j]@gamma[j] for j in range(p)],axis=0) 
+
+        b = Dm1Y_current[:,i] + delta_i@mu_current - np.sum([(np.inner(Rs_inv_current[j,i],A_invVmmu1_current[j]) - Rs_inv_current[j,i,i]*A_invVmmu1_current[j,i])*A_inv_current[j] for j in range(p)],axis=0)
         
         V_current[:,i] = np.linalg.cholesky(Minv)@random.normal(size=p) + Minv@b
+        Vmmu1_current[:,i] = V_current[:,i] - mu_current
+        A_invVmmu1_current[:,i] = A_inv_current@Vmmu1_current[:,i]
 
-    Vmmu1_current = V_current - np.outer(mu_current,np.ones(n))   
+  
     
     VmY_current = V_current - Y
     VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
     
-    A_invVmmu1_current = A_inv_current @ Vmmu1_current
+
     
     return(V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current)
-
 
 
 def V_move_conj_kron(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y, V_current, Vmmu1_current, mu_current):
@@ -94,7 +124,8 @@ def V_move_conj_kron(Rs_inv_current, A_inv_current, taus_current, Dm1_current, D
         delta_i = delta[i*p:(i+1)*p][:,i*p:(i+1)*p]
         M = delta_i + Dm1_current
         Minv = np.linalg.inv(M)
-        b = Dm1Y_current[:,i] + delta_i@mu_current - np.sum([delta[i*p:(i+1)*p][:,k*p:(k+1)*p]@(V_current[:,k]-mu_current) for k in range(n) if k != i],axis=0) 
+        b = Dm1Y_current[:,i] + delta_i@mu_current - delta[i*p:(i+1)*p]@np.reshape(V_current-np.outer(mu_current,np.ones(n)),n*p,order="F") + delta[i*p:(i+1)*p][:,i*p:(i+1)*p]@(V_current[:,i]-mu_current)
+       
         
         V_current[:,i] = np.linalg.cholesky(Minv)@random.normal(size=p) + Minv@b
 
@@ -108,31 +139,31 @@ def V_move_conj_kron(Rs_inv_current, A_inv_current, taus_current, Dm1_current, D
     return(V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current)
 
 
-def V_move_conj_kron2(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y, V_current, Vmmu1_current, mu_current):
+# def V_move_conj_kron2(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y, V_current, Vmmu1_current, mu_current):
     
-    p = Rs_inv_current.shape[0]
-    n = Rs_inv_current.shape[1]
+#     p = Rs_inv_current.shape[0]
+#     n = Rs_inv_current.shape[1]
     
-    delta = np.sum([ np.kron( Rs_inv_current[j] , np.outer(A_inv_current[j],A_inv_current[j]) ) for j in range(p) ],axis=0) 
+#     delta = np.sum([ np.kron( Rs_inv_current[j] , np.outer(A_inv_current[j],A_inv_current[j]) ) for j in range(p) ],axis=0) 
     
     
     
-    for i in random.permutation(range(n)):
-        delta_i = delta[i*p:(i+1)*p][:,i*p:(i+1)*p]
-        M = delta_i + Dm1_current
-        Minv = np.linalg.inv(M)
-        b = Dm1Y_current[:,i] + delta_i@mu_current - np.sum([delta[i*p:(i+1)*p][:,k*p:(k+1)*p]@(V_current[:,k]-mu_current) for k in range(n) if k != i],axis=0) 
+#     for i in random.permutation(range(n)):
+#         delta_i = delta[i*p:(i+1)*p][:,i*p:(i+1)*p]
+#         M = delta_i + Dm1_current
+#         Minv = np.linalg.inv(M)
+#         b = Dm1Y_current[:,i] + delta_i@mu_current - np.sum([delta[i*p:(i+1)*p][:,k*p:(k+1)*p]@(V_current[:,k]-mu_current) for k in range(n) if k != i],axis=0) 
         
-        V_current[:,i] = np.linalg.cholesky(Minv)@random.normal(size=p) + Minv@b
+#         V_current[:,i] = np.linalg.cholesky(Minv)@random.normal(size=p) + Minv@b
 
-    Vmmu1_current = V_current - np.outer(mu_current,np.ones(n))   
+#     Vmmu1_current = V_current - np.outer(mu_current,np.ones(n))   
     
-    VmY_current = V_current - Y
-    VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
+#     VmY_current = V_current - Y
+#     VmY_inner_rows_current = np.array([ np.inner(VmY_current[j], VmY_current[j]) for j in range(p) ])
     
-    A_invVmmu1_current = A_inv_current @ Vmmu1_current
+#     A_invVmmu1_current = A_inv_current @ Vmmu1_current
     
-    return(V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current)
+#     return(V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current)
 
 
 
