@@ -33,15 +33,15 @@ from LMC_pred_rjmcmc import V_pred
 cols = ["Blues","Oranges","Greens","Reds","Purples"]
 
 ### number of points 
-n_obs=10000
-# n_grid=20
-n_grid=int(np.sqrt(n_obs)-1)
+n_obs=2000
+n_grid=20
+# n_grid=int(np.sqrt(n_obs)-1)
 
 
 ### number of dimensions
 p = 2
 ### markov chain + tail length
-N = 1
+N = 1000
 tail = 0
 
 
