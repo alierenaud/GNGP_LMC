@@ -33,13 +33,15 @@ from LMC_pred_rjmcmc import V_pred
 cols = ["Blues","Oranges","Greens","Reds","Purples"]
 
 ### number of points 
-n_obs=1000
-n_grid=20
+n_obs=10000
+# n_grid=20
+n_grid=int(np.sqrt(n_obs)-1)
+
 
 ### number of dimensions
 p = 4
 ### markov chain + tail length
-N = 1000
+N = 1
 tail = 0
 
 
@@ -224,7 +226,7 @@ st = time.time()
 for i in range(N):
     
     
-    # V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj_scale(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, A_invVmmu1_current, mu_current)
+    V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj_scale(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y_obs, V_current, Vmmu1_current, A_invVmmu1_current, mu_current)
       
     
     
@@ -238,10 +240,10 @@ for i in range(N):
     
     phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,Dists_obs,A_invVmmu1_current,Rs_current,Rs_inv_current)
     
-    # taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y_obs,a,b,n_obs)
+    taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y_obs,a,b,n_obs)
 
     
-    # V_grid_current = V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invVmmu1_current, mu_current, (n_grid+1)**2)
+    V_grid_current = V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invVmmu1_current, mu_current, (n_grid+1)**2)
     
         
 
@@ -254,7 +256,7 @@ for i in range(N):
     V_grid_run[i] = V_grid_current 
 
     
-    if i % 100 == 0:
+    if i % 1 == 0:
         print(i)
 
 et = time.time()

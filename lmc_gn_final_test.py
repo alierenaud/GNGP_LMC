@@ -20,7 +20,7 @@ from noisyLMC_generation import rNLMC_mu
 
 
 
-from gn_func import phis_move, A_move_slice, mu_move, V_move_conj_scale
+from gn_func import phis_move, A_move_slice, mu_move, V_move_conj_scale, V_grid_move_scale, taus_move
 
 
 
@@ -30,20 +30,20 @@ cols = ["Blues","Oranges","Greens","Reds","Purples"]
 # random.seed(0)
 
 ### number of points 
-n_obs=5000
-n_grid=20
-# n_grid=int(np.sqrt(n_obs)-1)
+n_obs=10000
+# n_grid=20
+n_grid=int(np.sqrt(n_obs)-1)
 
 ### number of dimensions
-p = 2
+p = 4
 
 ### number of neighbors
 
 m = 3
 
 ### markov chain + tail length
-N = 1500
-tail = 500
+N = 1
+tail = 0
 
 
 ### generate uniform locations
@@ -358,16 +358,17 @@ for i in range(n_obs):
 
 ### sizes of anti neighbor sets
 
-sizes = np.zeros((n_grid+1)**2)
+# sizes = np.zeros((n_grid+1)**2)
 
-for i in range((n_grid+1)**2):
-    sizes[i] = len(aogInd[i])
+# for i in range((n_grid+1)**2):
+#     sizes[i] = len(aogInd[i])
 
-plt.hist(sizes)
-plt.show()
+# plt.hist(sizes)
+# plt.show()
 
-print("max of antineighbors sets:", np.max(sizes))
-print("median of antineighbors sets:", np.median(sizes))
+# print("max of antineighbors sets:", np.max(sizes))
+# print("median of antineighbors sets:", np.median(sizes))
+# print("sum of antineighbors sets:", np.sum(sizes))
     
 
 ### distances
@@ -496,9 +497,10 @@ st = time.time()
 
 for i in range(N):
     
-    ### V grid current
     
     V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj_scale(ogbs, ogrs, ogNei, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y_obs, V_current, V_grid_current, Vmmu1_current, V_gridmmu1_current, A_invVmmu1_current, A_invV_gridmmu1_current, mu_current)
+    
+    V_grid_current, V_gridmmu1_current, A_invV_gridmmu1_current = V_grid_move_scale(gbs, ogbs, grs, ogrs, gNei, ogNei, agNei, agInd, aogNei, aogInd, A_inv_current, V_current, V_grid_current, Vmmu1_current, V_gridmmu1_current, A_invVmmu1_current, A_invV_gridmmu1_current, mu_current)
     
     mu_current, Vmmu1_current, V_gridmmu1_current, A_invVmmu1_current, A_invV_gridmmu1_current = mu_move(A_inv_current,gNei,ogNei,gbs,grs,ogbs,ogrs,V_current,V_grid_current,sigma_mu,mu_mu)
 
@@ -507,12 +509,10 @@ for i in range(N):
 
     phis_current,gbs,grs,ogbs,ogrs,acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,A_invVmmu1_current,A_invV_gridmmu1_current,gNei,ogNei,dist_nei_grid,dist_pnei_grid,dist_nei_ogrid,dist_pnei_ogrid,gbs,grs,ogbs,ogrs)
     
-    # taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y_obs,a,b,n_obs)
+    taus_current, Dm1_current, Dm1Y_current = taus_move(taus_current,VmY_inner_rows_current,Y_obs,a,b,n_obs)
 
     
-    # V_grid_current = V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invVmmu1_current, mu_current, (n_grid+1)**2)
-    
-        
+ 
 
 
     mu_run[i] = mu_current
@@ -523,7 +523,7 @@ for i in range(N):
     V_grid_run[i] = V_grid_current 
 
     
-    if i % 100 == 0:
+    if i % 1 == 0:
         print(i)
 
 et = time.time()

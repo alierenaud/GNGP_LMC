@@ -11,8 +11,10 @@ from numpy import random
 
 ## 1 index correspondance
 
-def kay1c(j,i,m):
+def kay1c(ind,m,n_grid):
     
+    i = ind % (n_grid+1)
+    j = ind // (n_grid+1)
     
     if (i > m) & (j > m):
         return(m*(m+1)+m)
@@ -73,10 +75,10 @@ def phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,A_invVmmu1_cur
 
 
             
-            log_rat_grid = -1/2 * np.sum([[  (A_invV_gridmmu1_current[j,jc*(n_grid+1) + ic] - np.inner(A_invV_gridmmu1_current[j,gNei[jc*(n_grid+1) + ic]],gbs[j,kay1c(jc, ic, m)]))**2/ grs[j,kay1c(jc, ic, m)] + np.log(grs[j,kay1c(jc, ic, m)]) for ic in range(n_grid+1) ]  for jc in range(n_grid+1)  ]) 
+            log_rat_grid = -1/2 * np.sum([[  (A_invV_gridmmu1_current[j,jc*(n_grid+1) + ic] - np.inner(A_invV_gridmmu1_current[j,gNei[jc*(n_grid+1) + ic]],gbs[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)]))**2/ grs[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)] + np.log(grs[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)]) for ic in range(n_grid+1) ]  for jc in range(n_grid+1)  ]) 
             
             
-            log_rat_grid_new = -1/2 * np.sum([[  (A_invV_gridmmu1_current[j,jc*(n_grid+1) + ic] - np.inner(A_invV_gridmmu1_current[j,gNei[jc*(n_grid+1) + ic]],gbs_new[j,kay1c(jc, ic, m)]))**2/ grs_new[j,kay1c(jc, ic, m)] + np.log(grs_new[j,kay1c(jc, ic, m)])  for ic in range(n_grid+1) ]  for jc in range(n_grid+1)  ]) 
+            log_rat_grid_new = -1/2 * np.sum([[  (A_invV_gridmmu1_current[j,jc*(n_grid+1) + ic] - np.inner(A_invV_gridmmu1_current[j,gNei[jc*(n_grid+1) + ic]],gbs_new[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)]))**2/ grs_new[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)] + np.log(grs_new[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)])  for ic in range(n_grid+1) ]  for jc in range(n_grid+1)  ]) 
             
             
             
@@ -131,7 +133,7 @@ def A_move_slice(A_current, A_invVmmu1_current, A_invV_gridmmu1_current, Vmmu1_c
     
     ### threshold
     
-    log_rat_grid = -1/2 * np.sum([[[  (A_invV_gridmmu1_current[j,jc*(n_grid+1) + ic] - np.inner(A_invV_gridmmu1_current[j,gNei[jc*(n_grid+1) + ic]],gbs[j,kay1c(jc, ic, m)]))**2/ grs[j,kay1c(jc, ic, m)]  for ic in range(n_grid+1) ]  for jc in range(n_grid+1)  ] for j in range(p)])  - (n_grid+1)**2 * np.log( np.abs(np.linalg.det(A_current)))
+    log_rat_grid = -1/2 * np.sum([[[  (A_invV_gridmmu1_current[j,jc*(n_grid+1) + ic] - np.inner(A_invV_gridmmu1_current[j,gNei[jc*(n_grid+1) + ic]],gbs[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)]))**2/ grs[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)]  for ic in range(n_grid+1) ]  for jc in range(n_grid+1)  ] for j in range(p)])  - (n_grid+1)**2 * np.log( np.abs(np.linalg.det(A_current)))
     log_rat_obs = -1/2 * np.sum([[  (A_invVmmu1_current[j,ic] - np.inner(A_invV_gridmmu1_current[j,ogNei[ic]],ogbs[j,ic]))**2/ ogrs[j,ic]  for ic in range(n_obs) ] for j in range(p)] ) - n_obs * np.log( np.abs(np.linalg.det(A_current)))
     
     log_rat_pior = - 1/2 * 1/sigma_A**2 * np.sum((A_current-mu_A)**2)
@@ -152,7 +154,7 @@ def A_move_slice(A_current, A_invVmmu1_current, A_invV_gridmmu1_current, Vmmu1_c
         A_invVmmu1_prop = A_inv_prop @ Vmmu1_current
         A_invV_gridmmu1_prop = A_inv_prop @ V_gridmmu1_current
         
-        log_rat_grid_prop = -1/2 * np.sum([[[  (A_invV_gridmmu1_prop[j,jc*(n_grid+1) + ic] - np.inner(A_invV_gridmmu1_prop[j,gNei[jc*(n_grid+1) + ic]],gbs[j,kay1c(jc, ic, m)]))**2/ grs[j,kay1c(jc, ic, m)] for ic in range(n_grid+1) ]  for jc in range(n_grid+1)  ] for j in range(p)])  - (n_grid+1)**2 * np.log( np.abs(np.linalg.det(A_prop)))
+        log_rat_grid_prop = -1/2 * np.sum([[[  (A_invV_gridmmu1_prop[j,jc*(n_grid+1) + ic] - np.inner(A_invV_gridmmu1_prop[j,gNei[jc*(n_grid+1) + ic]],gbs[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)]))**2/ grs[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)] for ic in range(n_grid+1) ]  for jc in range(n_grid+1)  ] for j in range(p)])  - (n_grid+1)**2 * np.log( np.abs(np.linalg.det(A_prop)))
         log_rat_obs_prop = -1/2 * np.sum([[  (A_invVmmu1_prop[j,ic] - np.inner(A_invV_gridmmu1_prop[j,ogNei[ic]],ogbs[j,ic]))**2/ ogrs[j,ic] for ic in range(n_obs) ] for j in range(p)] ) - n_obs * np.log( np.abs(np.linalg.det(A_prop)))
         
         log_rat_pior_prop = - 1/2 * 1/sigma_A**2 * np.sum((A_prop-mu_A)**2)
@@ -187,14 +189,14 @@ def mu_move(A_inv_current,gNei,ogNei,gbs,grs,ogbs,ogrs,V_current,V_grid_current,
     
     outsies = [np.outer(A_inv_current[j],A_inv_current[j]) for j in range(p)]
     
-    M_grid = np.sum([[[ (1-ms_grid[j,kay1c(jc, ic, m)])**2 / grs[j,kay1c(jc, ic, m)] * outsies[j] for ic in range(n_grid+1)] for jc in range(n_grid+1)] for j in range(p)], axis=(0,1,2))
+    M_grid = np.sum([[[ (1-ms_grid[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)])**2 / grs[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)] * outsies[j] for ic in range(n_grid+1)] for jc in range(n_grid+1)] for j in range(p)], axis=(0,1,2))
     M_obs = np.sum([[ (1-ms_obs[j,i])**2 / ogrs[j,i] * outsies[j] for i in range(n_obs)] for j in range(p)], axis=(0,1))
     M_prior = np.identity(p)/sigma_mu
     
     M = M_grid + M_obs + M_prior
     
     
-    b_grid = np.sum([[[ (1-ms_grid[j,kay1c(jc, ic, m)]) / grs[j,kay1c(jc, ic, m)] * np.inner(A_inv_current[j],V_grid_current[:,jc*(n_grid+1) + ic] - V_grid_current[:,gNei[jc*(n_grid+1) + ic]]@gbs[j,kay1c(jc, ic, m)]) * A_inv_current[j]  for ic in range(n_grid+1)] for jc in range(n_grid+1)] for j in range(p)], axis=(0,1,2))
+    b_grid = np.sum([[[ (1-ms_grid[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)]) / grs[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)] * np.inner(A_inv_current[j],V_grid_current[:,jc*(n_grid+1) + ic] - V_grid_current[:,gNei[jc*(n_grid+1) + ic]]@gbs[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)]) * A_inv_current[j]  for ic in range(n_grid+1)] for jc in range(n_grid+1)] for j in range(p)], axis=(0,1,2))
     b_obs = np.sum([[ (1-ms_obs[j,i]) / ogrs[j,i] * np.inner(A_inv_current[j],V_current[:,i] - V_grid_current[:,ogNei[i]]@ogbs[j,i]) * A_inv_current[j]  for i in range(n_obs)] for j in range(p)], axis=(0,1))
     b_prior = mu_mu/sigma_mu
     
@@ -241,3 +243,55 @@ def V_move_conj_scale(ogbs, ogrs, ogNei, A_inv_current, taus_current, Dm1_curren
     
     return(V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current)
 
+def V_grid_move_scale(gbs, ogbs, grs, ogrs, gNei, ogNei, agNei, agInd, aogNei, aogInd, A_inv_current, V_current, V_grid_current, Vmmu1_current, V_gridmmu1_current, A_invVmmu1_current, A_invV_gridmmu1_current, mu_current):
+    
+    p = A_inv_current.shape[0]
+    n_grid = int(np.sqrt(gNei.shape[0]) - 1)
+    m = int(np.sqrt(ogNei.shape[1]) - 1)
+    
+    outsies = np.array([np.outer(A_inv_current[j],A_inv_current[j]) for j in range(p)])
+    
+    
+    
+    for ic in range(n_grid+1):
+        for jc in range(n_grid+1):
+            
+            
+            M1 = np.sum([outsies[j]/grs[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)] for j in range(p)],axis=0)
+            M2 = np.sum([[outsies[j]/grs[j,kay1c(agNei[jc*(n_grid+1)+ic][ni], m, n_grid)]*gbs[j,kay1c(agNei[jc*(n_grid+1)+ic][ni], m, n_grid)][agInd[jc*(n_grid+1)+ic][ni]]**2 for ni in range(len(agNei[jc*(n_grid+1)+ic]))] for j in range(p)],axis=(0,1))
+            M3 = np.sum([[outsies[j]/ogrs[j,aogNei[jc*(n_grid+1)+ic][ni]]*ogbs[j,aogNei[jc*(n_grid+1)+ic][ni],aogInd[jc*(n_grid+1)+ic][ni]]**2 for ni in range(len(aogNei[jc*(n_grid+1)+ic]))] for j in range(p)],axis=(0,1))
+            
+            M = M1+M2+M3
+            Minv = np.linalg.inv(M)
+    
+    
+            b1 = np.sum([np.inner(A_invV_gridmmu1_current[j,gNei[jc*(n_grid+1)+ic]],gbs[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)])/grs[j,kay1c(jc*(n_grid+1)+ic, m, n_grid)]*A_inv_current[j]  for j in range(p)],axis=0)
+            b2 = np.sum([[(A_invV_gridmmu1_current[j,agNei[jc*(n_grid+1)+ic][ni]] - np.inner(A_invV_gridmmu1_current[j,gNei[agNei[jc*(n_grid+1)+ic][ni]]],gbs[j,kay1c(agNei[jc*(n_grid+1)+ic][ni],m,n_grid)]) + A_invV_gridmmu1_current[j,gNei[agNei[jc*(n_grid+1)+ic][ni]]][agInd[jc*(n_grid+1)+ic][ni]]*gbs[j,kay1c(agNei[jc*(n_grid+1)+ic][ni],m,n_grid)][agInd[jc*(n_grid+1)+ic][ni]])/grs[j,kay1c(agNei[jc*(n_grid+1)+ic][ni], m, n_grid)]*gbs[j,kay1c(agNei[jc*(n_grid+1)+ic][ni], m, n_grid)][agInd[jc*(n_grid+1)+ic][ni]]*A_inv_current[j] for ni in range(len(agNei[jc*(n_grid+1)+ic]))] for j in range(p)],axis=(0,1))
+            b3 = np.sum([[(A_invVmmu1_current[j,aogNei[jc*(n_grid+1)+ic][ni]] - np.inner(A_invV_gridmmu1_current[j,ogNei[aogNei[jc*(n_grid+1)+ic][ni]]],ogbs[j,aogNei[jc*(n_grid+1)+ic][ni]]) + A_invV_gridmmu1_current[j,ogNei[aogNei[jc*(n_grid+1)+ic][ni]]][aogInd[jc*(n_grid+1)+ic][ni]]*ogbs[j,aogNei[jc*(n_grid+1)+ic][ni]][aogInd[jc*(n_grid+1)+ic][ni]])/ogrs[j,aogNei[jc*(n_grid+1)+ic][ni]]*ogbs[j,aogNei[jc*(n_grid+1)+ic][ni]][aogInd[jc*(n_grid+1)+ic][ni]]*A_inv_current[j] for ni in range(len(aogNei[jc*(n_grid+1)+ic]))] for j in range(p)],axis=(0,1))
+            
+
+            b = b1+b2+b3 + M@mu_current
+            V_grid_current[:,jc*(n_grid+1)+ic] = np.linalg.cholesky(Minv)@random.normal(size=p) + Minv@b
+            V_gridmmu1_current[:,jc*(n_grid+1)+ic] = V_grid_current[:,jc*(n_grid+1)+ic] - mu_current
+            A_invV_gridmmu1_current[:,jc*(n_grid+1)+ic] = A_inv_current@V_gridmmu1_current[:,jc*(n_grid+1)+ic]
+
+  
+    
+
+
+    
+    return(V_grid_current, V_gridmmu1_current, A_invV_gridmmu1_current)
+
+
+def taus_move(taus_current,VmY_inner_rows_current,Y,a,b,n):
+    
+    p = VmY_inner_rows_current.shape[0]
+    
+    for j in range(p):
+        
+        taus_current[j] = random.gamma(a + n/2, 1/( b + VmY_inner_rows_current[j]/2), 1)
+        
+    Dm1_current = np.diag(taus_current)
+    Dm1Y_current = Dm1_current @ Y
+    
+    return(taus_current, Dm1_current, Dm1Y_current)
