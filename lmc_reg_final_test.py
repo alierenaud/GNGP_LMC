@@ -28,14 +28,14 @@ from LMC_inference import phis_move
 from LMC_mean import mu_move
 from LMC_pred_rjmcmc import V_pred
 
-# random.seed(0)
+random.seed(0)
 
 cols = ["Blues","Oranges","Greens","Reds","Purples"]
 
 ### number of points 
 n_obs=2000
-n_grid=20
-# n_grid=int(np.sqrt(n_obs)-1)
+# n_grid=20
+n_grid=int(np.sqrt(n_obs/4)-1)
 
 
 ### number of dimensions
@@ -155,7 +155,7 @@ sigma_mu = 1
 ### proposals
 
 
-phis_prop = np.ones(p)*1
+phis_prop = np.ones(p)*0.5
 sigma_slice = 1
 
 
@@ -256,7 +256,7 @@ for i in range(N):
     V_grid_run[i] = V_grid_current 
 
     
-    if i % 1 == 0:
+    if i % 100 == 0:
         print(i)
 
 et = time.time()
@@ -369,5 +369,6 @@ for i in range(p):
     # plt.savefig("aaaaa.pdf", bbox_inches='tight')
     plt.show()
 
-
+MSE = np.mean((V_grid_run - V_true_grid)**2)
+print("MSE = ", MSE)
 
