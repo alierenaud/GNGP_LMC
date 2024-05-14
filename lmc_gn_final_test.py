@@ -35,7 +35,7 @@ n_obs=10000
 n_grid=int(np.sqrt(n_obs)-1)
 
 ### number of dimensions
-p = 4
+p = 2
 
 ### number of neighbors
 

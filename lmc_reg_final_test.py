@@ -39,7 +39,7 @@ n_grid=int(np.sqrt(n_obs)-1)
 
 
 ### number of dimensions
-p = 4
+p = 2
 ### markov chain + tail length
 N = 1
 tail = 0
