@@ -41,7 +41,7 @@ n_grid=int(np.sqrt(n_obs/4)-1)
 ### number of dimensions
 p = 2
 ### markov chain + tail length
-N = 1000
+N = 10
 tail = 0
 
 
@@ -256,7 +256,7 @@ for i in range(N):
     V_grid_run[i] = V_grid_current 
 
     
-    if i % 100 == 0:
+    if i % 1 == 0:
         print(i)
 
 et = time.time()
