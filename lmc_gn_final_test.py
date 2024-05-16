@@ -30,7 +30,7 @@ cols = ["Blues","Oranges","Greens","Reds","Purples"]
 random.seed(0)
 
 ### number of points 
-n_obs=2000
+n_obs=5000
 # n_grid=20
 n_grid=int(np.sqrt(n_obs/4)-1)
 
