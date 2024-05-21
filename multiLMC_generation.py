@@ -13,10 +13,10 @@ import matplotlib.pyplot as plt
 from LMC_generation import rLMC
 
 def mult(z):
-    if np.max(z)<0:
-        return(0)
-    else:
+    if np.max(z)>=0:
         return(np.argmax(z)+1)
+    else:
+        return(0)
 
 
 

@@ -30,7 +30,7 @@ cols = ["Blues","Oranges","Greens","Reds","Purples"]
 random.seed(0)
 
 ### number of points 
-n_obs=5000
+n_obs=2000
 # n_grid=20
 n_grid=int(np.sqrt(n_obs/4)-1)
 
@@ -42,7 +42,7 @@ p = 2
 m = 3
 
 ### markov chain + tail length
-N = 10
+N = 1000
 tail = 0
 
 
@@ -421,11 +421,11 @@ A_current = np.copy(A)
 # Random #
 
 # phis_current = np.repeat(10.,p)
-# V_current = random.normal(size=(p,n_obs))*1
+# V_current = np.zeros(shape=(p,n_obs))
 # mu_current = np.zeros(p)
-# V_grid_current = random.normal(size=(p,(n_grid+1)**2))*1
+# V_grid_current = np.zeros(shape=(p,(n_grid+1)**2))
 # taus_current = np.ones(p)
-# A_current = random.normal(size=(p,p))
+# A_current = np.identity(p)
 
 ### likelihood quantities
 
@@ -523,7 +523,7 @@ for i in range(N):
     V_grid_run[i] = V_grid_current 
 
     
-    if i % 1 == 0:
+    if i % 100 == 0:
         print(i)
 
 et = time.time()
@@ -645,7 +645,18 @@ MSE = np.mean((V_grid_run - V_true_grid)**2)
 print("MSE = ", MSE)
 
 
+### confidence interval C_12(0) and C_12(0.1)
 
+c0l = np.quantile(Sigma_run[tail:,0,1],0.05)
+c0u = np.quantile(Sigma_run[tail:,0,1],0.95)
+
+print("C_12(0) : [", c0l,",",c0u,"]")
+
+
+c0p1l = np.quantile(Sigma_0p1_run[tail:,0,1],0.05)
+c0p1u = np.quantile(Sigma_0p1_run[tail:,0,1],0.95)
+
+print("C_12(0.1) : [", c0p1l,",",c0p1u,"]")
 
 
 
