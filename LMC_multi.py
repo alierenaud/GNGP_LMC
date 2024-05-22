@@ -21,7 +21,7 @@ from scipy.stats import truncnorm
 from noisyLMC_interweaved import A_move_slice
 from LMC_inference import phis_move
 from LMC_mean import mu_move
-from noisyLMC_inference import V_move_conj
+# from noisyLMC_inference import V_move_conj
 
 tab_cols = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 'tab:brown', 'tab:pink', 'tab:gray', 'tab:olive', 'tab:cyan']
     
@@ -33,35 +33,27 @@ def Z_move(V_current,Z_current,Y):
     
     for ii in random.permutation(range(n)):
         
-            if Y[ii] == 0:
+        
+            if Y[ii] > 0:
+                
+                
+                
+                for jj in random.permutation(range(p)):
+                    if jj != Y[ii]-1:
+                        
+                        Z_current[jj,ii] = truncnorm.rvs(a=-np.inf,b=Z_current[Y[ii]-1,ii]-V_current[jj,ii],loc=V_current[jj,ii])
+            
+                    else:
+                        mini = np.max([np.max(np.delete(Z_current[:,ii], Y[ii]-1)),0])
+                        Z_current[jj,ii] = truncnorm.rvs(a=mini-V_current[jj,ii],b=np.inf,loc=V_current[jj,ii])
+            else:
                 for jj in random.permutation(range(p)):
                     Z_current[jj,ii] = truncnorm.rvs(a=-np.inf,b=-V_current[jj,ii],loc=V_current[jj,ii])
                     
-            else:
-                ### compute max Z_current[:,i]
                 
-                if p==1:
-                    mini=0
-                else:
-                
-                    mini = np.max(np.delete(Z_current[:,ii], Y[ii]-1))
-                    
-                    if mini < 0:
-                        mini = 0
-                        
-                    
-                
-                for jj in random.permutation(range(p)):
-                    if jj == Y[ii]-1:
-                        Z_current[jj,ii] = truncnorm.rvs(a=mini-V_current[jj,ii],b=np.inf,loc=V_current[jj,ii])
-                    
-                    else:
-                        Z_current[jj,ii] = truncnorm.rvs(a=-np.inf,b=V_current[Y[ii]-1,ii]-V_current[jj,ii],loc=V_current[jj,ii])
-    
-    VmZ_current = V_current - Z_current
-    VmZ_inner_rows_current = np.array([ np.inner(VmZ_current[j], VmZ_current[j]) for j in range(p) ])
-    
-    return(Z_current,VmZ_current,VmZ_inner_rows_current)
+        
+
+    return(Z_current)
 
 
 def mult_vec(Y,p):
