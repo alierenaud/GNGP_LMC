@@ -16,13 +16,65 @@ import time
 
 from base import makeGrid, vec_inv
 
-from multiLMC_generation import rmultiLMC
+from multiLMC_generation import rmultiLMC, mult
 from noisyLMC_interweaved import A_move_slice
 from noisyLMC_inference import V_move_conj_scale
 from LMC_multi import Z_move
 from LMC_inference import phis_move
 from LMC_mean import mu_move
 from LMC_pred_rjmcmc import V_pred
+
+def X_move(loc_grid,lam_current,phis_current,A_current,mu_current,A_inv_current,Rs_inv_current,A_invVmmu_current,X_current,V_current,Z_current,Y_current,D_obs,X_obs,Y_obs,n_obs):
+    
+    p = V_current.shape[0]
+    
+    V_obs_current = V_current[:,:n_obs]
+    Z_obs_current = Z_current[:,:n_obs]
+    
+    
+    
+    n_new = random.poisson(lam_current)
+    X_new = random.uniform(0,1,(n_new,2))
+    Y_new = np.zeros(n_new,dtype=int)
+    
+    D_0_new = distance_matrix(X_new,X_new)
+    D_current_0_new = distance_matrix(X_current,X_new)
+    
+    V_new = V_pred(D_0_new, D_current_0_new, phis_current, Rs_inv_current, A_current, A_invVmmu_current, mu_current, n_new)
+    Z_new = V_new + random.normal(size=(p,n_new))
+    
+    for ii in range(n_new):
+        Y_new[ii] = mult(Z_new[:,ii])
+    
+    X_0_current = X_new[Y_new==0]
+    V_0_current = V_new[:,Y_new==0]
+    Z_0_current = Z_new[:,Y_new==0]
+    n_0_current = np.sum(Y_new==0)
+    Y_0_current = np.zeros(n_0_current,dtype=int)
+    
+    D_0_current = distance_matrix(X_0_current,X_0_current)
+    D_0obs_current = distance_matrix(X_0_current,X_obs)
+    
+    Dists_obs_current = np.block([[D_obs,np.transpose(D_0obs_current)],[D_0obs_current,D_0_current]])
+    
+    X_current = np.concatenate((X_obs,X_0_current),axis=0)
+    n_current = n_obs + n_0_current
+    Y_current = np.concatenate((Y_obs,Y_0_current),axis=0)
+    
+    Dists_obs_grid_current = distance_matrix(X_current,loc_grid)
+    
+    Z_current = np.concatenate((Z_obs_current,Z_0_current),axis=1)
+    V_current = np.concatenate((V_obs_current,V_0_current),axis=1)
+    
+    Vmmu1_current = V_current - np.outer(mu_current,np.ones(n_current))
+    
+    A_invVmmu1_current = A_inv_current @ Vmmu1_current
+    
+    Rs_current = np.array([ np.exp(-Dists_obs_current*phis_current[j]) for j in range(p) ])
+    Rs_inv_current = np.array([ np.linalg.inv(Rs_current[j]) for j in range(p) ]) 
+    
+    
+    return(n_current,X_current,V_current,Z_current,Y_current,Dists_obs_current,Dists_obs_grid_current,Rs_current,Rs_inv_current,Vmmu1_current,A_invVmmu1_current)
 
 
 random.seed(0)
@@ -44,14 +96,14 @@ tail = 1000
 
 ### generate base poisson process
 
-n_tot = random.poisson(lam)
-loc_tot = random.uniform(size=(n_tot,2))
+n_true = random.poisson(lam)
+X_true = random.uniform(size=(n_true,2))
 
 ### grid locations
 marg_grid = np.linspace(0,1,n_grid+1)
 loc_grid = makeGrid(marg_grid, marg_grid)
 ### all locations
-locs = np.concatenate((loc_tot,loc_grid), axis=0)
+locs = np.concatenate((X_true,loc_grid), axis=0)
 
 ### showcase locations
 
@@ -60,7 +112,7 @@ ax.set_xlim(0,1)
 ax.set_ylim(0,1)
 ax.set_box_aspect(1)
 
-ax.scatter(loc_tot[:,0],loc_tot[:,1],color="black")
+ax.scatter(X_true[:,0],X_true[:,1],color="black")
 plt.show()
 
 
@@ -90,11 +142,11 @@ for i in range(p):
 ### weird correlation
 
 # A = np.ones((p,p))*np.sqrt(1/p)
-fac = np.ones((p,p))
-for i in range(p):
-    for j in range(i+1,p):
-        fac[i,j] = -1 
-A *= fac
+# fac = np.ones((p,p))
+# for i in range(p):
+#     for j in range(i+1,p):
+#         fac[i,j] = -1 
+# A *= fac
 
 ### amplify signal 
 
@@ -118,17 +170,29 @@ Sigma_1 = A@np.diag(np.exp(-phis*1))@np.transpose(A)
 
 ### random example
 
-Y, Z_true, V_true = rmultiLMC(A,phis,mu,locs, retZV=True) 
+Y, Z_true_all, V_true_all = rmultiLMC(A,phis,mu,locs, retZV=True) 
 
-Y_tot = Y[:n_tot]
-Y_grid = Y[n_tot:]
+Y_true = Y[:n_true]
+Y_grid = Y[n_true:]
 
-Z_true_tot = Z_true[:,:n_tot]
+Z_true = Z_true_all[:,:n_true]
 
 
-V_true_tot = V_true[:,:n_tot]
-V_true_grid = V_true[:,n_tot:]
+V_true = V_true_all[:,:n_true]
+V_grid = V_true_all[:,n_true:]
 
+### move zeros to tail 
+
+X_true = np.concatenate((X_true[Y_true!=0],X_true[Y_true==0]))
+Y_true = np.concatenate((Y_true[Y_true!=0],Y_true[Y_true==0]))
+V_true = np.concatenate((V_true[:,Y_true!=0],V_true[:,Y_true==0]),axis=1)
+Z_true = np.concatenate((Z_true[:,Y_true!=0],Z_true[:,Y_true==0]),axis=1)
+
+### fixed quantities 
+
+n_obs = np.sum(Y_true!=0)
+Y_obs = Y_true[:n_obs]
+X_obs = X_true[:n_obs]
 
 ### illustrate multi process grid
 
@@ -137,12 +201,12 @@ ax.set_xlim(0,1)
 ax.set_ylim(0,1)
 ax.set_box_aspect(1)
 
-ax.scatter(loc_tot[Y_tot==0,0],loc_tot[Y_tot==0,1],color="grey")
+ax.scatter(X_true[Y_true==0,0],X_true[Y_true==0,1],color="grey")
 
 for i in range(p):
     
     
-    ax.scatter(loc_tot[Y_tot==i+1,0],loc_tot[Y_tot==i+1,1],color=tab_cols[i])
+    ax.scatter(X_true[Y_true==i+1,0],X_true[Y_true==i+1,1],color=tab_cols[i])
     
 plt.show()
 
@@ -160,7 +224,7 @@ for i in range(p):
     
     
     
-    c = ax.pcolormesh(xv, yv, vec_inv(V_true_grid[i],n_grid+1), cmap = cols[i])
+    c = ax.pcolormesh(xv, yv, vec_inv(V_grid[i],n_grid+1), cmap = cols[i])
     plt.colorbar(c)
     plt.show()
 
@@ -201,6 +265,11 @@ b = 1
 mu_mu = np.zeros(p)
 sigma_mu = 1
 
+### lambda
+
+a_lam = 1000
+b_lam = 1
+
 
 ### proposals
 
@@ -211,6 +280,7 @@ sigma_slice = 1
 
 
 ### global run containers
+lam_run = np.zeros(p)
 mu_run = np.zeros((N,p))
 phis_run = np.zeros((N,p))
 A_run = np.zeros((N,p,p))
@@ -223,48 +293,61 @@ acc_phis = np.zeros((p,N))
 
 ### distance matrix
 
-Dists_obs = distance_matrix(loc_tot,loc_tot)
-Dists_obs_grid = distance_matrix(loc_tot,loc_grid)
+
 Dists_grid = distance_matrix(loc_grid,loc_grid)
 
 ### init 
 
 # True #
 
-# phis_current = np.copy(phis)
-# V_current = np.copy(V_true_tot)
-# mu_current = np.copy(mu)
-# V_grid_current = np.copy(V_true_grid)
-# Z_current = np.copy(Z_true_tot)
-# A_current = np.copy(A)
+n_current = np.copy(n_true)
+X_current = np.copy(X_true)
+Y_current = np.copy(Y_true)
+V_current = np.copy(V_true)
+Z_current = np.copy(Z_true)
+phis_current = np.copy(phis)
+mu_current = np.copy(mu)
+A_current = np.copy(A)
+lam_current = np.copy(lam)
+V_grid_current = np.copy(V_grid)
+
+
+
 
 # Arbitrary #
 
 # phis_current = np.repeat(10.,p)
-# V_current = np.zeros(shape=(p,n_tot))
+# V_current = np.zeros(shape=(p,n_true))
 # mu_current = np.zeros(p)
 # V_grid_current = np.zeros(shape=(p,(n_grid+1)**2))
-# Z_current = np.zeros(shape=(p,n_tot))
+# Z_current = np.zeros(shape=(p,n_true))
 # A_current = np.identity(p)
 
 
 # Random #
 
-phis_current = random.uniform(size=p) * 27 + 3
-V_current = random.normal(size=(p,n_tot))
-mu_current = random.normal(size=p)
-V_grid_current = random.normal(size=(p,(n_grid+1)**2))
-Z_current = random.normal(size=(p,n_tot))
-A_current = random.normal(size=(p,p))
+# phis_current = random.uniform(size=p) * 27 + 3
+# V_current = random.normal(size=(p,n_tot))
+# mu_current = random.normal(size=p)
+# V_grid_current = random.normal(size=(p,(n_grid+1)**2))
+# Z_current = random.normal(size=(p,n_tot))
+# A_current = random.normal(size=(p,p))
 
 ### current state
 
-Rs_current = np.array([ np.exp(-Dists_obs*phis_current[j]) for j in range(p) ])
+Dists_obs_current = distance_matrix(X_current,X_current)
+Dists_obs_grid_current = distance_matrix(X_current,loc_grid)
+
+### fixed ###
+Dists_obs = Dists_obs_current[:n_obs][n_obs]
+###
+
+Rs_current = np.array([ np.exp(-Dists_obs_current*phis_current[j]) for j in range(p) ])
 Rs_inv_current = np.array([ np.linalg.inv(Rs_current[j]) for j in range(p) ])
 
 
 
-Vmmu1_current = V_current-np.outer(mu_current,np.ones(n_tot))
+Vmmu1_current = V_current-np.outer(mu_current,np.ones(n_true))
 
 
 A_inv_current = np.linalg.inv(A_current)
@@ -281,6 +364,9 @@ st = time.time()
 for i in range(N):
     
     
+    n_current,X_current,V_current,Z_current,Y_current,Dists_obs_current,Dists_obs_grid_current,Rs_current,Rs_inv_current,Vmmu1_current,A_invVmmu1_current = X_move(loc_grid,lam_current,phis_current,A_current,mu_current,A_inv_current,Rs_inv_current,A_invVmmu1_current,X_current,V_current,Z_current,Y_current,Dists_obs,X_obs,Y_obs,n_obs)
+    
+    
     V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj_scale(Rs_inv_current, A_inv_current, taus, Dm1, Z_current, Z_current, V_current, Vmmu1_current, A_invVmmu1_current, mu_current)
       
     
@@ -293,15 +379,15 @@ for i in range(N):
     A_current, A_inv_current, A_invVmmu1_current = A_move_slice(A_current, A_invVmmu1_current, Rs_inv_current, Vmmu1_current, sigma_A, mu_A, sigma_slice)
     
     
-    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,Dists_obs,A_invVmmu1_current,Rs_current,Rs_inv_current)
+    phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,Dists_obs_current,A_invVmmu1_current,Rs_current,Rs_inv_current)
     
-    Z_current = Z_move(V_current,Z_current,Y_tot)
+    Z_current = Z_move(V_current,Z_current,Y_true)
     
-    V_grid_current = V_pred(Dists_grid, Dists_obs_grid, phis_current, Rs_inv_current, A_current, A_invVmmu1_current, mu_current, (n_grid+1)**2)
+    V_grid_current = V_pred(Dists_grid, Dists_obs_grid_current, phis_current, Rs_inv_current, A_current, A_invVmmu1_current, mu_current, (n_grid+1)**2)
     
-        
+    lam_current = random.gamma(n_current + a_lam, 1/(b_lam + 1))    
 
-
+    lam_run[i] = lam_run
     mu_run[i] = mu_current
     phis_run[i] =  phis_current
     A_run[i] = A_current
@@ -394,7 +480,7 @@ for i in range(p):
     
     
     
-    c = ax.pcolormesh(xv, yv, vec_inv(V_true_grid[i],n_grid+1), cmap = cols[i%5])
+    c = ax.pcolormesh(xv, yv, vec_inv(V_grid[i],n_grid+1), cmap = cols[i%5])
     plt.colorbar(c)
     # plt.savefig("aaaaa.pdf", bbox_inches='tight')
     plt.show()
@@ -415,7 +501,7 @@ for i in range(p):
     # plt.savefig("aaaaa.pdf", bbox_inches='tight')
     plt.show()
 
-MSE = np.mean((V_grid_run - V_true_grid)**2)
+MSE = np.mean((V_grid_run - V_grid)**2)
 print("MSE = ", MSE)
 
 
