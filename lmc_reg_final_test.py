@@ -33,7 +33,7 @@ random.seed(0)
 cols = ["Blues","Oranges","Greens","Reds","Purples"]
 
 ### number of points 
-n_obs=2000
+n_obs=1000
 # n_grid=20
 n_grid=int(np.sqrt(n_obs/4)-1)
 
@@ -83,7 +83,7 @@ A *= fac
 phis = np.exp(np.linspace(np.log(5), np.log(25),p))
 mu = A@np.ones(p)
 
-noise_sd = 0.5
+noise_sd = 1
 taus_sqrt_inv = np.ones(p)*noise_sd
 taus = 1/taus_sqrt_inv**2
 
@@ -155,7 +155,7 @@ sigma_mu = 1
 ### proposals
 
 
-phis_prop = np.ones(p)*0.5
+phis_prop = np.ones(p)*1
 sigma_slice = 1
 
 
@@ -182,21 +182,21 @@ Dists_grid = distance_matrix(loc_grid,loc_grid)
 
 # True #
 
-phis_current = np.copy(phis)
-V_current = np.copy(V_true_obs)
-mu_current = np.copy(mu)
-V_grid_current = np.copy(V_true_grid)
-taus_current = np.copy(taus)
-A_current = np.copy(A)
+# phis_current = np.copy(phis)
+# V_current = np.copy(V_true_obs)
+# mu_current = np.copy(mu)
+# V_grid_current = np.copy(V_true_grid)
+# taus_current = np.copy(taus)
+# A_current = np.copy(A)
 
 # Random #
 
-# phis_current = np.repeat(10.,p)
-# V_current = np.zeros(shape=(p,n_obs))
-# mu_current = np.zeros(p)
-# V_grid_current = np.zeros(shape=(p,(n_grid+1)**2))
-# taus_current = np.ones(p)
-# A_current = np.identity(p)
+phis_current = np.repeat(10.,p)
+V_current = np.zeros(shape=(p,n_obs))
+mu_current = np.zeros(p)
+V_grid_current = np.zeros(shape=(p,(n_grid+1)**2))
+taus_current = np.ones(p)
+A_current = np.identity(p)
 
 ### current state
 
@@ -256,13 +256,19 @@ for i in range(N):
     V_grid_run[i] = V_grid_current 
 
     
-    if i % 100 == 0:
-        print(i)
+    if i % 10 == 0:
+        ett = time.time()
+        est_time = (ett-st)*(N-i-1)/(i+1)
+        est_h = int(est_time//(60**2))
+        est_m = int(est_time%(60**2)//60)
+        print(i, "Est. Time Remaining:", est_h, "h", est_m, "min")
 
 et = time.time()
+ela_time = (et-st)
+ela_h = int(ela_time//(60**2))
+ela_m = int(ela_time%(60**2)//60)
+print(N, "Time Elapsed:", ela_h, "h", ela_m, "min")
 
-
-print("Time Elapsed", (et-st)/60, "min")
 print("Accept Rate for phis",np.mean(acc_phis,axis=1))
 
 
