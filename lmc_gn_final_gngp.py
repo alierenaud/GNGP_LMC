@@ -209,9 +209,11 @@ n_redoak = redoak.shape[0]
 n_blackoak = blackoak.shape[0]
 
 X_obs = np.concatenate((maple,hickory,whiteoak,redoak,blackoak))
-X_obs += 0.0005
+
 n_obs = n_maple + n_hickory + n_whiteoak + n_redoak + n_blackoak
 Y_obs = np.concatenate((np.ones(n_maple,dtype=int)*1,np.ones(n_hickory,dtype=int)*2,np.ones(n_whiteoak,dtype=int)*3,np.ones(n_redoak,dtype=int)*4,np.ones(n_blackoak,dtype=int)*5))
+
+X_obs += random.uniform(size=(n_obs,2))/10**3
 
 p = 5
 
@@ -231,7 +233,7 @@ a_lam = n_obs*(p+1)/p
 m = 3
 
 ### markov chain + tail length
-N = 20000
+N = 10000
 tail = 0
 
 
@@ -519,7 +521,7 @@ for j in range(m+1):
 
 # Arbitrary #
 
-n_0_init = int(n_obs/p)
+n_0_init = 0
 X_0_init = random.uniform(size=(n_0_init,2))
 Y_0_init = np.zeros(n_0_init)
 
@@ -535,6 +537,7 @@ V_grid_current = np.zeros(shape=(p,(n_grid+1)**2))
 phis_current = np.repeat(10.,p)
 mu_current = np.zeros(p)
 A_current = np.identity(p)
+# A_current = random.normal(size=(p,p))
 lam_current = a_lam
 
 
@@ -895,7 +898,7 @@ for i in range(p):
     
     
     c = ax.pcolormesh(xv, yv, np.transpose(vec_inv(intensity_mean[i+1],n_grid+1)), cmap = cols[i%5])
-    # ax.scatter(X_obs[Y_obs==i+1,0],X_obs[Y_obs==i+1,1],c="black")
+    ax.scatter(X_obs[Y_obs==i+1,0],X_obs[Y_obs==i+1,1],c="black")
     plt.colorbar(c)
     # plt.savefig("aaaaa.pdf", bbox_inches='tight')
     plt.show()
