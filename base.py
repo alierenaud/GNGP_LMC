@@ -25,7 +25,7 @@ from scipy.stats import norm
 
 def matern_kernel(r, phi = 1):
     
-    return np.exp(-(r/phi)) + (r==0)*0.001
+    return np.exp(-(r*phi)) + (r==0)*0.001
 
 # def matern_kernel(r, phi = 1):
     

@@ -9,6 +9,8 @@ Created on Thu May  9 14:48:31 2024
 import numpy as np
 from numpy import random
 
+from base import matern_kernel
+
 ## 1 index correspondance
 
 def kay1c(ind,m,n_grid):
@@ -64,8 +66,8 @@ def phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,A_invVmmu1_cur
             for i in range(npat):
                 
                     
-                R_j_Ni_inv = np.linalg.inv(np.exp(-dist_nei_grid[i]*phis_new))
-                r_j_Nii = np.exp(-dist_pnei_grid[i]*phis_new)
+                R_j_Ni_inv = np.linalg.inv(matern_kernel(dist_nei_grid[i],phis_new))
+                r_j_Nii = matern_kernel(dist_pnei_grid[i],phis_new)
                 
                 gb = R_j_Ni_inv@r_j_Nii
                 
@@ -84,12 +86,12 @@ def phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,A_invVmmu1_cur
             
             ### obs
             
-            R_j_N_inv = np.linalg.inv(np.exp(-dist_nei_ogrid*phis_new))
+            R_j_N_inv = np.linalg.inv(matern_kernel(dist_nei_ogrid,phis_new))
             
             
             for i in range(n_obs):
             
-                r_j_Nii = np.exp(-dist_pnei_ogrid[i]*phis_new)
+                r_j_Nii = matern_kernel(dist_pnei_ogrid[i],phis_new)
             
                 ogb = R_j_N_inv@r_j_Nii
                 
@@ -233,7 +235,7 @@ def V_move_conj_scale(ogbs, ogrs, ogNei, A_inv_current, taus_current, Dm1_curren
         V_current[:,i] = np.linalg.cholesky(Minv)@random.normal(size=p) + Minv@b
         Vmmu1_current[:,i] = V_current[:,i] - mu_current
         A_invVmmu1_current[:,i] = A_inv_current@Vmmu1_current[:,i]
-
+        
   
     
     VmY_current = V_current - Y

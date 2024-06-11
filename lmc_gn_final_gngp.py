@@ -22,6 +22,7 @@ from multiLMC_generation import rmultiLMC
 
 from gn_func import phis_move, A_move_slice, mu_move, V_move_conj_scale, V_grid_move_scale
 from LMC_multi import Z_move
+from base import matern_kernel
 
 def ell(s,n_grid,m):
     
@@ -74,12 +75,12 @@ def X_move(loc_grid,n_grid,lam_current,phis_current,mu_current,A_current,A_inv_c
 
     for j in range(p):
         
-        R_j_N_inv = np.linalg.inv(np.exp(-dist_nei_ogrid*phis_current[j]))
+        R_j_N_inv = np.linalg.inv(matern_kernel(dist_nei_ogrid,phis_current[j]))
         
         
         for i in range(n_new):
         
-            r_j_Nii = np.exp(-dist_pnei_ogrid_new[i]*phis_current[j])
+            r_j_Nii = matern_kernel(dist_pnei_ogrid_new[i],phis_current[j])
         
             ogb = R_j_N_inv@r_j_Nii
             
@@ -173,12 +174,12 @@ def X_move(loc_grid,n_grid,lam_current,phis_current,mu_current,A_current,A_inv_c
     
     for j in range(p):
         
-        R_j_N_inv = np.linalg.inv(np.exp(-dist_nei_ogrid*phis_current[j]))
+        R_j_N_inv = np.linalg.inv(matern_kernel(dist_nei_ogrid,phis_current[j]))
         
         
         for i in range(n_current):
         
-            r_j_Nii = np.exp(-dist_pnei_ogrid[i]*phis_current[j])
+            r_j_Nii = matern_kernel(dist_pnei_ogrid[i],phis_current[j])
         
             ogb = R_j_N_inv@r_j_Nii
             
@@ -196,57 +197,57 @@ tab_cols = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 'tab
 
 ### import lansing woods data
 
-maple = np.loadtxt("maple.csv", delimiter=",")
-hickory = np.loadtxt("hickory.csv", delimiter=",")
-whiteoak = np.loadtxt("whiteoak.csv", delimiter=",")
-redoak = np.loadtxt("redoak.csv", delimiter=",")
-blackoak = np.loadtxt("blackoak.csv", delimiter=",")
+# maple = np.loadtxt("maple.csv", delimiter=",")
+# hickory = np.loadtxt("hickory.csv", delimiter=",")
+# whiteoak = np.loadtxt("whiteoak.csv", delimiter=",")
+# redoak = np.loadtxt("redoak.csv", delimiter=",")
+# blackoak = np.loadtxt("blackoak.csv", delimiter=",")
 
-n_maple = maple.shape[0]
-n_hickory = hickory.shape[0]
-n_whiteoak = whiteoak.shape[0]
-n_redoak = redoak.shape[0]
-n_blackoak = blackoak.shape[0]
+# n_maple = maple.shape[0]
+# n_hickory = hickory.shape[0]
+# n_whiteoak = whiteoak.shape[0]
+# n_redoak = redoak.shape[0]
+# n_blackoak = blackoak.shape[0]
 
-X_obs = np.concatenate((maple,hickory,whiteoak,redoak,blackoak))
+# X_obs = np.concatenate((maple,hickory,whiteoak,redoak,blackoak))
 
-n_obs = n_maple + n_hickory + n_whiteoak + n_redoak + n_blackoak
-Y_obs = np.concatenate((np.ones(n_maple,dtype=int)*1,np.ones(n_hickory,dtype=int)*2,np.ones(n_whiteoak,dtype=int)*3,np.ones(n_redoak,dtype=int)*4,np.ones(n_blackoak,dtype=int)*5))
+# n_obs = n_maple + n_hickory + n_whiteoak + n_redoak + n_blackoak
+# Y_obs = np.concatenate((np.ones(n_maple,dtype=int)*1,np.ones(n_hickory,dtype=int)*2,np.ones(n_whiteoak,dtype=int)*3,np.ones(n_redoak,dtype=int)*4,np.ones(n_blackoak,dtype=int)*5))
 
-X_obs += random.uniform(size=(n_obs,2))/10**3
+# X_obs += random.uniform(size=(n_obs,2))/10**3
 
-p = 5
+# p = 5
 
-n_grid=50
+# n_grid=50
 
-a_lam = n_obs*(p+1)/p
+# a_lam = n_obs*(p+1)/p
 
 ### base intensity
-# lam = 2500
-# n_grid=20
+lam = 2500
+n_grid=50
 # n_grid=int(np.sqrt(lam/4)-1)
 
 ### number of dimensions
-# p = 5
+p = 5
 
 ### number of neighbors
 m = 3
 
 ### markov chain + tail length
-N = 10000
+N = 4000
 tail = 0
 
 
 ### generate base poisson process
 
-# n_true = random.poisson(lam)
-# X_true = random.uniform(size=(n_true,2))
+n_true = random.poisson(lam)
+X_true = random.uniform(size=(n_true,2))
 
 ### grid locations
 marg_grid = np.linspace(0,1,n_grid+1)
 loc_grid = makeGrid(marg_grid, marg_grid)
 ### all locations
-# locs = np.concatenate((X_true,loc_grid), axis=0)
+locs = np.concatenate((X_true,loc_grid), axis=0)
 
 ### showcase locations
 
@@ -271,25 +272,25 @@ loc_grid = makeGrid(marg_grid, marg_grid)
 
 ### positive correlation
 
-# line = np.ones(p)
+line = np.ones(p)
 
-# for i in range(p):
-#     line[i] /= (i+1)
+for i in range(p):
+    line[i] /= (i+1)
     
-# A = np.ones((p,p))
+A = np.ones((p,p))
 
-# for i in range(p):
-#     A[i] = np.concatenate((line[i:],line[:i]))
+for i in range(p):
+    A[i] = np.concatenate((line[i:],line[:i]))
 
 
 ### weird correlation
 
 # A = np.ones((p,p))*np.sqrt(1/p)
-# fac = np.ones((p,p))
-# for i in range(p):
-#     for j in range(i+1,p):
-#         fac[i,j] = -1 
-# A *= fac
+fac = np.ones((p,p))
+for i in range(p):
+    for j in range(i+1,p):
+        fac[i,j] = -1 
+A *= fac
 
 ### amplify signal 
 
@@ -302,35 +303,35 @@ loc_grid = makeGrid(marg_grid, marg_grid)
 # print(A)
 
 
-# phis = np.exp(np.linspace(np.log(5), np.log(25),p))
+phis = np.exp(np.linspace(np.log(5), np.log(25),p))
 # mu = A@np.ones(p)
 # mu = np.zeros(p)
-# mu = np.ones(p)*-1
+mu = np.ones(p)*-1
 
 
 taus = np.ones(p)
 Dm1 = np.diag(taus)
 
-# Sigma = A@np.transpose(A)
-# Sigma_0p1 = A@np.diag(np.exp(-phis*0.1))@np.transpose(A)
-# Sigma_1 = A@np.diag(np.exp(-phis*1))@np.transpose(A)
+Sigma = A@np.transpose(A)
+Sigma_0p1 = A@np.diag(np.exp(-phis*0.1))@np.transpose(A)
+Sigma_1 = A@np.diag(np.exp(-phis*1))@np.transpose(A)
 
-# Rho = np.diag(np.diag(Sigma)**(-1/2))@Sigma@np.diag(np.diag(Sigma)**(-1/2))
-# Rho_0p1 = np.diag(np.diag(Sigma)**(-1/2))@Sigma_0p1@np.diag(np.diag(Sigma)**(-1/2))
+Rho = np.diag(np.diag(Sigma)**(-1/2))@Sigma@np.diag(np.diag(Sigma)**(-1/2))
+Rho_0p1 = np.diag(np.diag(Sigma)**(-1/2))@Sigma_0p1@np.diag(np.diag(Sigma)**(-1/2))
 
 
 ### random example
 
-# Y, Z_true_all, V_true_all = rmultiLMC(A,phis,mu,locs, retZV=True) 
+Y, Z_true_all, V_true_all = rmultiLMC(A,phis,mu,locs, retZV=True) 
 
-# Y_true = Y[:n_true]
-# Y_grid = Y[n_true:]
+Y_true = Y[:n_true]
+Y_grid = Y[n_true:]
 
-# Z_true = Z_true_all[:,:n_true]
+Z_true = Z_true_all[:,:n_true]
 
 
-# V_true = V_true_all[:,:n_true]
-# V_grid = V_true_all[:,n_true:]
+V_true = V_true_all[:,:n_true]
+V_grid = V_true_all[:,n_true:]
 
 ### add noticeable patern
 
@@ -338,17 +339,17 @@ Dm1 = np.diag(taus)
 
 ### move zeros to tail 
 
-# X_true = np.concatenate((X_true[Y_true!=0],X_true[Y_true==0]))
-# V_true = np.concatenate((V_true[:,Y_true!=0],V_true[:,Y_true==0]),axis=1)
-# Z_true = np.concatenate((Z_true[:,Y_true!=0],Z_true[:,Y_true==0]),axis=1)
-# Y_true = np.concatenate((Y_true[Y_true!=0],Y_true[Y_true==0]))
+X_true = np.concatenate((X_true[Y_true!=0],X_true[Y_true==0]))
+V_true = np.concatenate((V_true[:,Y_true!=0],V_true[:,Y_true==0]),axis=1)
+Z_true = np.concatenate((Z_true[:,Y_true!=0],Z_true[:,Y_true==0]),axis=1)
+Y_true = np.concatenate((Y_true[Y_true!=0],Y_true[Y_true==0]))
 
 
 ### fixed quantities 
 
-# n_obs = np.sum(Y_true!=0)
-# Y_obs = Y_true[:n_obs]
-# X_obs = X_true[:n_obs]
+n_obs = np.sum(Y_true!=0)
+Y_obs = Y_true[:n_obs]
+X_obs = X_true[:n_obs]
 
 ### illustrate multi process grid
 
@@ -421,7 +422,7 @@ sigma_mu = 1
 
 ### lambda
 
-# a_lam = np.sum(Y_true!=0)*(p+1)/p
+a_lam = np.sum(Y_true!=0)*(p+1)/p
 b_lam = 1
 
 
@@ -598,8 +599,8 @@ grs = np.zeros((p,npat))
 for i in range(npat):
     for j in range(p):
         
-        R_j_Ni_inv = np.linalg.inv(np.exp(-dist_nei_grid[i]*phis_current[j]))
-        r_j_Nii = np.exp(-dist_pnei_grid[i]*phis_current[j])
+        R_j_Ni_inv = np.linalg.inv(matern_kernel(dist_nei_grid[i],phis_current[j]))
+        r_j_Nii = matern_kernel(dist_pnei_grid[i],phis_current[j])
         
         gb = R_j_Ni_inv@r_j_Nii
         
@@ -613,12 +614,12 @@ ogrs = np.zeros((p,n_current))
 
 for j in range(p):
     
-    R_j_N_inv = np.linalg.inv(np.exp(-dist_nei_ogrid*phis_current[j]))
+    R_j_N_inv = np.linalg.inv(matern_kernel(dist_nei_ogrid,phis_current[j]))
     
     
     for i in range(n_current):
     
-        r_j_Nii = np.exp(-dist_pnei_ogrid[i]*phis_current[j])
+        r_j_Nii = matern_kernel(dist_pnei_ogrid[i],phis_current[j])
     
         ogb = R_j_N_inv@r_j_Nii
         
@@ -660,12 +661,16 @@ for i in range(N):
     
     V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current = V_move_conj_scale(ogbs, ogrs, ogNei, A_inv_current, taus, Dm1, Z_current, Z_current, V_current, V_grid_current, Vmmu1_current, V_gridmmu1_current, A_invVmmu1_current, A_invV_gridmmu1_current, mu_current)
     
+    
+    
     V_grid_current, V_gridmmu1_current, A_invV_gridmmu1_current = V_grid_move_scale(gbs, ogbs, grs, ogrs, gNei, ogNei, agNei, agInd, aogNei, aogInd, A_inv_current, V_current, V_grid_current, Vmmu1_current, V_gridmmu1_current, A_invVmmu1_current, A_invV_gridmmu1_current, mu_current)
     
     mu_current, Vmmu1_current, V_gridmmu1_current, A_invVmmu1_current, A_invV_gridmmu1_current = mu_move(A_inv_current,gNei,ogNei,gbs,grs,ogbs,ogrs,V_current,V_grid_current,sigma_mu,mu_mu)
 
     
     A_current,A_inv_current,A_invVmmu1_current,A_invV_gridmmu1_current = A_move_slice(A_current, A_invVmmu1_current, A_invV_gridmmu1_current, Vmmu1_current, V_gridmmu1_current, gNei, ogNei, gbs, grs, ogbs, ogrs, sigma_A, mu_A, sigma_slice)
+
+    
 
     phis_current,gbs,grs,ogbs,ogrs,acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,A_invVmmu1_current,A_invV_gridmmu1_current,gNei,ogNei,dist_nei_grid,dist_pnei_grid,dist_nei_ogrid,dist_pnei_ogrid,gbs,grs,ogbs,ogrs)
     
@@ -688,6 +693,7 @@ for i in range(N):
         est_h = int(est_time//(60**2))
         est_m = int(est_time%(60**2)//60)
         print(i, "Est. Time Remaining:", est_h, "h", est_m, "min")
+        print(np.linalg.det(A_current))
         
         fig, ax = plt.subplots()
         ax.set_xlim(0,1)
