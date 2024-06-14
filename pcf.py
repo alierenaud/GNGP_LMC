@@ -10,11 +10,80 @@ import matplotlib.pyplot as plt
 import numpy as np
 from numpy import random
 from LMC_generation import rLMC
+from scipy.spatial import distance_matrix
 
 
 ### computing pcf
 
+Ns = 100
+nds = 50
+lim = 0.5
 
+ds = (np.arange(nds)+1)/nds*lim
+
+p = 5
+
+A = np.ones((p,p))*np.sqrt(1/p)
+fac = np.ones((p,p))
+for i in range(p):
+    for j in range(i+1,p):
+        fac[i,j] = -1 
+A *= fac
+
+# Sigma = A@np.transpose(A)
+    
+phis = np.exp(np.linspace(np.log(5), np.log(25),p))
+mu = np.ones(p)*-1
+
+
+
+def pcf_val(d,A,phis,mu,Ns):
+
+
+    
+    locs = np.array([[0],[d]])
+    
+    p = A.shape[0]
+    
+    D = distance_matrix(locs,locs)
+    
+    Rs = np.array([ np.exp(-D*phis[j]) for j in range(p) ])
+    Cs = np.array([np.linalg.cholesky(Rs[j]) for j in range(p)])
+    Zs = np.array([np.matmul( Cs[j], random.normal(size=(2,Ns)) ) for j in range(p)])
+    Vs = np.array([np.matmul( A, Zs[:,j] ) + np.outer(mu,np.ones(Ns)) for j in range(2)])
+    Ys = Vs + random.normal(size=(2,p,Ns))
+    return(Ys)
+
+
+import time
+st = time.time()
+
+N = 10000
+tail = 2000
+jumps = 80
+
+
+
+for i in range(tail,N,jumps):
+    
+    # print(i)
+    for j in range(nds):
+        y = pcf_val(ds[j],A,phis,mu,Ns)
+          
+        
+        
+et = time.time()
+print((et-st)/60,"minutes")
+
+
+
+(np.argmax(y,axis=1) + 1) * (np.max(y,axis=1) > 0)
+
+k = 0
+l = 1
+
+
+(np.argmax(y,axis=1) == k) & (y[:,k] > 0)
 
 def pcf(k,l,d,A,phis,mu,Ns):
     
