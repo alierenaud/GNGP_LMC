@@ -199,24 +199,29 @@ tab_cols = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 'tab
 
 maple = np.loadtxt("maple.csv", delimiter=",")
 hickory = np.loadtxt("hickory.csv", delimiter=",")
-whiteoak = np.loadtxt("whiteoak.csv", delimiter=",")
-redoak = np.loadtxt("redoak.csv", delimiter=",")
-blackoak = np.loadtxt("blackoak.csv", delimiter=",")
+# whiteoak = np.loadtxt("whiteoak.csv", delimiter=",")
+# redoak = np.loadtxt("redoak.csv", delimiter=",")
+# blackoak = np.loadtxt("blackoak.csv", delimiter=",")
 
 n_maple = maple.shape[0]
 n_hickory = hickory.shape[0]
-n_whiteoak = whiteoak.shape[0]
-n_redoak = redoak.shape[0]
-n_blackoak = blackoak.shape[0]
+# n_whiteoak = whiteoak.shape[0]
+# n_redoak = redoak.shape[0]
+# n_blackoak = blackoak.shape[0]
 
-X_obs = np.concatenate((maple,hickory,whiteoak,redoak,blackoak))
+# X_obs = np.concatenate((maple,hickory,whiteoak,redoak,blackoak))
+X_obs = np.concatenate((maple,hickory))
 
-n_obs = n_maple + n_hickory + n_whiteoak + n_redoak + n_blackoak
-Y_obs = np.concatenate((np.ones(n_maple,dtype=int)*1,np.ones(n_hickory,dtype=int)*2,np.ones(n_whiteoak,dtype=int)*3,np.ones(n_redoak,dtype=int)*4,np.ones(n_blackoak,dtype=int)*5))
+# n_obs = n_maple + n_hickory + n_whiteoak + n_redoak + n_blackoak
+n_obs = n_maple + n_hickory
+# Y_obs = np.concatenate((np.ones(n_maple,dtype=int)*1,np.ones(n_hickory,dtype=int)*2,np.ones(n_whiteoak,dtype=int)*3,np.ones(n_redoak,dtype=int)*4,np.ones(n_blackoak,dtype=int)*5))
+Y_obs = np.concatenate((np.ones(n_maple,dtype=int)*1,np.ones(n_hickory,dtype=int)*2))
+
 
 X_obs += random.uniform(size=(n_obs,2))/10**3
 
-p = 5
+# p = 5
+p = 2
 
 n_grid=50
 
@@ -235,7 +240,7 @@ m = 3
 
 ### markov chain + tail length
 N = 20000
-tail = 10000
+tail = 0
 
 
 ### generate base poisson process
@@ -909,11 +914,11 @@ for i in range(p):
     # plt.savefig("aaaaa.pdf", bbox_inches='tight')
     plt.show()
 
-# np.save("run_lam.npy",lam_run)
-# np.save("run_n.npy",n_run)
-# np.save("run_mu.npy",mu_run)
-# np.save("run_phis.npy",phis_run)
-# np.save("run_A.npy",A_run)
-# np.save("run_V_grid.npy",V_grid_run)
+# np.save("run2_lam.npy",lam_run)
+# np.save("run2_n.npy",n_run)
+# np.save("run2_mu.npy",mu_run)
+# np.save("run2_phis.npy",phis_run)
+# np.save("run2_A.npy",A_run)
+# np.save("run2_V_grid.npy",V_grid_run)
 
 
