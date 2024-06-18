@@ -13,27 +13,30 @@ from LMC_generation import rLMC
 from scipy.spatial import distance_matrix
 
 
+tab_cols = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 'tab:brown', 'tab:pink', 'tab:gray', 'tab:olive', 'tab:cyan']
+  
+
 ### computing pcf
 
-Ns = 10000
+Ns = 10000000
 nds = 50
-lim = 0.5
+lim = 1
 
 d = 0.1
 
-p = 5
+# p = 5
 
-A = np.ones((p,p))*np.sqrt(1/p)
-fac = np.ones((p,p))
-for i in range(p):
-    for j in range(i+1,p):
-        fac[i,j] = -1 
-A *= fac
+# A = np.ones((p,p))*np.sqrt(1/p)
+# fac = np.ones((p,p))
+# for i in range(p):
+#     for j in range(i+1,p):
+#         fac[i,j] = -1 
+# A *= fac
 
-Sigma = A@np.transpose(A)
+# Sigma = A@np.transpose(A)
     
-phis = np.exp(np.linspace(np.log(5), np.log(25),p))
-mu = np.ones(p)*-1
+# phis = np.exp(np.linspace(np.log(5), np.log(25),p))
+# mu = np.ones(p)*-1
 
 
 
@@ -54,37 +57,6 @@ def pcf_val(d,A,phis,mu,Ns):
     Ys = Vs + random.normal(size=(2,p,Ns))
     return(Ys)
 
-
-
-
-N = 10000
-tail = 2000
-jumps = 80
-
-ds = (np.arange(nds)+1)/nds*lim
-
-mms = np.zeros(((N-tail)//jumps,nds,2,Ns))
-
-
-import time
-st = time.time()
-
-for i in range(tail,N,jumps):
-    
-    # print(i)
-    for j in range(nds):
-        y = pcf_val(ds[j],A,phis,mu,Ns)
-        mms[(i-tail)//jumps,j] = (np.argmax(y,axis=1) + 1) * (np.max(y,axis=1) > 0)
-          
-        
-        
-et = time.time()
-print((et-st)/60,"minutes")
-
-
-
-### plotting
-
 def pairs(p):
     
     prs = np.zeros((p*(p+1)//2,2))
@@ -99,39 +71,184 @@ def pairs(p):
     return(prs)
 
 
+
+
+
+p = 2
 prs_p = pairs(p)
 
 
+N = 20000
+tail = 10000
+jumps = 100
+
+ds = (np.arange(nds)+1)/nds*lim
+
+A_run = np.load("run2_A.npy")
+phis_run = np.load("run2_phis.npy")
+mu_run = np.load("run2_mu.npy")
+
+# mms = np.zeros(((N-tail)//jumps,nds,2,Ns))
 pcfs = np.zeros((p*(p+1)//2,(N-tail)//jumps,nds))
 
+import time
 st = time.time()
 
-ind=0
-for prs in prs_p:
+for i in range(tail,N,jumps):
     
-    for i in range(tail,N,jumps):
-        for j in range(nds):
-            
-            ik = mms[(i-tail)//jumps,j] == prs[0]
-            il = mms[(i-tail)//jumps,j] == prs[1]
+    
+    for j in range(nds):
+        y = pcf_val(ds[j],A_run[i],phis_run[i],mu_run[i],Ns)
+        mm = (np.argmax(y,axis=1) + 1) * (np.max(y,axis=1) > 0)
+        ind=0
+        for prs in prs_p:
+            ik = mm == prs[0]
+            il = mm == prs[1]
             
             ikl = np.array([ik[0] & il[1],ik[1] & il[0]])
             
             pcfs[ind,(i-tail)//jumps,j] = np.mean(ikl)/np.mean(ik)/np.mean(il)
+            ind+=1
+     
+    print(i)    
+        
+et = time.time()
+print((et-st)/60,"minutes")
+
+
+
+
+
+# np.save("pcf2.npy",pcfs)
+
+
+
+
+# st = time.time()
+
+# ind=0
+# for prs in prs_p:
+    
+#     for i in range(tail,N,jumps):
+#         for j in range(nds):
             
-    ind+=1
+#             ik = mms[(i-tail)//jumps,j] == prs[0]
+#             il = mms[(i-tail)//jumps,j] == prs[1]
+            
+#             ikl = np.array([ik[0] & il[1],ik[1] & il[0]])
+            
+#             pcfs[ind,(i-tail)//jumps,j] = np.mean(ikl)/np.mean(ik)/np.mean(il)
+            
+#     ind+=1
 
     
-et = time.time()
-print((et-st)/60,"minutes") 
+# et = time.time()
+# print((et-st)/60,"minutes") 
 
 
-for pn in range(p*(p+1)//2):
+### plotting
 
-    plt.plot(ds,pcfs[pn,0])
-    plt.show()
+mean_pcfs = np.mean(pcfs,axis=1)
+q05_pcfs = np.quantile(pcfs,0.05,axis=1)
+q95_pcfs = np.quantile(pcfs,0.95,axis=1)
 
+# for pn in range(p*(p+1)//2):
 
+#     plt.plot(ds,mean_pcfs[pn])
+#     plt.fill_between(ds, q05_pcfs[pn], q95_pcfs[pn], alpha=0.5)
+#     plt.title(prs_p[pn])
+#     plt.show()
+
+# p = 2 #
+
+plt.plot(ds,mean_pcfs[0])
+plt.fill_between(ds, q05_pcfs[0], q95_pcfs[0], alpha=0.5)
+plt.plot(ds,mean_pcfs[2])
+plt.fill_between(ds, q05_pcfs[2], q95_pcfs[2], alpha=0.5)
+plt.plot(ds,mean_pcfs[1],c="grey")
+plt.fill_between(ds, q05_pcfs[1], q95_pcfs[1], color="grey", alpha=0.5)
+
+# p = 5 #
+
+# plt.plot(ds,mean_pcfs[0],c=tab_cols[0])
+# plt.fill_between(ds, q05_pcfs[0], q95_pcfs[0], color=tab_cols[0], alpha=0.5)
+# plt.plot(ds,mean_pcfs[5],c=tab_cols[1])
+# plt.fill_between(ds, q05_pcfs[5], q95_pcfs[5], color=tab_cols[1], alpha=0.5)
+# plt.plot(ds,mean_pcfs[1],c="grey")
+# plt.fill_between(ds, q05_pcfs[1], q95_pcfs[1], color="grey", alpha=0.5)
+# plt.show()
+
+# plt.plot(ds,mean_pcfs[0],c=tab_cols[0])
+# plt.fill_between(ds, q05_pcfs[0], q95_pcfs[0], color=tab_cols[0], alpha=0.5)
+# plt.plot(ds,mean_pcfs[9],c=tab_cols[2])
+# plt.fill_between(ds, q05_pcfs[9], q95_pcfs[9], color=tab_cols[2], alpha=0.5)
+# plt.plot(ds,mean_pcfs[2],c="grey")
+# plt.fill_between(ds, q05_pcfs[2], q95_pcfs[2], color="grey", alpha=0.5)
+# plt.show()
+
+# plt.plot(ds,mean_pcfs[0],c=tab_cols[0])
+# plt.fill_between(ds, q05_pcfs[0], q95_pcfs[0], color=tab_cols[0], alpha=0.5)
+# plt.plot(ds,mean_pcfs[12],c=tab_cols[3])
+# plt.fill_between(ds, q05_pcfs[12], q95_pcfs[12], color=tab_cols[3], alpha=0.5)
+# plt.plot(ds,mean_pcfs[3],c="grey")
+# plt.fill_between(ds, q05_pcfs[3], q95_pcfs[3], color="grey", alpha=0.5)
+# plt.show()
+
+# plt.plot(ds,mean_pcfs[0],c=tab_cols[0])
+# plt.fill_between(ds, q05_pcfs[0], q95_pcfs[0], color=tab_cols[0], alpha=0.5)
+# plt.plot(ds,mean_pcfs[14],c=tab_cols[4])
+# plt.fill_between(ds, q05_pcfs[14], q95_pcfs[14], color=tab_cols[4], alpha=0.5)
+# plt.plot(ds,mean_pcfs[4],c="grey")
+# plt.fill_between(ds, q05_pcfs[4], q95_pcfs[4], color="grey", alpha=0.5)
+# plt.show()
+
+# plt.plot(ds,mean_pcfs[5],c=tab_cols[1])
+# plt.fill_between(ds, q05_pcfs[5], q95_pcfs[5], color=tab_cols[1], alpha=0.5)
+# plt.plot(ds,mean_pcfs[9],c=tab_cols[2])
+# plt.fill_between(ds, q05_pcfs[9], q95_pcfs[9], color=tab_cols[2], alpha=0.5)
+# plt.plot(ds,mean_pcfs[6],c="grey")
+# plt.fill_between(ds, q05_pcfs[6], q95_pcfs[6], color="grey", alpha=0.5)
+# plt.show()
+
+# plt.plot(ds,mean_pcfs[5],c=tab_cols[1])
+# plt.fill_between(ds, q05_pcfs[5], q95_pcfs[5], color=tab_cols[1], alpha=0.5)
+# plt.plot(ds,mean_pcfs[12],c=tab_cols[3])
+# plt.fill_between(ds, q05_pcfs[12], q95_pcfs[12], color=tab_cols[3], alpha=0.5)
+# plt.plot(ds,mean_pcfs[7],c="grey")
+# plt.fill_between(ds, q05_pcfs[7], q95_pcfs[7], color="grey", alpha=0.5)
+# plt.show()
+
+# plt.plot(ds,mean_pcfs[5],c=tab_cols[1])
+# plt.fill_between(ds, q05_pcfs[5], q95_pcfs[5], color=tab_cols[1], alpha=0.5)
+# plt.plot(ds,mean_pcfs[14],c=tab_cols[4])
+# plt.fill_between(ds, q05_pcfs[14], q95_pcfs[14], color=tab_cols[4], alpha=0.5)
+# plt.plot(ds,mean_pcfs[8],c="grey")
+# plt.fill_between(ds, q05_pcfs[8], q95_pcfs[8], color="grey", alpha=0.5)
+# plt.show()
+
+# plt.plot(ds,mean_pcfs[9],c=tab_cols[2])
+# plt.fill_between(ds, q05_pcfs[9], q95_pcfs[9], color=tab_cols[2], alpha=0.5)
+# plt.plot(ds,mean_pcfs[12],c=tab_cols[3])
+# plt.fill_between(ds, q05_pcfs[12], q95_pcfs[12], color=tab_cols[3], alpha=0.5)
+# plt.plot(ds,mean_pcfs[10],c="grey")
+# plt.fill_between(ds, q05_pcfs[10], q95_pcfs[10], color="grey", alpha=0.5)
+# plt.show()
+
+# plt.plot(ds,mean_pcfs[9],c=tab_cols[2])
+# plt.fill_between(ds, q05_pcfs[9], q95_pcfs[9], color=tab_cols[2], alpha=0.5)
+# plt.plot(ds,mean_pcfs[14],c=tab_cols[4])
+# plt.fill_between(ds, q05_pcfs[14], q95_pcfs[14], color=tab_cols[4], alpha=0.5)
+# plt.plot(ds,mean_pcfs[11],c="grey")
+# plt.fill_between(ds, q05_pcfs[11], q95_pcfs[11], color="grey", alpha=0.5)
+# plt.show()
+
+# plt.plot(ds,mean_pcfs[12],c=tab_cols[3])
+# plt.fill_between(ds, q05_pcfs[12], q95_pcfs[12], color=tab_cols[3], alpha=0.5)
+# plt.plot(ds,mean_pcfs[14],c=tab_cols[4])
+# plt.fill_between(ds, q05_pcfs[14], q95_pcfs[14], color=tab_cols[4], alpha=0.5)
+# plt.plot(ds,mean_pcfs[13],c="grey")
+# plt.fill_between(ds, q05_pcfs[13], q95_pcfs[13], color="grey", alpha=0.5)
+# plt.show()
 
 # mm = (np.argmax(y,axis=1) + 1) * (np.max(y,axis=1) > 0)
 
