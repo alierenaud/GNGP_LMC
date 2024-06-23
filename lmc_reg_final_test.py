@@ -33,9 +33,9 @@ random.seed(0)
 cols = ["Blues","Oranges","Greens","Reds","Purples"]
 
 ### number of points 
-n_obs=1000
+n_obs=2000
 # n_grid=20
-n_grid=int(np.sqrt(n_obs/4)-1)
+n_grid=int(np.sqrt(n_obs)-1)
 
 
 ### number of dimensions
@@ -74,16 +74,17 @@ A = np.ones((p,p))*np.sqrt(1/p)
 fac = np.ones((p,p))
 for i in range(p):
     for j in range(i+1,p):
-        fac[i,j] = -1 
+        fac[j,i] = -1 
 A *= fac
 
 # print(A)
 
 
 phis = np.exp(np.linspace(np.log(5), np.log(25),p))
-mu = A@np.ones(p)
+# mu = A@np.ones(p)
+mu=np.zeros(p)
 
-noise_sd = 1
+noise_sd = 0.5
 taus_sqrt_inv = np.ones(p)*noise_sd
 taus = 1/taus_sqrt_inv**2
 
@@ -131,8 +132,9 @@ V_true_grid = V_true[:,n_obs:]
 ### priors
 
 # A #
-sigma_A = 1.
-mu_A = np.zeros((p,p))
+sigma_A = 1
+# mu_A = np.zeros((p,p))
+mu_A = np.copy(A)
 
 # phi #
 min_phi = 3.
@@ -155,7 +157,7 @@ sigma_mu = 1
 ### proposals
 
 
-phis_prop = np.ones(p)*1
+phis_prop = np.ones(p)*0.5
 sigma_slice = 1
 
 
@@ -182,21 +184,21 @@ Dists_grid = distance_matrix(loc_grid,loc_grid)
 
 # True #
 
-# phis_current = np.copy(phis)
-# V_current = np.copy(V_true_obs)
-# mu_current = np.copy(mu)
-# V_grid_current = np.copy(V_true_grid)
-# taus_current = np.copy(taus)
-# A_current = np.copy(A)
+phis_current = np.copy(phis)
+V_current = np.copy(V_true_obs)
+mu_current = np.copy(mu)
+V_grid_current = np.copy(V_true_grid)
+taus_current = np.copy(taus)
+A_current = np.copy(A)
 
 # Random #
 
-phis_current = np.repeat(10.,p)
-V_current = np.zeros(shape=(p,n_obs))
-mu_current = np.zeros(p)
-V_grid_current = np.zeros(shape=(p,(n_grid+1)**2))
-taus_current = np.ones(p)
-A_current = np.identity(p)
+# phis_current = np.repeat(10.,p)
+# V_current = np.zeros(shape=(p,n_obs))
+# mu_current = np.zeros(p)
+# V_grid_current = np.zeros(shape=(p,(n_grid+1)**2))
+# taus_current = np.ones(p)
+# A_current = np.identity(p)
 
 ### current state
 
@@ -231,7 +233,7 @@ for i in range(N):
     
     
     
-    mu_current, Vmmu1_current, A_invVmmu1_current = mu_move(A_inv_current,Rs_inv_current,V_current,sigma_mu,mu_mu)
+    # mu_current, Vmmu1_current, A_invVmmu1_current = mu_move(A_inv_current,Rs_inv_current,V_current,sigma_mu,mu_mu)
 
     
     
@@ -275,6 +277,8 @@ print("Accept Rate for phis",np.mean(acc_phis,axis=1))
 ### trace plots
 
 
+
+
 for i in range(p):
     plt.plot(mu_run[tail:,i])
 plt.show()
@@ -294,6 +298,8 @@ for i in range(p):
     plt.plot(phis_run[tail:,i])
 plt.show()
 
+# print("True phis ",phis)
+# print("Post Mean phis ",np.mean(phis_run[tail:],axis=0))
 
 for i in range(p):
     for j in range(p):
@@ -305,7 +311,9 @@ plt.show()
 
 Sigma_run = np.array([A_run[i]@np.transpose(A_run[i]) for i in range(N)])
 print("True Sigma\n",Sigma)
-print("Post Mean Sigma\n",np.mean(Sigma_run[tail:],axis=0))
+print("Post Median Sigma\n",np.median(Sigma_run[tail:],axis=0))
+print("Post 0.05 Sigma\n",np.quantile(Sigma_run[tail:],0.05,axis=0))
+print("Post 0.95 Sigma\n",np.quantile(Sigma_run[tail:],0.95,axis=0))
 
 for i in range(p):
     for j in range(i,p):
@@ -314,23 +322,42 @@ plt.show()
 
 Sigma_0p1_run = np.array([A_run[i]@np.diag(np.exp(-phis_run[i]*0.1))@np.transpose(A_run[i]) for i in range(N)])
 print("True Sigma 0.1\n",Sigma_0p1)
-print("Post Mean Sigma 0.1\n",np.mean(Sigma_0p1_run[tail:],axis=0))
+print("Post Median Sigma 0.1\n",np.median(Sigma_0p1_run[tail:],axis=0))
+print("Post 0.05 Sigma 0.1\n",np.quantile(Sigma_0p1_run[tail:],0.05,axis=0))
+print("Post 0.95 Sigma 0.1\n",np.quantile(Sigma_0p1_run[tail:],0.95,axis=0))
 
 for i in range(p):
     for j in range(i,p):
         plt.plot(Sigma_0p1_run[tail:,i,j])
 plt.show()
 
-Sigma_1_run = np.array([A_run[i]@np.diag(np.exp(-phis_run[i]*1))@np.transpose(A_run[i]) for i in range(N)])
-print("True Sigma 1\n",Sigma_1)
-print("Post Mean Sigma 1\n",np.mean(Sigma_1_run[tail:],axis=0))
+# Sigma_1_run = np.array([A_run[i]@np.diag(np.exp(-phis_run[i]*1))@np.transpose(A_run[i]) for i in range(N)])
+# print("True Sigma 1\n",Sigma_1)
+# print("Post Mean Sigma 1\n",np.mean(Sigma_1_run[tail:],axis=0))
+
+# for i in range(p):
+#     for j in range(i,p):
+#         plt.plot(Sigma_1_run[tail:,i,j])
+# plt.show()
+
+## id parameters
+
+id_param_true = np.zeros((p,p))
 
 for i in range(p):
-    for j in range(i,p):
-        plt.plot(Sigma_1_run[tail:,i,j])
-plt.show()
+    for j in range(p):
+        id_param_true[i,j] = A[i,j]**2*phis[j]
 
+id_param_run = np.zeros((N,p,p))
 
+for i in range(p):
+    for j in range(p):
+        id_param_run[:,i,j] = A_run[:,i,j]**2*phis_run[:,j]
+
+print("True id param:\n", id_param_true)
+print("Median id param:\n", np.median(id_param_run[tail:],axis=0))
+print("0.05 id param:\n", np.quantile(id_param_run[tail:],0.05,axis=0))
+print("0.95 id param:\n", np.quantile(id_param_run[tail:],0.95,axis=0))
 
 
 # mean processes
@@ -378,16 +405,47 @@ for i in range(p):
 MSE = np.mean((V_grid_run - V_true_grid)**2)
 print("MSE = ", MSE)
 
+### CI cover ###
+
+V_grid_05 = np.quantile(V_grid_run[tail:],0.05,axis=0)
+V_grid_95 = np.quantile(V_grid_run[tail:],0.95,axis=0)
+
+cover_global = np.mean((V_true_grid > V_grid_05) & (V_true_grid < V_grid_95))
+
+# print("90 cover 1:", cover_1)
+# print("90 cover 2:", cover_2)
+print("90 cover T:", cover_global)
+
+### CI width ###
+
+width_global = np.mean(V_grid_95 - V_grid_05)
+
+# print("90 width 1:", width_1)
+# print("90 width 2:", width_2)
+print("90 width T:", width_global)
+
+print("T/I:",(et-st)/N,"n =",n_obs,"p =",p,"N =", N)
+
 
 ### confidence interval C_12(0) and C_12(0.1)
 
-c0l = np.quantile(Sigma_run[tail:,0,1],0.05)
-c0u = np.quantile(Sigma_run[tail:,0,1],0.95)
+# c0l = np.quantile(Sigma_run[tail:,0,1],0.05)
+# c0u = np.quantile(Sigma_run[tail:,0,1],0.95)
 
-print("C_12(0) : [", c0l,",",c0u,"]")
+# print("C_12(0) : [", c0l,",",c0u,"]")
 
 
-c0p1l = np.quantile(Sigma_0p1_run[tail:,0,1],0.05)
-c0p1u = np.quantile(Sigma_0p1_run[tail:,0,1],0.95)
+# c0p1l = np.quantile(Sigma_0p1_run[tail:,0,1],0.05)
+# c0p1u = np.quantile(Sigma_0p1_run[tail:,0,1],0.95)
 
-print("C_12(0.1) : [", c0p1l,",",c0p1u,"]")
+# print("C_12(0.1) : [", c0p1l,",",c0p1u,"]")
+
+
+# np.save("run2000reg_mu.npy",mu_run)
+# np.save("run2000reg_taus.npy",taus_run)
+# np.save("run2000reg_phis.npy",phis_run)
+# np.save("run2000reg_A.npy",A_run)
+# np.save("run2000reg_V_grid.npy",V_grid_run)
+# np.save("run2000reg_V_current.npy",V_run)
+
+
