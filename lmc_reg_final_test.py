@@ -41,7 +41,7 @@ n_grid=int(np.sqrt(n_obs)-1)
 ### number of dimensions
 p = 2
 ### markov chain + tail length
-N = 1000
+N = 10000
 tail = 0
 
 
@@ -132,9 +132,9 @@ V_true_grid = V_true[:,n_obs:]
 ### priors
 
 # A #
-sigma_A = 1
-# mu_A = np.zeros((p,p))
-mu_A = np.copy(A)
+sigma_A = 0.2
+mu_A = np.zeros((p,p))
+# mu_A = np.copy(A)
 
 # phi #
 min_phi = 3.

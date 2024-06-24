@@ -240,7 +240,7 @@ m = 3
 
 ### markov chain + tail length
 N = 20000
-tail = 0
+tail = 10000
 
 
 ### generate base poisson process
@@ -866,6 +866,8 @@ print("Post Mean Rho 0.1\n",np.mean(rho_0p1_run[tail:],axis=0))
 
 ### computing intensity
 
+# lam_run = np.load("run2_lam.npy")
+# V_grid_run = np.load("run2_V_grid.npy")
 
 Z_grid_run = V_grid_run + random.normal(size=(N,p,(n_grid+1)**2))
 
@@ -885,14 +887,92 @@ def intensis(x):
     return(iis)
 
 
-intensity_run = np.zeros((N,p+1,(n_grid+1)**2))
+intensity_run = np.zeros((N-tail,p+1,(n_grid+1)**2))
 
 
-for ii in range(N):
+for ii in range(N-tail):
+    if ii % 100 == 0:
+        print(ii+tail)
     for jj in range((n_grid+1)**2):
-        intensity_run[ii,:,jj] = lam_run[ii] * intensis(Z_grid_run[ii,:,jj])
+        intensity_run[ii,:,jj] = lam_run[ii+tail] * intensis(Z_grid_run[ii+tail,:,jj])
 
-intensity_mean = np.mean(intensity_run[tail:],axis=0)
+intensity_mean = np.mean(intensity_run,axis=0)
+
+
+
+# xv, yv = np.meshgrid(marg_grid, marg_grid)
+
+
+
+
+# fig, ax = plt.subplots()
+# # ax.set_xlim(0,1)
+# # ax.set_ylim(0,1)
+# ax.set_box_aspect(1)
+
+# i = 0
+# c = ax.pcolormesh(xv, yv, np.transpose(vec_inv(intensity_mean[i+1],n_grid+1)), cmap = cols[i%5])
+# ax.scatter(X_obs[Y_obs==i+1,0],X_obs[Y_obs==i+1,1],c="black",s=20)
+# plt.title("maple")
+# plt.colorbar(c)
+# plt.savefig("2int_maple.pdf", bbox_inches='tight')
+# # plt.show()
+
+
+# fig, ax = plt.subplots()
+# # ax.set_xlim(0,1)
+# # ax.set_ylim(0,1)
+# ax.set_box_aspect(1)
+
+# i = 1
+# c = ax.pcolormesh(xv, yv, np.transpose(vec_inv(intensity_mean[i+1],n_grid+1)), cmap = cols[i%5])
+# ax.scatter(X_obs[Y_obs==i+1,0],X_obs[Y_obs==i+1,1],c="black",s=20)
+# plt.title("hickory")
+# plt.colorbar(c)
+# plt.savefig("2int_hickory.pdf", bbox_inches='tight')
+# # plt.show()
+
+
+# fig, ax = plt.subplots()
+# # ax.set_xlim(0,1)
+# # ax.set_ylim(0,1)
+# ax.set_box_aspect(1)
+
+# i = 2
+# c = ax.pcolormesh(xv, yv, np.transpose(vec_inv(intensity_mean[i+1],n_grid+1)), cmap = cols[i%5])
+# ax.scatter(X_obs[Y_obs==i+1,0],X_obs[Y_obs==i+1,1],c="black",s=20)
+# plt.title("whiteoak")
+# plt.colorbar(c)
+# plt.savefig("5int_whiteoak.pdf", bbox_inches='tight')
+# # plt.show()
+
+
+# fig, ax = plt.subplots()
+# # ax.set_xlim(0,1)
+# # ax.set_ylim(0,1)
+# ax.set_box_aspect(1)
+
+# i = 3
+# c = ax.pcolormesh(xv, yv, np.transpose(vec_inv(intensity_mean[i+1],n_grid+1)), cmap = cols[i%5])
+# ax.scatter(X_obs[Y_obs==i+1,0],X_obs[Y_obs==i+1,1],c="black",s=20)
+# plt.title("redoak")
+# plt.colorbar(c)
+# plt.savefig("5int_redoak.pdf", bbox_inches='tight')
+# # plt.show()
+
+
+# fig, ax = plt.subplots()
+# # ax.set_xlim(0,1)
+# # ax.set_ylim(0,1)
+# ax.set_box_aspect(1)
+
+# i = 4
+# c = ax.pcolormesh(xv, yv, np.transpose(vec_inv(intensity_mean[i+1],n_grid+1)), cmap = cols[i%5])
+# ax.scatter(X_obs[Y_obs==i+1,0],X_obs[Y_obs==i+1,1],c="black",s=20)
+# plt.title("blackoak")
+# plt.colorbar(c)
+# plt.savefig("5int_blackoak.pdf", bbox_inches='tight')
+# # plt.show()
 
 for i in range(p):
     
@@ -909,9 +989,9 @@ for i in range(p):
     
     
     c = ax.pcolormesh(xv, yv, np.transpose(vec_inv(intensity_mean[i+1],n_grid+1)), cmap = cols[i%5])
-    ax.scatter(X_obs[Y_obs==i+1,0],X_obs[Y_obs==i+1,1],c="black")
+    ax.scatter(X_obs[Y_obs==i+1,0],X_obs[Y_obs==i+1,1],c="black",s=20)
     plt.colorbar(c)
-    # plt.savefig("aaaaa.pdf", bbox_inches='tight')
+    # plt.savefig("5int"+str(i)+".pdf", bbox_inches='tight')
     plt.show()
 
 # np.save("run2_lam.npy",lam_run)
