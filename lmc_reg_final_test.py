@@ -274,6 +274,16 @@ print(N, "Time Elapsed:", ela_h, "h", ela_m, "min")
 print("Accept Rate for phis",np.mean(acc_phis,axis=1))
 
 
+
+# mu_run = np.load("run2000reg_mu.npy")
+# taus_run = np.load("run2000reg_taus.npy")
+# phis_run = np.load("run2000reg_phis.npy")
+# A_run = np.load("run2000reg_A.npy")
+# V_grid_run = np.load("run2000reg_V_grid.npy")
+# V_run = np.load("run2000reg_V_current.npy")
+
+
+
 ### trace plots
 
 
