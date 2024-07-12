@@ -28,7 +28,7 @@ plt.legend(["Standard", "NNGP"], loc ="upper left")
 plt.xlabel("n")
 plt.ylabel("Time (sec)")
 
-# plt.savefig("time_n_mcmc.pdf", format="pdf", bbox_inches="tight")
+plt.savefig("time_n_mcmc.pdf", format="pdf", bbox_inches="tight")
 plt.show()
 
 
@@ -39,5 +39,5 @@ plt.legend(["Standard", "NNGP"], loc ="upper left")
 plt.xlabel("p")
 plt.ylabel("Time (sec)")
 
-# plt.savefig("time_p_mcmc.pdf", format="pdf", bbox_inches="tight")
+plt.savefig("time_p_mcmc.pdf", format="pdf", bbox_inches="tight")
 plt.show()
