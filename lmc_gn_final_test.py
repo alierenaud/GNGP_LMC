@@ -30,16 +30,16 @@ cols = ["Blues","Oranges","Greens","Reds","Purples"]
 random.seed(0)
 
 ### number of points 
-n_obs=2000
-# n_grid=20
-n_grid=int(np.sqrt(n_obs)-1)
+n_obs=100
+n_grid=4
+# n_grid=int(np.sqrt(n_obs)-1)
 
 ### number of dimensions
 p = 2
 
 ### number of neighbors
 
-m = 3
+m = 1
 
 ### markov chain + tail length
 N = 10000
@@ -224,7 +224,7 @@ for j in range(n_grid+1):
 #         agNei[j*(n_grid+1)+i] = np.array([jj*(n_grid+1)+ii for jj in yaNei for ii in xaNei if (ii != i) | (jj != j )],dtype=int)
          
  
-## showcase grid neighbors
+# # showcase grid neighbors
 
 # for j in range(n_grid+1):
 #     for i in range(n_grid+1):
@@ -372,6 +372,83 @@ for i in range(n_obs):
 # print("median of antineighbors sets:", np.median(sizes))
 # print("sum of antineighbors sets:", np.sum(sizes))
     
+
+
+#### covariance matrix structure
+
+# def structShow(mat):
+
+#     np.flip(mat,axis=0)
+#     n = mat.shape[0]
+#     marg_grid = np.linspace(0,1,n)
+    
+    
+#     n_lower = int(np.sqrt(n))
+#     marg_grid_lower = np.linspace(0,1,n_lower) - 1/(n-1)/2 - np.arange(n_lower)/(n-1)
+
+
+#     xv, yv = np.meshgrid(marg_grid, marg_grid)
+#     xv_lower, yv_lower = np.meshgrid(marg_grid_lower, marg_grid_lower)
+
+
+#     fig, ax = plt.subplots()
+#     # ax.set_xlim(0,1)
+#     # ax.set_ylim(0,1)
+#     ax.set_box_aspect(1)
+    
+#     plt.tick_params(left = False, right = False , labelleft = False , 
+#                     labelbottom = False, bottom = False)
+
+
+
+#     c = ax.pcolormesh(xv, yv, np.flip(mat,axis=0), cmap = "Blues", edgecolors= "lightgrey", alpha=0.8)
+#     # c = ax.pcolormesh(xv_lower, yv_lower, np.flip(mat_zero,axis=0), cmap = "Blues", edgecolors= "lightgrey", alpha=0.8)
+
+#     # c = ax.pcolormesh(xv, yv, np.flip(mat,axis=0), cmap = "Blues", alpha=0.8)
+    
+#     lw = 1
+    
+#     for i in range(n_lower):
+#         plt.plot([marg_grid_lower[i],marg_grid_lower[i]],[-1/(n-1)/2,1+1/(n-1)/2],c="grey",linewidth=lw)
+#         plt.plot([-1/(n-1)/2,1+1/(n-1)/2],[marg_grid_lower[i],marg_grid_lower[i]],c="grey",linewidth=lw)
+        
+#     plt.ylim(-1/(n-1)/2,1+1/(n-1)/2)
+    
+    
+#     plt.savefig("mdiagStruc.pdf", bbox_inches='tight')
+    
+#     plt.show()
+
+
+# T = np.identity((n_grid+1)**2)
+
+# for i in range(gNei.shape[0]):
+    
+#     for j in gNei[i]:
+        
+#         T[i,j] = 1
+
+# structShow(T)
+
+# cT = np.transpose(T)@T
+# structShow(cT**2>0.0001)
+
+    
+# B = np.zeros((n_obs,(n_grid+1)**2))
+
+# for i in range(ogNei.shape[0]):
+    
+#     for j in ogNei[i]:
+        
+#         B[i,j] = 1
+
+
+
+# cB = np.transpose(B)@B
+# structShow(cB**2>0.0001)
+
+# structShow((cT + cB)**2>0.0001)
+
 
 ### distances
 
