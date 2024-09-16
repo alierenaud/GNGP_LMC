@@ -15,7 +15,7 @@ res_mat = np.loadtxt("res_mat.csv",delimiter=",")
 xs = np.array([2,4,6,8])
 
 
-fig, axs = plt.subplots(2, 2, figsize=(7,7), layout='constrained')
+fig, axs = plt.subplots(2, 2, figsize=(9,5), layout='constrained')
 
 
 axs[0,0].plot(xs,res_vec[0],marker="o",label="Vector")
@@ -41,6 +41,6 @@ fig.legend(handles, labels, loc='center right', bbox_to_anchor=(1.15, 0.5))
 fig.supxlabel('p')
 fig.supylabel('Time (sec)')
 
-# plt.savefig("likeEval2.pdf", format="pdf", bbox_inches="tight")
+# plt.savefig("likeEval3.pdf", format="pdf", bbox_inches="tight")
 plt.show()
 

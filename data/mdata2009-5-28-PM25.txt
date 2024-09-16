@@ -1,0 +1,777 @@
+summary_date,site,monitor,pm25_davg,name,obs_count 
+2009-05-22,3151,A,7.2,Death Valley Natl Monument,24 
+2009-05-22,3154,A,10.0,Keeler-Cerro Gordo Road,24 
+2009-05-22,3707,A,3.6,Hoover,24 
+2009-05-22,3698,A,4.7,Bliss State Park,24 
+2009-05-22,3018,A,9.1,Yosemite Natl Park-Turtleback Dome,24 
+2009-05-22,2353,A,15.7,Yosemite Village-Visitor Center,24 
+2009-05-22,2208,D,11.7,Truckee-Fire Station,24 
+2009-05-22,2208,A,5.0,Truckee-Fire Station,24 
+2009-05-22,3128,C,6.6,Chester-222 1st Avenue,24 
+2009-05-22,3494,E,5.4,Portola-161 Nevada Street,24 
+2009-05-22,3494,A,5.3,Portola-161 Nevada Street,24 
+2009-05-22,3020,A,5.0,Quincy-N Church Street,24 
+2009-05-22,3020,C,6.0,Quincy-N Church Street,24 
+2009-05-22,3152,A,6.8,Joshua Tree NP - Black Rock,24 
+2009-05-22,3016,A,6.8,Redwood Natl Park-Requa,24 
+2009-05-22,2271,C,19.6,Ukiah-County Library,24 
+2009-05-22,2347,A,20.5,Willits-Firehouse,24 
+2009-05-22,3711,A,4.6,Trinity,24 
+2009-05-22,2983,A,8.2,Pinnacles National Monument,24 
+2009-05-22,3150,A,5.1,Lava Beds Natl Monument,24 
+2009-05-22,2484,A,15.2,Azusa,24 
+2009-05-22,2492,A,13.3,Burbank-W Palm Avenue,24 
+2009-05-22,2492,C,26.0,Burbank-W Palm Avenue,24 
+2009-05-22,3743,A,14.3,Compton-700 North Bullis Road,24 
+2009-05-22,3701,B,5.7,Lebec-Peace Valley Road,24 
+2009-05-22,2899,A,15.8,Los Angeles-North Main Street,24 
+2009-05-22,2899,E,17.5,Los Angeles-North Main Street,24 
+2009-05-22,2899,D,24.5,Los Angeles-North Main Street,24 
+2009-05-22,2429,E,16.3,North Long Beach,24 
+2009-05-22,2429,A,14.0,North Long Beach,24 
+2009-05-22,2160,A,15.5,Pasadena-S Wilson Avenue,24 
+2009-05-22,3693,A,13.7,Pico Rivera-4144 San Gabriel,24 
+2009-05-22,2420,A,12.1,Reseda,24 
+2009-05-22,3502,A,23.5,Santa Clarita,24 
+2009-05-22,3679,A,12.7,South Long Beach,24 
+2009-05-22,3674,C,13.2,Anaheim-Pampas Lane,24 
+2009-05-22,3674,B,17.0,Anaheim-Pampas Lane,24 
+2009-05-22,3674,A,12.3,Anaheim-Pampas Lane,24 
+2009-05-22,3265,A,11.8,Mission Viejo-26081 Via Pera,24 
+2009-05-22,3708,A,9.9,Agua Tibia,24 
+2009-05-22,3168,A,,Banning Airport,17 
+2009-05-22,2943,A,19.2,Lake Elsinore-W Flint Street,24 
+2009-05-22,3702,B,23.2,Mira Loma Van Buren,24 
+2009-05-22,3702,A,20.5,Mira Loma Van Buren,24 
+2009-05-22,2333,A,13.4,Riverside-Magnolia,24 
+2009-05-22,2596,H,22.1,Riverside-Rubidoux,24 
+2009-05-22,2596,G,25.4,Riverside-Rubidoux,24 
+2009-05-22,2596,C,19.5,Riverside-Rubidoux,24 
+2009-05-22,2596,A,19.0,Riverside-Rubidoux,24 
+2009-05-22,2266,D,18.1,Fontana-Arrow Highway,24 
+2009-05-22,2266,A,14.1,Fontana-Arrow Highway,24 
+2009-05-22,3254,A,13.0,Ontario-1408 Francis Street,24 
+2009-05-22,2221,A,16.5,San Bernardino-4th Street,24 
+2009-05-22,3700,A,5.7,San Gorgonio Wilderness,24 
+2009-05-22,2360,B,11.8,Lompoc-S H Street,24 
+2009-05-22,3710,A,6.2,San Rafael Wilderness,24 
+2009-05-22,3665,C,15.0,Santa Barbara-700 East Canon Perdido,24 
+2009-05-22,3486,C,11.8,Santa Maria-906 S Broadway,24 
+2009-05-22,2991,A,16.2,El Rio-Rio Mesa School #2,24 
+2009-05-22,2991,C,17.7,El Rio-Rio Mesa School #2,24 
+2009-05-22,3172,A,11.5,Ojai-Ojai Avenue,24 
+2009-05-22,3505,B,,Piru-3301 Pacific Avenue,9 
+2009-05-22,2880,A,16.7,Simi Valley-Cochran Street,24 
+2009-05-22,2984,E,15.3,Thousand Oaks-Moorpark Road,24 
+2009-05-22,2460,A,22.0,Alpine-Victoria Drive,24 
+2009-05-22,3198,A,18.3,Camp Pendleton,24 
+2009-05-22,2589,A,13.6,Chula Vista,24 
+2009-05-22,2327,A,15.2,El Cajon-Redwood Avenue,24 
+2009-05-22,2327,D,17.7,El Cajon-Redwood Avenue,24 
+2009-05-22,2263,A,13.2,Escondido-E Valley Parkway,24 
+2009-05-22,2263,E,19.4,Escondido-E Valley Parkway,24 
+2009-05-22,2263,C,12.2,Escondido-E Valley Parkway,24 
+2009-05-22,3690,A,14.3,San Diego-1110 Beardsley Street,24 
+2009-05-22,3690,B,13.2,San Diego-1110 Beardsley Street,24 
+2009-05-22,2040,A,15.1,San Diego-Overland Avenue,24 
+2009-05-22,3727,A,17.1,Berkeley-6th Street,24 
+2009-05-22,3490,B,15.5,Livermore-793 Rincon Avenue,24 
+2009-05-22,3742,A,16.9,Oakland-West,24 
+2009-05-22,2831,A,11.7,Concord-2956-A Treat Blvd,24 
+2009-05-22,3506,A,10.7,Point Reyes,24 
+2009-05-22,2986,A,12.8,Point Reyes National Seashore,24 
+2009-05-22,2655,A,13.0,Napa-Jefferson Avenue,24 
+2009-05-22,2373,C,18.8,San Francisco-Arkansas Street,24 
+2009-05-22,2125,C,15.8,Redwood City,24 
+2009-05-22,2320,A,8.1,Gilroy-9th Street,24 
+2009-05-22,3661,A,12.0,San Jose-Jackson Street,24 
+2009-05-22,3661,C,11.6,San Jose-Jackson Street,23 
+2009-05-22,2410,B,17.0,Vallejo-304 Tuolumne Street,24 
+2009-05-22,3026,D,16.8,Clovis-N Villa Avenue,24 
+2009-05-22,3009,D,15.8,Fresno-1st Street,24 
+2009-05-22,3009,A,11.0,Fresno-1st Street,24 
+2009-05-22,3009,C,11.3,Fresno-1st Street,24 
+2009-05-22,3009,L,10.0,Fresno-1st Street,24 
+2009-05-22,3704,A,9.6,Kaiser,24 
+2009-05-22,3496,A,13.6,Bakersfield-410 E Planz Road,24 
+2009-05-22,3146,A,10.5,Bakersfield-5558 California Avenue,24 
+2009-05-22,3146,H,12.2,Bakersfield-5558 California Avenue,24 
+2009-05-22,3146,G,10.4,Bakersfield-5558 California Avenue,24 
+2009-05-22,3145,C,10.5,Bakersfield-Golden State Highway,24 
+2009-05-22,3194,F,9.0,Corcoran-Patterson Avenue,24 
+2009-05-22,2094,A,10.7,Stockton-Hazelton Street,24 
+2009-05-22,2094,E,10.0,Stockton-Hazelton Street,24 
+2009-05-22,3696,A,9.2,Tracy-Airport,24 
+2009-05-22,2833,A,11.5,Modesto-14th Street,24 
+2009-05-22,2833,E,13.9,Modesto-14th Street,24 
+2009-05-22,2996,A,16.3,Turlock-S Minaret Street,24 
+2009-05-22,3484,B,15.9,Sequoia and Kings Canyon Natl Park,24 
+2009-05-22,3484,A,15.9,Sequoia and Kings Canyon Natl Park,24 
+2009-05-22,2156,A,10.7,Sequoia Natl Park-Ash Mountain #2,24 
+2009-05-22,2032,B,12.8,Visalia-N Church Street,24 
+2009-05-22,2032,A,12.6,Visalia-N Church Street,24 
+2009-05-22,3675,A,8.2,Brawley-220 Main Street,24 
+2009-05-22,3173,A,16.5,Calexico-East,24 
+2009-05-22,2551,A,7.8,El Centro-9th Street,24 
+2009-05-22,2878,A,9.0,Indio-Jackson Street,24 
+2009-05-22,2199,A,9.3,Palm Springs-Fire Station,24 
+2009-05-22,2115,D,8.7,Chico-Manzanita Avenue,24 
+2009-05-22,2115,C,10.3,Chico-Manzanita Avenue,24 
+2009-05-22,2630,A,13.0,Gridley-Cowee Avenue,24 
+2009-05-22,2660,A,12.0,Paradise-Fire Station #1,24 
+2009-05-22,2744,B,12.2,Colusa-Sunrise Blvd,24 
+2009-05-22,3714,A,12.3,Willows-720 N Colusa Street,24 
+2009-05-22,2956,B,14.2,Roseville-N Sunrise Blvd,24 
+2009-05-22,2977,A,17.7,Elk Grove-Bruceville Road,24 
+2009-05-22,3187,A,14.0,Folsom-Natoma Street,24 
+2009-05-22,2731,A,11.9,Sacramento-Del Paso Manor,24 
+2009-05-22,2731,C,12.2,Sacramento-Del Paso Manor,24 
+2009-05-22,2731,D,17.6,Sacramento-Del Paso Manor,24 
+2009-05-22,2346,A,11.6,Sacramento-Health Dept Stockton Blvd,24 
+2009-05-22,3011,A,12.0,Sacramento-T Street,24 
+2009-05-22,3011,F,12.0,Sacramento-T Street,24 
+2009-05-22,2972,A,3.7,Lassen Volcanic Natl Park-Manzanita Lake,24 
+2009-05-22,2958,C,11.9,Yuba City-Almond Street,23 
+2009-05-22,2958,A,7.5,Yuba City-Almond Street,24 
+2009-05-22,2143,A,13.5,Davis-UCD Campus,24 
+2009-05-23,2353,A,17.6,Yosemite Village-Visitor Center,24 
+2009-05-23,2208,D,13.6,Truckee-Fire Station,24 
+2009-05-23,3128,C,8.1,Chester-222 1st Avenue,24 
+2009-05-23,3494,E,5.3,Portola-161 Nevada Street,24 
+2009-05-23,3020,C,7.4,Quincy-N Church Street,24 
+2009-05-23,2271,C,22.3,Ukiah-County Library,24 
+2009-05-23,2347,A,21.5,Willits-Firehouse,24 
+2009-05-23,2492,A,13.8,Burbank-W Palm Avenue,24 
+2009-05-23,2492,C,25.5,Burbank-W Palm Avenue,24 
+2009-05-23,2899,D,22.3,Los Angeles-North Main Street,24 
+2009-05-23,2899,A,15.3,Los Angeles-North Main Street,24 
+2009-05-23,2429,E,13.6,North Long Beach,24 
+2009-05-23,3502,A,21.9,Santa Clarita,24 
+2009-05-23,3679,A,10.5,South Long Beach,24 
+2009-05-23,3674,A,12.8,Anaheim-Pampas Lane,24 
+2009-05-23,3674,B,15.2,Anaheim-Pampas Lane,24 
+2009-05-23,3168,A,20.1,Banning Airport,24 
+2009-05-23,2943,A,17.3,Lake Elsinore-W Flint Street,24 
+2009-05-23,3702,A,21.7,Mira Loma Van Buren,24 
+2009-05-23,3702,B,21.7,Mira Loma Van Buren,24 
+2009-05-23,2596,A,19.2,Riverside-Rubidoux,24 
+2009-05-23,2596,G,26.2,Riverside-Rubidoux,24 
+2009-05-23,2360,B,7.9,Lompoc-S H Street,24 
+2009-05-23,3665,C,15.4,Santa Barbara-700 East Canon Perdido,24 
+2009-05-23,3486,C,7.7,Santa Maria-906 S Broadway,24 
+2009-05-23,2991,C,18.3,El Rio-Rio Mesa School #2,24 
+2009-05-23,3172,A,14.8,Ojai-Ojai Avenue,24 
+2009-05-23,3505,B,16.9,Piru-3301 Pacific Avenue,24 
+2009-05-23,2984,E,17.1,Thousand Oaks-Moorpark Road,24 
+2009-05-23,2460,A,17.4,Alpine-Victoria Drive,24 
+2009-05-23,3198,A,13.8,Camp Pendleton,24 
+2009-05-23,2327,D,15.4,El Cajon-Redwood Avenue,24 
+2009-05-23,2263,E,18.8,Escondido-E Valley Parkway,24 
+2009-05-23,2263,C,9.9,Escondido-E Valley Parkway,24 
+2009-05-23,3690,A,12.0,San Diego-1110 Beardsley Street,24 
+2009-05-23,3690,B,10.4,San Diego-1110 Beardsley Street,24 
+2009-05-23,3727,A,14.0,Berkeley-6th Street,24 
+2009-05-23,3490,B,11.5,Livermore-793 Rincon Avenue,24 
+2009-05-23,3742,A,15.2,Oakland-West,24 
+2009-05-23,3506,A,11.2,Point Reyes,24 
+2009-05-23,2655,A,12.7,Napa-Jefferson Avenue,24 
+2009-05-23,2373,C,15.7,San Francisco-Arkansas Street,24 
+2009-05-23,2125,C,9.8,Redwood City,24 
+2009-05-23,3661,C,7.5,San Jose-Jackson Street,24 
+2009-05-23,2410,B,15.2,Vallejo-304 Tuolumne Street,24 
+2009-05-23,3026,D,15.3,Clovis-N Villa Avenue,23 
+2009-05-23,3009,D,14.9,Fresno-1st Street,24 
+2009-05-23,3009,A,10.0,Fresno-1st Street,24 
+2009-05-23,3146,A,9.7,Bakersfield-5558 California Avenue,24 
+2009-05-23,3146,H,11.3,Bakersfield-5558 California Avenue,24 
+2009-05-23,3146,G,8.8,Bakersfield-5558 California Avenue,24 
+2009-05-23,3145,C,9.3,Bakersfield-Golden State Highway,24 
+2009-05-23,3194,F,8.4,Corcoran-Patterson Avenue,24 
+2009-05-23,2094,E,8.9,Stockton-Hazelton Street,24 
+2009-05-23,3696,A,10.4,Tracy-Airport,24 
+2009-05-23,2833,E,13.4,Modesto-14th Street,24 
+2009-05-23,2996,A,14.8,Turlock-S Minaret Street,24 
+2009-05-23,3484,B,15.9,Sequoia and Kings Canyon Natl Park,24 
+2009-05-23,3484,A,15.9,Sequoia and Kings Canyon Natl Park,24 
+2009-05-23,2032,B,13.1,Visalia-N Church Street,24 
+2009-05-23,3173,A,14.5,Calexico-East,24 
+2009-05-23,2115,D,15.3,Chico-Manzanita Avenue,24 
+2009-05-23,2115,C,15.2,Chico-Manzanita Avenue,24 
+2009-05-23,2630,A,16.7,Gridley-Cowee Avenue,24 
+2009-05-23,2660,A,16.3,Paradise-Fire Station #1,24 
+2009-05-23,2744,B,15.0,Colusa-Sunrise Blvd,24 
+2009-05-23,3714,A,14.5,Willows-720 N Colusa Street,24 
+2009-05-23,2956,B,16.9,Roseville-N Sunrise Blvd,24 
+2009-05-23,2977,A,18.6,Elk Grove-Bruceville Road,24 
+2009-05-23,3187,A,17.0,Folsom-Natoma Street,24 
+2009-05-23,2731,D,17.4,Sacramento-Del Paso Manor,24 
+2009-05-23,3011,F,13.0,Sacramento-T Street,24 
+2009-05-23,2958,C,15.5,Yuba City-Almond Street,24 
+2009-05-23,2958,A,9.4,Yuba City-Almond Street,24 
+2009-05-23,2143,A,17.6,Davis-UCD Campus,24 
+2009-05-24,2353,A,10.5,Yosemite Village-Visitor Center,24 
+2009-05-24,2208,D,12.5,Truckee-Fire Station,24 
+2009-05-24,3128,C,8.5,Chester-222 1st Avenue,24 
+2009-05-24,3494,E,4.2,Portola-161 Nevada Street,24 
+2009-05-24,3020,C,7.8,Quincy-N Church Street,24 
+2009-05-24,2271,C,16.8,Ukiah-County Library,24 
+2009-05-24,2347,A,20.3,Willits-Firehouse,24 
+2009-05-24,2492,A,12.5,Burbank-W Palm Avenue,24 
+2009-05-24,2492,C,21.9,Burbank-W Palm Avenue,24 
+2009-05-24,2899,A,13.2,Los Angeles-North Main Street,24 
+2009-05-24,2899,D,18.0,Los Angeles-North Main Street,23 
+2009-05-24,2429,A,11.2,North Long Beach,24 
+2009-05-24,2429,E,12.5,North Long Beach,24 
+2009-05-24,3502,A,23.2,Santa Clarita,24 
+2009-05-24,3679,A,8.5,South Long Beach,24 
+2009-05-24,3674,B,14.2,Anaheim-Pampas Lane,24 
+2009-05-24,3674,A,11.4,Anaheim-Pampas Lane,24 
+2009-05-24,3168,A,18.9,Banning Airport,24 
+2009-05-24,2943,A,15.9,Lake Elsinore-W Flint Street,24 
+2009-05-24,3702,B,19.9,Mira Loma Van Buren,24 
+2009-05-24,3702,A,19.9,Mira Loma Van Buren,24 
+2009-05-24,2596,G,25.2,Riverside-Rubidoux,24 
+2009-05-24,2596,A,19.2,Riverside-Rubidoux,24 
+2009-05-24,2360,B,7.8,Lompoc-S H Street,24 
+2009-05-24,3665,C,13.9,Santa Barbara-700 East Canon Perdido,24 
+2009-05-24,3486,C,7.8,Santa Maria-906 S Broadway,24 
+2009-05-24,2991,C,16.5,El Rio-Rio Mesa School #2,24 
+2009-05-24,3172,A,12.8,Ojai-Ojai Avenue,24 
+2009-05-24,3505,B,16.4,Piru-3301 Pacific Avenue,24 
+2009-05-24,2984,E,15.7,Thousand Oaks-Moorpark Road,24 
+2009-05-24,2460,A,18.8,Alpine-Victoria Drive,24 
+2009-05-24,3198,A,12.4,Camp Pendleton,24 
+2009-05-24,2327,D,15.5,El Cajon-Redwood Avenue,24 
+2009-05-24,2263,E,15.5,Escondido-E Valley Parkway,24 
+2009-05-24,2263,C,8.5,Escondido-E Valley Parkway,24 
+2009-05-24,3690,A,10.2,San Diego-1110 Beardsley Street,24 
+2009-05-24,3690,B,7.4,San Diego-1110 Beardsley Street,24 
+2009-05-24,3727,A,14.3,Berkeley-6th Street,24 
+2009-05-24,3490,B,11.1,Livermore-793 Rincon Avenue,24 
+2009-05-24,3742,A,16.1,Oakland-West,24 
+2009-05-24,3506,A,11.4,Point Reyes,24 
+2009-05-24,2655,A,12.3,Napa-Jefferson Avenue,24 
+2009-05-24,2373,C,17.5,San Francisco-Arkansas Street,24 
+2009-05-24,2125,C,12.0,Redwood City,24 
+2009-05-24,3661,C,7.0,San Jose-Jackson Street,24 
+2009-05-24,2410,B,14.8,Vallejo-304 Tuolumne Street,24 
+2009-05-24,3026,D,14.9,Clovis-N Villa Avenue,24 
+2009-05-24,3009,D,14.5,Fresno-1st Street,24 
+2009-05-24,3009,A,10.2,Fresno-1st Street,24 
+2009-05-24,3146,A,9.3,Bakersfield-5558 California Avenue,24 
+2009-05-24,3146,G,11.6,Bakersfield-5558 California Avenue,24 
+2009-05-24,3146,H,12.1,Bakersfield-5558 California Avenue,24 
+2009-05-24,3145,C,11.3,Bakersfield-Golden State Highway,24 
+2009-05-24,3194,F,9.1,Corcoran-Patterson Avenue,24 
+2009-05-24,2094,E,7.0,Stockton-Hazelton Street,24 
+2009-05-24,3696,A,9.0,Tracy-Airport,24 
+2009-05-24,2833,E,12.2,Modesto-14th Street,24 
+2009-05-24,2996,A,14.7,Turlock-S Minaret Street,24 
+2009-05-24,3484,A,15.2,Sequoia and Kings Canyon Natl Park,24 
+2009-05-24,3484,B,15.2,Sequoia and Kings Canyon Natl Park,24 
+2009-05-24,2032,B,11.2,Visalia-N Church Street,24 
+2009-05-24,3173,A,13.3,Calexico-East,24 
+2009-05-24,2115,C,14.8,Chico-Manzanita Avenue,24 
+2009-05-24,2115,D,16.7,Chico-Manzanita Avenue,24 
+2009-05-24,2630,A,17.7,Gridley-Cowee Avenue,24 
+2009-05-24,2660,A,18.7,Paradise-Fire Station #1,24 
+2009-05-24,2744,B,16.1,Colusa-Sunrise Blvd,24 
+2009-05-24,3714,A,17.0,Willows-720 N Colusa Street,24 
+2009-05-24,2956,B,18.2,Roseville-N Sunrise Blvd,24 
+2009-05-24,2977,A,17.9,Elk Grove-Bruceville Road,24 
+2009-05-24,3187,A,17.6,Folsom-Natoma Street,24 
+2009-05-24,2731,D,17.6,Sacramento-Del Paso Manor,24 
+2009-05-24,3011,F,13.0,Sacramento-T Street,24 
+2009-05-24,2958,A,9.6,Yuba City-Almond Street,24 
+2009-05-24,2958,C,17.3,Yuba City-Almond Street,24 
+2009-05-24,2143,A,13.6,Davis-UCD Campus,24 
+2009-05-25,3151,A,7.7,Death Valley Natl Monument,24 
+2009-05-25,3154,A,11.0,Keeler-Cerro Gordo Road,24 
+2009-05-25,3707,A,3.7,Hoover,24 
+2009-05-25,2914,A,7.1,Lakeport-Lakeport Blvd,24 
+2009-05-25,3698,A,4.9,Bliss State Park,24 
+2009-05-25,3144,A,9.7,San Andreas-Gold Strike Road,24 
+2009-05-25,3018,A,6.2,Yosemite Natl Park-Turtleback Dome,24 
+2009-05-25,2353,A,12.4,Yosemite Village-Visitor Center,24 
+2009-05-25,3126,A,8.4,Grass Valley-Litton Building,24 
+2009-05-25,2208,D,12.3,Truckee-Fire Station,24 
+2009-05-25,2208,B,5.4,Truckee-Fire Station,24 
+2009-05-25,2208,A,5.0,Truckee-Fire Station,24 
+2009-05-25,3128,C,6.3,Chester-222 1st Avenue,24 
+2009-05-25,3494,E,6.2,Portola-161 Nevada Street,24 
+2009-05-25,3494,A,5.9,Portola-161 Nevada Street,24 
+2009-05-25,3494,B,10.0,Portola-161 Nevada Street,24 
+2009-05-25,3020,C,7.3,Quincy-N Church Street,24 
+2009-05-25,3020,A,6.0,Quincy-N Church Street,24 
+2009-05-25,3121,A,7.6,Mojave-923 Poole Street,24 
+2009-05-25,3492,A,6.6,Ridgecrest-100 West California Avenue,24 
+2009-05-25,3152,A,5.5,Joshua Tree NP - Black Rock,24 
+2009-05-25,3500,B,10.0,Victorville-14306 Park Avenue,24 
+2009-05-25,3500,A,10.0,Victorville-14306 Park Avenue,24 
+2009-05-25,3016,A,7.2,Redwood Natl Park-Requa,24 
+2009-05-25,2386,A,8.3,Eureka-I Street,24 
+2009-05-25,3716,A,8.2,Eureka-Jacobs,24 
+2009-05-25,2271,C,19.5,Ukiah-County Library,24 
+2009-05-25,2347,A,21.9,Willits-Firehouse,24 
+2009-05-25,3711,A,5.3,Trinity,24 
+2009-05-25,3489,B,7.8,Salinas-High School,24 
+2009-05-25,3489,A,7.2,Salinas-High School,24 
+2009-05-25,2628,A,6.8,Hollister-Fairview Road,24 
+2009-05-25,2983,A,7.0,Pinnacles National Monument,24 
+2009-05-25,3200,A,6.4,Santa Cruz AMS,24 
+2009-05-25,3150,A,4.8,Lava Beds Natl Monument,24 
+2009-05-25,2752,A,5.8,Yreka-Foothill Drive,24 
+2009-05-25,2484,A,14.1,Azusa,24 
+2009-05-25,2492,C,20.8,Burbank-W Palm Avenue,24 
+2009-05-25,2492,A,12.1,Burbank-W Palm Avenue,24 
+2009-05-25,3743,A,12.8,Compton-700 North Bullis Road,24 
+2009-05-25,3701,B,7.8,Lebec-Peace Valley Road,24 
+2009-05-25,2899,E,15.0,Los Angeles-North Main Street,24 
+2009-05-25,2899,C,18.3,Los Angeles-North Main Street,24 
+2009-05-25,2899,D,16.5,Los Angeles-North Main Street,24 
+2009-05-25,2899,F,13.8,Los Angeles-North Main Street,24 
+2009-05-25,2899,B,12.7,Los Angeles-North Main Street,24 
+2009-05-25,2899,A,12.9,Los Angeles-North Main Street,24 
+2009-05-25,2429,A,11.3,North Long Beach,24 
+2009-05-25,2429,E,11.4,North Long Beach,24 
+2009-05-25,2160,A,14.2,Pasadena-S Wilson Avenue,24 
+2009-05-25,3693,A,12.1,Pico Rivera-4144 San Gabriel,24 
+2009-05-25,2420,A,13.0,Reseda,24 
+2009-05-25,3502,A,23.5,Santa Clarita,24 
+2009-05-25,3679,A,10.1,South Long Beach,24 
+2009-05-25,3674,A,10.6,Anaheim-Pampas Lane,24 
+2009-05-25,3674,C,12.5,Anaheim-Pampas Lane,24 
+2009-05-25,3674,B,14.2,Anaheim-Pampas Lane,24 
+2009-05-25,3265,A,10.0,Mission Viejo-26081 Via Pera,24 
+2009-05-25,3708,A,8.4,Agua Tibia,24 
+2009-05-25,3168,A,21.9,Banning Airport,24 
+2009-05-25,2943,A,12.3,Lake Elsinore-W Flint Street,24 
+2009-05-25,3702,B,19.4,Mira Loma Van Buren,24 
+2009-05-25,3702,A,19.7,Mira Loma Van Buren,24 
+2009-05-25,2333,A,13.8,Riverside-Magnolia,24 
+2009-05-25,2596,D,17.6,Riverside-Rubidoux,24 
+2009-05-25,2596,A,17.6,Riverside-Rubidoux,24 
+2009-05-25,2596,H,19.6,Riverside-Rubidoux,24 
+2009-05-25,2596,E,16.3,Riverside-Rubidoux,24 
+2009-05-25,2596,G,22.2,Riverside-Rubidoux,24 
+2009-05-25,2596,C,19.0,Riverside-Rubidoux,24 
+2009-05-25,3266,A,4.1,Big Bear City-501 W. Valley Blvd,24 
+2009-05-25,2266,D,17.9,Fontana-Arrow Highway,24 
+2009-05-25,2266,A,14.9,Fontana-Arrow Highway,24 
+2009-05-25,3254,A,12.9,Ontario-1408 Francis Street,24 
+2009-05-25,2221,A,17.7,San Bernardino-4th Street,24 
+2009-05-25,3700,A,6.7,San Gorgonio Wilderness,24 
+2009-05-25,2965,B,7.3,Atascadero-Lewis Avenue,24 
+2009-05-25,2965,A,7.4,Atascadero-Lewis Avenue,24 
+2009-05-25,3688,A,8.7,San Luis Obispo-3220 South Higuera St,24 
+2009-05-25,2360,B,10.2,Lompoc-S H Street,24 
+2009-05-25,3710,A,6.7,San Rafael Wilderness,24 
+2009-05-25,3665,C,13.5,Santa Barbara-700 East Canon Perdido,24 
+2009-05-25,3665,A,9.7,Santa Barbara-700 East Canon Perdido,24 
+2009-05-25,3486,C,8.6,Santa Maria-906 S Broadway,24 
+2009-05-25,3486,A,9.6,Santa Maria-906 S Broadway,24 
+2009-05-25,2991,C,15.8,El Rio-Rio Mesa School #2,24 
+2009-05-25,2991,A,13.3,El Rio-Rio Mesa School #2,24 
+2009-05-25,3172,A,11.5,Ojai-Ojai Avenue,24 
+2009-05-25,3505,A,13.3,Piru-3301 Pacific Avenue,24 
+2009-05-25,3505,B,14.1,Piru-3301 Pacific Avenue,24 
+2009-05-25,2880,B,14.5,Simi Valley-Cochran Street,24 
+2009-05-25,2880,A,14.7,Simi Valley-Cochran Street,24 
+2009-05-25,2984,E,14.3,Thousand Oaks-Moorpark Road,24 
+2009-05-25,2984,A,13.0,Thousand Oaks-Moorpark Road,24 
+2009-05-25,2984,B,13.0,Thousand Oaks-Moorpark Road,24 
+2009-05-25,2460,A,18.3,Alpine-Victoria Drive,24 
+2009-05-25,3198,A,15.0,Camp Pendleton,24 
+2009-05-25,2589,A,10.2,Chula Vista,24 
+2009-05-25,2327,C,11.5,El Cajon-Redwood Avenue,24 
+2009-05-25,2327,D,13.0,El Cajon-Redwood Avenue,24 
+2009-05-25,2327,A,11.2,El Cajon-Redwood Avenue,24 
+2009-05-25,2263,E,17.3,Escondido-E Valley Parkway,24 
+2009-05-25,2263,A,11.0,Escondido-E Valley Parkway,24 
+2009-05-25,2263,C,9.0,Escondido-E Valley Parkway,24 
+2009-05-25,2263,B,14.0,Escondido-E Valley Parkway,24 
+2009-05-25,3690,A,10.0,San Diego-1110 Beardsley Street,24 
+2009-05-25,3690,B,7.4,San Diego-1110 Beardsley Street,24 
+2009-05-25,2040,A,11.4,San Diego-Overland Avenue,24 
+2009-05-25,3727,A,15.4,Berkeley-6th Street,24 
+2009-05-25,2293,A,13.9,Fremont-Chapel Way,24 
+2009-05-25,3490,C,10.5,Livermore-793 Rincon Avenue,24 
+2009-05-25,3490,B,13.4,Livermore-793 Rincon Avenue,24 
+2009-05-25,3490,A,11.1,Livermore-793 Rincon Avenue,24 
+2009-05-25,3247,A,15.0,Oakland-9925 International Blvd,24 
+2009-05-25,3742,B,14.6,Oakland-West,24 
+2009-05-25,3742,A,17.5,Oakland-West,24 
+2009-05-25,2831,A,11.8,Concord-2956-A Treat Blvd,24 
+2009-05-25,2831,B,12.9,Concord-2956-A Treat Blvd,24 
+2009-05-25,3506,A,9.3,Point Reyes,24 
+2009-05-25,2986,A,10.8,Point Reyes National Seashore,24 
+2009-05-25,2655,A,14.0,Napa-Jefferson Avenue,24 
+2009-05-25,2373,C,18.1,San Francisco-Arkansas Street,24 
+2009-05-25,2373,A,13.6,San Francisco-Arkansas Street,24 
+2009-05-25,2125,A,12.4,Redwood City,24 
+2009-05-25,2125,C,13.3,Redwood City,24 
+2009-05-25,2320,A,8.7,Gilroy-9th Street,24 
+2009-05-25,3661,A,11.7,San Jose-Jackson Street,24 
+2009-05-25,3661,B,10.8,San Jose-Jackson Street,24 
+2009-05-25,3661,C,11.0,San Jose-Jackson Street,24 
+2009-05-25,2410,A,16.2,Vallejo-304 Tuolumne Street,24 
+2009-05-25,2410,C,14.6,Vallejo-304 Tuolumne Street,24 
+2009-05-25,2410,B,18.8,Vallejo-304 Tuolumne Street,24 
+2009-05-25,2105,A,14.0,Santa Rosa-5th Street,24 
+2009-05-25,3026,A,9.9,Clovis-N Villa Avenue,24 
+2009-05-25,3026,D,16.6,Clovis-N Villa Avenue,24 
+2009-05-25,3009,B,11.2,Fresno-1st Street,24 
+2009-05-25,3009,D,15.3,Fresno-1st Street,24 
+2009-05-25,3009,C,11.9,Fresno-1st Street,24 
+2009-05-25,3009,A,10.5,Fresno-1st Street,24 
+2009-05-25,3009,L,9.0,Fresno-1st Street,24 
+2009-05-25,3485,A,9.4,Fresno-Hamilton and Winery,24 
+2009-05-25,3704,A,4.9,Kaiser,24 
+2009-05-25,3496,A,14.3,Bakersfield-410 E Planz Road,24 
+2009-05-25,3146,H,15.0,Bakersfield-5558 California Avenue,24 
+2009-05-25,3146,A,11.5,Bakersfield-5558 California Avenue,24 
+2009-05-25,3146,G,13.3,Bakersfield-5558 California Avenue,24 
+2009-05-25,3146,B,11.5,Bakersfield-5558 California Avenue,24 
+2009-05-25,3145,A,10.8,Bakersfield-Golden State Highway,24 
+2009-05-25,3145,C,13.5,Bakersfield-Golden State Highway,24 
+2009-05-25,3724,A,8.6,Lebec-Frazier Park Road,24 
+2009-05-25,3194,A,9.7,Corcoran-Patterson Avenue,24 
+2009-05-25,3194,F,11.4,Corcoran-Patterson Avenue,24 
+2009-05-25,3253,A,10.1,Merced-2334 M Street,24 
+2009-05-25,2094,A,11.0,Stockton-Hazelton Street,24 
+2009-05-25,2094,E,9.9,Stockton-Hazelton Street,24 
+2009-05-25,3696,A,8.0,Tracy-Airport,24 
+2009-05-25,2833,D,13.0,Modesto-14th Street,24 
+2009-05-25,2833,E,14.1,Modesto-14th Street,24 
+2009-05-25,2833,A,11.7,Modesto-14th Street,24 
+2009-05-25,2996,A,16.3,Turlock-S Minaret Street,24 
+2009-05-25,3484,B,14.4,Sequoia and Kings Canyon Natl Park,24 
+2009-05-25,3484,A,14.4,Sequoia and Kings Canyon Natl Park,24 
+2009-05-25,2156,A,9.6,Sequoia Natl Park-Ash Mountain #2,24 
+2009-05-25,2032,C,13.0,Visalia-N Church Street,24 
+2009-05-25,2032,B,12.5,Visalia-N Church Street,24 
+2009-05-25,2032,A,12.4,Visalia-N Church Street,24 
+2009-05-25,3675,A,7.5,Brawley-220 Main Street,24 
+2009-05-25,3173,A,15.5,Calexico-East,24 
+2009-05-25,3135,C,12.0,Calexico-Ethel Street,24 
+2009-05-25,2551,A,8.9,El Centro-9th Street,24 
+2009-05-25,2878,A,11.9,Indio-Jackson Street,24 
+2009-05-25,2878,B,10.8,Indio-Jackson Street,24 
+2009-05-25,2199,A,10.5,Palm Springs-Fire Station,24 
+2009-05-25,2115,C,16.6,Chico-Manzanita Avenue,24 
+2009-05-25,2115,D,17.6,Chico-Manzanita Avenue,24 
+2009-05-25,2115,B,14.0,Chico-Manzanita Avenue,24 
+2009-05-25,2115,A,11.1,Chico-Manzanita Avenue,24 
+2009-05-25,2630,A,16.8,Gridley-Cowee Avenue,24 
+2009-05-25,2660,A,17.8,Paradise-Fire Station #1,24 
+2009-05-25,2744,B,16.4,Colusa-Sunrise Blvd,24 
+2009-05-25,3714,A,15.8,Willows-720 N Colusa Street,24 
+2009-05-25,2956,B,19.7,Roseville-N Sunrise Blvd,24 
+2009-05-25,2956,A,11.2,Roseville-N Sunrise Blvd,24 
+2009-05-25,2977,A,19.0,Elk Grove-Bruceville Road,24 
+2009-05-25,3187,A,17.2,Folsom-Natoma Street,24 
+2009-05-25,2731,A,12.8,Sacramento-Del Paso Manor,24 
+2009-05-25,2731,C,13.9,Sacramento-Del Paso Manor,24 
+2009-05-25,2731,D,17.8,Sacramento-Del Paso Manor,24 
+2009-05-25,2731,B,12.9,Sacramento-Del Paso Manor,24 
+2009-05-25,2346,A,12.9,Sacramento-Health Dept Stockton Blvd,24 
+2009-05-25,3011,A,13.6,Sacramento-T Street,24 
+2009-05-25,3011,C,14.0,Sacramento-T Street,24 
+2009-05-25,3011,F,14.7,Sacramento-T Street,24 
+2009-05-25,2972,A,5.0,Lassen Volcanic Natl Park-Manzanita Lake,24 
+2009-05-25,3807,A,8.8,Redding-Buckeye,24 
+2009-05-25,2829,A,7.3,Redding-Health Dept Roof,24 
+2009-05-25,3808,A,6.4,Shasta Lake-Shasta Dam Blvd             ,24 
+2009-05-25,2958,A,9.8,Yuba City-Almond Street,24 
+2009-05-25,2958,C,16.1,Yuba City-Almond Street,24 
+2009-05-25,2143,A,14.8,Davis-UCD Campus,24 
+2009-05-25,3249,A,10.3,Woodland-Gibson Road,24 
+2009-05-26,2353,A,8.3,Yosemite Village-Visitor Center,24 
+2009-05-26,2208,D,13.7,Truckee-Fire Station,24 
+2009-05-26,3128,C,5.9,Chester-222 1st Avenue,24 
+2009-05-26,3494,E,4.5,Portola-161 Nevada Street,24 
+2009-05-26,3020,C,5.5,Quincy-N Church Street,24 
+2009-05-26,3658,A,9.0,Lancaster-43301 Division Street,24 
+2009-05-26,2271,C,18.4,Ukiah-County Library,24 
+2009-05-26,2347,A,21.0,Willits-Firehouse,24 
+2009-05-26,2492,A,15.6,Burbank-W Palm Avenue,24 
+2009-05-26,2492,C,24.5,Burbank-W Palm Avenue,24 
+2009-05-26,2849,A,,Glendora-Laurel,10 
+2009-05-26,2899,D,21.9,Los Angeles-North Main Street,24 
+2009-05-26,2429,A,13.7,North Long Beach,24 
+2009-05-26,2429,E,14.6,North Long Beach,24 
+2009-05-26,3502,A,28.1,Santa Clarita,24 
+2009-05-26,3679,A,13.5,South Long Beach,24 
+2009-05-26,3674,A,11.8,Anaheim-Pampas Lane,24 
+2009-05-26,3674,B,17.1,Anaheim-Pampas Lane,24 
+2009-05-26,3168,A,27.6,Banning Airport,24 
+2009-05-26,2943,A,19.4,Lake Elsinore-W Flint Street,24 
+2009-05-26,3702,B,23.3,Mira Loma Van Buren,19 
+2009-05-26,3702,A,22.0,Mira Loma Van Buren,24 
+2009-05-26,2596,A,22.5,Riverside-Rubidoux,24 
+2009-05-26,2596,G,27.3,Riverside-Rubidoux,24 
+2009-05-26,2360,B,11.4,Lompoc-S H Street,24 
+2009-05-26,3665,C,16.4,Santa Barbara-700 East Canon Perdido,24 
+2009-05-26,3486,C,11.8,Santa Maria-906 S Broadway,24 
+2009-05-26,2991,C,14.9,El Rio-Rio Mesa School #2,22 
+2009-05-26,3172,A,12.9,Ojai-Ojai Avenue,24 
+2009-05-26,3505,B,15.3,Piru-3301 Pacific Avenue,24 
+2009-05-26,2984,E,14.4,Thousand Oaks-Moorpark Road,24 
+2009-05-26,2460,A,19.4,Alpine-Victoria Drive,24 
+2009-05-26,3198,A,,Camp Pendleton,11 
+2009-05-26,2327,D,15.8,El Cajon-Redwood Avenue,24 
+2009-05-26,2263,E,19.3,Escondido-E Valley Parkway,24 
+2009-05-26,2263,C,12.1,Escondido-E Valley Parkway,24 
+2009-05-26,3690,A,11.7,San Diego-1110 Beardsley Street,24 
+2009-05-26,3690,B,10.3,San Diego-1110 Beardsley Street,24 
+2009-05-26,3727,A,17.1,Berkeley-6th Street,24 
+2009-05-26,3490,B,14.3,Livermore-793 Rincon Avenue,24 
+2009-05-26,3742,A,20.3,Oakland-West,24 
+2009-05-26,3506,A,10.4,Point Reyes,24 
+2009-05-26,2655,A,14.3,Napa-Jefferson Avenue,23 
+2009-05-26,2373,C,19.0,San Francisco-Arkansas Street,24 
+2009-05-26,2125,C,18.2,Redwood City,24 
+2009-05-26,3661,C,11.5,San Jose-Jackson Street,24 
+2009-05-26,2410,B,16.3,Vallejo-304 Tuolumne Street,24 
+2009-05-26,3026,D,19.3,Clovis-N Villa Avenue,24 
+2009-05-26,3009,A,13.6,Fresno-1st Street,24 
+2009-05-26,3009,D,18.4,Fresno-1st Street,24 
+2009-05-26,3146,G,18.6,Bakersfield-5558 California Avenue,24 
+2009-05-26,3146,A,16.1,Bakersfield-5558 California Avenue,24 
+2009-05-26,3146,H,19.0,Bakersfield-5558 California Avenue,24 
+2009-05-26,3145,C,16.4,Bakersfield-Golden State Highway,24 
+2009-05-26,3194,F,12.1,Corcoran-Patterson Avenue,24 
+2009-05-26,2094,E,9.8,Stockton-Hazelton Street,24 
+2009-05-26,3696,A,8.8,Tracy-Airport,24 
+2009-05-26,2833,E,15.9,Modesto-14th Street,24 
+2009-05-26,2996,A,18.4,Turlock-S Minaret Street,24 
+2009-05-26,3484,B,17.1,Sequoia and Kings Canyon Natl Park,24 
+2009-05-26,3484,A,17.1,Sequoia and Kings Canyon Natl Park,24 
+2009-05-26,2032,B,17.4,Visalia-N Church Street,24 
+2009-05-26,3173,A,16.0,Calexico-East,24 
+2009-05-26,2115,C,10.4,Chico-Manzanita Avenue,24 
+2009-05-26,2115,D,9.9,Chico-Manzanita Avenue,24 
+2009-05-26,2630,A,17.4,Gridley-Cowee Avenue,24 
+2009-05-26,2660,A,12.8,Paradise-Fire Station #1,24 
+2009-05-26,2744,B,13.8,Colusa-Sunrise Blvd,23 
+2009-05-26,3714,A,11.7,Willows-720 N Colusa Street,24 
+2009-05-26,2956,B,18.3,Roseville-N Sunrise Blvd,24 
+2009-05-26,2977,A,18.1,Elk Grove-Bruceville Road,23 
+2009-05-26,3187,A,15.7,Folsom-Natoma Street,23 
+2009-05-26,2731,D,15.7,Sacramento-Del Paso Manor,23 
+2009-05-26,3011,F,13.7,Sacramento-T Street,23 
+2009-05-26,2958,C,14.8,Yuba City-Almond Street,24 
+2009-05-26,2958,A,9.0,Yuba City-Almond Street,24 
+2009-05-26,2143,A,13.3,Davis-UCD Campus,24 
+2009-05-27,2353,A,7.3,Yosemite Village-Visitor Center,24 
+2009-05-27,2208,D,11.3,Truckee-Fire Station,24 
+2009-05-27,3128,C,6.2,Chester-222 1st Avenue,24 
+2009-05-27,3494,E,4.6,Portola-161 Nevada Street,24 
+2009-05-27,3020,C,7.2,Quincy-N Church Street,23 
+2009-05-27,2271,C,14.8,Ukiah-County Library,24 
+2009-05-27,2347,A,18.1,Willits-Firehouse,24 
+2009-05-27,2492,A,15.8,Burbank-W Palm Avenue,24 
+2009-05-27,2492,C,29.0,Burbank-W Palm Avenue,24 
+2009-05-27,2849,A,29.4,Glendora-Laurel,22 
+2009-05-27,2899,D,27.5,Los Angeles-North Main Street,24 
+2009-05-27,2899,A,20.3,Los Angeles-North Main Street,24 
+2009-05-27,2429,A,17.4,North Long Beach,24 
+2009-05-27,2429,E,18.0,North Long Beach,24 
+2009-05-27,3502,A,28.8,Santa Clarita,23 
+2009-05-27,3679,A,14.8,South Long Beach,24 
+2009-05-27,3674,A,13.6,Anaheim-Pampas Lane,24 
+2009-05-27,3674,B,17.5,Anaheim-Pampas Lane,24 
+2009-05-27,3168,A,33.0,Banning Airport,23 
+2009-05-27,2943,A,23.6,Lake Elsinore-W Flint Street,24 
+2009-05-27,3702,B,,Mira Loma Van Buren,16 
+2009-05-27,3702,A,30.0,Mira Loma Van Buren,24 
+2009-05-27,2596,G,37.8,Riverside-Rubidoux,24 
+2009-05-27,2596,A,31.1,Riverside-Rubidoux,24 
+2009-05-27,2360,B,12.8,Lompoc-S H Street,24 
+2009-05-27,3665,C,16.0,Santa Barbara-700 East Canon Perdido,24 
+2009-05-27,3486,C,13.7,Santa Maria-906 S Broadway,24 
+2009-05-27,2991,C,16.7,El Rio-Rio Mesa School #2,24 
+2009-05-27,3172,A,15.1,Ojai-Ojai Avenue,24 
+2009-05-27,3505,B,18.2,Piru-3301 Pacific Avenue,23 
+2009-05-27,2984,E,19.5,Thousand Oaks-Moorpark Road,24 
+2009-05-27,2460,A,20.4,Alpine-Victoria Drive,24 
+2009-05-27,3198,A,,Camp Pendleton,11 
+2009-05-27,2327,D,16.9,El Cajon-Redwood Avenue,24 
+2009-05-27,2263,E,19.6,Escondido-E Valley Parkway,21 
+2009-05-27,2263,C,13.6,Escondido-E Valley Parkway,21 
+2009-05-27,3690,B,10.5,San Diego-1110 Beardsley Street,24 
+2009-05-27,3727,A,14.3,Berkeley-6th Street,23 
+2009-05-27,3490,B,14.2,Livermore-793 Rincon Avenue,23 
+2009-05-27,3742,A,15.5,Oakland-West,23 
+2009-05-27,3506,A,7.4,Point Reyes,22 
+2009-05-27,2655,A,11.7,Napa-Jefferson Avenue,24 
+2009-05-27,2373,C,15.4,San Francisco-Arkansas Street,24 
+2009-05-27,2125,C,16.0,Redwood City,24 
+2009-05-27,3661,C,13.6,San Jose-Jackson Street,24 
+2009-05-27,2410,B,14.7,Vallejo-304 Tuolumne Street,24 
+2009-05-27,3026,D,19.5,Clovis-N Villa Avenue,24 
+2009-05-27,3009,D,19.9,Fresno-1st Street,24 
+2009-05-27,3009,A,13.7,Fresno-1st Street,24 
+2009-05-27,3146,G,20.6,Bakersfield-5558 California Avenue,23 
+2009-05-27,3146,H,21.4,Bakersfield-5558 California Avenue,23 
+2009-05-27,3145,C,20.3,Bakersfield-Golden State Highway,24 
+2009-05-27,3194,F,12.6,Corcoran-Patterson Avenue,24 
+2009-05-27,2094,E,9.0,Stockton-Hazelton Street,24 
+2009-05-27,3696,A,10.8,Tracy-Airport,24 
+2009-05-27,2833,E,15.6,Modesto-14th Street,23 
+2009-05-27,2996,A,18.9,Turlock-S Minaret Street,24 
+2009-05-27,3484,A,7.6,Sequoia and Kings Canyon Natl Park,24 
+2009-05-27,3484,B,7.6,Sequoia and Kings Canyon Natl Park,24 
+2009-05-27,2032,B,22.6,Visalia-N Church Street,23 
+2009-05-27,3173,A,19.3,Calexico-East,23 
+2009-05-27,2115,C,11.5,Chico-Manzanita Avenue,24 
+2009-05-27,2115,D,11.7,Chico-Manzanita Avenue,24 
+2009-05-27,2630,A,15.1,Gridley-Cowee Avenue,24 
+2009-05-27,2660,A,12.8,Paradise-Fire Station #1,24 
+2009-05-27,2744,B,11.6,Colusa-Sunrise Blvd,24 
+2009-05-27,3714,A,8.7,Willows-720 N Colusa Street,24 
+2009-05-27,2956,B,19.3,Roseville-N Sunrise Blvd,24 
+2009-05-27,2977,A,17.7,Elk Grove-Bruceville Road,24 
+2009-05-27,3187,A,14.1,Folsom-Natoma Street,23 
+2009-05-27,2731,D,16.7,Sacramento-Del Paso Manor,24 
+2009-05-27,3011,F,12.8,Sacramento-T Street,24 
+2009-05-27,2958,A,10.2,Yuba City-Almond Street,24 
+2009-05-27,2958,C,15.6,Yuba City-Almond Street,24 
+2009-05-27,2143,A,13.5,Davis-UCD Campus,24 
+2009-05-28,3151,A,4.7,Death Valley Natl Monument,24 
+2009-05-28,3154,A,6.0,Keeler-Cerro Gordo Road,24 
+2009-05-28,3707,A,2.6,Hoover,24 
+2009-05-28,3698,A,3.8,Bliss State Park,24 
+2009-05-28,3018,A,3.3,Yosemite Natl Park-Turtleback Dome,24 
+2009-05-28,2353,A,19.6,Yosemite Village-Visitor Center,22 
+2009-05-28,2208,A,3.9,Truckee-Fire Station,24 
+2009-05-28,2208,D,12.3,Truckee-Fire Station,24 
+2009-05-28,3128,C,6.7,Chester-222 1st Avenue,24 
+2009-05-28,3494,E,5.3,Portola-161 Nevada Street,24 
+2009-05-28,3494,A,4.8,Portola-161 Nevada Street,24 
+2009-05-28,3020,A,4.8,Quincy-N Church Street,24 
+2009-05-28,3020,C,7.0,Quincy-N Church Street,24 
+2009-05-28,3152,A,6.3,Joshua Tree NP - Black Rock,24 
+2009-05-28,3016,A,7.7,Redwood Natl Park-Requa,24 
+2009-05-28,2271,C,16.9,Ukiah-County Library,24 
+2009-05-28,2347,A,16.8,Willits-Firehouse,24 
+2009-05-28,3711,A,5.0,Trinity,24 
+2009-05-28,2983,A,6.1,Pinnacles National Monument,24 
+2009-05-28,3150,A,4.1,Lava Beds Natl Monument,24 
+2009-05-28,2484,A,20.7,Azusa,24 
+2009-05-28,2492,C,28.8,Burbank-W Palm Avenue,24 
+2009-05-28,2492,A,15.9,Burbank-W Palm Avenue,24 
+2009-05-28,3743,A,17.2,Compton-700 North Bullis Road,24 
+2009-05-28,2849,A,28.7,Glendora-Laurel,24 
+2009-05-28,3701,B,4.4,Lebec-Peace Valley Road,24 
+2009-05-28,2899,E,18.6,Los Angeles-North Main Street,24 
+2009-05-28,2899,D,26.7,Los Angeles-North Main Street,24 
+2009-05-28,2899,A,19.0,Los Angeles-North Main Street,24 
+2009-05-28,2429,E,21.7,North Long Beach,24 
+2009-05-28,2429,A,18.1,North Long Beach,24 
+2009-05-28,3693,A,20.1,Pico Rivera-4144 San Gabriel,24 
+2009-05-28,2420,A,17.2,Reseda,24 
+2009-05-28,3502,A,30.6,Santa Clarita,24 
+2009-05-28,3679,A,18.3,South Long Beach,24 
+2009-05-28,3674,C,18.9,Anaheim-Pampas Lane,24 
+2009-05-28,3674,B,23.2,Anaheim-Pampas Lane,24 
+2009-05-28,3674,A,17.0,Anaheim-Pampas Lane,24 
+2009-05-28,3265,A,11.2,Mission Viejo-26081 Via Pera,24 
+2009-05-28,3708,A,10.4,Agua Tibia,24 
+2009-05-28,3168,A,37.6,Banning Airport,24 
+2009-05-28,2943,A,28.9,Lake Elsinore-W Flint Street,24 
+2009-05-28,3702,A,40.6,Mira Loma Van Buren,24 
+2009-05-28,3702,B,42.2,Mira Loma Van Buren,24 
+2009-05-28,2333,A,31.5,Riverside-Magnolia,24 
+2009-05-28,2596,H,41.8,Riverside-Rubidoux,24 
+2009-05-28,2596,C,41.3,Riverside-Rubidoux,24 
+2009-05-28,2596,A,42.5,Riverside-Rubidoux,24 
+2009-05-28,2596,G,49.2,Riverside-Rubidoux,24 
+2009-05-28,2266,A,27.5,Fontana-Arrow Highway,24 
+2009-05-28,2266,D,32.3,Fontana-Arrow Highway,24 
+2009-05-28,3254,A,25.8,Ontario-1408 Francis Street,24 
+2009-05-28,3700,A,4.6,San Gorgonio Wilderness,24 
+2009-05-28,2360,B,11.3,Lompoc-S H Street,24 
+2009-05-28,3710,A,8.1,San Rafael Wilderness,24 
+2009-05-28,3665,C,15.2,Santa Barbara-700 East Canon Perdido,24 
+2009-05-28,3486,C,11.6,Santa Maria-906 S Broadway,23 
+2009-05-28,2991,C,16.3,El Rio-Rio Mesa School #2,24 
+2009-05-28,2991,A,14.5,El Rio-Rio Mesa School #2,24 
+2009-05-28,3172,A,14.0,Ojai-Ojai Avenue,24 
+2009-05-28,3505,B,20.6,Piru-3301 Pacific Avenue,24 
+2009-05-28,2880,B,18.7,Simi Valley-Cochran Street,24 
+2009-05-28,2880,A,19.1,Simi Valley-Cochran Street,24 
+2009-05-28,2984,E,18.5,Thousand Oaks-Moorpark Road,24 
+2009-05-28,2460,A,24.5,Alpine-Victoria Drive,24 
+2009-05-28,3198,A,13.9,Camp Pendleton,24 
+2009-05-28,2589,A,12.6,Chula Vista,24 
+2009-05-28,2327,A,19.6,El Cajon-Redwood Avenue,24 
+2009-05-28,2327,C,14.8,El Cajon-Redwood Avenue,24 
+2009-05-28,2327,D,20.3,El Cajon-Redwood Avenue,24 
+2009-05-28,2263,A,12.9,Escondido-E Valley Parkway,24 
+2009-05-28,2263,C,13.6,Escondido-E Valley Parkway,20 
+2009-05-28,2263,E,17.2,Escondido-E Valley Parkway,20 
+2009-05-28,3690,B,10.8,San Diego-1110 Beardsley Street,24 
+2009-05-28,2040,A,13.9,San Diego-Overland Avenue,24 
+2009-05-28,3727,A,9.0,Berkeley-6th Street,24 
+2009-05-28,3490,B,12.5,Livermore-793 Rincon Avenue,24 
+2009-05-28,3742,A,11.4,Oakland-West,24 
+2009-05-28,2831,A,7.4,Concord-2956-A Treat Blvd,24 
+2009-05-28,3506,A,3.7,Point Reyes,24 
+2009-05-28,2986,A,3.3,Point Reyes National Seashore,24 
+2009-05-28,2655,A,5.8,Napa-Jefferson Avenue,23 
+2009-05-28,2373,C,10.7,San Francisco-Arkansas Street,24 
+2009-05-28,2125,C,13.7,Redwood City,24 
+2009-05-28,2320,A,5.9,Gilroy-9th Street,24 
+2009-05-28,3661,B,8.6,San Jose-Jackson Street,24 
+2009-05-28,3661,C,8.5,San Jose-Jackson Street,24 
+2009-05-28,3661,A,9.3,San Jose-Jackson Street,24 
+2009-05-28,2410,B,9.4,Vallejo-304 Tuolumne Street,24 
+2009-05-28,3026,D,21.5,Clovis-N Villa Avenue,24 
+2009-05-28,3009,C,11.8,Fresno-1st Street,24 
+2009-05-28,3009,A,12.0,Fresno-1st Street,24 
+2009-05-28,3009,L,44.7,Fresno-1st Street,24 
+2009-05-28,3009,D,17.3,Fresno-1st Street,24 
+2009-05-28,3704,A,3.6,Kaiser,24 
+2009-05-28,3496,A,24.5,Bakersfield-410 E Planz Road,24 
+2009-05-28,3146,A,13.1,Bakersfield-5558 California Avenue,24 
+2009-05-28,3146,G,15.8,Bakersfield-5558 California Avenue,24 
+2009-05-28,3146,H,15.7,Bakersfield-5558 California Avenue,24 
+2009-05-28,3145,C,14.6,Bakersfield-Golden State Highway,20 
+2009-05-28,3724,A,4.6,Lebec-Frazier Park Road,24 
+2009-05-28,3194,F,11.4,Corcoran-Patterson Avenue,23 
+2009-05-28,2094,E,6.8,Stockton-Hazelton Street,24 
+2009-05-28,2094,A,8.0,Stockton-Hazelton Street,24 
+2009-05-28,3696,A,7.3,Tracy-Airport,24 
+2009-05-28,2833,A,10.2,Modesto-14th Street,24 
+2009-05-28,2833,E,12.3,Modesto-14th Street,24 
+2009-05-28,2996,A,14.7,Turlock-S Minaret Street,24 
+2009-05-28,3484,B,7.0,Sequoia and Kings Canyon Natl Park,24 
+2009-05-28,3484,A,7.0,Sequoia and Kings Canyon Natl Park,24 
+2009-05-28,2156,A,4.4,Sequoia Natl Park-Ash Mountain #2,24 
+2009-05-28,2032,B,15.5,Visalia-N Church Street,21 
+2009-05-28,2032,A,14.6,Visalia-N Church Street,24 
+2009-05-28,3675,A,8.2,Brawley-220 Main Street,24 
+2009-05-28,3173,A,15.9,Calexico-East,24 
+2009-05-28,2551,A,10.4,El Centro-9th Street,24 
+2009-05-28,2878,A,11.5,Indio-Jackson Street,24 
+2009-05-28,2199,A,13.2,Palm Springs-Fire Station,24 
+2009-05-28,2115,D,13.5,Chico-Manzanita Avenue,24 
+2009-05-28,2115,C,13.5,Chico-Manzanita Avenue,24 
+2009-05-28,2630,A,14.0,Gridley-Cowee Avenue,23 
+2009-05-28,2660,A,14.6,Paradise-Fire Station #1,24 
+2009-05-28,2744,B,12.3,Colusa-Sunrise Blvd,24 
+2009-05-28,3714,A,14.8,Willows-720 N Colusa Street,24 
+2009-05-28,2956,B,13.6,Roseville-N Sunrise Blvd,24 
+2009-05-28,2977,A,13.5,Elk Grove-Bruceville Road,24 
+2009-05-28,3187,A,10.3,Folsom-Natoma Street,22 
+2009-05-28,2731,A,8.8,Sacramento-Del Paso Manor,24 
+2009-05-28,2731,D,12.4,Sacramento-Del Paso Manor,24 
+2009-05-28,2731,C,8.4,Sacramento-Del Paso Manor,24 
+2009-05-28,2346,A,7.8,Sacramento-Health Dept Stockton Blvd,24 
+2009-05-28,3011,A,8.1,Sacramento-T Street,24 
+2009-05-28,3011,F,7.5,Sacramento-T Street,24 
+2009-05-28,2972,A,4.8,Lassen Volcanic Natl Park-Manzanita Lake,24 
+2009-05-28,2958,C,11.7,Yuba City-Almond Street,24 
+2009-05-28,2958,A,7.7,Yuba City-Almond Street,24 
+2009-05-28,2143,A,11.0,Davis-UCD Campus,23

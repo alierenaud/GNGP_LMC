@@ -1,0 +1,1085 @@
+summary_date,site,monitor,pm25_davg,name,obs_count 
+2019-12-22,2116,B,4.1,Bishop-White Mountain Research Center,24 
+2019-12-22,3154,G,3.4,Keeler-Cerro Gordo Road,24 
+2019-12-22,2224,A,1.6,Lee Vining-SMS,24 
+2019-12-22,2915,B,4.4,Mammoth Lakes-Gateway HC,24 
+2019-12-22,3802,B,0.9,Tahoe City-221 Fairway Drive,24 
+2019-12-22,3144,B,4.6,San Andreas-Gold Strike Road,24 
+2019-12-22,2353,A,39.3,Yosemite Village-Visitor Center,24 
+2019-12-22,3126,D,5.7,Grass Valley-Litton Building,23 
+2019-12-22,2208,D,4.0,Truckee-Fire Station,24 
+2019-12-22,3002,B,5.1,Colfax-City Hall,24 
+2019-12-22,3128,C,13.5,Chester-222 1st Avenue,24 
+2019-12-22,3801,C,16.3,Portola-Gulling Street                  ,24 
+2019-12-22,3020,C,3.4,Quincy-N Church Street,24 
+2019-12-22,3020,A,2.9,Quincy-N Church Street,24 
+2019-12-22,3121,B,1.7,Mojave-923 Poole Street,24 
+2019-12-22,3835,A,-0.2,Ridgecrest-Ward                         ,24 
+2019-12-22,3658,B,8.9,Lancaster-43301 Division Street,24 
+2019-12-22,3500,A,5.3,Victorville-14306 Park Avenue,24 
+2019-12-22,3500,B,5.5,Victorville-14306 Park Avenue,24 
+2019-12-22,3839,B,7.0,CRESCENT CITY-CRESCENT ELK SCHOOL       ,24 
+2019-12-22,2271,C,4.6,Ukiah-County Library,22 
+2019-12-22,3765,A,4.1,Willits-125 E Commercial Street,24 
+2019-12-22,3132,B,7.5,Weaverville-Courthouse,24 
+2019-12-22,2016,A,2.3,Carmel Valley-Ford Road,24 
+2019-12-22,3726,A,2.5,King City-415 Pearl Street,24 
+2019-12-22,3489,C,1.9,Salinas-High School,24 
+2019-12-22,2628,B,2.9,Hollister-Fairview Road,24 
+2019-12-22,3811,A,2.9,San Lorenzo Valley Middle School AMS,24 
+2019-12-22,3200,C,3.4,Santa Cruz AMS,24 
+2019-12-22,2752,B,4.2,Yreka-Foothill Drive,24 
+2019-12-22,3743,A,14.3,Compton-700 North Bullis Road,24 
+2019-12-22,2849,A,6.9,Glendora-Laurel,24 
+2019-12-22,3818,A,11.6,Long Beach-Route 710 Near Road          ,24 
+2019-12-22,3818,C,15.8,Long Beach-Route 710 Near Road          ,23 
+2019-12-22,2899,A,8.7,Los Angeles-North Main Street,24 
+2019-12-22,2899,I,11.5,Los Angeles-North Main Street,24 
+2019-12-22,2420,C,14.9,Reseda,24 
+2019-12-22,3502,A,4.4,Santa Clarita,24 
+2019-12-22,3679,B,11.4,South Long Beach,24 
+2019-12-22,3679,A,9.5,South Long Beach,24 
+2019-12-22,3674,B,6.5,Anaheim-Pampas Lane,24 
+2019-12-22,3674,A,6.9,Anaheim-Pampas Lane,24 
+2019-12-22,3168,A,5.1,Banning Airport,24 
+2019-12-22,2943,A,4.4,Lake Elsinore-W Flint Street,24 
+2019-12-22,3702,A,15.7,Mira Loma Van Buren,24 
+2019-12-22,3702,B,16.6,Mira Loma Van Buren,24 
+2019-12-22,2596,J,8.9,Riverside-Rubidoux,24 
+2019-12-22,2596,A,9.3,Riverside-Rubidoux,24 
+2019-12-22,3777,A,6.1,Winchester-33700 Borel Road             ,24 
+2019-12-22,3819,C,10.4,Ontario-Route 60 Near Road              ,24 
+2019-12-22,3819,A,8.0,Ontario-Route 60 Near Road              ,24 
+2019-12-22,2485,A,1.0,Upland,24 
+2019-12-22,3762,A,3.1,Arroyo Grande-2391 Willow Road,24 
+2019-12-22,3812,A,5.1,Atascadero-Lift Station #5              ,24 
+2019-12-22,2979,A,4.4,Nipomo-Guadalupe Road,24 
+2019-12-22,3688,B,3.8,San Luis Obispo-3220 South Higuera St,24 
+2019-12-22,3153,A,5.5,Goleta-Fairview,24 
+2019-12-22,2360,A,2.5,Lompoc-S H Street,22 
+2019-12-22,3665,D,4.7,Santa Barbara-700 East Canon Perdido,24 
+2019-12-22,3486,D,2.8,Santa Maria-906 S Broadway,23 
+2019-12-22,2991,D,1.7,El Rio-Rio Mesa School #2,24 
+2019-12-22,3172,B,3.8,Ojai-Ojai Avenue,24 
+2019-12-22,3505,C,3.5,Piru-3301 Pacific Avenue,24 
+2019-12-22,2880,E,7.3,Simi Valley-Cochran Street,24 
+2019-12-22,2880,D,6.3,Simi Valley-Cochran Street,24 
+2019-12-22,2984,F,7.2,Thousand Oaks-Moorpark Road,24 
+2019-12-22,2460,B,3.8,Alpine-Victoria Drive,24 
+2019-12-22,3198,C,6.8,Camp Pendleton,24 
+2019-12-22,3829,A,23.8,El Cajon-Lexington Elementary School    ,24 
+2019-12-22,3829,B,24.8,El Cajon-Lexington Elementary School    ,24 
+2019-12-22,3739,A,19.3,Otay Mesa-Donovan,24 
+2019-12-22,3846,A,13.2,San Diego - Sherman Elementary School   ,24 
+2019-12-22,3828,A,6.5,Berkeley-Aquatic Park                   ,24 
+2019-12-22,3490,D,6.4,Livermore-793 Rincon Avenue,24 
+2019-12-22,3247,B,5.7,Oakland-9925 International Blvd,24 
+2019-12-22,3803,A,5.2,Oakland-Laney College                   ,24 
+2019-12-22,3742,C,4.2,Oakland-West,24 
+2019-12-22,3840,A,7.9,Pleasanton-Owens Ct                     ,24 
+2019-12-22,2831,C,8.2,Concord-2956-A Treat Blvd,24 
+2019-12-22,3668,A,6.9,San Pablo-Rumrill Blvd,24 
+2019-12-22,2622,A,7.3,San Rafael,24 
+2019-12-22,3837,A,8.9,Napa-Valley College,24 
+2019-12-22,2373,D,4.7,San Francisco-Arkansas Street,24 
+2019-12-22,2125,D,4.6,Redwood City,24 
+2019-12-22,2320,B,5.3,Gilroy-9th Street,24 
+2019-12-22,3661,D,3.3,San Jose-Jackson Street,24 
+2019-12-22,3810,A,5.5,San Jose-Knox Avenue                    ,24 
+2019-12-22,2410,D,10.7,Vallejo-304 Tuolumne Street,24 
+2019-12-22,2410,E,10.8,Vallejo-304 Tuolumne Street,24 
+2019-12-22,3804,A,8.3,Sebastopol-103 Morris Street            ,24 
+2019-12-22,3026,D,5.5,Clovis-N Villa Avenue,24 
+2019-12-22,3781,A,8.3,Fresno-Garland                          ,24 
+2019-12-22,3781,C,7.5,Fresno-Garland                          ,24 
+2019-12-22,3781,E,7.7,Fresno-Garland                          ,24 
+2019-12-22,3768,A,1.3,Huron-16875 4th Street,19 
+2019-12-22,3759,A,3.2,Tranquility-32650 West Adams Avenue,24 
+2019-12-22,3146,A,8.1,Bakersfield-5558 California Avenue,24 
+2019-12-22,3146,G,8.0,Bakersfield-5558 California Avenue,24 
+2019-12-22,3769,A,2.0,Lebec-Beartrap Road,24 
+2019-12-22,3194,G,7.7,Corcoran-Patterson Avenue,24 
+2019-12-22,3129,A,5.8,Hanford-S Irwin Street,24 
+2019-12-22,3771,A,5.0,Madera-28261 Avenue 14,24 
+2019-12-22,3022,A,6.3,Merced-S Coffee Avenue,24 
+2019-12-22,3772,A,4.8,Manteca-530 Fishback Rd,24 
+2019-12-22,2094,F,7.0,Stockton-Hazelton Street,24 
+2019-12-22,3696,A,5.6,Tracy-Airport,24 
+2019-12-22,2833,I,5.6,Modesto-14th Street,23 
+2019-12-22,2996,A,5.1,Turlock-S Minaret Street,24 
+2019-12-22,3763,A,9.8,Porterville-1839 Newcomb Street,24 
+2019-12-22,3484,B,6.4,Sequoia and Kings Canyon Natl Park,24 
+2019-12-22,2032,B,10.2,Visalia-N Church Street,24 
+2019-12-22,5407,t,3.0,Bombay Beach,24 
+2019-12-22,3135,K,25.0,Calexico-Ethel Street,24 
+2019-12-22,3135,A,27.0,Calexico-Ethel Street,24 
+2019-12-22,5408,t,3.6,Sonny Bono,24 
+2019-12-22,3838,A,5.3,Joshua Tree NP-Cottonwood #2            ,24 
+2019-12-22,5406,t,3.5,Salton Sea Park,23 
+2019-12-22,3783,E,8.0,Chico-East Avenue                       ,24 
+2019-12-22,2630,A,8.6,Gridley-Cowee Avenue,24 
+2019-12-22,3786,A,0.5,Paradise-Theater                        ,24 
+2019-12-22,2744,B,9.0,Colusa-Sunrise Blvd,24 
+2019-12-22,3714,A,11.1,Willows-720 N Colusa Street,24 
+2019-12-22,3789,A,5.4,Auburn-11645 Atwood Road                ,24 
+2019-12-22,3841,B,11.3,Lincoln-2885 Moore Road                 ,24 
+2019-12-22,2977,A,4.7,Elk Grove-Bruceville Road,24 
+2019-12-22,2731,A,10.2,Sacramento-Del Paso Manor,24 
+2019-12-22,2731,D,9.4,Sacramento-Del Paso Manor,24 
+2019-12-22,3011,F,10.9,Sacramento-T Street,24 
+2019-12-22,3209,B,2.9,Sloughhouse,24 
+2019-12-22,3032,-,21.0,Anderson-North Street,23 
+2019-12-22,2829,-,7.5,Redding-Health Dept Roof,24 
+2019-12-22,3678,-,11.2,Vacaville-Ulatis Drive,24 
+2019-12-22,2958,C,6.7,Yuba City-Almond Street,24 
+2019-12-22,2958,A,7.0,Yuba City-Almond Street,24 
+2019-12-22,3816,B,8.3,Red Bluff-1834 Walnut Street            ,24 
+2019-12-22,2143,A,8.8,Davis-UCD Campus,24 
+2019-12-22,3249,-,9.8,Woodland-Gibson Road,24 
+2019-12-23,2116,A,1.1,Bishop-White Mountain Research Center,24 
+2019-12-23,2116,C,1.0,Bishop-White Mountain Research Center,24 
+2019-12-23,2116,B,1.7,Bishop-White Mountain Research Center,24 
+2019-12-23,3154,A,1.0,Keeler-Cerro Gordo Road,24 
+2019-12-23,3154,G,2.5,Keeler-Cerro Gordo Road,23 
+2019-12-23,3707,A,0.3,Hoover,24 
+2019-12-23,2224,A,1.3,Lee Vining-SMS,24 
+2019-12-23,2915,B,2.1,Mammoth Lakes-Gateway HC,24 
+2019-12-23,2915,C,2.0,Mammoth Lakes-Gateway HC,24 
+2019-12-23,3834,A,1.9,Lakeport-S. Main Street                 ,24 
+2019-12-23,3817,A,2.5,Lake Tahoe Community College            ,24 
+2019-12-23,3802,B,1.2,Tahoe City-221 Fairway Drive,24 
+2019-12-23,3144,B,5.5,San Andreas-Gold Strike Road,24 
+2019-12-23,3018,B,0.6,Yosemite Natl Park-Turtleback Dome,24 
+2019-12-23,3018,A,0.8,Yosemite Natl Park-Turtleback Dome,24 
+2019-12-23,2353,A,17.6,Yosemite Village-Visitor Center,24 
+2019-12-23,3126,A,2.7,Grass Valley-Litton Building,24 
+2019-12-23,3126,D,7.3,Grass Valley-Litton Building,24 
+2019-12-23,2208,A,4.1,Truckee-Fire Station,24 
+2019-12-23,2208,D,6.5,Truckee-Fire Station,24 
+2019-12-23,3002,B,7.2,Colfax-City Hall,24 
+2019-12-23,3128,C,14.0,Chester-222 1st Avenue,24 
+2019-12-23,3801,C,18.8,Portola-Gulling Street                  ,24 
+2019-12-23,3801,D,15.7,Portola-Gulling Street                  ,24 
+2019-12-23,3801,A,14.5,Portola-Gulling Street                  ,24 
+2019-12-23,3801,B,15.5,Portola-Gulling Street                  ,24 
+2019-12-23,3020,A,4.4,Quincy-N Church Street,24 
+2019-12-23,3020,C,5.1,Quincy-N Church Street,24 
+2019-12-23,3121,B,2.0,Mojave-923 Poole Street,24 
+2019-12-23,3835,A,2.3,Ridgecrest-Ward                         ,23 
+2019-12-23,3658,B,3.4,Lancaster-43301 Division Street,24 
+2019-12-23,3152,A,1.8,Joshua Tree NP - Black Rock,24 
+2019-12-23,3500,B,3.7,Victorville-14306 Park Avenue,24 
+2019-12-23,3500,A,3.4,Victorville-14306 Park Avenue,24 
+2019-12-23,3839,B,4.2,CRESCENT CITY-CRESCENT ELK SCHOOL       ,24 
+2019-12-23,3016,A,1.6,Redwood Natl Park-Requa,24 
+2019-12-23,3716,A,10.8,Eureka-Jacobs,24 
+2019-12-23,2271,C,10.5,Ukiah-County Library,23 
+2019-12-23,3765,A,4.4,Willits-125 E Commercial Street,24 
+2019-12-23,3711,A,0.9,Trinity,24 
+2019-12-23,3132,B,11.3,Weaverville-Courthouse,24 
+2019-12-23,2016,A,1.9,Carmel Valley-Ford Road,22 
+2019-12-23,3726,A,1.4,King City-415 Pearl Street,23 
+2019-12-23,3489,C,3.6,Salinas-High School,24 
+2019-12-23,3489,B,6.8,Salinas-High School,24 
+2019-12-23,2628,B,6.2,Hollister-Fairview Road,23 
+2019-12-23,2983,A,1.9,Pinnacles National Monument,24 
+2019-12-23,3811,A,2.8,San Lorenzo Valley Middle School AMS,23 
+2019-12-23,3200,C,3.5,Santa Cruz AMS,24 
+2019-12-23,3150,A,0.5,Lava Beds Natl Monument,24 
+2019-12-23,2752,B,5.9,Yreka-Foothill Drive,24 
+2019-12-23,2484,A,2.0,Azusa,24 
+2019-12-23,3743,A,6.8,Compton-700 North Bullis Road,24 
+2019-12-23,2849,A,7.2,Glendora-Laurel,24 
+2019-12-23,3701,B,0.6,Lebec-Peace Valley Road,24 
+2019-12-23,3818,A,7.0,Long Beach-Route 710 Near Road          ,24 
+2019-12-23,3818,C,7.5,Long Beach-Route 710 Near Road          ,24 
+2019-12-23,2899,E,5.7,Los Angeles-North Main Street,24 
+2019-12-23,2899,B,4.3,Los Angeles-North Main Street,24 
+2019-12-23,2899,A,4.7,Los Angeles-North Main Street,24 
+2019-12-23,2899,I,6.5,Los Angeles-North Main Street,24 
+2019-12-23,2429,A,7.0,North Long Beach,24 
+2019-12-23,2160,A,3.5,Pasadena-S Wilson Avenue,24 
+2019-12-23,2160,B,3.9,Pasadena-S Wilson Avenue,24 
+2019-12-23,3693,D,7.1,Pico Rivera-4144 San Gabriel,24 
+2019-12-23,3693,A,7.2,Pico Rivera-4144 San Gabriel,24 
+2019-12-23,2420,A,6.7,Reseda,24 
+2019-12-23,2420,C,7.8,Reseda,24 
+2019-12-23,3502,A,6.1,Santa Clarita,24 
+2019-12-23,3679,A,6.2,South Long Beach,24 
+2019-12-23,3679,B,7.0,South Long Beach,24 
+2019-12-23,3674,A,7.1,Anaheim-Pampas Lane,24 
+2019-12-23,3674,B,4.4,Anaheim-Pampas Lane,24 
+2019-12-23,3674,C,8.1,Anaheim-Pampas Lane,24 
+2019-12-23,3265,A,4.2,Mission Viejo-26081 Via Pera,24 
+2019-12-23,3708,A,2.7,Agua Tibia,24 
+2019-12-23,3168,A,8.6,Banning Airport,24 
+2019-12-23,2943,A,1.6,Lake Elsinore-W Flint Street,24 
+2019-12-23,3702,D,7.4,Mira Loma Van Buren,24 
+2019-12-23,3702,A,7.6,Mira Loma Van Buren,24 
+2019-12-23,3702,B,6.7,Mira Loma Van Buren,24 
+2019-12-23,2596,H,7.1,Riverside-Rubidoux,24 
+2019-12-23,2596,A,6.7,Riverside-Rubidoux,24 
+2019-12-23,2596,J,4.7,Riverside-Rubidoux,23 
+2019-12-23,2596,E,6.6,Riverside-Rubidoux,24 
+2019-12-23,3777,A,7.5,Winchester-33700 Borel Road             ,24 
+2019-12-23,3266,A,2.2,Big Bear City-501 W. Valley Blvd,24 
+2019-12-23,2266,D,4.8,Fontana-Arrow Highway,24 
+2019-12-23,2266,A,4.0,Fontana-Arrow Highway,24 
+2019-12-23,3819,A,7.1,Ontario-Route 60 Near Road              ,24 
+2019-12-23,3819,C,7.5,Ontario-Route 60 Near Road              ,24 
+2019-12-23,2221,A,8.7,San Bernardino-4th Street,24 
+2019-12-23,3700,A,0.9,San Gorgonio Wilderness,24 
+2019-12-23,2485,A,1.2,Upland,24 
+2019-12-23,3762,A,3.2,Arroyo Grande-2391 Willow Road,24 
+2019-12-23,3812,A,3.1,Atascadero-Lift Station #5              ,24 
+2019-12-23,2979,A,3.5,Nipomo-Guadalupe Road,24 
+2019-12-23,3688,B,3.5,San Luis Obispo-3220 South Higuera St,24 
+2019-12-23,3153,A,3.8,Goleta-Fairview,24 
+2019-12-23,2360,A,0.7,Lompoc-S H Street,23 
+2019-12-23,3710,A,0.2,San Rafael Wilderness,24 
+2019-12-23,3665,D,4.6,Santa Barbara-700 East Canon Perdido,24 
+2019-12-23,3486,D,2.0,Santa Maria-906 S Broadway,24 
+2019-12-23,2991,D,1.9,El Rio-Rio Mesa School #2,24 
+2019-12-23,3172,B,3.2,Ojai-Ojai Avenue,24 
+2019-12-23,3505,C,1.6,Piru-3301 Pacific Avenue,24 
+2019-12-23,2880,D,5.3,Simi Valley-Cochran Street,24 
+2019-12-23,2880,E,4.7,Simi Valley-Cochran Street,24 
+2019-12-23,2984,F,5.5,Thousand Oaks-Moorpark Road,24 
+2019-12-23,2460,B,2.4,Alpine-Victoria Drive,23 
+2019-12-23,3198,C,5.3,Camp Pendleton,24 
+2019-12-23,2589,A,6.2,Chula Vista,24 
+2019-12-23,3829,B,12.3,El Cajon-Lexington Elementary School    ,24 
+2019-12-23,3739,A,7.7,Otay Mesa-Donovan,23 
+2019-12-23,3821,A,5.3,San Diego-11403 Rancho Carmel Dr        ,24 
+2019-12-23,3766,B,3.9,San Diego-Kearny Villa Road,24 
+2019-12-23,3766,A,3.8,San Diego-Kearny Villa Road,24 
+2019-12-23,3846,A,6.1,San Diego - Sherman Elementary School   ,24 
+2019-12-23,3828,A,4.9,Berkeley-Aquatic Park                   ,24 
+2019-12-23,3490,D,6.3,Livermore-793 Rincon Avenue,24 
+2019-12-23,3247,B,5.0,Oakland-9925 International Blvd,23 
+2019-12-23,3803,A,4.1,Oakland-Laney College                   ,24 
+2019-12-23,3742,C,4.6,Oakland-West,24 
+2019-12-23,3840,A,5.8,Pleasanton-Owens Ct                     ,24 
+2019-12-23,2831,A,4.5,Concord-2956-A Treat Blvd,24 
+2019-12-23,2831,C,5.3,Concord-2956-A Treat Blvd,24 
+2019-12-23,3668,A,4.4,San Pablo-Rumrill Blvd,23 
+2019-12-23,2986,A,1.9,Point Reyes National Seashore,24 
+2019-12-23,2622,A,3.7,San Rafael,23 
+2019-12-23,3837,A,6.0,Napa-Valley College,23 
+2019-12-23,2373,D,5.4,San Francisco-Arkansas Street,24 
+2019-12-23,2125,D,5.2,Redwood City,22 
+2019-12-23,2320,B,4.8,Gilroy-9th Street,23 
+2019-12-23,3661,D,8.5,San Jose-Jackson Street,24 
+2019-12-23,3661,A,11.0,San Jose-Jackson Street,24 
+2019-12-23,3810,A,10.3,San Jose-Knox Avenue                    ,23 
+2019-12-23,2410,E,10.2,Vallejo-304 Tuolumne Street,23 
+2019-12-23,2410,D,10.3,Vallejo-304 Tuolumne Street,23 
+2019-12-23,3804,A,6.4,Sebastopol-103 Morris Street            ,23 
+2019-12-23,3026,D,4.9,Clovis-N Villa Avenue,24 
+2019-12-23,3026,A,7.0,Clovis-N Villa Avenue,24 
+2019-12-23,3781,A,9.0,Fresno-Garland                          ,24 
+2019-12-23,3781,E,8.3,Fresno-Garland                          ,24 
+2019-12-23,3781,C,6.7,Fresno-Garland                          ,24 
+2019-12-23,3781,F,7.0,Fresno-Garland                          ,24 
+2019-12-23,3485,A,9.8,Fresno-Hamilton and Winery,24 
+2019-12-23,3768,A,1.2,Huron-16875 4th Street,24 
+2019-12-23,3704,A,0.3,Kaiser,24 
+2019-12-23,3759,A,4.8,Tranquility-32650 West Adams Avenue,24 
+2019-12-23,3496,A,8.6,Bakersfield-410 E Planz Road,24 
+2019-12-23,3146,B,7.5,Bakersfield-5558 California Avenue,24 
+2019-12-23,3146,G,6.8,Bakersfield-5558 California Avenue,24 
+2019-12-23,3146,A,7.7,Bakersfield-5558 California Avenue,24 
+2019-12-23,3145,D,9.4,Bakersfield-Golden State Highway,24 
+2019-12-23,3769,A,-0.6,Lebec-Beartrap Road,20 
+2019-12-23,3724,A,2.2,Lebec-Frazier Park Road,24 
+2019-12-23,3194,G,7.2,Corcoran-Patterson Avenue,23 
+2019-12-23,3194,A,9.1,Corcoran-Patterson Avenue,24 
+2019-12-23,3129,A,8.2,Hanford-S Irwin Street,24 
+2019-12-23,3771,B,8.8,Madera-28261 Avenue 14,24 
+2019-12-23,3771,A,8.0,Madera-28261 Avenue 14,24 
+2019-12-23,3253,A,9.1,Merced-2334 M Street,24 
+2019-12-23,3022,A,8.1,Merced-S Coffee Avenue,24 
+2019-12-23,3772,A,5.5,Manteca-530 Fishback Rd,24 
+2019-12-23,2094,F,8.5,Stockton-Hazelton Street,24 
+2019-12-23,3696,A,4.3,Tracy-Airport,24 
+2019-12-23,2833,I,6.8,Modesto-14th Street,24 
+2019-12-23,2833,D,7.7,Modesto-14th Street,24 
+2019-12-23,2833,A,8.4,Modesto-14th Street,24 
+2019-12-23,2996,A,6.6,Turlock-S Minaret Street,24 
+2019-12-23,3763,A,8.9,Porterville-1839 Newcomb Street,22 
+2019-12-23,3484,B,3.5,Sequoia and Kings Canyon Natl Park,24 
+2019-12-23,2156,A,1.0,Sequoia Natl Park-Ash Mountain #2,24 
+2019-12-23,2032,A,8.5,Visalia-N Church Street,24 
+2019-12-23,2032,C,9.4,Visalia-N Church Street,24 
+2019-12-23,2032,B,8.1,Visalia-N Church Street,24 
+2019-12-23,5407,t,5.7,Bombay Beach,24 
+2019-12-23,3675,A,12.8,Brawley-220 Main Street,24 
+2019-12-23,3135,A,15.9,Calexico-Ethel Street,24 
+2019-12-23,3135,K,13.8,Calexico-Ethel Street,23 
+2019-12-23,3135,C,16.2,Calexico-Ethel Street,24 
+2019-12-23,3135,H,16.2,Calexico-Ethel Street,24 
+2019-12-23,2551,A,10.4,El Centro-9th Street,24 
+2019-12-23,5408,t,4.3,Sonny Bono,24 
+2019-12-23,3838,A,5.5,Joshua Tree NP-Cottonwood #2            ,24 
+2019-12-23,5406,t,7.2,Salton Sea Park,24 
+2019-12-23,3783,E,10.1,Chico-East Avenue                       ,23 
+2019-12-23,3783,B,9.8,Chico-East Avenue                       ,24 
+2019-12-23,2630,A,6.7,Gridley-Cowee Avenue,23 
+2019-12-23,3786,A,1.3,Paradise-Theater                        ,24 
+2019-12-23,2744,B,3.6,Colusa-Sunrise Blvd,23 
+2019-12-23,2744,A,2.4,Colusa-Sunrise Blvd,24 
+2019-12-23,3714,A,5.3,Willows-720 N Colusa Street,24 
+2019-12-23,3789,A,6.2,Auburn-11645 Atwood Road                ,24 
+2019-12-23,3841,B,5.4,Lincoln-2885 Moore Road                 ,24 
+2019-12-23,2956,C,7.3,Roseville-N Sunrise Blvd,24 
+2019-12-23,2956,A,7.3,Roseville-N Sunrise Blvd,24 
+2019-12-23,2977,A,2.0,Elk Grove-Bruceville Road,24 
+2019-12-23,2731,B,7.7,Sacramento-Del Paso Manor,24 
+2019-12-23,2731,A,7.6,Sacramento-Del Paso Manor,24 
+2019-12-23,2731,D,8.3,Sacramento-Del Paso Manor,23 
+2019-12-23,3011,A,5.7,Sacramento-T Street,24 
+2019-12-23,3011,C,6.3,Sacramento-T Street,24 
+2019-12-23,3011,F,6.8,Sacramento-T Street,24 
+2019-12-23,3209,B,3.3,Sloughhouse,23 
+2019-12-23,3032,-,18.3,Anderson-North Street,23 
+2019-12-23,2972,A,0.2,Lassen Volcanic Natl Park-Manzanita Lake,24 
+2019-12-23,2829,-,2.1,Redding-Health Dept Roof,24 
+2019-12-23,2829,A,3.0,Redding-Health Dept Roof,24 
+2019-12-23,3678,-,4.4,Vacaville-Ulatis Drive,24 
+2019-12-23,2958,A,5.9,Yuba City-Almond Street,24 
+2019-12-23,2958,C,5.7,Yuba City-Almond Street,23 
+2019-12-23,3816,B,4.4,Red Bluff-1834 Walnut Street            ,24 
+2019-12-23,2143,A,3.8,Davis-UCD Campus,22 
+2019-12-23,3249,-,4.4,Woodland-Gibson Road,24 
+2019-12-23,3249,A,1.0,Woodland-Gibson Road,24 
+2019-12-24,2116,B,4.3,Bishop-White Mountain Research Center,24 
+2019-12-24,3154,G,4.6,Keeler-Cerro Gordo Road,24 
+2019-12-24,2224,A,1.5,Lee Vining-SMS,24 
+2019-12-24,2915,B,3.9,Mammoth Lakes-Gateway HC,24 
+2019-12-24,3802,B,0.3,Tahoe City-221 Fairway Drive,24 
+2019-12-24,3144,B,9.0,San Andreas-Gold Strike Road,24 
+2019-12-24,2353,A,6.5,Yosemite Village-Visitor Center,24 
+2019-12-24,3126,D,8.4,Grass Valley-Litton Building,24 
+2019-12-24,2208,D,2.4,Truckee-Fire Station,24 
+2019-12-24,3002,B,5.0,Colfax-City Hall,24 
+2019-12-24,3128,C,17.4,Chester-222 1st Avenue,24 
+2019-12-24,3801,C,19.9,Portola-Gulling Street                  ,24 
+2019-12-24,3020,A,7.0,Quincy-N Church Street,24 
+2019-12-24,3020,C,7.5,Quincy-N Church Street,24 
+2019-12-24,3121,B,1.3,Mojave-923 Poole Street,24 
+2019-12-24,3835,A,1.5,Ridgecrest-Ward                         ,24 
+2019-12-24,3658,B,5.4,Lancaster-43301 Division Street,24 
+2019-12-24,3500,B,3.5,Victorville-14306 Park Avenue,24 
+2019-12-24,3500,A,4.7,Victorville-14306 Park Avenue,24 
+2019-12-24,3839,B,4.3,CRESCENT CITY-CRESCENT ELK SCHOOL       ,24 
+2019-12-24,2271,C,10.7,Ukiah-County Library,23 
+2019-12-24,3765,A,4.8,Willits-125 E Commercial Street,24 
+2019-12-24,3132,B,17.0,Weaverville-Courthouse,24 
+2019-12-24,2016,A,1.8,Carmel Valley-Ford Road,24 
+2019-12-24,3726,A,5.4,King City-415 Pearl Street,24 
+2019-12-24,3489,C,8.5,Salinas-High School,24 
+2019-12-24,2628,B,6.3,Hollister-Fairview Road,24 
+2019-12-24,3811,A,2.8,San Lorenzo Valley Middle School AMS,24 
+2019-12-24,3200,C,6.4,Santa Cruz AMS,24 
+2019-12-24,2752,B,9.4,Yreka-Foothill Drive,24 
+2019-12-24,3743,A,13.2,Compton-700 North Bullis Road,24 
+2019-12-24,2849,A,6.8,Glendora-Laurel,24 
+2019-12-24,3818,A,10.1,Long Beach-Route 710 Near Road          ,24 
+2019-12-24,3818,C,12.7,Long Beach-Route 710 Near Road          ,24 
+2019-12-24,2899,A,8.4,Los Angeles-North Main Street,24 
+2019-12-24,2899,I,10.5,Los Angeles-North Main Street,24 
+2019-12-24,2420,C,14.3,Reseda,24 
+2019-12-24,3502,A,6.8,Santa Clarita,24 
+2019-12-24,3679,B,10.9,South Long Beach,24 
+2019-12-24,3679,A,8.5,South Long Beach,24 
+2019-12-24,3674,A,15.7,Anaheim-Pampas Lane,24 
+2019-12-24,3674,B,13.3,Anaheim-Pampas Lane,24 
+2019-12-24,3168,A,5.6,Banning Airport,24 
+2019-12-24,2943,A,0.3,Lake Elsinore-W Flint Street,24 
+2019-12-24,3702,A,14.3,Mira Loma Van Buren,24 
+2019-12-24,3702,B,11.9,Mira Loma Van Buren,24 
+2019-12-24,2596,A,11.1,Riverside-Rubidoux,24 
+2019-12-24,2596,J,8.8,Riverside-Rubidoux,22 
+2019-12-24,3777,A,5.1,Winchester-33700 Borel Road             ,24 
+2019-12-24,3819,A,14.4,Ontario-Route 60 Near Road              ,24 
+2019-12-24,3819,C,15.9,Ontario-Route 60 Near Road              ,24 
+2019-12-24,2485,A,5.7,Upland,24 
+2019-12-24,3762,A,3.0,Arroyo Grande-2391 Willow Road,24 
+2019-12-24,3812,A,6.3,Atascadero-Lift Station #5              ,24 
+2019-12-24,2979,A,3.7,Nipomo-Guadalupe Road,24 
+2019-12-24,3688,B,2.9,San Luis Obispo-3220 South Higuera St,24 
+2019-12-24,3153,A,2.5,Goleta-Fairview,24 
+2019-12-24,2360,A,3.4,Lompoc-S H Street,24 
+2019-12-24,3665,D,3.3,Santa Barbara-700 East Canon Perdido,24 
+2019-12-24,3486,D,5.5,Santa Maria-906 S Broadway,22 
+2019-12-24,2991,D,2.5,El Rio-Rio Mesa School #2,24 
+2019-12-24,3172,B,4.4,Ojai-Ojai Avenue,24 
+2019-12-24,3505,C,0.6,Piru-3301 Pacific Avenue,24 
+2019-12-24,2880,D,7.7,Simi Valley-Cochran Street,24 
+2019-12-24,2880,E,7.5,Simi Valley-Cochran Street,24 
+2019-12-24,2984,F,9.2,Thousand Oaks-Moorpark Road,24 
+2019-12-24,2460,B,2.3,Alpine-Victoria Drive,23 
+2019-12-24,3198,C,4.2,Camp Pendleton,24 
+2019-12-24,3829,B,8.3,El Cajon-Lexington Elementary School    ,24 
+2019-12-24,3739,A,6.1,Otay Mesa-Donovan,24 
+2019-12-24,3846,A,4.4,San Diego - Sherman Elementary School   ,24 
+2019-12-24,3828,A,6.8,Berkeley-Aquatic Park                   ,24 
+2019-12-24,3490,D,3.9,Livermore-793 Rincon Avenue,24 
+2019-12-24,3247,B,6.8,Oakland-9925 International Blvd,24 
+2019-12-24,3803,A,5.2,Oakland-Laney College                   ,24 
+2019-12-24,3742,C,4.9,Oakland-West,24 
+2019-12-24,3840,A,6.0,Pleasanton-Owens Ct                     ,24 
+2019-12-24,2831,C,6.8,Concord-2956-A Treat Blvd,24 
+2019-12-24,3668,A,6.4,San Pablo-Rumrill Blvd,24 
+2019-12-24,2622,A,5.5,San Rafael,24 
+2019-12-24,3837,A,7.3,Napa-Valley College,24 
+2019-12-24,2373,D,5.3,San Francisco-Arkansas Street,24 
+2019-12-24,2125,D,6.1,Redwood City,24 
+2019-12-24,2320,B,10.7,Gilroy-9th Street,24 
+2019-12-24,3661,D,6.3,San Jose-Jackson Street,24 
+2019-12-24,3810,A,9.0,San Jose-Knox Avenue                    ,24 
+2019-12-24,2410,E,11.5,Vallejo-304 Tuolumne Street,24 
+2019-12-24,2410,D,11.0,Vallejo-304 Tuolumne Street,24 
+2019-12-24,3804,A,7.0,Sebastopol-103 Morris Street            ,24 
+2019-12-24,3026,D,11.7,Clovis-N Villa Avenue,24 
+2019-12-24,3781,A,21.1,Fresno-Garland                          ,24 
+2019-12-24,3781,E,18.3,Fresno-Garland                          ,24 
+2019-12-24,3781,C,18.2,Fresno-Garland                          ,24 
+2019-12-24,3781,D,20.5,Fresno-Garland                          ,24 
+2019-12-24,3768,A,5.6,Huron-16875 4th Street,24 
+2019-12-24,3759,A,0.0,Tranquility-32650 West Adams Avenue,24 
+2019-12-24,3146,A,9.1,Bakersfield-5558 California Avenue,24 
+2019-12-24,3146,G,8.8,Bakersfield-5558 California Avenue,24 
+2019-12-24,3769,A,2.7,Lebec-Beartrap Road,21 
+2019-12-24,3194,G,12.1,Corcoran-Patterson Avenue,24 
+2019-12-24,3129,A,12.2,Hanford-S Irwin Street,24 
+2019-12-24,3771,A,16.2,Madera-28261 Avenue 14,24 
+2019-12-24,3022,A,11.0,Merced-S Coffee Avenue,23 
+2019-12-24,3772,A,7.7,Manteca-530 Fishback Rd,24 
+2019-12-24,2094,G,,Stockton-Hazelton Street,13 
+2019-12-24,2094,F,16.0,Stockton-Hazelton Street,24 
+2019-12-24,3696,A,2.9,Tracy-Airport,24 
+2019-12-24,2833,I,17.7,Modesto-14th Street,23 
+2019-12-24,2996,A,14.3,Turlock-S Minaret Street,24 
+2019-12-24,3763,A,8.1,Porterville-1839 Newcomb Street,24 
+2019-12-24,3484,B,3.3,Sequoia and Kings Canyon Natl Park,24 
+2019-12-24,2032,B,15.3,Visalia-N Church Street,24 
+2019-12-24,5407,t,2.2,Bombay Beach,24 
+2019-12-24,3135,K,7.6,Calexico-Ethel Street,24 
+2019-12-24,3135,A,5.8,Calexico-Ethel Street,24 
+2019-12-24,5408,t,1.5,Sonny Bono,24 
+2019-12-24,3838,A,2.5,Joshua Tree NP-Cottonwood #2            ,24 
+2019-12-24,5406,t,3.0,Salton Sea Park,23 
+2019-12-24,3783,E,14.5,Chico-East Avenue                       ,24 
+2019-12-24,2630,A,12.1,Gridley-Cowee Avenue,24 
+2019-12-24,3786,A,2.9,Paradise-Theater                        ,24 
+2019-12-24,2744,B,7.0,Colusa-Sunrise Blvd,24 
+2019-12-24,3714,A,9.0,Willows-720 N Colusa Street,24 
+2019-12-24,3789,A,7.9,Auburn-11645 Atwood Road                ,24 
+2019-12-24,3841,B,8.5,Lincoln-2885 Moore Road                 ,24 
+2019-12-24,2977,A,5.6,Elk Grove-Bruceville Road,24 
+2019-12-24,2731,A,10.0,Sacramento-Del Paso Manor,24 
+2019-12-24,2731,D,10.3,Sacramento-Del Paso Manor,24 
+2019-12-24,3011,F,10.0,Sacramento-T Street,24 
+2019-12-24,3209,B,4.0,Sloughhouse,24 
+2019-12-24,3032,-,25.2,Anderson-North Street,24 
+2019-12-24,2829,-,14.8,Redding-Health Dept Roof,24 
+2019-12-24,3678,-,6.5,Vacaville-Ulatis Drive,24 
+2019-12-24,2958,C,15.8,Yuba City-Almond Street,24 
+2019-12-24,2958,A,18.8,Yuba City-Almond Street,24 
+2019-12-24,3816,B,9.5,Red Bluff-1834 Walnut Street            ,24 
+2019-12-24,2143,A,8.0,Davis-UCD Campus,24 
+2019-12-24,3249,-,9.9,Woodland-Gibson Road,24 
+2019-12-25,2116,B,3.2,Bishop-White Mountain Research Center,24 
+2019-12-25,3154,G,3.8,Keeler-Cerro Gordo Road,24 
+2019-12-25,2224,A,1.6,Lee Vining-SMS,24 
+2019-12-25,2915,B,3.6,Mammoth Lakes-Gateway HC,24 
+2019-12-25,3802,B,1.0,Tahoe City-221 Fairway Drive,24 
+2019-12-25,3144,B,5.3,San Andreas-Gold Strike Road,24 
+2019-12-25,2353,A,5.8,Yosemite Village-Visitor Center,24 
+2019-12-25,3126,D,7.4,Grass Valley-Litton Building,24 
+2019-12-25,2208,D,1.2,Truckee-Fire Station,24 
+2019-12-25,3002,B,5.6,Colfax-City Hall,24 
+2019-12-25,3128,C,10.1,Chester-222 1st Avenue,24 
+2019-12-25,3801,C,23.8,Portola-Gulling Street                  ,24 
+2019-12-25,3020,A,9.5,Quincy-N Church Street,24 
+2019-12-25,3020,C,11.6,Quincy-N Church Street,22 
+2019-12-25,3121,B,2.5,Mojave-923 Poole Street,24 
+2019-12-25,3835,A,1.0,Ridgecrest-Ward                         ,23 
+2019-12-25,3658,B,3.3,Lancaster-43301 Division Street,24 
+2019-12-25,3500,B,3.2,Victorville-14306 Park Avenue,24 
+2019-12-25,3500,A,3.7,Victorville-14306 Park Avenue,24 
+2019-12-25,3839,B,3.8,CRESCENT CITY-CRESCENT ELK SCHOOL       ,23 
+2019-12-25,2271,C,6.0,Ukiah-County Library,24 
+2019-12-25,3765,A,7.3,Willits-125 E Commercial Street,24 
+2019-12-25,3132,B,16.5,Weaverville-Courthouse,24 
+2019-12-25,2016,A,1.8,Carmel Valley-Ford Road,24 
+2019-12-25,3726,A,1.3,King City-415 Pearl Street,24 
+2019-12-25,3489,C,0.5,Salinas-High School,24 
+2019-12-25,2628,B,1.6,Hollister-Fairview Road,24 
+2019-12-25,3811,A,1.7,San Lorenzo Valley Middle School AMS,24 
+2019-12-25,3200,C,4.1,Santa Cruz AMS,24 
+2019-12-25,2752,B,10.5,Yreka-Foothill Drive,24 
+2019-12-25,3743,A,10.0,Compton-700 North Bullis Road,24 
+2019-12-25,2849,A,7.5,Glendora-Laurel,24 
+2019-12-25,3818,C,7.0,Long Beach-Route 710 Near Road          ,23 
+2019-12-25,3818,A,5.7,Long Beach-Route 710 Near Road          ,24 
+2019-12-25,2899,I,7.9,Los Angeles-North Main Street,24 
+2019-12-25,2899,A,5.8,Los Angeles-North Main Street,24 
+2019-12-25,2420,C,17.1,Reseda,24 
+2019-12-25,3502,A,7.1,Santa Clarita,24 
+2019-12-25,3679,A,3.5,South Long Beach,24 
+2019-12-25,3679,B,5.9,South Long Beach,24 
+2019-12-25,3674,A,4.7,Anaheim-Pampas Lane,24 
+2019-12-25,3674,B,5.3,Anaheim-Pampas Lane,24 
+2019-12-25,3168,A,5.2,Banning Airport,24 
+2019-12-25,2943,A,0.4,Lake Elsinore-W Flint Street,23 
+2019-12-25,3702,B,9.3,Mira Loma Van Buren,24 
+2019-12-25,3702,A,9.5,Mira Loma Van Buren,24 
+2019-12-25,2596,A,8.3,Riverside-Rubidoux,24 
+2019-12-25,2596,J,6.2,Riverside-Rubidoux,24 
+2019-12-25,3777,A,5.4,Winchester-33700 Borel Road             ,24 
+2019-12-25,3819,C,10.7,Ontario-Route 60 Near Road              ,24 
+2019-12-25,3819,A,8.9,Ontario-Route 60 Near Road              ,24 
+2019-12-25,2485,A,5.6,Upland,24 
+2019-12-25,3762,A,2.3,Arroyo Grande-2391 Willow Road,24 
+2019-12-25,3812,A,3.9,Atascadero-Lift Station #5              ,22 
+2019-12-25,2979,A,3.2,Nipomo-Guadalupe Road,24 
+2019-12-25,3688,B,1.9,San Luis Obispo-3220 South Higuera St,24 
+2019-12-25,3153,A,1.9,Goleta-Fairview,24 
+2019-12-25,2360,A,0.8,Lompoc-S H Street,24 
+2019-12-25,3665,D,3.4,Santa Barbara-700 East Canon Perdido,19 
+2019-12-25,3486,D,1.1,Santa Maria-906 S Broadway,22 
+2019-12-25,2991,D,3.3,El Rio-Rio Mesa School #2,24 
+2019-12-25,3172,B,4.0,Ojai-Ojai Avenue,24 
+2019-12-25,3505,C,1.8,Piru-3301 Pacific Avenue,24 
+2019-12-25,2880,D,6.9,Simi Valley-Cochran Street,24 
+2019-12-25,2880,E,6.8,Simi Valley-Cochran Street,24 
+2019-12-25,2984,F,7.6,Thousand Oaks-Moorpark Road,24 
+2019-12-25,2460,B,2.5,Alpine-Victoria Drive,24 
+2019-12-25,3198,C,4.0,Camp Pendleton,24 
+2019-12-25,3829,A,7.6,El Cajon-Lexington Elementary School    ,24 
+2019-12-25,3829,B,8.5,El Cajon-Lexington Elementary School    ,24 
+2019-12-25,3739,A,7.3,Otay Mesa-Donovan,23 
+2019-12-25,3846,A,9.5,San Diego - Sherman Elementary School   ,24 
+2019-12-25,3828,A,4.5,Berkeley-Aquatic Park                   ,24 
+2019-12-25,3490,D,4.3,Livermore-793 Rincon Avenue,24 
+2019-12-25,3247,B,4.2,Oakland-9925 International Blvd,24 
+2019-12-25,3803,A,2.0,Oakland-Laney College                   ,24 
+2019-12-25,3742,C,2.2,Oakland-West,24 
+2019-12-25,3840,A,3.5,Pleasanton-Owens Ct                     ,24 
+2019-12-25,2831,C,5.2,Concord-2956-A Treat Blvd,24 
+2019-12-25,3668,A,3.5,San Pablo-Rumrill Blvd,24 
+2019-12-25,2622,A,4.7,San Rafael,24 
+2019-12-25,3837,A,5.7,Napa-Valley College,24 
+2019-12-25,2373,D,3.5,San Francisco-Arkansas Street,24 
+2019-12-25,2125,D,3.1,Redwood City,24 
+2019-12-25,2320,B,4.3,Gilroy-9th Street,24 
+2019-12-25,3661,D,1.7,San Jose-Jackson Street,24 
+2019-12-25,3810,A,2.6,San Jose-Knox Avenue                    ,24 
+2019-12-25,2410,E,8.5,Vallejo-304 Tuolumne Street,24 
+2019-12-25,2410,D,8.3,Vallejo-304 Tuolumne Street,24 
+2019-12-25,3804,A,5.8,Sebastopol-103 Morris Street            ,24 
+2019-12-25,3026,D,5.7,Clovis-N Villa Avenue,24 
+2019-12-25,3781,C,12.7,Fresno-Garland                          ,24 
+2019-12-25,3781,E,13.2,Fresno-Garland                          ,24 
+2019-12-25,3781,A,11.9,Fresno-Garland                          ,24 
+2019-12-25,3768,A,1.9,Huron-16875 4th Street,23 
+2019-12-25,3759,A,0.8,Tranquility-32650 West Adams Avenue,24 
+2019-12-25,3146,A,8.9,Bakersfield-5558 California Avenue,24 
+2019-12-25,3146,G,10.3,Bakersfield-5558 California Avenue,24 
+2019-12-25,3769,A,0.9,Lebec-Beartrap Road,19 
+2019-12-25,3194,G,7.5,Corcoran-Patterson Avenue,22 
+2019-12-25,3129,A,9.8,Hanford-S Irwin Street,24 
+2019-12-25,3771,A,7.1,Madera-28261 Avenue 14,24 
+2019-12-25,3022,A,7.5,Merced-S Coffee Avenue,24 
+2019-12-25,3772,A,7.5,Manteca-530 Fishback Rd,24 
+2019-12-25,2094,F,6.9,Stockton-Hazelton Street,24 
+2019-12-25,2094,G,7.6,Stockton-Hazelton Street,24 
+2019-12-25,3696,A,3.8,Tracy-Airport,24 
+2019-12-25,2833,I,12.1,Modesto-14th Street,24 
+2019-12-25,2996,A,12.0,Turlock-S Minaret Street,24 
+2019-12-25,3763,A,6.4,Porterville-1839 Newcomb Street,24 
+2019-12-25,3484,B,5.7,Sequoia and Kings Canyon Natl Park,24 
+2019-12-25,2032,B,14.0,Visalia-N Church Street,24 
+2019-12-25,5407,t,0.7,Bombay Beach,24 
+2019-12-25,3135,A,4.5,Calexico-Ethel Street,24 
+2019-12-25,3135,K,5.3,Calexico-Ethel Street,24 
+2019-12-25,5408,t,0.6,Sonny Bono,24 
+2019-12-25,3838,A,3.0,Joshua Tree NP-Cottonwood #2            ,24 
+2019-12-25,5406,t,1.9,Salton Sea Park,22 
+2019-12-25,3783,E,6.5,Chico-East Avenue                       ,24 
+2019-12-25,2630,A,10.0,Gridley-Cowee Avenue,24 
+2019-12-25,3786,A,1.5,Paradise-Theater                        ,24 
+2019-12-25,2744,B,6.1,Colusa-Sunrise Blvd,24 
+2019-12-25,3714,A,7.6,Willows-720 N Colusa Street,24 
+2019-12-25,3789,A,7.7,Auburn-11645 Atwood Road                ,24 
+2019-12-25,3841,B,5.8,Lincoln-2885 Moore Road                 ,24 
+2019-12-25,2977,A,2.0,Elk Grove-Bruceville Road,24 
+2019-12-25,2731,D,5.6,Sacramento-Del Paso Manor,24 
+2019-12-25,2731,A,5.0,Sacramento-Del Paso Manor,24 
+2019-12-25,3011,F,6.2,Sacramento-T Street,24 
+2019-12-25,3209,B,5.0,Sloughhouse,24 
+2019-12-25,3032,-,21.9,Anderson-North Street,24 
+2019-12-25,2829,-,6.7,Redding-Health Dept Roof,24 
+2019-12-25,3678,-,5.4,Vacaville-Ulatis Drive,24 
+2019-12-25,2958,C,9.2,Yuba City-Almond Street,24 
+2019-12-25,2958,A,9.0,Yuba City-Almond Street,24 
+2019-12-25,3816,B,7.9,Red Bluff-1834 Walnut Street            ,24 
+2019-12-25,2143,A,8.0,Davis-UCD Campus,24 
+2019-12-25,3249,-,6.4,Woodland-Gibson Road,24 
+2019-12-26,2116,A,0.6,Bishop-White Mountain Research Center,24 
+2019-12-26,2116,B,1.1,Bishop-White Mountain Research Center,24 
+2019-12-26,3154,G,2.0,Keeler-Cerro Gordo Road,24 
+2019-12-26,3154,A,1.0,Keeler-Cerro Gordo Road,24 
+2019-12-26,2224,A,1.1,Lee Vining-SMS,24 
+2019-12-26,2915,B,2.0,Mammoth Lakes-Gateway HC,24 
+2019-12-26,2915,C,1.0,Mammoth Lakes-Gateway HC,24 
+2019-12-26,3817,A,2.4,Lake Tahoe Community College            ,24 
+2019-12-26,3802,B,1.5,Tahoe City-221 Fairway Drive,24 
+2019-12-26,3144,B,5.8,San Andreas-Gold Strike Road,24 
+2019-12-26,3018,A,0.8,Yosemite Natl Park-Turtleback Dome,24 
+2019-12-26,3018,B,0.8,Yosemite Natl Park-Turtleback Dome,24 
+2019-12-26,2353,A,6.8,Yosemite Village-Visitor Center,24 
+2019-12-26,3126,D,5.3,Grass Valley-Litton Building,24 
+2019-12-26,2208,D,5.7,Truckee-Fire Station,24 
+2019-12-26,3002,B,5.7,Colfax-City Hall,24 
+2019-12-26,3128,C,7.5,Chester-222 1st Avenue,24 
+2019-12-26,3801,B,15.6,Portola-Gulling Street                  ,24 
+2019-12-26,3801,C,15.2,Portola-Gulling Street                  ,24 
+2019-12-26,3020,A,12.2,Quincy-N Church Street,24 
+2019-12-26,3020,C,11.9,Quincy-N Church Street,24 
+2019-12-26,3121,B,0.5,Mojave-923 Poole Street,24 
+2019-12-26,3835,A,1.8,Ridgecrest-Ward                         ,24 
+2019-12-26,3658,B,4.3,Lancaster-43301 Division Street,24 
+2019-12-26,3500,B,3.3,Victorville-14306 Park Avenue,24 
+2019-12-26,3500,A,,Victorville-14306 Park Avenue,5 
+2019-12-26,3839,B,5.5,CRESCENT CITY-CRESCENT ELK SCHOOL       ,23 
+2019-12-26,3016,A,3.7,Redwood Natl Park-Requa,24 
+2019-12-26,3716,A,13.7,Eureka-Jacobs,24 
+2019-12-26,2271,C,11.3,Ukiah-County Library,23 
+2019-12-26,3765,A,7.8,Willits-125 E Commercial Street,24 
+2019-12-26,3711,A,0.6,Trinity,24 
+2019-12-26,3132,B,11.7,Weaverville-Courthouse,24 
+2019-12-26,2016,A,2.0,Carmel Valley-Ford Road,24 
+2019-12-26,3726,A,2.2,King City-415 Pearl Street,24 
+2019-12-26,3489,C,0.5,Salinas-High School,23 
+2019-12-26,2628,B,1.7,Hollister-Fairview Road,23 
+2019-12-26,3811,A,5.0,San Lorenzo Valley Middle School AMS,23 
+2019-12-26,3200,C,4.3,Santa Cruz AMS,23 
+2019-12-26,3150,A,0.5,Lava Beds Natl Monument,24 
+2019-12-26,2752,B,10.7,Yreka-Foothill Drive,24 
+2019-12-26,2484,F,1.6,Azusa,24 
+2019-12-26,3743,A,7.8,Compton-700 North Bullis Road,24 
+2019-12-26,2849,A,5.3,Glendora-Laurel,24 
+2019-12-26,3701,B,0.4,Lebec-Peace Valley Road,24 
+2019-12-26,3818,C,6.2,Long Beach-Route 710 Near Road          ,24 
+2019-12-26,3818,A,5.8,Long Beach-Route 710 Near Road          ,24 
+2019-12-26,2899,I,6.0,Los Angeles-North Main Street,24 
+2019-12-26,2899,A,4.4,Los Angeles-North Main Street,24 
+2019-12-26,2429,A,4.6,North Long Beach,24 
+2019-12-26,2160,A,3.2,Pasadena-S Wilson Avenue,24 
+2019-12-26,3693,C,0.2,Pico Rivera-4144 San Gabriel,24 
+2019-12-26,2420,A,0.9,Reseda,24 
+2019-12-26,2420,C,3.1,Reseda,21 
+2019-12-26,3502,A,1.1,Santa Clarita,23 
+2019-12-26,3679,A,5.1,South Long Beach,24 
+2019-12-26,3679,B,5.2,South Long Beach,24 
+2019-12-26,3674,B,4.1,Anaheim-Pampas Lane,24 
+2019-12-26,3674,A,5.3,Anaheim-Pampas Lane,24 
+2019-12-26,3265,A,2.7,Mission Viejo-26081 Via Pera,24 
+2019-12-26,3168,A,5.4,Banning Airport,24 
+2019-12-26,2943,A,-0.5,Lake Elsinore-W Flint Street,24 
+2019-12-26,3702,B,2.2,Mira Loma Van Buren,23 
+2019-12-26,3702,A,1.4,Mira Loma Van Buren,24 
+2019-12-26,2596,J,1.0,Riverside-Rubidoux,22 
+2019-12-26,2596,A,1.7,Riverside-Rubidoux,24 
+2019-12-26,3777,A,4.4,Winchester-33700 Borel Road             ,24 
+2019-12-26,2266,A,1.1,Fontana-Arrow Highway,24 
+2019-12-26,3819,C,7.4,Ontario-Route 60 Near Road              ,24 
+2019-12-26,3819,A,5.5,Ontario-Route 60 Near Road              ,24 
+2019-12-26,2221,A,2.5,San Bernardino-4th Street,24 
+2019-12-26,3700,A,0.2,San Gorgonio Wilderness,24 
+2019-12-26,2485,A,1.3,Upland,24 
+2019-12-26,3762,A,2.7,Arroyo Grande-2391 Willow Road,24 
+2019-12-26,3812,A,5.1,Atascadero-Lift Station #5              ,22 
+2019-12-26,2979,A,2.8,Nipomo-Guadalupe Road,24 
+2019-12-26,3688,B,3.1,San Luis Obispo-3220 South Higuera St,24 
+2019-12-26,3153,A,2.3,Goleta-Fairview,24 
+2019-12-26,2360,A,0.8,Lompoc-S H Street,24 
+2019-12-26,3710,A,1.2,San Rafael Wilderness,24 
+2019-12-26,3486,D,1.3,Santa Maria-906 S Broadway,22 
+2019-12-26,2991,D,-0.4,El Rio-Rio Mesa School #2,24 
+2019-12-26,3172,B,2.0,Ojai-Ojai Avenue,24 
+2019-12-26,3505,C,-0.6,Piru-3301 Pacific Avenue,24 
+2019-12-26,2880,E,0.6,Simi Valley-Cochran Street,24 
+2019-12-26,2880,D,1.5,Simi Valley-Cochran Street,24 
+2019-12-26,2984,F,-0.1,Thousand Oaks-Moorpark Road,24 
+2019-12-26,2460,B,3.2,Alpine-Victoria Drive,22 
+2019-12-26,3198,C,,Camp Pendleton,17 
+2019-12-26,2589,A,4.4,Chula Vista,24 
+2019-12-26,3829,A,4.5,El Cajon-Lexington Elementary School    ,24 
+2019-12-26,3829,B,6.0,El Cajon-Lexington Elementary School    ,22 
+2019-12-26,3739,A,3.7,Otay Mesa-Donovan,24 
+2019-12-26,3821,A,4.0,San Diego-11403 Rancho Carmel Dr        ,24 
+2019-12-26,3766,A,2.2,San Diego-Kearny Villa Road,24 
+2019-12-26,3846,A,5.1,San Diego - Sherman Elementary School   ,21 
+2019-12-26,3828,A,7.9,Berkeley-Aquatic Park                   ,24 
+2019-12-26,3490,D,3.6,Livermore-793 Rincon Avenue,23 
+2019-12-26,3247,B,6.0,Oakland-9925 International Blvd,24 
+2019-12-26,3803,A,3.7,Oakland-Laney College                   ,23 
+2019-12-26,3742,C,4.3,Oakland-West,23 
+2019-12-26,3840,A,4.1,Pleasanton-Owens Ct                     ,23 
+2019-12-26,2831,C,5.2,Concord-2956-A Treat Blvd,24 
+2019-12-26,2831,A,3.3,Concord-2956-A Treat Blvd,24 
+2019-12-26,3668,A,7.0,San Pablo-Rumrill Blvd,24 
+2019-12-26,2622,A,3.8,San Rafael,24 
+2019-12-26,3837,A,3.3,Napa-Valley College,24 
+2019-12-26,2373,D,7.0,San Francisco-Arkansas Street,23 
+2019-12-26,2125,D,5.8,Redwood City,24 
+2019-12-26,2320,B,4.3,Gilroy-9th Street,24 
+2019-12-26,3661,A,4.6,San Jose-Jackson Street,24 
+2019-12-26,3661,D,5.0,San Jose-Jackson Street,23 
+2019-12-26,3810,A,5.4,San Jose-Knox Avenue                    ,24 
+2019-12-26,2410,E,8.0,Vallejo-304 Tuolumne Street,24 
+2019-12-26,2410,D,7.1,Vallejo-304 Tuolumne Street,24 
+2019-12-26,3804,A,7.2,Sebastopol-103 Morris Street            ,24 
+2019-12-26,3026,D,4.1,Clovis-N Villa Avenue,24 
+2019-12-26,3026,A,6.3,Clovis-N Villa Avenue,24 
+2019-12-26,3781,A,7.8,Fresno-Garland                          ,24 
+2019-12-26,3781,F,7.5,Fresno-Garland                          ,24 
+2019-12-26,3781,E,7.4,Fresno-Garland                          ,24 
+2019-12-26,3781,C,7.3,Fresno-Garland                          ,24 
+2019-12-26,3485,A,7.1,Fresno-Hamilton and Winery,24 
+2019-12-26,3768,A,0.9,Huron-16875 4th Street,21 
+2019-12-26,3704,A,0.3,Kaiser,24 
+2019-12-26,3759,A,1.4,Tranquility-32650 West Adams Avenue,24 
+2019-12-26,3496,A,3.2,Bakersfield-410 E Planz Road,24 
+2019-12-26,3146,A,7.8,Bakersfield-5558 California Avenue,24 
+2019-12-26,3146,G,5.0,Bakersfield-5558 California Avenue,24 
+2019-12-26,3145,D,3.3,Bakersfield-Golden State Highway,24 
+2019-12-26,3769,A,,Lebec-Beartrap Road,1 
+2019-12-26,3724,A,1.0,Lebec-Frazier Park Road,24 
+2019-12-26,3194,A,3.5,Corcoran-Patterson Avenue,24 
+2019-12-26,3194,G,3.5,Corcoran-Patterson Avenue,22 
+2019-12-26,3129,A,,Hanford-S Irwin Street,2 
+2019-12-26,3771,A,6.7,Madera-28261 Avenue 14,24 
+2019-12-26,3253,A,9.2,Merced-2334 M Street,24 
+2019-12-26,3022,A,6.5,Merced-S Coffee Avenue,24 
+2019-12-26,3772,A,-0.8,Manteca-530 Fishback Rd,24 
+2019-12-26,2094,G,3.2,Stockton-Hazelton Street,24 
+2019-12-26,2094,F,2.4,Stockton-Hazelton Street,24 
+2019-12-26,3696,A,1.9,Tracy-Airport,24 
+2019-12-26,2833,I,1.5,Modesto-14th Street,24 
+2019-12-26,2996,A,3.2,Turlock-S Minaret Street,23 
+2019-12-26,3763,A,5.3,Porterville-1839 Newcomb Street,24 
+2019-12-26,3484,B,4.3,Sequoia and Kings Canyon Natl Park,24 
+2019-12-26,2032,B,4.8,Visalia-N Church Street,24 
+2019-12-26,2032,A,3.9,Visalia-N Church Street,24 
+2019-12-26,5407,t,1.0,Bombay Beach,24 
+2019-12-26,3675,A,3.5,Brawley-220 Main Street,24 
+2019-12-26,3135,K,4.3,Calexico-Ethel Street,24 
+2019-12-26,3135,A,4.1,Calexico-Ethel Street,24 
+2019-12-26,2551,A,3.9,El Centro-9th Street,24 
+2019-12-26,5408,t,0.9,Sonny Bono,24 
+2019-12-26,3838,A,2.5,Joshua Tree NP-Cottonwood #2            ,24 
+2019-12-26,2199,A,1.6,Palm Springs-Fire Station,24 
+2019-12-26,5406,t,0.0,Salton Sea Park,24 
+2019-12-26,3783,E,5.4,Chico-East Avenue                       ,23 
+2019-12-26,2630,A,4.2,Gridley-Cowee Avenue,24 
+2019-12-26,3786,A,0.4,Paradise-Theater                        ,23 
+2019-12-26,2744,B,0.7,Colusa-Sunrise Blvd,24 
+2019-12-26,3714,A,2.1,Willows-720 N Colusa Street,24 
+2019-12-26,3789,A,4.9,Auburn-11645 Atwood Road                ,24 
+2019-12-26,3841,B,2.9,Lincoln-2885 Moore Road                 ,24 
+2019-12-26,2977,A,1.2,Elk Grove-Bruceville Road,24 
+2019-12-26,3823,A,2.4,Sacramento-Bercut Drive,24 
+2019-12-26,2731,A,3.3,Sacramento-Del Paso Manor,24 
+2019-12-26,2731,D,3.5,Sacramento-Del Paso Manor,24 
+2019-12-26,3011,A,2.0,Sacramento-T Street,24 
+2019-12-26,3011,F,2.6,Sacramento-T Street,24 
+2019-12-26,3209,B,3.7,Sloughhouse,24 
+2019-12-26,3032,-,16.1,Anderson-North Street,24 
+2019-12-26,2972,A,0.6,Lassen Volcanic Natl Park-Manzanita Lake,24 
+2019-12-26,2829,-,1.1,Redding-Health Dept Roof,23 
+2019-12-26,3678,-,0.5,Vacaville-Ulatis Drive,24 
+2019-12-26,2958,C,2.3,Yuba City-Almond Street,24 
+2019-12-26,2958,A,1.0,Yuba City-Almond Street,24 
+2019-12-26,3816,B,3.0,Red Bluff-1834 Walnut Street            ,24 
+2019-12-26,2143,A,1.6,Davis-UCD Campus,24 
+2019-12-26,3249,-,2.3,Woodland-Gibson Road,24 
+2019-12-27,2116,B,1.9,Bishop-White Mountain Research Center,24 
+2019-12-27,3154,G,4.6,Keeler-Cerro Gordo Road,24 
+2019-12-27,2224,A,,Lee Vining-SMS,14 
+2019-12-27,2915,B,27.8,Mammoth Lakes-Gateway HC,24 
+2019-12-27,3802,B,1.3,Tahoe City-221 Fairway Drive,23 
+2019-12-27,3144,B,8.7,San Andreas-Gold Strike Road,24 
+2019-12-27,2353,A,20.5,Yosemite Village-Visitor Center,24 
+2019-12-27,3126,D,7.8,Grass Valley-Litton Building,23 
+2019-12-27,2208,D,5.0,Truckee-Fire Station,24 
+2019-12-27,3002,B,7.0,Colfax-City Hall,24 
+2019-12-27,3128,C,11.9,Chester-222 1st Avenue,24 
+2019-12-27,3801,C,32.0,Portola-Gulling Street                  ,24 
+2019-12-27,3020,C,23.2,Quincy-N Church Street,24 
+2019-12-27,3121,B,2.6,Mojave-923 Poole Street,24 
+2019-12-27,3835,A,0.8,Ridgecrest-Ward                         ,24 
+2019-12-27,3658,B,7.1,Lancaster-43301 Division Street,24 
+2019-12-27,3500,B,10.2,Victorville-14306 Park Avenue,24 
+2019-12-27,3839,B,7.3,CRESCENT CITY-CRESCENT ELK SCHOOL       ,24 
+2019-12-27,2271,C,15.3,Ukiah-County Library,23 
+2019-12-27,3765,A,13.5,Willits-125 E Commercial Street,24 
+2019-12-27,3132,B,11.9,Weaverville-Courthouse,24 
+2019-12-27,2016,A,1.9,Carmel Valley-Ford Road,24 
+2019-12-27,3726,A,2.8,King City-415 Pearl Street,24 
+2019-12-27,3489,C,5.0,Salinas-High School,24 
+2019-12-27,2628,B,4.2,Hollister-Fairview Road,24 
+2019-12-27,3811,A,10.4,San Lorenzo Valley Middle School AMS,24 
+2019-12-27,3200,C,5.7,Santa Cruz AMS,24 
+2019-12-27,2752,B,13.9,Yreka-Foothill Drive,24 
+2019-12-27,3743,A,15.1,Compton-700 North Bullis Road,24 
+2019-12-27,2849,A,6.7,Glendora-Laurel,24 
+2019-12-27,3818,C,20.9,Long Beach-Route 710 Near Road          ,24 
+2019-12-27,3818,A,16.9,Long Beach-Route 710 Near Road          ,24 
+2019-12-27,2899,A,7.4,Los Angeles-North Main Street,24 
+2019-12-27,2899,I,9.0,Los Angeles-North Main Street,24 
+2019-12-27,2420,C,3.9,Reseda,24 
+2019-12-27,3502,A,4.1,Santa Clarita,24 
+2019-12-27,3679,A,12.6,South Long Beach,24 
+2019-12-27,3679,B,16.4,South Long Beach,24 
+2019-12-27,3674,B,8.6,Anaheim-Pampas Lane,24 
+2019-12-27,3674,A,8.7,Anaheim-Pampas Lane,24 
+2019-12-27,3168,A,4.5,Banning Airport,21 
+2019-12-27,2943,A,2.0,Lake Elsinore-W Flint Street,21 
+2019-12-27,3702,B,7.0,Mira Loma Van Buren,24 
+2019-12-27,3702,A,7.3,Mira Loma Van Buren,24 
+2019-12-27,2596,J,4.4,Riverside-Rubidoux,24 
+2019-12-27,2596,A,5.1,Riverside-Rubidoux,24 
+2019-12-27,3777,A,5.9,Winchester-33700 Borel Road             ,24 
+2019-12-27,3819,A,10.7,Ontario-Route 60 Near Road              ,24 
+2019-12-27,3819,C,12.3,Ontario-Route 60 Near Road              ,24 
+2019-12-27,2485,A,6.6,Upland,23 
+2019-12-27,3762,A,3.6,Arroyo Grande-2391 Willow Road,24 
+2019-12-27,3812,A,6.5,Atascadero-Lift Station #5              ,22 
+2019-12-27,2979,A,3.9,Nipomo-Guadalupe Road,24 
+2019-12-27,3688,B,5.6,San Luis Obispo-3220 South Higuera St,24 
+2019-12-27,3153,A,3.8,Goleta-Fairview,24 
+2019-12-27,2360,A,3.5,Lompoc-S H Street,22 
+2019-12-27,3486,D,3.1,Santa Maria-906 S Broadway,24 
+2019-12-27,2991,D,1.6,El Rio-Rio Mesa School #2,22 
+2019-12-27,3172,B,3.7,Ojai-Ojai Avenue,23 
+2019-12-27,3505,C,1.3,Piru-3301 Pacific Avenue,23 
+2019-12-27,2880,E,3.8,Simi Valley-Cochran Street,23 
+2019-12-27,2880,D,3.4,Simi Valley-Cochran Street,23 
+2019-12-27,2984,F,3.0,Thousand Oaks-Moorpark Road,23 
+2019-12-27,2460,B,3.8,Alpine-Victoria Drive,24 
+2019-12-27,3198,C,4.3,Camp Pendleton,22 
+2019-12-27,3829,B,12.9,El Cajon-Lexington Elementary School    ,24 
+2019-12-27,3739,A,6.5,Otay Mesa-Donovan,23 
+2019-12-27,3846,A,7.6,San Diego - Sherman Elementary School   ,24 
+2019-12-27,3828,A,9.2,Berkeley-Aquatic Park                   ,23 
+2019-12-27,3490,D,9.4,Livermore-793 Rincon Avenue,24 
+2019-12-27,3247,B,6.3,Oakland-9925 International Blvd,24 
+2019-12-27,3803,A,5.5,Oakland-Laney College                   ,24 
+2019-12-27,3742,C,8.8,Oakland-West,23 
+2019-12-27,3840,A,5.5,Pleasanton-Owens Ct                     ,24 
+2019-12-27,2831,C,7.4,Concord-2956-A Treat Blvd,23 
+2019-12-27,3668,A,5.9,San Pablo-Rumrill Blvd,21 
+2019-12-27,2622,A,5.8,San Rafael,24 
+2019-12-27,3837,A,8.5,Napa-Valley College,24 
+2019-12-27,2373,D,8.2,San Francisco-Arkansas Street,24 
+2019-12-27,2125,D,7.3,Redwood City,24 
+2019-12-27,2320,B,6.8,Gilroy-9th Street,24 
+2019-12-27,3661,D,12.1,San Jose-Jackson Street,24 
+2019-12-27,3810,A,11.5,San Jose-Knox Avenue                    ,24 
+2019-12-27,2410,D,11.2,Vallejo-304 Tuolumne Street,24 
+2019-12-27,2410,E,11.1,Vallejo-304 Tuolumne Street,24 
+2019-12-27,3804,A,9.2,Sebastopol-103 Morris Street            ,24 
+2019-12-27,3026,D,10.4,Clovis-N Villa Avenue,24 
+2019-12-27,3781,E,14.1,Fresno-Garland                          ,24 
+2019-12-27,3781,A,15.7,Fresno-Garland                          ,24 
+2019-12-27,3781,C,14.5,Fresno-Garland                          ,24 
+2019-12-27,3768,A,3.7,Huron-16875 4th Street,24 
+2019-12-27,3759,A,6.6,Tranquility-32650 West Adams Avenue,24 
+2019-12-27,3146,G,8.8,Bakersfield-5558 California Avenue,24 
+2019-12-27,3146,A,3.9,Bakersfield-5558 California Avenue,24 
+2019-12-27,3769,A,,Lebec-Beartrap Road,18 
+2019-12-27,3194,G,7.5,Corcoran-Patterson Avenue,24 
+2019-12-27,3771,A,12.7,Madera-28261 Avenue 14,24 
+2019-12-27,3022,A,9.8,Merced-S Coffee Avenue,24 
+2019-12-27,3772,A,6.8,Manteca-530 Fishback Rd,24 
+2019-12-27,2094,F,11.2,Stockton-Hazelton Street,24 
+2019-12-27,2094,G,9.7,Stockton-Hazelton Street,24 
+2019-12-27,3696,A,2.8,Tracy-Airport,24 
+2019-12-27,2833,I,8.9,Modesto-14th Street,24 
+2019-12-27,2996,A,14.0,Turlock-S Minaret Street,24 
+2019-12-27,3763,A,6.7,Porterville-1839 Newcomb Street,24 
+2019-12-27,3484,B,3.1,Sequoia and Kings Canyon Natl Park,24 
+2019-12-27,2032,B,11.0,Visalia-N Church Street,24 
+2019-12-27,5407,t,0.6,Bombay Beach,24 
+2019-12-27,3135,K,5.2,Calexico-Ethel Street,24 
+2019-12-27,3135,A,4.6,Calexico-Ethel Street,24 
+2019-12-27,5408,t,0.8,Sonny Bono,24 
+2019-12-27,3838,A,,Joshua Tree NP-Cottonwood #2            ,7 
+2019-12-27,5406,t,1.0,Salton Sea Park,24 
+2019-12-27,3783,E,15.3,Chico-East Avenue                       ,23 
+2019-12-27,2630,A,5.8,Gridley-Cowee Avenue,24 
+2019-12-27,3786,A,1.7,Paradise-Theater                        ,24 
+2019-12-27,2744,B,2.7,Colusa-Sunrise Blvd,24 
+2019-12-27,3714,A,4.0,Willows-720 N Colusa Street,24 
+2019-12-27,3789,A,7.8,Auburn-11645 Atwood Road                ,24 
+2019-12-27,3841,B,8.3,Lincoln-2885 Moore Road                 ,24 
+2019-12-27,2977,A,2.4,Elk Grove-Bruceville Road,24 
+2019-12-27,2731,A,12.6,Sacramento-Del Paso Manor,24 
+2019-12-27,2731,D,12.1,Sacramento-Del Paso Manor,24 
+2019-12-27,3011,F,6.5,Sacramento-T Street,24 
+2019-12-27,3209,B,6.0,Sloughhouse,24 
+2019-12-27,3032,-,,Anderson-North Street,13 
+2019-12-27,2829,-,1.1,Redding-Health Dept Roof,23 
+2019-12-27,3678,-,5.3,Vacaville-Ulatis Drive,24 
+2019-12-27,2958,C,4.8,Yuba City-Almond Street,24 
+2019-12-27,2958,A,5.3,Yuba City-Almond Street,24 
+2019-12-27,3816,B,3.7,Red Bluff-1834 Walnut Street            ,23 
+2019-12-27,2143,A,2.1,Davis-UCD Campus,24 
+2019-12-27,3249,-,,Woodland-Gibson Road,9 
+2019-12-28,2116,B,1.0,Bishop-White Mountain Research Center,24 
+2019-12-28,3154,G,2.9,Keeler-Cerro Gordo Road,24 
+2019-12-28,2915,B,34.6,Mammoth Lakes-Gateway HC,24 
+2019-12-28,3802,B,3.1,Tahoe City-221 Fairway Drive,24 
+2019-12-28,3144,B,12.2,San Andreas-Gold Strike Road,24 
+2019-12-28,2353,A,40.9,Yosemite Village-Visitor Center,24 
+2019-12-28,3126,D,5.0,Grass Valley-Litton Building,24 
+2019-12-28,2208,D,2.9,Truckee-Fire Station,24 
+2019-12-28,3002,B,16.8,Colfax-City Hall,24 
+2019-12-28,3128,C,18.7,Chester-222 1st Avenue,24 
+2019-12-28,3801,C,32.3,Portola-Gulling Street                  ,24 
+2019-12-28,3020,A,27.6,Quincy-N Church Street,24 
+2019-12-28,3020,C,26.3,Quincy-N Church Street,24 
+2019-12-28,3121,B,5.0,Mojave-923 Poole Street,24 
+2019-12-28,3835,A,0.6,Ridgecrest-Ward                         ,24 
+2019-12-28,3658,B,9.3,Lancaster-43301 Division Street,24 
+2019-12-28,3500,B,17.9,Victorville-14306 Park Avenue,24 
+2019-12-28,3500,A,,Victorville-14306 Park Avenue,5 
+2019-12-28,3839,B,11.0,CRESCENT CITY-CRESCENT ELK SCHOOL       ,24 
+2019-12-28,2271,C,15.1,Ukiah-County Library,24 
+2019-12-28,3765,A,10.3,Willits-125 E Commercial Street,24 
+2019-12-28,3132,B,18.4,Weaverville-Courthouse,24 
+2019-12-28,2016,A,3.8,Carmel Valley-Ford Road,24 
+2019-12-28,3726,A,2.9,King City-415 Pearl Street,24 
+2019-12-28,3489,C,5.4,Salinas-High School,24 
+2019-12-28,2628,B,5.0,Hollister-Fairview Road,23 
+2019-12-28,3811,A,15.2,San Lorenzo Valley Middle School AMS,24 
+2019-12-28,3200,C,6.7,Santa Cruz AMS,24 
+2019-12-28,2752,B,16.4,Yreka-Foothill Drive,24 
+2019-12-28,3743,A,18.1,Compton-700 North Bullis Road,24 
+2019-12-28,2849,A,8.9,Glendora-Laurel,24 
+2019-12-28,3818,C,19.0,Long Beach-Route 710 Near Road          ,24 
+2019-12-28,3818,A,16.2,Long Beach-Route 710 Near Road          ,24 
+2019-12-28,2899,A,11.1,Los Angeles-North Main Street,24 
+2019-12-28,2899,I,12.8,Los Angeles-North Main Street,24 
+2019-12-28,2420,C,15.7,Reseda,24 
+2019-12-28,3502,A,7.4,Santa Clarita,24 
+2019-12-28,3679,A,13.2,South Long Beach,24 
+2019-12-28,3679,B,15.1,South Long Beach,24 
+2019-12-28,3674,A,11.3,Anaheim-Pampas Lane,24 
+2019-12-28,3674,B,11.0,Anaheim-Pampas Lane,24 
+2019-12-28,3168,A,7.0,Banning Airport,24 
+2019-12-28,2943,A,6.2,Lake Elsinore-W Flint Street,24 
+2019-12-28,3702,B,20.0,Mira Loma Van Buren,24 
+2019-12-28,3702,A,22.0,Mira Loma Van Buren,24 
+2019-12-28,2596,J,13.7,Riverside-Rubidoux,24 
+2019-12-28,2596,A,16.3,Riverside-Rubidoux,24 
+2019-12-28,3777,A,8.2,Winchester-33700 Borel Road             ,24 
+2019-12-28,3819,C,19.1,Ontario-Route 60 Near Road              ,24 
+2019-12-28,3819,A,16.9,Ontario-Route 60 Near Road              ,24 
+2019-12-28,2485,A,9.9,Upland,24 
+2019-12-28,3762,A,5.3,Arroyo Grande-2391 Willow Road,24 
+2019-12-28,3812,A,12.4,Atascadero-Lift Station #5              ,22 
+2019-12-28,2979,A,5.8,Nipomo-Guadalupe Road,24 
+2019-12-28,3688,B,5.7,San Luis Obispo-3220 South Higuera St,24 
+2019-12-28,3153,A,5.1,Goleta-Fairview,24 
+2019-12-28,2360,A,4.8,Lompoc-S H Street,24 
+2019-12-28,3486,D,3.9,Santa Maria-906 S Broadway,24 
+2019-12-28,2991,D,3.5,El Rio-Rio Mesa School #2,24 
+2019-12-28,3172,B,4.0,Ojai-Ojai Avenue,24 
+2019-12-28,3505,C,1.1,Piru-3301 Pacific Avenue,24 
+2019-12-28,2880,D,7.6,Simi Valley-Cochran Street,24 
+2019-12-28,2880,E,8.3,Simi Valley-Cochran Street,24 
+2019-12-28,2984,F,9.1,Thousand Oaks-Moorpark Road,24 
+2019-12-28,2460,B,4.0,Alpine-Victoria Drive,24 
+2019-12-28,3198,C,5.4,Camp Pendleton,24 
+2019-12-28,3829,B,16.5,El Cajon-Lexington Elementary School    ,24 
+2019-12-28,3739,A,9.5,Otay Mesa-Donovan,24 
+2019-12-28,3846,A,10.0,San Diego - Sherman Elementary School   ,24 
+2019-12-28,3828,A,10.2,Berkeley-Aquatic Park                   ,24 
+2019-12-28,3490,D,9.7,Livermore-793 Rincon Avenue,24 
+2019-12-28,3247,B,9.0,Oakland-9925 International Blvd,24 
+2019-12-28,3803,A,7.3,Oakland-Laney College                   ,24 
+2019-12-28,3742,C,9.4,Oakland-West,24 
+2019-12-28,3840,A,7.5,Pleasanton-Owens Ct                     ,24 
+2019-12-28,2831,C,8.2,Concord-2956-A Treat Blvd,24 
+2019-12-28,2622,A,7.0,San Rafael,24 
+2019-12-28,3837,A,10.0,Napa-Valley College,24 
+2019-12-28,2373,D,9.2,San Francisco-Arkansas Street,24 
+2019-12-28,2125,D,9.6,Redwood City,24 
+2019-12-28,2320,B,7.6,Gilroy-9th Street,24 
+2019-12-28,3661,D,12.0,San Jose-Jackson Street,24 
+2019-12-28,3810,A,13.5,San Jose-Knox Avenue                    ,24 
+2019-12-28,2410,D,15.8,Vallejo-304 Tuolumne Street,24 
+2019-12-28,2410,E,16.5,Vallejo-304 Tuolumne Street,24 
+2019-12-28,3804,A,9.9,Sebastopol-103 Morris Street            ,24 
+2019-12-28,3026,D,18.3,Clovis-N Villa Avenue,24 
+2019-12-28,3781,A,30.0,Fresno-Garland                          ,24 
+2019-12-28,3781,C,28.7,Fresno-Garland                          ,24 
+2019-12-28,3781,E,28.3,Fresno-Garland                          ,24 
+2019-12-28,3768,A,5.0,Huron-16875 4th Street,24 
+2019-12-28,3759,A,6.6,Tranquility-32650 West Adams Avenue,24 
+2019-12-28,3146,A,15.3,Bakersfield-5558 California Avenue,24 
+2019-12-28,3146,G,15.0,Bakersfield-5558 California Avenue,24 
+2019-12-28,3769,A,2.3,Lebec-Beartrap Road,21 
+2019-12-28,3194,G,15.6,Corcoran-Patterson Avenue,24 
+2019-12-28,3771,A,17.2,Madera-28261 Avenue 14,24 
+2019-12-28,3022,A,15.2,Merced-S Coffee Avenue,24 
+2019-12-28,3772,A,27.1,Manteca-530 Fishback Rd,24 
+2019-12-28,2094,F,27.7,Stockton-Hazelton Street,24 
+2019-12-28,2094,G,28.0,Stockton-Hazelton Street,24 
+2019-12-28,3696,A,6.9,Tracy-Airport,23 
+2019-12-28,2833,I,23.6,Modesto-14th Street,24 
+2019-12-28,2996,A,25.8,Turlock-S Minaret Street,24 
+2019-12-28,3763,A,9.2,Porterville-1839 Newcomb Street,24 
+2019-12-28,3484,B,4.7,Sequoia and Kings Canyon Natl Park,24 
+2019-12-28,2032,B,18.3,Visalia-N Church Street,24 
+2019-12-28,5407,t,2.4,Bombay Beach,24 
+2019-12-28,3135,A,10.5,Calexico-Ethel Street,24 
+2019-12-28,3135,K,11.1,Calexico-Ethel Street,24 
+2019-12-28,5408,t,2.3,Sonny Bono,24 
+2019-12-28,5406,t,2.8,Salton Sea Park,22 
+2019-12-28,3783,E,23.3,Chico-East Avenue                       ,24 
+2019-12-28,2630,A,18.4,Gridley-Cowee Avenue,24 
+2019-12-28,3786,A,2.6,Paradise-Theater                        ,24 
+2019-12-28,2744,B,7.1,Colusa-Sunrise Blvd,24 
+2019-12-28,3714,A,9.4,Willows-720 N Colusa Street,24 
+2019-12-28,3789,A,16.5,Auburn-11645 Atwood Road                ,24 
+2019-12-28,3841,B,14.0,Lincoln-2885 Moore Road                 ,23 
+2019-12-28,2977,A,15.6,Elk Grove-Bruceville Road,24 
+2019-12-28,2731,A,19.9,Sacramento-Del Paso Manor,24 
+2019-12-28,2731,D,18.4,Sacramento-Del Paso Manor,24 
+2019-12-28,3011,F,18.1,Sacramento-T Street,24 
+2019-12-28,3209,B,11.7,Sloughhouse,24 
+2019-12-28,2829,-,5.6,Redding-Health Dept Roof,22 
+2019-12-28,3678,-,10.0,Vacaville-Ulatis Drive,24 
+2019-12-28,2958,A,24.6,Yuba City-Almond Street,24 
+2019-12-28,2958,C,22.1,Yuba City-Almond Street,24 
+2019-12-28,3816,B,13.8,Red Bluff-1834 Walnut Street            ,24 
+2019-12-28,2143,A,11.1,Davis-UCD Campus,24
+ 
+ Quality Flag Definition 
+0, Valid observation 
+1, The data supplier marked the observation as suspect - but it is still valid 
+2, The automated qa routine judged the observation questionable and invalid 
+3, The automated qa routine judged the observation invalid  
+4, The data supplier flagged the observation invalid  
+5, The observation was flagged invalid manually  
+
+Data extracted from mrgd database: 
+December 3, 2023 at 10:55:59
+  

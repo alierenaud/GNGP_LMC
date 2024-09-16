@@ -1,0 +1,104 @@
+basin,cnty_abbr,name,prelim_yn,county_name,site,state,latitude,longitude,aqs_id,qa_id,district,met_id,elevation,address,city,zip_code,co2002obs 
+GBV,MNO,Mammoth Lakes-Gateway HC,N,Mono,2915,CA,37.645710000000001,-118.96651,060510001,26785,GBU,MTH03,2392,Gateway HC; Mammoth Lakes,Mammoth Lakes                   ,93546,372 
+LT ,ED,South Lake Tahoe-Sandy Way,N,El Dorado,2948,CA,38.944978999999996,-119.970609,060170011,09691,ED,SLT16,1905,3337 Sandy Way,South Lake Tahoe                ,96150,8301 
+MC ,AMA,Jackson-Clinton Road,N,Amador,2993,CA,38.342606000000004,-120.764426,060050002,03614,AMA,JKS02,390,201 Clinton Road,Jackson                         ,95642,8127 
+MC ,CAL,San Andreas-Gold Strike Road,N,Calaveras,3144,CA,38.20185,-120.680277,060090001,05633,CAL,SAD,300,501 Gold Strike Road,San Andreas,95249,8358 
+MC ,ED,Echo Summit,N,El Dorado,3487,CA,38.811610000000002,-120.033084,060170012,09695,ED,ESM01,2250,21200 Hwy 50-Little Norway,Echo Summit,95721,8184 
+MC ,ED,Placerville-Gold Nugget Way,N,El Dorado,3017,CA,38.725282,-120.821916,060170010,09690,ED,PLA04,612,3111 Gold Nugget Way,Placerville                     ,95667,8355 
+MC ,TUO,Sonora-Barretta Street,N,Tuolumne,2968,CA,37.981780000000001,-120.378551,061090005,55930,TUO,SON06,579,251 South Barretta,Sonora                          ,95370,7611 
+MD ,LA,Lancaster-43301 Division Street,N,Los Angeles,3658,CA,34.669589999999999,-118.13068,060379033,70301,AV,,750,43301 Division Street,Lancaster                       ,93535,8145 
+MD ,SBD,Barstow,N,San Bernardino,2923,CA,34.89405,-117.02471,060710001,36155,MD,BAR01,697,200 East Buena Vista,Barstow,92311,7902 
+MD ,SBD,Victorville-14306 Park Avenue,N,San Bernardino,3500,CA,34.510959999999997,-117.32555000000001,060710306,36306,MD,VIC01,913,14306 Park Avenue,Victorville                     ,92392,8157 
+MEX,MXM,Mexicali-CBTIS,N,Mexicali Area,3202,MX,32.658299999999997,-115.42700000000001,800020013,,SDU,MML02,1,CBTIS; Calzada Cuauhtemoc,,,3532 
+MEX,MXM,Mexicali-Cobach,N,Mexicali Area,3203,MX,32.640300000000003,-115.506,800020014,,SDU,MML03,,Cobach; Colegio De Bachilleres,,,6102 
+MEX,MXM,Mexicali-ITM,N,Mexicali Area,3185,MX,32.621400000000001,-115.398,800020010,,SDU,MML05,,Instituto Tecnologico Mexicali,,,6640 
+MEX,MXM,Mexicali-UABC,N,Mexicali Area,3201,MX,32.629199999999997,-115.446,800020012,,SDU,MML10,0,UABC; Calzada Benito Juarez,,,8130 
+MEX,MXT,Rosarito,N,Tijuana Area,3183,MX,32.353299999999997,-117.056,800020004,,SDU,RRT01,3,3 Blocks east of Boulevard Benito Juarez,,,6199 
+MEX,MXT,Tecate-Paseo Morelos,N,Tijuana Area,3255,MX,32.575000000000003,-116.619,800020017,,SDU,TEC01,174,Paseo Morelos S/N Y Rio Lema,,,4891 
+MEX,MXT,Tijuana-ITT,N,Tijuana Area,3138,MX,32.530799999999999,-116.98699999999999,800020001,,SDU,TIJ03,,Instituto Tecnologico-Calle de Tecnologico & Chapultepec,,,6561 
+MEX,MXT,Tijuana-La Mesa,N,Tijuana Area,3141,MX,32.497500000000002,-116.976,800020003,,SDU,TIJ04,,13891 Cajeme; La Mesa,,,5331 
+MEX,MXT,Tijuana-Las Playas,N,Tijuana Area,3178,MX,32.513599999999997,-117.116,800020005,,SDU,TIJ05,,Avenida Parque,,,8023 
+NC ,MEN,Ukiah-E Gobbi Street,N,Mendocino,3010,CA,39.145659999999999,-123.20298,060450008,23769,MEN,UKI06,190,306 East Gobbi Street,Ukiah                           ,95482,8206 
+NC ,MEN,Willits-899 S Main Street,N,Mendocino,3116,CA,39.404446,-123.34972399999999,060450009,23770,MEN,WLT01,420,899 So Main Street; Willits; CA  95490,Willits                         ,95490,7933 
+NCC,MNT,Salinas-High School,N,Monterey,3489,CA,36.694260999999997,-121.623271,060531003,27554,MBU,SNS04,32,867 East Laurel Drive,Salinas                         ,93901,8434 
+NCC,SCR,Davenport,N,Santa Cruz,2329,CA,37.011899999999997,-122.1939,060870003,44851,MBU,DVN01,27,Fire Dept; Davenport,Davenport                       ,95017,7811 
+OUT,OTH,Stateline-Harveys Hotel,N,Outside Calif,3483,NV,38.956389999999999,-119.94499999999999,320050009,,OUT,STL01,,Harveys Hotel-Stateline,,,8516 
+SC ,LA,Azusa,N,Los Angeles,2484,CA,34.136479999999999,-117.92392,060370002,70060,SC,AZU01,189,803 North Loren Avenue,Azusa,91702,8354 
+SC ,LA,Burbank-W Palm Avenue,N,Los Angeles,2492,CA,34.175799999999995,-118.31689999999999,060371002,70069,SC,BUR03,168,228 W. Palm Ave.; Burbank,Burbank                         ,91502,8356 
+SC ,LA,Hawthorne,N,Los Angeles,2045,CA,33.9208,-118.3703,060375001,,SC,HAW01,6,5234 West 120th Street,Hawthorne                       ,90250,8239 
+SC ,LA,Los Angeles-651 Mott Street,N,Los Angeles,3508,CA,34.03528,-118.2167,060370030,,SC,LMT01,20,651 S Mott Street (SB25 Trailer),Los Angeles                     ,90023,3422 
+SC ,LA,Los Angeles-North Main Street,N,Los Angeles,2899,CA,34.06653,-118.22676,060371103,70087,SC,LAX06,92,1630 North Main Street,Los Angeles                     ,90012,8231 
+SC ,LA,Lynwood,N,Los Angeles,2583,CA,33.928991000000003,-118.21068,060371301,70084,SC,LYN01,8,11220 Long Beach Boulevard,Lynwood                         ,90262,8306 
+SC ,LA,North Long Beach,N,Los Angeles,2429,CA,33.82376,-118.18916,060374002,70072,SC,NLB01,29,3648 North Long Beach Boulevard,Long Beach,90807,8260 
+SC ,LA,Pasadena-S Wilson Avenue,N,Los Angeles,2160,CA,34.132649999999998,-118.12714,060372005,70088,SC,PAS04,227,752 South Wilson Avenue,Pasadena                        ,91702,8335 
+SC ,LA,Pico Rivera,N,Los Angeles,2166,CA,34.014073000000003,-118.06050399999999,060371601,,SC,PIC01,21,3713 San Gabriel River Parkkway,Pico Rivera                     ,90660,8349 
+SC ,LA,Pomona,N,Los Angeles,2898,CA,34.066980000000001,-117.75138,060371701,70075,SC,POM01,273,924 North Garey Avenue,Pomona                          ,91767,8324 
+SC ,LA,Reseda,N,Los Angeles,2420,CA,34.199199999999998,-118.53274999999999,060371201,70074,SC,RES01,225,18330 Gault Street,Los Angeles,91335,8358 
+SC ,LA,Santa Clarita,N,Los Angeles,3502,CA,34.383369999999999,-118.52839,060376012,70090,SC,SLI01,388,22224 Placerita Canyon Road,Santa Clarita                   ,91321,8361 
+SC ,LA,West Los Angeles-VA Hospital,N,Los Angeles,2494,CA,34.051090000000002,-118.4564,060370113,70091,SC,WSL03,92,VA Hospital,Los Angeles,90025,8329 
+SC ,LA,Wilmington-1115 N.Mahar Avenue,N,Los Angeles,3509,CA,33.786110000000001,-118.24639999999999,060370031,,SC,WMN01,,1115 N Mahar Avenue,West Los Angeles                ,90744,4742 
+SC ,ORA,Anaheim-Pampas Lane,N,Orange,3674,CA,33.83061,-117.9385,060590007,30178,SC,,40,1630 W Pampas Lane,Anaheim,92802,8732 
+SC ,ORA,Costa Mesa-Mesa Verde Drive,N,Orange,2937,CA,33.674579999999999,-117.9256,060591003,30195,SC,COS03,18,2850 Mesa Verde Dr East; Costa Mesa,Costa Mesa                      ,92626,8139 
+SC ,ORA,La Habra,N,Orange,2249,CA,33.925049999999999,-117.95259,060595001,30177,SC,LAH01,83,621 West Lambert,La Habra                        ,90631,8359 
+SC ,ORA,Mission Viejo-26081 Via Pera,N,Orange,3265,CA,33.630049999999997,-117.67588000000001,060592022,30002,SC,MVJ01,169,26081 Via Pera,Mission Viejo                   ,92691,8383 
+SC ,RIV,Lake Elsinore-W Flint Street,N,Riverside,2943,CA,33.67653,-117.33104,060659001,33158,SC,LEL01,410,506 West Flint Street,Lake Elsinore                   ,92530,8326 
+SC ,RIV,Riverside-Magnolia,N,Riverside,2333,CA,33.946387999999999,-117.40110799999999,060651003,33146,SC,RIV04,249,7002 Magnolia Ave.; Riverside,Riverside                       ,92506,8709 
+SC ,RIV,Riverside-Rubidoux,N,Riverside,2596,CA,33.999519999999997,-117.41595,060658001,33144,SC,RIV08,248,5888 Mission Boulevard,Rubidoux                        ,92509,7973 
+SC ,SBD,San Bernardino-4th Street,N,San Bernardino,2221,CA,34.106678000000002,-117.274063,060719004,36203,SC,SNB02,318,24302 4th Street,San Bernardino                  ,92410,7989 
+SC ,SBD,Upland,N,San Bernardino,2485,CA,34.103670000000001,-117.62906,060711004,36175,SC,UPL01,386,1350 San Bernardino Road,Upland,91786,8349 
+SCC,SLO,Atascadero-Lewis Avenue,N,San Luis Obispo,2965,CA,35.491667,-120.66805600000001,060798001,40847,SLO,ATA01,45,6005 Lewis Avenue,Atascadero,93422,7782 
+SCC,SLO,San Luis Obispo-Marsh Street,N,San Luis Obispo,2709,CA,35.282200000000003,-120.65779999999999,060792002,,SLO,SLO04,20,1160 Marsh Street,San Luis Obispo                 ,93401,8277 
+SCC,SBA,Goleta-Fairview,N,Santa Barbara,3153,CA,34.445504999999997,-119.828452,060832011,42404,SB,GOL04,16,380 North Fairview Avenue,Goleta                          ,93117,8108 
+SCC,SBA,Las Flores Canyon #1,N,Santa Barbara,3101,CA,34.489759999999997,-120.04689999999999,060831025,42101,SB,CLF01,190,LFC #1-Las Flores Canyon; Capitan,Capitan                         ,93117,8093 
+SCC,SBA,Lompoc-S H Street,N,Santa Barbara,2360,CA,34.637819999999998,-120.4575,060832004,42381,SB,LOM06,32,128 S H Street,Lompoc,93436,8258 
+SCC,SBA,Santa Maria-906 S Broadway,N,Santa Barbara,3486,CA,34.942872000000001,-120.43561099999999,060831008,42408,SB,SMX04,72,906 S Broadway,Santa Maria                     ,93454,8360 
+SCC,SBA,Vandenberg Air Force Base-STS Power,N,Santa Barbara,3023,CA,34.595930000000003,-120.63129000000001,060834003,42390,SB,VBG05,95,Sts Power Plant; Vandenberg AFB,Vandenberg Air Force Base       ,93437,8157 
+SCC,VEN,El Rio-Rio Mesa School #2,N,Ventura,2991,CA,34.252389999999998,-119.143182,061113001,56436,VEN,ERI02,40,Rio Mesa School,Oxnard                          ,93030,8112 
+SCC,VEN,Simi Valley-Cochran Street,N,Ventura,2880,CA,34.276316000000001,-118.683685,061112002,56434,VEN,SIM04,316,5400 Cochran Street,Simi Valley                     ,93063,7720 
+SD ,SD,Chula Vista,N,San Diego,2589,CA,32.631230000000002,-117.05905,060730001,80114,SD,CHU01,55,80 East J Street,Chula Vista                     ,91910,8299 
+SD ,SD,Escondido-E Valley Parkway,N,San Diego,2263,CA,33.127707999999998,-117.075327,060731002,80115,SD,ESC01,62,600 East Valley Parkway,Escondido                       ,92019,8649 
+SD ,SD,Otay Mesa-Paseo International,N,San Diego,2933,CA,32.552216999999999,-116.93793100000001,060732007,80139,SD,OTY01,47,1100 Paseo International,Otay Mesa                       ,92154,8267 
+SD ,SD,San Diego-12th Avenue,N,San Diego,2964,CA,32.709200000000003,-117.15389999999999,060731007,,SD,SAN01,2,330A 12th Avenue,San Diego                       ,92112,8164 
+SD ,SD,San Diego-Union Street,N,San Diego,2921,CA,32.717269000000002,-117.16508899999999,060730007,80130,SD,SAN12,5,1133 Union Street,San Diego                       ,92101,8213 
+SFB,ALA,Fremont-Chapel Way,N,Alameda,2293,CA,37.535832999999997,-121.961944,060011001,60336,BA,FRC01,7,40733 Chapel Way,Fremont                         ,94538,7906 
+SFB,ALA,Livermore-793 Rincon Avenue,N,Alameda,3490,CA,37.6875,-121.7842,060010007,60344,BA,LVK01,138,793 Rincon Avenue,Livermore                       ,94550,8342 
+SFB,ALA,Oakland-6701 International Blvd,N,Alameda,3659,CA,37.786944999999996,-122.27999899999999,060010010,,BA,,10,6701 International Blvd,Oakland                         ,94607,7844 
+SFB,ALA,Oakland-Alice Street,N,Alameda,2225,CA,37.801389999999998,-122.2672,060010005,,BA,OAK03,2,822 Alice Street,Oakland                         ,94607,8472 
+SFB,CC,Bethel Island Road,N,Contra Costa,2804,CA,38.006300000000003,-121.64191,060131002,07442,BA,BTH02,-1,5551 Bethel Island Road,Bethel Island,94561,8221 
+SFB,CC,Concord-2956-A Treat Blvd,N,Contra Costa,2831,CA,37.936,-122.0262,060130002,07448,BA,CCR01,28,2956-A Treat Blvd,Concord                         ,94518,8288 
+SFB,CC,Crockett-1098 Pomona Street,N,Contra Costa,3660,CA,38.053332999999995,-122.22110699999999,060130010,,BA,,36,1098 Pomona Street,Crockett                        ,94525,8087 
+SFB,CC,Pittsburg-10th Street,N,Contra Costa,2102,CA,38.029167000000001,-121.896944,060133001,07430,BA,PIT01,3,583 West 10th Street,Pittsburg                       ,94565,8322 
+SFB,CC,San Pablo-El Portal,N,Contra Costa,3207,CA,37.963332999999999,-122.339996,060131003,,BA,SPB01,15,Unit 759 El Portal Shopping Center,San Pablo                       ,94806,5235 
+SFB,CC,San Pablo-Rumrill Blvd,N,Contra Costa,3668,CA,37.9604,-122.35684999999999,060131004,07447,BA,,11,1865D Rumrill Blvd,San Pablo                       ,94806,2384 
+SFB,MRN,San Rafael,N,Marin,2622,CA,37.972299999999997,-122.52011,060410001,21451,BA,SRF01,3,534 4th Street,San Rafael                      ,94901,8306 
+SFB,NAP,Napa-Jefferson Avenue,N,Napa,2655,CA,38.311390000000003,-122.2942,060550003,28783,BA,NAP02,7,2552 Jefferson Avenue,Napa                            ,94558,8124 
+SFB,SF,San Francisco-Arkansas Street,N,San Francisco,2373,CA,37.765949999999997,-122.39901999999999,060750005,90306,BA,SFO02,5,10 Arkansas Street,San Francisco,94107,8146 
+SFB,SF,San Francisco-Ellis Street,N,San Francisco,2325,CA,37.784168000000001,-122.43111399999999,060750003,,BA,SFO03,40,939 Ellis Street,San Francisco,94115,8674 
+SFB,SM,Redwood City,N,San Mateo,2125,CA,37.482930000000003,-122.20348,060811001,41541,BA,RWD01,4,897 Barron Avenue,Redwood City                    ,94063,8039 
+SFB,SCL,San Jose-4th Street,N,Santa Clara,2413,CA,37.340000000000003,-121.887497,060850004,,BA,SJC03,25,120b North 4th Street,San Jose,95112,2745 
+SFB,SCL,San Jose-Jackson Street,N,Santa Clara,3661,CA,37.348488000000003,-121.894936,060850005,43383,BA,,27,156B Jackson Street,San Jose                        ,95112,679 
+SFB,SOL,Vallejo-304 Tuolumne Street,N,Solano,2410,CA,38.102510000000002,-122.238,060950004,48879,BA,VAL01,6,304 Tuolumne Street,Vallejo,94590,8289 
+SFB,SON,Santa Rosa-5th Street,N,Sonoma,2105,CA,38.443610999999997,-122.70916699999999,060970003,49893,BA,STS04,49,837 5th Street,Santa Rosa                      ,95404,8292 
+SJV,FRE,Clovis-N Villa Avenue,N,Fresno,3026,CA,36.819313000000001,-119.71638900000001,060195001,10248,SJV,CLV01,113,908 North Villa Ave,Clovis                          ,93612,8225 
+SJV,FRE,Fresno-1st Street,N,Fresno,3009,CA,36.781944000000003,-119.773056,060190008,10246,SJV,FAT01,29,3425 North First Street,Fresno                          ,93726,8274 
+SJV,FRE,Fresno-Drummond Street,N,Fresno,2013,CA,36.705559999999998,-119.74139,060190007,10244,SJV,FAT09,101,4706 East Drummond Avenue,Fresno                          ,93725,8311 
+SJV,FRE,Fresno-Sierra Skypark #2,N,Fresno,2844,CA,36.841569999999997,-119.87448999999999,060190242,10245,SJV,FAT19,98,Blythe and Chennault,Fresno,93722,8226 
+SJV,KER,Bakersfield-5558 California Avenue,N,Kern,3146,CA,35.356614999999998,-119.062613,060290014,15255,SJV,BFL06,119,5558 California Avenue,Bakersfield,93309,8218 
+SJV,KER,Bakersfield-Golden State Highway,N,Kern,3145,CA,35.385620000000003,-119.015,060290010,15256,SJV,BFL21,126,1128 Golden State Highway,Bakersfield                     ,,8089 
+SJV,SJ,Stockton-Hazelton Street,N,San Joaquin,2094,CA,37.950749999999999,-121.26897,060771002,39252,SJV,SCK07,10,1593 East Hazelton Avenue,Stockton,95205,8273 
+SJV,STA,Modesto-14th Street,N,Stanislaus,2833,CA,37.642164999999999,-120.994212,060990005,50568,SJV,MOD02,33,814 14th Street,Modesto                         ,95354,8203 
+SJV,STA,Turlock-S Minaret Street,N,Stanislaus,2996,CA,37.488219999999998,-120.83592,060990006,50573,SJV,TUR04,32,900 South Minaret Street,Turlock                         ,95380,8262 
+SJV,TUL,Visalia-N Church Street,N,Tulare,2032,CA,36.332520000000002,-119.29095,061072002,54568,SJV,VIS02,102,310 North Church Street,Visalia                         ,93291,8326 
+SS ,IMP,Calexico-East,N,Imperial,3173,CA,32.674199999999999,-115.39109999999999,060250006,13700,IMP,CLX01,10,1699 Carr Road,Calexico                        ,92231,7427 
+SS ,IMP,Calexico-Ethel Street,N,Imperial,3135,CA,32.676180000000002,-115.48307,060250005,13698,IMP,CLX02,3,1029 East Belcher Street,Calexico                        ,92231,8331 
+SS ,IMP,El Centro-9th Street,N,Imperial,2551,CA,32.792149999999999,-115.56299,060251003,13694,IMP,ELC02,9,150 9th Street,El Centro                       ,92243,8299 
+SS ,RIV,Palm Springs-Fire Station,N,Riverside,2199,CA,33.852620000000002,-116.54098999999999,060655001,33137,SC,PSP03,174,590 Racquet Club Avenue,Palm Springs,92262,8270 
+SV ,BUT,Chico-Manzanita Avenue,N,Butte,2115,CA,39.7575,-121.842224,060070002,04628,BUT,CIC02,62,468 Manzanita Avenue,Chico                           ,95926,8302 
+SV ,PLA,Roseville-N Sunrise Blvd,N,Placer,2956,CA,38.746429999999997,-121.26497999999999,060610006,31822,PLA,ROS02,60,151 North Sunrise Boulevard,Roseville                       ,95661,8341 
+SV ,SAC,North Highlands-Blackfoot Way,N,Sacramento,2123,CA,38.712090000000003,-121.38108,060670002,34294,SAC,NHD02,33,7823 Blackfoot Way,North Highlands                 ,95660,7289 
+SV ,SAC,Sacramento-3801 Airport Road,N,Sacramento,3223,CA,38.636667000000003,-121.514167,060670013,34314,SAC,SAC06,2,3801 Airport Road,Sacramento                      ,95834,8216 
+SV ,SAC,Sacramento-Del Paso Manor,N,Sacramento,2731,CA,38.61374,-121.36801,060670006,34295,SAC,SAC14,30,2701 Avalon Drive,Sacramento,95821,8185 
+SV ,SAC,Sacramento-El Camino and Watt,N,Sacramento,2840,CA,38.610199999999999,-121.3817,060670007,34289,SAC,SAC17,15,3535 El Camino & Watt; Sacramento,Sacramento                      ,95814,8354 
+SV ,SAC,Sacramento-T Street,N,Sacramento,3011,CA,38.568440000000002,-121.49311,060670010,34305,SAC,SAC23,15,1309 T Street,Sacramento                      ,95814,8158 
+SV ,SUT,Yuba City-Almond Street,N,Sutter,2958,CA,39.138680000000001,-121.61884000000001,061010003,51898,FR,YUB03,18,773 Almond Street,Yuba City                       ,95991,8275 
+SV ,YOL,Davis-UCD Campus,N,Yolo,2143,CA,38.534550000000003,-121.7734,061130004,57577,YS,DAV07,19,UC Davis campus,Davis                           ,95616,7576

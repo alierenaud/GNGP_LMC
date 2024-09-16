@@ -1,0 +1,689 @@
+summary_date,site,monitor,pm25_davg,name,obs_count 
+2008-12-15,2353,A,6.1,Yosemite Village-Visitor Center,24 
+2008-12-15,3126,C,1.0,Grass Valley-Litton Building,22 
+2008-12-15,2208,D,7.4,Truckee-Fire Station,24 
+2008-12-15,3128,C,11.4,Chester-222 1st Avenue,24 
+2008-12-15,3494,E,7.3,Portola-161 Nevada Street,24 
+2008-12-15,3020,C,7.5,Quincy-N Church Street,24 
+2008-12-15,2484,A,2.9,Azusa,24 
+2008-12-15,2849,A,6.2,Glendora-Laurel,19 
+2008-12-15,2429,A,5.5,North Long Beach,24 
+2008-12-15,3502,A,6.3,Santa Clarita,19 
+2008-12-15,3679,A,3.8,South Long Beach,24 
+2008-12-15,3168,A,6.3,Banning Airport,19 
+2008-12-15,2943,A,0.2,Lake Elsinore-W Flint Street,19 
+2008-12-15,2596,A,4.8,Riverside-Rubidoux,24 
+2008-12-15,2360,B,2.5,Lompoc-S H Street,24 
+2008-12-15,3665,C,9.0,Santa Barbara-700 East Canon Perdido,23 
+2008-12-15,3486,C,2.8,Santa Maria-906 S Broadway,24 
+2008-12-15,2991,C,3.3,El Rio-Rio Mesa School #2,24 
+2008-12-15,3172,A,3.1,Ojai-Ojai Avenue,24 
+2008-12-15,3505,B,0.7,Piru-3301 Pacific Avenue,24 
+2008-12-15,2880,C,5.8,Simi Valley-Cochran Street,24 
+2008-12-15,2984,E,2.6,Thousand Oaks-Moorpark Road,24 
+2008-12-15,2460,A,8.8,Alpine-Victoria Drive,24 
+2008-12-15,3198,A,6.6,Camp Pendleton,24 
+2008-12-15,2327,D,6.6,El Cajon-Redwood Avenue,24 
+2008-12-15,2263,C,2.8,Escondido-E Valley Parkway,24 
+2008-12-15,2263,E,7.0,Escondido-E Valley Parkway,24 
+2008-12-15,3690,B,3.7,San Diego-1110 Beardsley Street,24 
+2008-12-15,3727,A,7.6,Berkeley-6th Street,24 
+2008-12-15,3490,A,3.6,Livermore-793 Rincon Avenue,24 
+2008-12-15,3490,B,2.3,Livermore-793 Rincon Avenue,24 
+2008-12-15,3568,A,4.1,Oakland-Filbert St.,24 
+2008-12-15,3506,A,0.4,Point Reyes,24 
+2008-12-15,2655,A,13.5,Napa-Jefferson Avenue,23 
+2008-12-15,2373,C,7.0,San Francisco-Arkansas Street,23 
+2008-12-15,2125,C,4.4,Redwood City,24 
+2008-12-15,3661,A,4.9,San Jose-Jackson Street,24 
+2008-12-15,3661,C,3.2,San Jose-Jackson Street,24 
+2008-12-15,3723,A,2.6,Benicia-East 2nd Street,24 
+2008-12-15,2410,B,6.8,Vallejo-304 Tuolumne Street,24 
+2008-12-15,2410,A,6.8,Vallejo-304 Tuolumne Street,24 
+2008-12-15,3026,D,11.6,Clovis-N Villa Avenue,22 
+2008-12-15,3009,A,7.5,Fresno-1st Street,24 
+2008-12-15,3009,D,10.3,Fresno-1st Street,24 
+2008-12-15,3146,G,6.5,Bakersfield-5558 California Avenue,24 
+2008-12-15,3146,A,4.1,Bakersfield-5558 California Avenue,24 
+2008-12-15,3146,H,6.9,Bakersfield-5558 California Avenue,24 
+2008-12-15,3145,C,2.7,Bakersfield-Golden State Highway,24 
+2008-12-15,3194,E,1.8,Corcoran-Patterson Avenue,24 
+2008-12-15,2094,E,2.5,Stockton-Hazelton Street,24 
+2008-12-15,3696,A,0.8,Tracy-Airport,24 
+2008-12-15,2833,E,8.3,Modesto-14th Street,24 
+2008-12-15,2996,A,12.2,Turlock-S Minaret Street,24 
+2008-12-15,2032,B,2.2,Visalia-N Church Street,24 
+2008-12-15,3173,A,12.2,Calexico-East,24 
+2008-12-15,2115,D,5.6,Chico-Manzanita Avenue,24 
+2008-12-15,2115,C,5.5,Chico-Manzanita Avenue,24 
+2008-12-15,2630,A,1.8,Gridley-Cowee Avenue,24 
+2008-12-15,2660,A,6.0,Paradise-Fire Station #1,24 
+2008-12-15,2744,B,4.1,Colusa-Sunrise Blvd,24 
+2008-12-15,3714,A,6.1,Willows-720 N Colusa Street,24 
+2008-12-15,2956,B,2.8,Roseville-N Sunrise Blvd,23 
+2008-12-15,2977,A,8.6,Elk Grove-Bruceville Road,23 
+2008-12-15,3187,A,2.9,Folsom-Natoma Street,23 
+2008-12-15,2731,D,7.0,Sacramento-Del Paso Manor,24 
+2008-12-15,3011,F,,Sacramento-T Street,18 
+2008-12-15,2958,C,3.5,Yuba City-Almond Street,24 
+2008-12-15,2143,A,6.0,Davis-UCD Campus,24 
+2008-12-16,2353,A,12.1,Yosemite Village-Visitor Center,22 
+2008-12-16,3126,C,3.4,Grass Valley-Litton Building,24 
+2008-12-16,2208,D,13.6,Truckee-Fire Station,24 
+2008-12-16,3128,C,12.1,Chester-222 1st Avenue,24 
+2008-12-16,3494,E,33.6,Portola-161 Nevada Street,24 
+2008-12-16,3020,C,30.0,Quincy-N Church Street,24 
+2008-12-16,2484,A,3.2,Azusa,24 
+2008-12-16,2849,A,4.1,Glendora-Laurel,24 
+2008-12-16,2429,A,14.8,North Long Beach,24 
+2008-12-16,3502,A,11.0,Santa Clarita,24 
+2008-12-16,3679,A,10.6,South Long Beach,24 
+2008-12-16,3168,A,6.8,Banning Airport,24 
+2008-12-16,2943,A,,Lake Elsinore-W Flint Street,12 
+2008-12-16,2596,A,9.6,Riverside-Rubidoux,24 
+2008-12-16,2360,B,1.5,Lompoc-S H Street,24 
+2008-12-16,3665,C,10.0,Santa Barbara-700 East Canon Perdido,24 
+2008-12-16,3486,C,3.1,Santa Maria-906 S Broadway,24 
+2008-12-16,2991,C,2.3,El Rio-Rio Mesa School #2,24 
+2008-12-16,3172,A,,Ojai-Ojai Avenue,9 
+2008-12-16,3505,B,,Piru-3301 Pacific Avenue,12 
+2008-12-16,2880,C,5.6,Simi Valley-Cochran Street,24 
+2008-12-16,2984,E,6.2,Thousand Oaks-Moorpark Road,24 
+2008-12-16,2460,A,8.5,Alpine-Victoria Drive,24 
+2008-12-16,3198,A,6.4,Camp Pendleton,20 
+2008-12-16,2327,D,5.5,El Cajon-Redwood Avenue,24 
+2008-12-16,2263,E,12.2,Escondido-E Valley Parkway,24 
+2008-12-16,2263,C,7.1,Escondido-E Valley Parkway,24 
+2008-12-16,3690,A,5.5,San Diego-1110 Beardsley Street,24 
+2008-12-16,3690,B,3.5,San Diego-1110 Beardsley Street,24 
+2008-12-16,3727,A,5.6,Berkeley-6th Street,24 
+2008-12-16,3490,B,5.7,Livermore-793 Rincon Avenue,24 
+2008-12-16,3490,A,6.2,Livermore-793 Rincon Avenue,24 
+2008-12-16,3568,A,4.6,Oakland-Filbert St.,24 
+2008-12-16,2831,A,5.9,Concord-2956-A Treat Blvd,24 
+2008-12-16,3506,A,1.5,Point Reyes,24 
+2008-12-16,2655,A,5.5,Napa-Jefferson Avenue,24 
+2008-12-16,2373,C,7.5,San Francisco-Arkansas Street,24 
+2008-12-16,2125,C,6.3,Redwood City,24 
+2008-12-16,3661,C,3.3,San Jose-Jackson Street,24 
+2008-12-16,3661,A,5.0,San Jose-Jackson Street,24 
+2008-12-16,3723,A,4.6,Benicia-East 2nd Street,24 
+2008-12-16,2410,B,12.4,Vallejo-304 Tuolumne Street,23 
+2008-12-16,2410,A,11.4,Vallejo-304 Tuolumne Street,24 
+2008-12-16,3026,D,12.0,Clovis-N Villa Avenue,24 
+2008-12-16,3009,A,8.8,Fresno-1st Street,24 
+2008-12-16,3009,D,10.4,Fresno-1st Street,24 
+2008-12-16,3146,A,5.6,Bakersfield-5558 California Avenue,24 
+2008-12-16,3146,H,8.5,Bakersfield-5558 California Avenue,24 
+2008-12-16,3146,G,9.0,Bakersfield-5558 California Avenue,24 
+2008-12-16,3145,C,5.2,Bakersfield-Golden State Highway,24 
+2008-12-16,3194,F,,Corcoran-Patterson Avenue,6 
+2008-12-16,3194,E,,Corcoran-Patterson Avenue,16 
+2008-12-16,2094,E,7.0,Stockton-Hazelton Street,24 
+2008-12-16,3696,A,3.1,Tracy-Airport,24 
+2008-12-16,2833,E,10.0,Modesto-14th Street,24 
+2008-12-16,2996,A,16.4,Turlock-S Minaret Street,24 
+2008-12-16,2032,B,4.2,Visalia-N Church Street,23 
+2008-12-16,3173,A,12.3,Calexico-East,24 
+2008-12-16,2115,D,7.8,Chico-Manzanita Avenue,23 
+2008-12-16,2115,C,8.1,Chico-Manzanita Avenue,22 
+2008-12-16,2630,A,6.8,Gridley-Cowee Avenue,24 
+2008-12-16,2660,A,11.2,Paradise-Fire Station #1,24 
+2008-12-16,2744,B,8.8,Colusa-Sunrise Blvd,24 
+2008-12-16,3714,A,7.0,Willows-720 N Colusa Street,24 
+2008-12-16,2956,B,3.7,Roseville-N Sunrise Blvd,24 
+2008-12-16,2977,A,12.8,Elk Grove-Bruceville Road,24 
+2008-12-16,3187,A,6.6,Folsom-Natoma Street,24 
+2008-12-16,2731,D,11.3,Sacramento-Del Paso Manor,24 
+2008-12-16,3011,F,3.7,Sacramento-T Street,24 
+2008-12-16,2958,C,10.0,Yuba City-Almond Street,24 
+2008-12-16,2958,A,6.9,Yuba City-Almond Street,24 
+2008-12-16,2143,A,8.3,Davis-UCD Campus,24 
+2008-12-17,3154,A,2.0,Keeler-Cerro Gordo Road,24 
+2008-12-17,2914,A,2.9,Lakeport-Lakeport Blvd,24 
+2008-12-17,3698,A,1.5,Bliss State Park,24 
+2008-12-17,3018,A,0.5,Yosemite Natl Park-Turtleback Dome,24 
+2008-12-17,2353,A,10.7,Yosemite Village-Visitor Center,24 
+2008-12-17,3126,C,2.6,Grass Valley-Litton Building,24 
+2008-12-17,2208,A,14.3,Truckee-Fire Station,24 
+2008-12-17,2208,D,20.9,Truckee-Fire Station,24 
+2008-12-17,3128,C,20.1,Chester-222 1st Avenue,24 
+2008-12-17,3494,E,34.6,Portola-161 Nevada Street,24 
+2008-12-17,3494,A,33.6,Portola-161 Nevada Street,24 
+2008-12-17,3020,A,40.9,Quincy-N Church Street,24 
+2008-12-17,3020,C,39.7,Quincy-N Church Street,23 
+2008-12-17,3658,A,2.0,Lancaster-43301 Division Street,24 
+2008-12-17,3152,A,0.7,Joshua Tree NP - Black Rock,24 
+2008-12-17,3016,A,1.9,Redwood Natl Park-Requa,24 
+2008-12-17,2386,A,21.5,Eureka-I Street,24 
+2008-12-17,3716,A,26.5,Eureka-Jacobs,24 
+2008-12-17,3711,A,1.8,Trinity,24 
+2008-12-17,2983,A,3.0,Pinnacles National Monument,24 
+2008-12-17,2484,A,2.8,Azusa,24 
+2008-12-17,2492,A,5.8,Burbank-W Palm Avenue,24 
+2008-12-17,2849,A,3.0,Glendora-Laurel,22 
+2008-12-17,2429,A,6.7,North Long Beach,24 
+2008-12-17,2160,A,4.4,Pasadena-S Wilson Avenue,24 
+2008-12-17,3693,A,7.2,Pico Rivera-4144 San Gabriel,24 
+2008-12-17,2420,A,2.1,Reseda,24 
+2008-12-17,3502,A,7.6,Santa Clarita,22 
+2008-12-17,3679,A,5.9,South Long Beach,24 
+2008-12-17,3265,A,1.8,Mission Viejo-26081 Via Pera,24 
+2008-12-17,3708,A,0.6,Agua Tibia,24 
+2008-12-17,3168,A,3.4,Banning Airport,24 
+2008-12-17,3702,A,3.2,Mira Loma Van Buren,24 
+2008-12-17,2333,A,2.8,Riverside-Magnolia,24 
+2008-12-17,2596,C,2.6,Riverside-Rubidoux,24 
+2008-12-17,2596,A,2.8,Riverside-Rubidoux,24 
+2008-12-17,2266,A,2.3,Fontana-Arrow Highway,24 
+2008-12-17,3254,A,5.3,Ontario-1408 Francis Street,24 
+2008-12-17,2221,A,4.1,San Bernardino-4th Street,24 
+2008-12-17,2360,B,3.2,Lompoc-S H Street,24 
+2008-12-17,3710,A,1.0,San Rafael Wilderness,24 
+2008-12-17,3665,C,4.1,Santa Barbara-700 East Canon Perdido,24 
+2008-12-17,3486,C,3.9,Santa Maria-906 S Broadway,24 
+2008-12-17,2991,A,1.8,El Rio-Rio Mesa School #2,24 
+2008-12-17,2991,C,1.4,El Rio-Rio Mesa School #2,24 
+2008-12-17,3172,A,,Ojai-Ojai Avenue,6 
+2008-12-17,2880,A,1.1,Simi Valley-Cochran Street,24 
+2008-12-17,2880,C,0.8,Simi Valley-Cochran Street,24 
+2008-12-17,2880,B,1.6,Simi Valley-Cochran Street,24 
+2008-12-17,2984,E,1.3,Thousand Oaks-Moorpark Road,24 
+2008-12-17,2460,A,5.4,Alpine-Victoria Drive,24 
+2008-12-17,3198,A,4.3,Camp Pendleton,24 
+2008-12-17,2589,A,2.8,Chula Vista,24 
+2008-12-17,2327,C,4.6,El Cajon-Redwood Avenue,24 
+2008-12-17,2327,A,3.8,El Cajon-Redwood Avenue,24 
+2008-12-17,2327,D,5.0,El Cajon-Redwood Avenue,24 
+2008-12-17,2263,C,3.6,Escondido-E Valley Parkway,24 
+2008-12-17,2263,A,3.7,Escondido-E Valley Parkway,24 
+2008-12-17,2263,E,7.5,Escondido-E Valley Parkway,24 
+2008-12-17,3690,B,2.9,San Diego-1110 Beardsley Street,24 
+2008-12-17,3690,A,3.2,San Diego-1110 Beardsley Street,24 
+2008-12-17,3727,A,11.2,Berkeley-6th Street,24 
+2008-12-17,2293,A,8.8,Fremont-Chapel Way,24 
+2008-12-17,3490,B,7.2,Livermore-793 Rincon Avenue,24 
+2008-12-17,3247,A,8.6,Oakland-9925 International Blvd,24 
+2008-12-17,3568,A,5.4,Oakland-Filbert St.,23 
+2008-12-17,2831,A,6.6,Concord-2956-A Treat Blvd,24 
+2008-12-17,3506,A,1.0,Point Reyes,24 
+2008-12-17,2986,A,2.6,Point Reyes National Seashore,24 
+2008-12-17,2655,A,19.4,Napa-Jefferson Avenue,24 
+2008-12-17,2373,A,6.5,San Francisco-Arkansas Street,24 
+2008-12-17,2373,C,9.6,San Francisco-Arkansas Street,24 
+2008-12-17,2125,C,9.5,Redwood City,24 
+2008-12-17,2125,A,9.5,Redwood City,24 
+2008-12-17,2320,A,9.4,Gilroy-9th Street,24 
+2008-12-17,3661,A,13.1,San Jose-Jackson Street,24 
+2008-12-17,3661,C,12.2,San Jose-Jackson Street,23 
+2008-12-17,3661,B,13.3,San Jose-Jackson Street,24 
+2008-12-17,3723,A,5.7,Benicia-East 2nd Street,23 
+2008-12-17,2410,A,13.4,Vallejo-304 Tuolumne Street,24 
+2008-12-17,2410,B,14.7,Vallejo-304 Tuolumne Street,24 
+2008-12-17,2105,A,21.2,Santa Rosa-5th Street,24 
+2008-12-17,3026,D,21.5,Clovis-N Villa Avenue,21 
+2008-12-17,3026,A,19.6,Clovis-N Villa Avenue,24 
+2008-12-17,3009,L,18.4,Fresno-1st Street,24 
+2008-12-17,3009,D,22.2,Fresno-1st Street,24 
+2008-12-17,3009,A,20.1,Fresno-1st Street,24 
+2008-12-17,3009,C,22.7,Fresno-1st Street,24 
+2008-12-17,3485,A,20.1,Fresno-Hamilton and Winery,24 
+2008-12-17,3704,A,0.4,Kaiser,24 
+2008-12-17,3496,A,16.8,Bakersfield-410 E Planz Road,24 
+2008-12-17,3146,A,15.2,Bakersfield-5558 California Avenue,24 
+2008-12-17,3146,G,17.8,Bakersfield-5558 California Avenue,24 
+2008-12-17,3146,H,17.8,Bakersfield-5558 California Avenue,24 
+2008-12-17,3145,C,13.4,Bakersfield-Golden State Highway,24 
+2008-12-17,3194,A,16.2,Corcoran-Patterson Avenue,24 
+2008-12-17,3194,F,13.5,Corcoran-Patterson Avenue,24 
+2008-12-17,3194,E,13.5,Corcoran-Patterson Avenue,24 
+2008-12-17,3253,A,13.5,Merced-2334 M Street,24 
+2008-12-17,2094,E,9.9,Stockton-Hazelton Street,24 
+2008-12-17,2094,A,11.4,Stockton-Hazelton Street,24 
+2008-12-17,3696,A,2.3,Tracy-Airport,24 
+2008-12-17,2833,A,10.6,Modesto-14th Street,24 
+2008-12-17,2833,E,10.8,Modesto-14th Street,24 
+2008-12-17,2996,A,16.6,Turlock-S Minaret Street,24 
+2008-12-17,2156,A,5.3,Sequoia Natl Park-Ash Mountain #2,24 
+2008-12-17,2032,B,15.2,Visalia-N Church Street,24 
+2008-12-17,2032,A,19.3,Visalia-N Church Street,24 
+2008-12-17,3675,A,2.9,Brawley-220 Main Street,24 
+2008-12-17,3173,A,5.6,Calexico-East,24 
+2008-12-17,2551,A,4.5,El Centro-9th Street,24 
+2008-12-17,2878,A,3.3,Indio-Jackson Street,24 
+2008-12-17,2199,A,1.5,Palm Springs-Fire Station,24 
+2008-12-17,2115,D,42.7,Chico-Manzanita Avenue,24 
+2008-12-17,2115,C,42.6,Chico-Manzanita Avenue,24 
+2008-12-17,2630,A,10.8,Gridley-Cowee Avenue,23 
+2008-12-17,2660,A,6.5,Paradise-Fire Station #1,24 
+2008-12-17,2744,B,12.5,Colusa-Sunrise Blvd,24 
+2008-12-17,3714,A,8.9,Willows-720 N Colusa Street,23 
+2008-12-17,2956,B,10.9,Roseville-N Sunrise Blvd,24 
+2008-12-17,2977,A,14.3,Elk Grove-Bruceville Road,24 
+2008-12-17,3187,A,12.8,Folsom-Natoma Street,24 
+2008-12-17,2731,C,19.1,Sacramento-Del Paso Manor,24 
+2008-12-17,2731,D,23.3,Sacramento-Del Paso Manor,24 
+2008-12-17,2731,A,18.5,Sacramento-Del Paso Manor,24 
+2008-12-17,2346,A,14.3,Sacramento-Health Dept Stockton Blvd,24 
+2008-12-17,3011,F,12.5,Sacramento-T Street,24 
+2008-12-17,3011,A,12.2,Sacramento-T Street,24 
+2008-12-17,2972,A,0.7,Lassen Volcanic Natl Park-Manzanita Lake,24 
+2008-12-17,2958,C,12.6,Yuba City-Almond Street,24 
+2008-12-17,2958,A,10.1,Yuba City-Almond Street,24 
+2008-12-17,2143,A,9.6,Davis-UCD Campus,23 
+2008-12-18,2353,A,8.9,Yosemite Village-Visitor Center,24 
+2008-12-18,3126,C,6.3,Grass Valley-Litton Building,24 
+2008-12-18,2208,D,21.0,Truckee-Fire Station,24 
+2008-12-18,3128,C,6.7,Chester-222 1st Avenue,24 
+2008-12-18,3494,E,12.9,Portola-161 Nevada Street,24 
+2008-12-18,3020,C,30.4,Quincy-N Church Street,24 
+2008-12-18,2752,A,12.6,Yreka-Foothill Drive,24 
+2008-12-18,2484,A,5.9,Azusa,24 
+2008-12-18,2849,A,,Glendora-Laurel,15 
+2008-12-18,2429,A,10.6,North Long Beach,24 
+2008-12-18,3502,A,,Santa Clarita,15 
+2008-12-18,3168,A,,Banning Airport,15 
+2008-12-18,2596,A,12.2,Riverside-Rubidoux,24 
+2008-12-18,2360,B,7.9,Lompoc-S H Street,24 
+2008-12-18,3665,C,9.8,Santa Barbara-700 East Canon Perdido,24 
+2008-12-18,3486,C,6.2,Santa Maria-906 S Broadway,24 
+2008-12-18,2991,C,4.8,El Rio-Rio Mesa School #2,24 
+2008-12-18,3172,A,3.4,Ojai-Ojai Avenue,24 
+2008-12-18,2880,C,11.3,Simi Valley-Cochran Street,24 
+2008-12-18,2984,E,7.5,Thousand Oaks-Moorpark Road,24 
+2008-12-18,2460,A,9.1,Alpine-Victoria Drive,24 
+2008-12-18,3198,A,6.5,Camp Pendleton,24 
+2008-12-18,2327,D,9.4,El Cajon-Redwood Avenue,24 
+2008-12-18,2263,E,13.2,Escondido-E Valley Parkway,24 
+2008-12-18,2263,C,8.7,Escondido-E Valley Parkway,24 
+2008-12-18,3690,B,6.2,San Diego-1110 Beardsley Street,19 
+2008-12-18,3690,A,8.4,San Diego-1110 Beardsley Street,24 
+2008-12-18,3727,A,7.9,Berkeley-6th Street,23 
+2008-12-18,3490,A,11.0,Livermore-793 Rincon Avenue,24 
+2008-12-18,3490,B,9.2,Livermore-793 Rincon Avenue,23 
+2008-12-18,3568,A,9.0,Oakland-Filbert St.,24 
+2008-12-18,2831,A,6.8,Concord-2956-A Treat Blvd,24 
+2008-12-18,2831,B,7.0,Concord-2956-A Treat Blvd,24 
+2008-12-18,3506,A,2.0,Point Reyes,24 
+2008-12-18,2655,A,17.8,Napa-Jefferson Avenue,24 
+2008-12-18,2373,C,12.7,San Francisco-Arkansas Street,24 
+2008-12-18,2125,C,9.7,Redwood City,24 
+2008-12-18,3661,C,8.3,San Jose-Jackson Street,24 
+2008-12-18,3661,A,10.0,San Jose-Jackson Street,24 
+2008-12-18,3723,A,9.4,Benicia-East 2nd Street,24 
+2008-12-18,2410,A,13.6,Vallejo-304 Tuolumne Street,24 
+2008-12-18,2410,B,15.3,Vallejo-304 Tuolumne Street,24 
+2008-12-18,3026,D,28.7,Clovis-N Villa Avenue,23 
+2008-12-18,3009,D,29.8,Fresno-1st Street,24 
+2008-12-18,3009,A,29.0,Fresno-1st Street,24 
+2008-12-18,3496,A,11.6,Bakersfield-410 E Planz Road,24 
+2008-12-18,3146,A,15.3,Bakersfield-5558 California Avenue,24 
+2008-12-18,3146,H,19.3,Bakersfield-5558 California Avenue,24 
+2008-12-18,3146,G,20.1,Bakersfield-5558 California Avenue,24 
+2008-12-18,3145,C,12.6,Bakersfield-Golden State Highway,24 
+2008-12-18,3194,E,14.0,Corcoran-Patterson Avenue,24 
+2008-12-18,3194,F,14.0,Corcoran-Patterson Avenue,24 
+2008-12-18,2094,E,20.1,Stockton-Hazelton Street,24 
+2008-12-18,3696,A,4.4,Tracy-Airport,23 
+2008-12-18,2833,E,22.1,Modesto-14th Street,24 
+2008-12-18,2996,A,26.0,Turlock-S Minaret Street,23 
+2008-12-18,3484,A,,Sequoia and Kings Canyon Natl Park,10 
+2008-12-18,3484,B,,Sequoia and Kings Canyon Natl Park,10 
+2008-12-18,2032,B,16.8,Visalia-N Church Street,24 
+2008-12-18,3173,A,8.0,Calexico-East,24 
+2008-12-18,2115,D,37.6,Chico-Manzanita Avenue,24 
+2008-12-18,2115,C,36.7,Chico-Manzanita Avenue,24 
+2008-12-18,2630,A,14.5,Gridley-Cowee Avenue,24 
+2008-12-18,2660,A,12.2,Paradise-Fire Station #1,24 
+2008-12-18,2744,B,16.8,Colusa-Sunrise Blvd,24 
+2008-12-18,3714,A,18.7,Willows-720 N Colusa Street,24 
+2008-12-18,2956,B,12.5,Roseville-N Sunrise Blvd,24 
+2008-12-18,2977,A,24.0,Elk Grove-Bruceville Road,24 
+2008-12-18,3187,A,14.1,Folsom-Natoma Street,24 
+2008-12-18,2731,D,18.8,Sacramento-Del Paso Manor,24 
+2008-12-18,3011,F,16.2,Sacramento-T Street,23 
+2008-12-18,2958,A,14.3,Yuba City-Almond Street,24 
+2008-12-18,2958,C,18.6,Yuba City-Almond Street,24 
+2008-12-18,2143,A,17.9,Davis-UCD Campus,24 
+2008-12-19,2353,A,8.9,Yosemite Village-Visitor Center,24 
+2008-12-19,3126,C,3.6,Grass Valley-Litton Building,24 
+2008-12-19,2208,D,7.5,Truckee-Fire Station,24 
+2008-12-19,3128,C,4.0,Chester-222 1st Avenue,24 
+2008-12-19,3494,E,5.3,Portola-161 Nevada Street,24 
+2008-12-19,3020,C,11.8,Quincy-N Church Street,24 
+2008-12-19,2484,A,8.6,Azusa,24 
+2008-12-19,2849,A,12.5,Glendora-Laurel,23 
+2008-12-19,2429,A,20.8,North Long Beach,24 
+2008-12-19,3502,A,10.3,Santa Clarita,23 
+2008-12-19,3168,A,10.0,Banning Airport,23 
+2008-12-19,2360,B,4.1,Lompoc-S H Street,24 
+2008-12-19,3665,C,13.2,Santa Barbara-700 East Canon Perdido,24 
+2008-12-19,3486,C,3.9,Santa Maria-906 S Broadway,23 
+2008-12-19,2991,C,8.3,El Rio-Rio Mesa School #2,24 
+2008-12-19,3172,A,5.1,Ojai-Ojai Avenue,24 
+2008-12-19,3505,B,,Piru-3301 Pacific Avenue,7 
+2008-12-19,2880,C,12.9,Simi Valley-Cochran Street,24 
+2008-12-19,2984,E,12.7,Thousand Oaks-Moorpark Road,23 
+2008-12-19,2460,A,10.9,Alpine-Victoria Drive,24 
+2008-12-19,3198,A,9.8,Camp Pendleton,24 
+2008-12-19,2327,D,10.8,El Cajon-Redwood Avenue,24 
+2008-12-19,2263,C,21.1,Escondido-E Valley Parkway,24 
+2008-12-19,2263,E,23.5,Escondido-E Valley Parkway,24 
+2008-12-19,3690,A,13.1,San Diego-1110 Beardsley Street,24 
+2008-12-19,3690,B,11.8,San Diego-1110 Beardsley Street,24 
+2008-12-19,3727,A,9.6,Berkeley-6th Street,24 
+2008-12-19,3490,A,7.2,Livermore-793 Rincon Avenue,24 
+2008-12-19,3490,B,5.3,Livermore-793 Rincon Avenue,24 
+2008-12-19,3568,A,6.5,Oakland-Filbert St.,24 
+2008-12-19,2831,A,4.3,Concord-2956-A Treat Blvd,24 
+2008-12-19,3506,A,0.7,Point Reyes,24 
+2008-12-19,2655,A,13.5,Napa-Jefferson Avenue,24 
+2008-12-19,2373,C,6.9,San Francisco-Arkansas Street,24 
+2008-12-19,2125,C,10.7,Redwood City,24 
+2008-12-19,3661,A,9.4,San Jose-Jackson Street,24 
+2008-12-19,3661,C,7.5,San Jose-Jackson Street,24 
+2008-12-19,3723,A,4.8,Benicia-East 2nd Street,24 
+2008-12-19,2410,B,5.2,Vallejo-304 Tuolumne Street,24 
+2008-12-19,2410,A,5.2,Vallejo-304 Tuolumne Street,24 
+2008-12-19,3026,D,13.8,Clovis-N Villa Avenue,23 
+2008-12-19,3009,D,18.1,Fresno-1st Street,23 
+2008-12-19,3009,A,15.8,Fresno-1st Street,24 
+2008-12-19,3496,A,12.8,Bakersfield-410 E Planz Road,24 
+2008-12-19,3146,G,21.2,Bakersfield-5558 California Avenue,24 
+2008-12-19,3146,H,20.1,Bakersfield-5558 California Avenue,24 
+2008-12-19,3146,A,17.8,Bakersfield-5558 California Avenue,24 
+2008-12-19,3145,C,14.5,Bakersfield-Golden State Highway,24 
+2008-12-19,3194,F,12.0,Corcoran-Patterson Avenue,24 
+2008-12-19,3194,E,12.0,Corcoran-Patterson Avenue,24 
+2008-12-19,2094,E,20.4,Stockton-Hazelton Street,24 
+2008-12-19,3696,A,8.8,Tracy-Airport,24 
+2008-12-19,2833,E,22.0,Modesto-14th Street,24 
+2008-12-19,2996,A,23.1,Turlock-S Minaret Street,24 
+2008-12-19,3484,A,9.3,Sequoia and Kings Canyon Natl Park,24 
+2008-12-19,3484,B,9.3,Sequoia and Kings Canyon Natl Park,24 
+2008-12-19,2032,B,13.1,Visalia-N Church Street,24 
+2008-12-19,3173,A,13.3,Calexico-East,24 
+2008-12-19,2115,D,19.4,Chico-Manzanita Avenue,24 
+2008-12-19,2115,C,19.5,Chico-Manzanita Avenue,24 
+2008-12-19,2630,A,10.5,Gridley-Cowee Avenue,24 
+2008-12-19,2660,A,17.0,Paradise-Fire Station #1,24 
+2008-12-19,2744,B,9.8,Colusa-Sunrise Blvd,24 
+2008-12-19,3714,A,8.5,Willows-720 N Colusa Street,24 
+2008-12-19,2956,B,11.3,Roseville-N Sunrise Blvd,24 
+2008-12-19,2977,A,23.2,Elk Grove-Bruceville Road,24 
+2008-12-19,3187,A,9.7,Folsom-Natoma Street,24 
+2008-12-19,2731,D,23.1,Sacramento-Del Paso Manor,24 
+2008-12-19,3011,F,,Sacramento-T Street,11 
+2008-12-19,2958,C,16.1,Yuba City-Almond Street,24 
+2008-12-19,2958,A,10.6,Yuba City-Almond Street,24 
+2008-12-19,2143,A,15.0,Davis-UCD Campus,24 
+2008-12-20,3151,A,2.4,Death Valley Natl Monument,24 
+2008-12-20,3154,B,8.0,Keeler-Cerro Gordo Road,24 
+2008-12-20,3154,A,7.0,Keeler-Cerro Gordo Road,24 
+2008-12-20,3707,A,0.5,Hoover,24 
+2008-12-20,2914,A,2.6,Lakeport-Lakeport Blvd,24 
+2008-12-20,3698,A,1.0,Bliss State Park,24 
+2008-12-20,3144,A,9.2,San Andreas-Gold Strike Road,24 
+2008-12-20,3018,A,0.7,Yosemite Natl Park-Turtleback Dome,24 
+2008-12-20,2353,A,8.2,Yosemite Village-Visitor Center,24 
+2008-12-20,3126,C,3.5,Grass Valley-Litton Building,24 
+2008-12-20,3126,A,3.4,Grass Valley-Litton Building,24 
+2008-12-20,2208,D,18.0,Truckee-Fire Station,24 
+2008-12-20,2208,B,15.6,Truckee-Fire Station,24 
+2008-12-20,2208,A,12.3,Truckee-Fire Station,24 
+2008-12-20,3128,C,31.8,Chester-222 1st Avenue,24 
+2008-12-20,3494,E,27.8,Portola-161 Nevada Street,24 
+2008-12-20,3494,B,30.0,Portola-161 Nevada Street,24 
+2008-12-20,3494,A,28.5,Portola-161 Nevada Street,24 
+2008-12-20,3020,A,17.8,Quincy-N Church Street,24 
+2008-12-20,3020,C,21.3,Quincy-N Church Street,24 
+2008-12-20,3121,A,8.8,Mojave-923 Poole Street,24 
+2008-12-20,3492,A,17.2,Ridgecrest-100 West California Avenue,24 
+2008-12-20,3658,A,9.0,Lancaster-43301 Division Street,24 
+2008-12-20,3152,A,3.8,Joshua Tree NP - Black Rock,24 
+2008-12-20,3500,A,16.0,Victorville-14306 Park Avenue,24 
+2008-12-20,3500,B,17.0,Victorville-14306 Park Avenue,24 
+2008-12-20,3016,A,1.1,Redwood Natl Park-Requa,24 
+2008-12-20,2386,A,10.7,Eureka-I Street,24 
+2008-12-20,3716,A,8.6,Eureka-Jacobs,24 
+2008-12-20,2271,A,9.8,Ukiah-County Library,24 
+2008-12-20,3711,A,1.0,Trinity,24 
+2008-12-20,3489,B,7.8,Salinas-High School,24 
+2008-12-20,3489,A,7.7,Salinas-High School,24 
+2008-12-20,2628,A,8.4,Hollister-Fairview Road,24 
+2008-12-20,2983,A,2.7,Pinnacles National Monument,24 
+2008-12-20,3200,A,6.4,Santa Cruz AMS,24 
+2008-12-20,3150,A,1.1,Lava Beds Natl Monument,24 
+2008-12-20,2752,A,11.6,Yreka-Foothill Drive,24 
+2008-12-20,2484,A,13.6,Azusa,24 
+2008-12-20,2492,A,26.5,Burbank-W Palm Avenue,24 
+2008-12-20,2849,A,18.8,Glendora-Laurel,24 
+2008-12-20,2899,E,25.9,Los Angeles-North Main Street,24 
+2008-12-20,2899,F,26.0,Los Angeles-North Main Street,24 
+2008-12-20,2899,C,29.7,Los Angeles-North Main Street,24 
+2008-12-20,2899,B,27.5,Los Angeles-North Main Street,24 
+2008-12-20,2429,A,29.0,North Long Beach,24 
+2008-12-20,2160,A,19.9,Pasadena-S Wilson Avenue,24 
+2008-12-20,3693,A,28.7,Pico Rivera-4144 San Gabriel,24 
+2008-12-20,2420,A,23.4,Reseda,24 
+2008-12-20,3502,A,11.0,Santa Clarita,24 
+2008-12-20,3679,A,26.0,South Long Beach,24 
+2008-12-20,3674,C,21.2,Anaheim-Pampas Lane,24 
+2008-12-20,3265,A,13.9,Mission Viejo-26081 Via Pera,24 
+2008-12-20,3708,A,3.1,Agua Tibia,24 
+2008-12-20,3168,A,15.8,Banning Airport,24 
+2008-12-20,3702,A,33.3,Mira Loma Van Buren,24 
+2008-12-20,2333,A,20.4,Riverside-Magnolia,24 
+2008-12-20,2596,H,18.8,Riverside-Rubidoux,24 
+2008-12-20,2596,E,19.0,Riverside-Rubidoux,24 
+2008-12-20,2596,A,18.0,Riverside-Rubidoux,24 
+2008-12-20,2596,C,19.3,Riverside-Rubidoux,24 
+2008-12-20,2596,D,19.1,Riverside-Rubidoux,24 
+2008-12-20,2266,A,27.1,Fontana-Arrow Highway,24 
+2008-12-20,2266,D,27.7,Fontana-Arrow Highway,24 
+2008-12-20,3254,A,32.0,Ontario-1408 Francis Street,24 
+2008-12-20,2221,A,5.2,San Bernardino-4th Street,24 
+2008-12-20,2965,A,10.5,Atascadero-Lewis Avenue,24 
+2008-12-20,2965,B,10.2,Atascadero-Lewis Avenue,24 
+2008-12-20,3688,A,5.3,San Luis Obispo-3220 South Higuera St,24 
+2008-12-20,2360,B,4.9,Lompoc-S H Street,24 
+2008-12-20,3710,A,1.3,San Rafael Wilderness,24 
+2008-12-20,3665,C,17.8,Santa Barbara-700 East Canon Perdido,24 
+2008-12-20,3665,A,15.5,Santa Barbara-700 East Canon Perdido,24 
+2008-12-20,3486,C,5.0,Santa Maria-906 S Broadway,24 
+2008-12-20,2991,C,8.3,El Rio-Rio Mesa School #2,24 
+2008-12-20,2991,A,11.5,El Rio-Rio Mesa School #2,24 
+2008-12-20,3172,A,7.8,Ojai-Ojai Avenue,24 
+2008-12-20,3505,B,1.8,Piru-3301 Pacific Avenue,24 
+2008-12-20,3505,A,4.3,Piru-3301 Pacific Avenue,24 
+2008-12-20,2880,C,6.2,Simi Valley-Cochran Street,24 
+2008-12-20,2880,A,5.8,Simi Valley-Cochran Street,24 
+2008-12-20,2880,B,6.0,Simi Valley-Cochran Street,24 
+2008-12-20,2984,B,7.6,Thousand Oaks-Moorpark Road,24 
+2008-12-20,2984,A,8.0,Thousand Oaks-Moorpark Road,24 
+2008-12-20,2984,E,7.0,Thousand Oaks-Moorpark Road,24 
+2008-12-20,2460,A,11.3,Alpine-Victoria Drive,24 
+2008-12-20,3198,A,14.4,Camp Pendleton,24 
+2008-12-20,2589,A,15.7,Chula Vista,24 
+2008-12-20,2327,C,22.4,El Cajon-Redwood Avenue,24 
+2008-12-20,2327,A,22.6,El Cajon-Redwood Avenue,24 
+2008-12-20,2327,D,23.5,El Cajon-Redwood Avenue,24 
+2008-12-20,2263,B,28.0,Escondido-E Valley Parkway,24 
+2008-12-20,2263,A,27.9,Escondido-E Valley Parkway,24 
+2008-12-20,2263,E,32.9,Escondido-E Valley Parkway,24 
+2008-12-20,2263,C,30.8,Escondido-E Valley Parkway,24 
+2008-12-20,3690,B,15.5,San Diego-1110 Beardsley Street,24 
+2008-12-20,3690,A,17.6,San Diego-1110 Beardsley Street,24 
+2008-12-20,3727,A,11.9,Berkeley-6th Street,24 
+2008-12-20,2293,A,8.3,Fremont-Chapel Way,24 
+2008-12-20,3490,B,13.7,Livermore-793 Rincon Avenue,24 
+2008-12-20,3490,A,17.1,Livermore-793 Rincon Avenue,24 
+2008-12-20,3490,C,18.8,Livermore-793 Rincon Avenue,24 
+2008-12-20,3247,A,8.5,Oakland-9925 International Blvd,24 
+2008-12-20,3568,A,7.8,Oakland-Filbert St.,24 
+2008-12-20,2831,A,10.1,Concord-2956-A Treat Blvd,24 
+2008-12-20,3506,A,0.6,Point Reyes,24 
+2008-12-20,2986,A,1.8,Point Reyes National Seashore,24 
+2008-12-20,2655,A,23.5,Napa-Jefferson Avenue,24 
+2008-12-20,2373,C,8.6,San Francisco-Arkansas Street,24 
+2008-12-20,2373,A,7.0,San Francisco-Arkansas Street,24 
+2008-12-20,2125,C,12.6,Redwood City,24 
+2008-12-20,3661,A,19.9,San Jose-Jackson Street,24 
+2008-12-20,3661,B,18.3,San Jose-Jackson Street,24 
+2008-12-20,3661,C,18.1,San Jose-Jackson Street,24 
+2008-12-20,3723,A,5.3,Benicia-East 2nd Street,24 
+2008-12-20,2410,C,18.5,Vallejo-304 Tuolumne Street,24 
+2008-12-20,2410,A,18.6,Vallejo-304 Tuolumne Street,24 
+2008-12-20,2410,B,21.8,Vallejo-304 Tuolumne Street,24 
+2008-12-20,2105,A,15.2,Santa Rosa-5th Street,24 
+2008-12-20,3026,A,14.0,Clovis-N Villa Avenue,24 
+2008-12-20,3026,D,14.8,Clovis-N Villa Avenue,24 
+2008-12-20,3009,A,18.0,Fresno-1st Street,24 
+2008-12-20,3009,B,17.7,Fresno-1st Street,24 
+2008-12-20,3009,D,19.1,Fresno-1st Street,24 
+2008-12-20,3009,L,15.9,Fresno-1st Street,24 
+2008-12-20,3009,C,0.7,Fresno-1st Street,24 
+2008-12-20,3485,A,18.0,Fresno-Hamilton and Winery,24 
+2008-12-20,3704,A,0.5,Kaiser,24 
+2008-12-20,3496,A,30.6,Bakersfield-410 E Planz Road,24 
+2008-12-20,3146,B,35.3,Bakersfield-5558 California Avenue,24 
+2008-12-20,3146,A,34.6,Bakersfield-5558 California Avenue,24 
+2008-12-20,3146,G,39.0,Bakersfield-5558 California Avenue,24 
+2008-12-20,3146,H,37.1,Bakersfield-5558 California Avenue,24 
+2008-12-20,3145,C,32.9,Bakersfield-Golden State Highway,24 
+2008-12-20,3724,A,2.6,Lebec-Frazier Park Road,24 
+2008-12-20,3194,A,16.3,Corcoran-Patterson Avenue,24 
+2008-12-20,3194,E,13.2,Corcoran-Patterson Avenue,24 
+2008-12-20,3194,F,13.2,Corcoran-Patterson Avenue,24 
+2008-12-20,3253,A,21.5,Merced-2334 M Street,24 
+2008-12-20,2094,E,15.2,Stockton-Hazelton Street,24 
+2008-12-20,2094,A,16.5,Stockton-Hazelton Street,24 
+2008-12-20,3696,A,1.0,Tracy-Airport,24 
+2008-12-20,2833,E,21.3,Modesto-14th Street,24 
+2008-12-20,2833,A,21.2,Modesto-14th Street,24 
+2008-12-20,2833,D,23.0,Modesto-14th Street,24 
+2008-12-20,2996,A,25.8,Turlock-S Minaret Street,24 
+2008-12-20,3484,A,11.2,Sequoia and Kings Canyon Natl Park,24 
+2008-12-20,3484,B,11.2,Sequoia and Kings Canyon Natl Park,24 
+2008-12-20,2156,A,5.6,Sequoia Natl Park-Ash Mountain #2,24 
+2008-12-20,2032,A,38.6,Visalia-N Church Street,24 
+2008-12-20,2032,C,40.0,Visalia-N Church Street,24 
+2008-12-20,2032,B,33.7,Visalia-N Church Street,24 
+2008-12-20,3675,A,15.8,Brawley-220 Main Street,24 
+2008-12-20,3173,A,15.8,Calexico-East,24 
+2008-12-20,3135,C,15.0,Calexico-Ethel Street,24 
+2008-12-20,2551,A,13.7,El Centro-9th Street,24 
+2008-12-20,2878,A,13.3,Indio-Jackson Street,24 
+2008-12-20,2878,B,13.6,Indio-Jackson Street,24 
+2008-12-20,2199,A,10.9,Palm Springs-Fire Station,24 
+2008-12-20,2115,C,25.3,Chico-Manzanita Avenue,24 
+2008-12-20,2115,D,25.0,Chico-Manzanita Avenue,24 
+2008-12-20,2115,B,25.0,Chico-Manzanita Avenue,24 
+2008-12-20,2115,A,23.7,Chico-Manzanita Avenue,24 
+2008-12-20,2630,A,13.5,Gridley-Cowee Avenue,24 
+2008-12-20,2660,A,24.5,Paradise-Fire Station #1,24 
+2008-12-20,2744,A,12.5,Colusa-Sunrise Blvd,24 
+2008-12-20,2744,B,17.9,Colusa-Sunrise Blvd,24 
+2008-12-20,3714,A,5.2,Willows-720 N Colusa Street,24 
+2008-12-20,2956,A,15.2,Roseville-N Sunrise Blvd,24 
+2008-12-20,2956,B,16.5,Roseville-N Sunrise Blvd,24 
+2008-12-20,2977,A,16.0,Elk Grove-Bruceville Road,24 
+2008-12-20,3187,A,11.2,Folsom-Natoma Street,24 
+2008-12-20,2731,A,21.1,Sacramento-Del Paso Manor,24 
+2008-12-20,2731,C,21.4,Sacramento-Del Paso Manor,24 
+2008-12-20,2731,D,27.8,Sacramento-Del Paso Manor,24 
+2008-12-20,2731,B,20.3,Sacramento-Del Paso Manor,24 
+2008-12-20,2346,A,14.3,Sacramento-Health Dept Stockton Blvd,24 
+2008-12-20,3011,C,11.0,Sacramento-T Street,24 
+2008-12-20,3011,A,13.1,Sacramento-T Street,24 
+2008-12-20,2972,A,1.0,Lassen Volcanic Natl Park-Manzanita Lake,24 
+2008-12-20,3807,A,7.8,Redding-Buckeye,24 
+2008-12-20,2829,A,7.0,Redding-Health Dept Roof,24 
+2008-12-20,2958,A,11.5,Yuba City-Almond Street,24 
+2008-12-20,2958,C,14.8,Yuba City-Almond Street,24 
+2008-12-20,2143,A,4.8,Davis-UCD Campus,24 
+2008-12-20,3249,A,6.8,Woodland-Gibson Road,24 
+2008-12-21,2353,A,3.3,Yosemite Village-Visitor Center,24 
+2008-12-21,3126,C,1.1,Grass Valley-Litton Building,24 
+2008-12-21,2208,D,8.4,Truckee-Fire Station,24 
+2008-12-21,3128,C,13.5,Chester-222 1st Avenue,24 
+2008-12-21,3494,E,17.8,Portola-161 Nevada Street,24 
+2008-12-21,3020,C,24.6,Quincy-N Church Street,24 
+2008-12-21,2484,A,6.2,Azusa,24 
+2008-12-21,2849,A,9.9,Glendora-Laurel,24 
+2008-12-21,2429,A,22.7,North Long Beach,24 
+2008-12-21,3502,A,9.5,Santa Clarita,24 
+2008-12-21,3679,A,24.2,South Long Beach,24 
+2008-12-21,3168,A,9.2,Banning Airport,24 
+2008-12-21,2596,A,18.4,Riverside-Rubidoux,24 
+2008-12-21,2360,B,7.8,Lompoc-S H Street,24 
+2008-12-21,3665,C,12.8,Santa Barbara-700 East Canon Perdido,24 
+2008-12-21,3486,C,4.6,Santa Maria-906 S Broadway,24 
+2008-12-21,2991,C,6.0,El Rio-Rio Mesa School #2,24 
+2008-12-21,3172,A,5.7,Ojai-Ojai Avenue,24 
+2008-12-21,3505,B,3.2,Piru-3301 Pacific Avenue,24 
+2008-12-21,2880,C,6.6,Simi Valley-Cochran Street,24 
+2008-12-21,2984,E,8.3,Thousand Oaks-Moorpark Road,24 
+2008-12-21,2460,A,11.5,Alpine-Victoria Drive,24 
+2008-12-21,3198,A,18.3,Camp Pendleton,24 
+2008-12-21,2327,D,38.5,El Cajon-Redwood Avenue,24 
+2008-12-21,2263,C,31.6,Escondido-E Valley Parkway,24 
+2008-12-21,2263,E,33.7,Escondido-E Valley Parkway,24 
+2008-12-21,3690,B,26.1,San Diego-1110 Beardsley Street,24 
+2008-12-21,3690,A,28.3,San Diego-1110 Beardsley Street,24 
+2008-12-21,3727,A,12.2,Berkeley-6th Street,24 
+2008-12-21,3490,B,8.9,Livermore-793 Rincon Avenue,24 
+2008-12-21,3490,A,11.5,Livermore-793 Rincon Avenue,24 
+2008-12-21,3568,A,12.1,Oakland-Filbert St.,24 
+2008-12-21,2831,A,17.2,Concord-2956-A Treat Blvd,24 
+2008-12-21,3506,A,1.5,Point Reyes,24 
+2008-12-21,2655,A,18.3,Napa-Jefferson Avenue,24 
+2008-12-21,2373,C,15.5,San Francisco-Arkansas Street,24 
+2008-12-21,2125,C,13.8,Redwood City,24 
+2008-12-21,3661,A,12.0,San Jose-Jackson Street,24 
+2008-12-21,3661,C,9.2,San Jose-Jackson Street,24 
+2008-12-21,3723,A,10.7,Benicia-East 2nd Street,24 
+2008-12-21,2410,B,16.4,Vallejo-304 Tuolumne Street,24 
+2008-12-21,2410,A,15.3,Vallejo-304 Tuolumne Street,24 
+2008-12-21,3026,D,33.9,Clovis-N Villa Avenue,24 
+2008-12-21,3009,D,34.2,Fresno-1st Street,24 
+2008-12-21,3009,A,36.5,Fresno-1st Street,24 
+2008-12-21,3146,G,46.0,Bakersfield-5558 California Avenue,24 
+2008-12-21,3146,H,45.4,Bakersfield-5558 California Avenue,24 
+2008-12-21,3146,A,44.1,Bakersfield-5558 California Avenue,24 
+2008-12-21,3145,C,36.3,Bakersfield-Golden State Highway,24 
+2008-12-21,3194,E,23.0,Corcoran-Patterson Avenue,24 
+2008-12-21,3194,F,23.0,Corcoran-Patterson Avenue,24 
+2008-12-21,2094,E,16.6,Stockton-Hazelton Street,24 
+2008-12-21,3696,A,4.0,Tracy-Airport,24 
+2008-12-21,2833,E,25.3,Modesto-14th Street,24 
+2008-12-21,2996,A,24.0,Turlock-S Minaret Street,24 
+2008-12-21,3484,A,13.7,Sequoia and Kings Canyon Natl Park,24 
+2008-12-21,3484,B,13.7,Sequoia and Kings Canyon Natl Park,24 
+2008-12-21,2032,B,37.6,Visalia-N Church Street,24 
+2008-12-21,3173,A,37.8,Calexico-East,24 
+2008-12-21,2115,D,15.5,Chico-Manzanita Avenue,24 
+2008-12-21,2115,C,15.2,Chico-Manzanita Avenue,24 
+2008-12-21,2630,A,14.8,Gridley-Cowee Avenue,24 
+2008-12-21,2660,A,7.8,Paradise-Fire Station #1,24 
+2008-12-21,2744,B,16.0,Colusa-Sunrise Blvd,24 
+2008-12-21,3714,A,13.8,Willows-720 N Colusa Street,24 
+2008-12-21,2956,B,16.3,Roseville-N Sunrise Blvd,24 
+2008-12-21,2977,A,18.8,Elk Grove-Bruceville Road,24 
+2008-12-21,3187,A,14.0,Folsom-Natoma Street,24 
+2008-12-21,2731,D,24.1,Sacramento-Del Paso Manor,24 
+2008-12-21,2958,C,20.6,Yuba City-Almond Street,24 
+2008-12-21,2958,A,14.4,Yuba City-Almond Street,24 
+2008-12-21,2143,A,13.0,Davis-UCD Campus,24
+ 
+ Quality Flag Definition 
+0, Valid observation 
+1, The data supplier marked the observation as suspect - but it is still valid 
+2, The automated qa routine judged the observation questionable and invalid 
+3, The automated qa routine judged the observation invalid  
+4, The data supplier flagged the observation invalid  
+5, The observation was flagged invalid manually  
+
+Data extracted from mrgd database: 
+December 3, 2023 at 10:49:30
+  

@@ -192,33 +192,75 @@ np.sum(df_wide["NO2"]<=0)
 
 
 
-######
+###### dropping na
+
+# df_all = pd.concat([df_CO,df_O3,df_NO,df_NO2])
+# df_wide = pd.pivot_table(df_all, values="value", index=["summary_date", "site"], columns=["polutant"])
+# df_nona = df_wide.dropna()
+
+
+
+# grouped = df_nona.groupby(['summary_date']).count()
+# # grouped.describe()
+# # np.max(grouped)
+# # grouped[np.argmax(grouped["CO"]):np.argmax(grouped["CO"])+1]
+# perf_date = df_nona.loc[["2002-04-26"]]
+# perf_date = (perf_date == 0)*0.0005 + perf_date
+# # np.min(perf_date)
+# # np.sum(perf_date<0)
+
+
+# perf_date.to_csv("data/april2602Data.txt")
+
+
+###### no dropping na
 
 df_all = pd.concat([df_CO,df_O3,df_NO,df_NO2])
 df_wide = pd.pivot_table(df_all, values="value", index=["summary_date", "site"], columns=["polutant"])
-df_nona = df_wide.dropna()
 
 
 
-grouped = df_nona.groupby(['summary_date']).count()
+
+grouped = df_wide.groupby(['summary_date']).count()
 # grouped.describe()
 # np.max(grouped)
 # grouped[np.argmax(grouped["CO"]):np.argmax(grouped["CO"])+1]
-perf_date = df_nona.loc[["2002-04-26"]]
+perf_date = df_wide.loc[["2002-04-26"]]
 perf_date = (perf_date == 0)*0.0005 + perf_date
 # np.min(perf_date)
 # np.sum(perf_date<0)
 
+### only have O3 measurements ###
+ind = np.logical_not(perf_date["CO"].isna() & perf_date["NO"].isna() & perf_date["NO2"].isna())
+np.sum(1-ind)
 
-perf_date.to_csv("data/april2602Data.txt")
+# ind = np.logical_not(perf_date["CO"].isna() & perf_date["NO"].isna() & perf_date["O3"].isna())
+# np.sum(1-ind)
+
+# ind = np.logical_not(perf_date["CO"].isna() & perf_date["NO2"].isna() & perf_date["O3"].isna())
+# np.sum(1-ind)
+
+# ind = np.logical_not(perf_date["NO"].isna() & perf_date["NO2"].isna() & perf_date["O3"].isna())
+# np.sum(1-ind)
+
+perf_date = perf_date[ind]
+
+
+perf_date.to_csv("data/april2602DataMiss.txt")
 
 ####
 
 
-april_data = pd.read_csv("data/april2602Data.txt")
+april_data = pd.read_csv("data/april2602DataMiss.txt")
 # np.round(np.cov(np.log(april_data.iloc[:,2:]),rowvar=False),2)
 
-sites = pd.read_csv("data/asites.txt")
+sites_CO = pd.read_csv("data/aCO_sites.txt")
+sites_NO = pd.read_csv("data/aNO_sites.txt")
+sites_NO2 = pd.read_csv("data/aNO2_sites.txt")
+sites_O3 = pd.read_csv("data/aO3_sites.txt")
+
+sites = pd.concat([sites_CO,sites_NO,sites_NO2,sites_O3])
+sites.drop_duplicates(subset=['site'], keep="first", inplace=True)
 sites = sites.sort_values(by="site")
 # sites.columns
 # sites.dtypes
@@ -256,7 +298,7 @@ april_data['x'] = x
 april_data['y'] = y
 
 
-april_data.to_csv("data/april2602xyData.txt")
+april_data.to_csv("data/april2602xyDataMiss.txt")
 
 
 

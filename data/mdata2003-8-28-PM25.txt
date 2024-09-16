@@ -1,0 +1,382 @@
+summary_date,site,monitor,pm25_davg,name,obs_count 
+2003-08-22,3154,A,4.0,Keeler-Cerro Gordo Road,24 
+2003-08-22,2915,A,5.0,Mammoth Lakes-Gateway HC,24 
+2003-08-22,2948,C,6.8,South Lake Tahoe-Sandy Way,24 
+2003-08-22,3669,A,4.1,Tahoe City-Lake Forest Road,24 
+2003-08-22,3671,A,10.3,Big Hill Lookout Road,24 
+2003-08-22,2353,A,17.0,Yosemite Village-Visitor Center,24 
+2003-08-22,2208,A,6.0,Truckee-Fire Station,24 
+2003-08-22,3494,A,5.0,Portola-161 Nevada Street,24 
+2003-08-22,3121,A,10.2,Mojave-923 Poole Street,24 
+2003-08-22,3492,A,4.5,Ridgecrest-100 West California Avenue,24 
+2003-08-22,3658,A,7.0,Lancaster-43301 Division Street,24 
+2003-08-22,3500,A,8.0,Victorville-14306 Park Avenue,24 
+2003-08-22,2484,A,10.0,Azusa,24 
+2003-08-22,2492,A,8.7,Burbank-W Palm Avenue,24 
+2003-08-22,2899,A,7.2,Los Angeles-North Main Street,24 
+2003-08-22,2583,A,8.7,Lynwood,24 
+2003-08-22,2429,A,7.3,North Long Beach,24 
+2003-08-22,2160,A,7.5,Pasadena-S Wilson Avenue,24 
+2003-08-22,2166,A,8.0,Pico Rivera,24 
+2003-08-22,2420,A,6.0,Reseda,24 
+2003-08-22,3679,A,7.4,South Long Beach,24 
+2003-08-22,3674,A,7.9,Anaheim-Pampas Lane,24 
+2003-08-22,3265,A,8.7,Mission Viejo-26081 Via Pera,24 
+2003-08-22,2333,A,16.0,Riverside-Magnolia,24 
+2003-08-22,2596,C,18.0,Riverside-Rubidoux,24 
+2003-08-22,2596,A,15.7,Riverside-Rubidoux,24 
+2003-08-22,2596,D,19.2,Riverside-Rubidoux,24 
+2003-08-22,2266,A,12.4,Fontana-Arrow Highway,24 
+2003-08-22,3254,A,11.3,Ontario-1408 Francis Street,24 
+2003-08-22,2221,A,13.7,San Bernardino-4th Street,24 
+2003-08-22,2991,A,6.3,El Rio-Rio Mesa School #2,24 
+2003-08-22,3505,A,7.4,Piru-3301 Pacific Avenue,24 
+2003-08-22,3672,A,6.7,San Nicolas Island-Building 98,24 
+2003-08-22,2880,A,7.0,Simi Valley-Cochran Street,24 
+2003-08-22,2984,A,5.1,Thousand Oaks-Moorpark Road,24 
+2003-08-22,2589,A,6.8,Chula Vista,24 
+2003-08-22,2327,C,7.6,El Cajon-Redwood Avenue,24 
+2003-08-22,2327,A,8.2,El Cajon-Redwood Avenue,24 
+2003-08-22,2263,A,8.6,Escondido-E Valley Parkway,24 
+2003-08-22,3506,A,8.8,Point Reyes,24 
+2003-08-22,3661,B,6.1,San Jose-Jackson Street,24 
+2003-08-22,3009,C,8.9,Fresno-1st Street,24 
+2003-08-22,3009,D,17.2,Fresno-1st Street,24 
+2003-08-22,3009,A,8.0,Fresno-1st Street,24 
+2003-08-22,3496,A,11.1,Bakersfield-410 E Planz Road,24 
+2003-08-22,3146,G,18.7,Bakersfield-5558 California Avenue,24 
+2003-08-22,3146,A,8.9,Bakersfield-5558 California Avenue,24 
+2003-08-22,3146,H,20.1,Bakersfield-5558 California Avenue,24 
+2003-08-22,2094,A,6.0,Stockton-Hazelton Street,24 
+2003-08-22,2833,A,7.0,Modesto-14th Street,24 
+2003-08-22,2833,E,12.9,Modesto-14th Street,24 
+2003-08-22,2032,B,18.0,Visalia-N Church Street,24 
+2003-08-22,2032,A,11.0,Visalia-N Church Street,24 
+2003-08-22,2415,A,7.4,Brawley-Main Street,24 
+2003-08-22,3173,A,23.3,Calexico-East,24 
+2003-08-22,3135,A,8.0,Calexico-Ethel Street,24 
+2003-08-22,2551,A,7.5,El Centro-9th Street,24 
+2003-08-22,2878,A,9.3,Indio-Jackson Street,24 
+2003-08-22,2199,A,8.3,Palm Springs-Fire Station,24 
+2003-08-22,2115,D,11.1,Chico-Manzanita Avenue,24 
+2003-08-22,2115,C,8.2,Chico-Manzanita Avenue,24 
+2003-08-22,2630,A,12.5,Gridley-Cowee Avenue,24 
+2003-08-22,2744,A,9.0,Colusa-Sunrise Blvd,24 
+2003-08-22,2977,A,8.7,Elk Grove-Bruceville Road,24 
+2003-08-22,3187,A,6.8,Folsom-Natoma Street,24 
+2003-08-22,2731,C,5.6,Sacramento-Del Paso Manor,24 
+2003-08-22,2731,A,5.0,Sacramento-Del Paso Manor,24 
+2003-08-22,2731,D,4.9,Sacramento-Del Paso Manor,24 
+2003-08-22,2346,A,5.0,Sacramento-Health Dept Stockton Blvd,24 
+2003-08-22,3011,A,6.0,Sacramento-T Street,24 
+2003-08-22,2143,A,4.7,Davis-UCD Campus,19 
+2003-08-22,3249,A,5.0,Woodland-Gibson Road,24 
+2003-08-23,2948,C,7.6,South Lake Tahoe-Sandy Way,24 
+2003-08-23,3669,A,4.4,Tahoe City-Lake Forest Road,24 
+2003-08-23,3671,A,9.9,Big Hill Lookout Road,24 
+2003-08-23,2353,A,11.0,Yosemite Village-Visitor Center,24 
+2003-08-23,2484,A,9.8,Azusa,24 
+2003-08-23,2899,A,9.8,Los Angeles-North Main Street,24 
+2003-08-23,2429,A,7.8,North Long Beach,24 
+2003-08-23,3674,A,8.5,Anaheim-Pampas Lane,24 
+2003-08-23,2596,A,10.5,Riverside-Rubidoux,24 
+2003-08-23,3672,A,9.3,San Nicolas Island-Building 98,24 
+2003-08-23,2327,A,8.1,El Cajon-Redwood Avenue,24 
+2003-08-23,2263,A,7.7,Escondido-E Valley Parkway,24 
+2003-08-23,3506,A,9.9,Point Reyes,24 
+2003-08-23,3009,D,16.9,Fresno-1st Street,24 
+2003-08-23,3009,A,9.0,Fresno-1st Street,24 
+2003-08-23,3146,H,19.4,Bakersfield-5558 California Avenue,24 
+2003-08-23,3146,A,8.9,Bakersfield-5558 California Avenue,24 
+2003-08-23,3146,G,20.5,Bakersfield-5558 California Avenue,24 
+2003-08-23,2833,E,12.4,Modesto-14th Street,24 
+2003-08-23,2032,B,18.9,Visalia-N Church Street,24 
+2003-08-23,3173,A,21.0,Calexico-East,24 
+2003-08-23,2115,D,9.4,Chico-Manzanita Avenue,24 
+2003-08-23,2115,C,6.8,Chico-Manzanita Avenue,24 
+2003-08-23,2630,A,12.5,Gridley-Cowee Avenue,24 
+2003-08-23,2977,A,11.4,Elk Grove-Bruceville Road,24 
+2003-08-23,3187,A,8.5,Folsom-Natoma Street,24 
+2003-08-23,2731,D,8.2,Sacramento-Del Paso Manor,24 
+2003-08-23,3011,A,6.0,Sacramento-T Street,24 
+2003-08-23,2143,A,6.1,Davis-UCD Campus,21 
+2003-08-24,2948,C,5.4,South Lake Tahoe-Sandy Way,24 
+2003-08-24,3669,A,4.5,Tahoe City-Lake Forest Road,24 
+2003-08-24,3671,A,6.5,Big Hill Lookout Road,24 
+2003-08-24,2353,A,7.5,Yosemite Village-Visitor Center,24 
+2003-08-24,3489,A,8.3,Salinas-High School,24 
+2003-08-24,2484,A,12.0,Azusa,24 
+2003-08-24,2899,A,11.6,Los Angeles-North Main Street,24 
+2003-08-24,2429,A,10.4,North Long Beach,24 
+2003-08-24,3679,A,10.9,South Long Beach,24 
+2003-08-24,3674,A,11.9,Anaheim-Pampas Lane,24 
+2003-08-24,2596,A,11.2,Riverside-Rubidoux,24 
+2003-08-24,3672,A,10.2,San Nicolas Island-Building 98,24 
+2003-08-24,2327,A,8.5,El Cajon-Redwood Avenue,24 
+2003-08-24,2263,A,8.8,Escondido-E Valley Parkway,24 
+2003-08-24,3506,A,13.1,Point Reyes,23 
+2003-08-24,3009,A,13.0,Fresno-1st Street,24 
+2003-08-24,3009,D,21.4,Fresno-1st Street,24 
+2003-08-24,3146,H,25.6,Bakersfield-5558 California Avenue,24 
+2003-08-24,3146,A,15.4,Bakersfield-5558 California Avenue,24 
+2003-08-24,3146,G,26.2,Bakersfield-5558 California Avenue,24 
+2003-08-24,2833,E,14.6,Modesto-14th Street,24 
+2003-08-24,2032,B,17.3,Visalia-N Church Street,24 
+2003-08-24,3173,A,38.7,Calexico-East,22 
+2003-08-24,2115,C,6.5,Chico-Manzanita Avenue,24 
+2003-08-24,2115,D,9.0,Chico-Manzanita Avenue,24 
+2003-08-24,2630,A,10.6,Gridley-Cowee Avenue,24 
+2003-08-24,2977,A,10.8,Elk Grove-Bruceville Road,24 
+2003-08-24,3187,A,8.2,Folsom-Natoma Street,24 
+2003-08-24,2731,D,7.8,Sacramento-Del Paso Manor,24 
+2003-08-24,3011,A,9.0,Sacramento-T Street,24 
+2003-08-24,2143,A,7.6,Davis-UCD Campus,24 
+2003-08-25,3154,A,5.0,Keeler-Cerro Gordo Road,24 
+2003-08-25,3154,B,6.0,Keeler-Cerro Gordo Road,24 
+2003-08-25,2915,A,4.0,Mammoth Lakes-Gateway HC,24 
+2003-08-25,2914,A,4.8,Lakeport-Lakeport Blvd,24 
+2003-08-25,2948,A,14.0,South Lake Tahoe-Sandy Way,24 
+2003-08-25,2948,C,13.9,South Lake Tahoe-Sandy Way,24 
+2003-08-25,3669,A,4.6,Tahoe City-Lake Forest Road,24 
+2003-08-25,3144,A,7.0,San Andreas-Gold Strike Road,24 
+2003-08-25,3671,A,6.1,Big Hill Lookout Road,24 
+2003-08-25,2353,A,9.4,Yosemite Village-Visitor Center,24 
+2003-08-25,2208,B,6.0,Truckee-Fire Station,24 
+2003-08-25,2208,A,5.0,Truckee-Fire Station,24 
+2003-08-25,3494,A,4.0,Portola-161 Nevada Street,24 
+2003-08-25,3494,B,4.0,Portola-161 Nevada Street,24 
+2003-08-25,3121,A,9.4,Mojave-923 Poole Street,24 
+2003-08-25,3492,A,8.2,Ridgecrest-100 West California Avenue,24 
+2003-08-25,3658,A,8.0,Lancaster-43301 Division Street,24 
+2003-08-25,3500,A,11.0,Victorville-14306 Park Avenue,24 
+2003-08-25,2386,A,5.9,Eureka-I Street,24 
+2003-08-25,2271,A,4.6,Ukiah-County Library,24 
+2003-08-25,3489,A,10.9,Salinas-High School,24 
+2003-08-25,2484,A,16.3,Azusa,24 
+2003-08-25,2492,A,13.9,Burbank-W Palm Avenue,24 
+2003-08-25,2899,B,13.3,Los Angeles-North Main Street,24 
+2003-08-25,2899,C,12.9,Los Angeles-North Main Street,24 
+2003-08-25,2583,A,17.0,Lynwood,24 
+2003-08-25,2429,A,16.4,North Long Beach,24 
+2003-08-25,2160,A,12.9,Pasadena-S Wilson Avenue,24 
+2003-08-25,2166,A,15.3,Pico Rivera,24 
+2003-08-25,2420,A,10.8,Reseda,24 
+2003-08-25,3679,A,17.5,South Long Beach,24 
+2003-08-25,3674,A,13.8,Anaheim-Pampas Lane,24 
+2003-08-25,3265,A,11.7,Mission Viejo-26081 Via Pera,24 
+2003-08-25,2333,A,14.5,Riverside-Magnolia,24 
+2003-08-25,2596,A,14.7,Riverside-Rubidoux,24 
+2003-08-25,2596,C,15.2,Riverside-Rubidoux,24 
+2003-08-25,2596,D,15.3,Riverside-Rubidoux,24 
+2003-08-25,3266,A,8.6,Big Bear City-501 W. Valley Blvd,24 
+2003-08-25,2266,A,17.2,Fontana-Arrow Highway,24 
+2003-08-25,3254,A,17.9,Ontario-1408 Francis Street,24 
+2003-08-25,2221,A,15.5,San Bernardino-4th Street,24 
+2003-08-25,2965,B,7.3,Atascadero-Lewis Avenue,24 
+2003-08-25,2965,A,7.3,Atascadero-Lewis Avenue,24 
+2003-08-25,2709,A,8.8,San Luis Obispo-Marsh Street,24 
+2003-08-25,3665,A,8.9,Santa Barbara-700 East Canon Perdido,24 
+2003-08-25,3486,A,9.1,Santa Maria-906 S Broadway,24 
+2003-08-25,2991,A,10.6,El Rio-Rio Mesa School #2,24 
+2003-08-25,3505,A,12.0,Piru-3301 Pacific Avenue,24 
+2003-08-25,3672,A,15.7,San Nicolas Island-Building 98,24 
+2003-08-25,2880,A,10.3,Simi Valley-Cochran Street,24 
+2003-08-25,2880,B,10.2,Simi Valley-Cochran Street,24 
+2003-08-25,2984,A,10.5,Thousand Oaks-Moorpark Road,24 
+2003-08-25,2984,B,10.5,Thousand Oaks-Moorpark Road,24 
+2003-08-25,2589,A,9.2,Chula Vista,24 
+2003-08-25,2327,A,9.2,El Cajon-Redwood Avenue,24 
+2003-08-25,2263,B,12.0,Escondido-E Valley Parkway,24 
+2003-08-25,2263,A,11.0,Escondido-E Valley Parkway,24 
+2003-08-25,2040,A,9.0,San Diego-Overland Avenue,24 
+2003-08-25,2293,A,10.8,Fremont-Chapel Way,24 
+2003-08-25,3490,A,9.6,Livermore-793 Rincon Avenue,24 
+2003-08-25,3506,A,15.3,Point Reyes,24 
+2003-08-25,2373,A,13.4,San Francisco-Arkansas Street,24 
+2003-08-25,2125,A,9.9,Redwood City,24 
+2003-08-25,3661,A,10.3,San Jose-Jackson Street,24 
+2003-08-25,2936,A,13.3,San Jose-Tully Road,24 
+2003-08-25,2410,A,11.3,Vallejo-304 Tuolumne Street,24 
+2003-08-25,2105,A,7.0,Santa Rosa-5th Street,24 
+2003-08-25,3009,A,14.0,Fresno-1st Street,24 
+2003-08-25,3009,D,22.4,Fresno-1st Street,23 
+2003-08-25,3009,B,12.0,Fresno-1st Street,24 
+2003-08-25,3485,A,12.9,Fresno-Hamilton and Winery,24 
+2003-08-25,3496,A,19.7,Bakersfield-410 E Planz Road,24 
+2003-08-25,3146,G,26.8,Bakersfield-5558 California Avenue,24 
+2003-08-25,3146,H,26.5,Bakersfield-5558 California Avenue,24 
+2003-08-25,3146,B,16.2,Bakersfield-5558 California Avenue,24 
+2003-08-25,3146,A,16.8,Bakersfield-5558 California Avenue,24 
+2003-08-25,3145,A,18.1,Bakersfield-Golden State Highway,24 
+2003-08-25,3194,A,11.7,Corcoran-Patterson Avenue,24 
+2003-08-25,3253,A,9.8,Merced-2334 M Street,24 
+2003-08-25,2094,A,11.0,Stockton-Hazelton Street,24 
+2003-08-25,2833,E,16.8,Modesto-14th Street,24 
+2003-08-25,2833,A,11.0,Modesto-14th Street,24 
+2003-08-25,2833,D,11.0,Modesto-14th Street,24 
+2003-08-25,2032,B,20.2,Visalia-N Church Street,24 
+2003-08-25,2032,C,16.0,Visalia-N Church Street,24 
+2003-08-25,2032,A,14.0,Visalia-N Church Street,24 
+2003-08-25,2415,A,11.1,Brawley-Main Street,24 
+2003-08-25,3173,A,27.7,Calexico-East,23 
+2003-08-25,3135,A,9.5,Calexico-Ethel Street,24 
+2003-08-25,2551,A,10.2,El Centro-9th Street,24 
+2003-08-25,2878,A,13.3,Indio-Jackson Street,24 
+2003-08-25,2199,A,12.2,Palm Springs-Fire Station,24 
+2003-08-25,2115,C,5.7,Chico-Manzanita Avenue,23 
+2003-08-25,2115,D,9.8,Chico-Manzanita Avenue,24 
+2003-08-25,2115,A,6.0,Chico-Manzanita Avenue,24 
+2003-08-25,2115,B,6.0,Chico-Manzanita Avenue,24 
+2003-08-25,2630,A,9.8,Gridley-Cowee Avenue,24 
+2003-08-25,2744,A,16.0,Colusa-Sunrise Blvd,24 
+2003-08-25,2956,A,8.0,Roseville-N Sunrise Blvd,24 
+2003-08-25,2977,A,12.3,Elk Grove-Bruceville Road,24 
+2003-08-25,3187,A,7.3,Folsom-Natoma Street,24 
+2003-08-25,2731,C,10.2,Sacramento-Del Paso Manor,24 
+2003-08-25,2731,B,9.0,Sacramento-Del Paso Manor,24 
+2003-08-25,2731,A,8.0,Sacramento-Del Paso Manor,24 
+2003-08-25,2731,D,8.8,Sacramento-Del Paso Manor,24 
+2003-08-25,2346,A,10.0,Sacramento-Health Dept Stockton Blvd,24 
+2003-08-25,3011,C,10.0,Sacramento-T Street,24 
+2003-08-25,3011,A,10.0,Sacramento-T Street,24 
+2003-08-25,3807,A,4.4,Redding-Buckeye,24 
+2003-08-25,2829,A,5.0,Redding-Health Dept Roof,24 
+2003-08-25,3808,A,3.4,Shasta Lake-Shasta Dam Blvd             ,24 
+2003-08-25,2958,B,9.0,Yuba City-Almond Street,24 
+2003-08-25,2958,A,9.0,Yuba City-Almond Street,24 
+2003-08-25,2143,A,8.5,Davis-UCD Campus,23 
+2003-08-25,3249,A,9.0,Woodland-Gibson Road,24 
+2003-08-26,2948,C,3.2,South Lake Tahoe-Sandy Way,24 
+2003-08-26,3669,A,2.9,Tahoe City-Lake Forest Road,24 
+2003-08-26,3671,A,8.5,Big Hill Lookout Road,24 
+2003-08-26,2353,A,10.6,Yosemite Village-Visitor Center,24 
+2003-08-26,2484,A,17.4,Azusa,24 
+2003-08-26,2899,A,17.5,Los Angeles-North Main Street,24 
+2003-08-26,2429,A,18.4,North Long Beach,24 
+2003-08-26,3679,A,16.3,South Long Beach,24 
+2003-08-26,3674,A,14.3,Anaheim-Pampas Lane,24 
+2003-08-26,2596,A,13.6,Riverside-Rubidoux,24 
+2003-08-26,3672,A,10.4,San Nicolas Island-Building 98,24 
+2003-08-26,2327,A,9.8,El Cajon-Redwood Avenue,24 
+2003-08-26,2263,A,10.8,Escondido-E Valley Parkway,24 
+2003-08-26,3506,A,11.8,Point Reyes,24 
+2003-08-26,3009,D,17.9,Fresno-1st Street,24 
+2003-08-26,3009,C,11.0,Fresno-1st Street,24 
+2003-08-26,3009,A,12.0,Fresno-1st Street,24 
+2003-08-26,3146,H,21.9,Bakersfield-5558 California Avenue,24 
+2003-08-26,3146,G,22.1,Bakersfield-5558 California Avenue,24 
+2003-08-26,2833,E,14.1,Modesto-14th Street,24 
+2003-08-26,2032,B,17.9,Visalia-N Church Street,24 
+2003-08-26,3173,A,28.7,Calexico-East,23 
+2003-08-26,2115,D,9.0,Chico-Manzanita Avenue,23 
+2003-08-26,2115,C,5.0,Chico-Manzanita Avenue,23 
+2003-08-26,2630,A,11.0,Gridley-Cowee Avenue,24 
+2003-08-26,2977,A,10.3,Elk Grove-Bruceville Road,24 
+2003-08-26,3187,A,6.3,Folsom-Natoma Street,24 
+2003-08-26,2731,D,6.2,Sacramento-Del Paso Manor,24 
+2003-08-26,3011,A,8.0,Sacramento-T Street,24 
+2003-08-26,2143,A,7.8,Davis-UCD Campus,24 
+2003-08-27,2948,C,3.4,South Lake Tahoe-Sandy Way,24 
+2003-08-27,3669,A,4.9,Tahoe City-Lake Forest Road,19 
+2003-08-27,3671,A,10.0,Big Hill Lookout Road,24 
+2003-08-27,2353,A,8.2,Yosemite Village-Visitor Center,24 
+2003-08-27,3126,A,5.0,Grass Valley-Litton Building,24 
+2003-08-27,2484,A,21.1,Azusa,24 
+2003-08-27,2899,A,17.5,Los Angeles-North Main Street,24 
+2003-08-27,2429,A,20.1,North Long Beach,24 
+2003-08-27,3679,A,18.4,South Long Beach,24 
+2003-08-27,3674,A,15.6,Anaheim-Pampas Lane,24 
+2003-08-27,2596,A,17.0,Riverside-Rubidoux,24 
+2003-08-27,3672,A,12.4,San Nicolas Island-Building 98,24 
+2003-08-27,2327,A,11.7,El Cajon-Redwood Avenue,24 
+2003-08-27,2263,A,12.1,Escondido-E Valley Parkway,24 
+2003-08-27,2964,A,12.7,San Diego-12th Avenue,24 
+2003-08-27,3506,A,10.4,Point Reyes,24 
+2003-08-27,3009,D,14.9,Fresno-1st Street,24 
+2003-08-27,3009,A,11.0,Fresno-1st Street,24 
+2003-08-27,3146,A,14.4,Bakersfield-5558 California Avenue,24 
+2003-08-27,3146,H,24.8,Bakersfield-5558 California Avenue,24 
+2003-08-27,3146,G,22.8,Bakersfield-5558 California Avenue,24 
+2003-08-27,2833,E,10.5,Modesto-14th Street,24 
+2003-08-27,2032,B,16.9,Visalia-N Church Street,24 
+2003-08-27,3173,A,63.5,Calexico-East,20 
+2003-08-27,2115,C,8.3,Chico-Manzanita Avenue,24 
+2003-08-27,2115,D,10.3,Chico-Manzanita Avenue,24 
+2003-08-27,2630,A,11.6,Gridley-Cowee Avenue,24 
+2003-08-27,2977,A,11.0,Elk Grove-Bruceville Road,24 
+2003-08-27,3187,A,6.3,Folsom-Natoma Street,24 
+2003-08-27,2731,D,7.7,Sacramento-Del Paso Manor,24 
+2003-08-27,3011,A,9.0,Sacramento-T Street,24 
+2003-08-27,2143,A,8.4,Davis-UCD Campus,24 
+2003-08-28,3154,A,5.0,Keeler-Cerro Gordo Road,24 
+2003-08-28,2915,A,3.0,Mammoth Lakes-Gateway HC,24 
+2003-08-28,2948,C,3.3,South Lake Tahoe-Sandy Way,24 
+2003-08-28,3669,A,5.3,Tahoe City-Lake Forest Road,24 
+2003-08-28,3671,A,8.5,Big Hill Lookout Road,24 
+2003-08-28,2353,A,8.8,Yosemite Village-Visitor Center,24 
+2003-08-28,2208,A,7.0,Truckee-Fire Station,24 
+2003-08-28,3494,A,7.0,Portola-161 Nevada Street,24 
+2003-08-28,3121,A,9.7,Mojave-923 Poole Street,24 
+2003-08-28,3492,A,9.4,Ridgecrest-100 West California Avenue,24 
+2003-08-28,3500,A,12.0,Victorville-14306 Park Avenue,24 
+2003-08-28,3500,B,10.0,Victorville-14306 Park Avenue,24 
+2003-08-28,2484,A,20.8,Azusa,24 
+2003-08-28,2492,A,14.6,Burbank-W Palm Avenue,24 
+2003-08-28,2899,A,16.1,Los Angeles-North Main Street,24 
+2003-08-28,2583,A,15.2,Lynwood,24 
+2003-08-28,2429,A,14.1,North Long Beach,24 
+2003-08-28,2160,A,14.4,Pasadena-S Wilson Avenue,24 
+2003-08-28,2166,A,16.8,Pico Rivera,24 
+2003-08-28,2420,A,10.8,Reseda,24 
+2003-08-28,3679,A,14.3,South Long Beach,24 
+2003-08-28,3674,A,15.9,Anaheim-Pampas Lane,24 
+2003-08-28,3265,A,12.1,Mission Viejo-26081 Via Pera,24 
+2003-08-28,2333,A,15.7,Riverside-Magnolia,24 
+2003-08-28,2596,D,18.4,Riverside-Rubidoux,24 
+2003-08-28,2596,A,16.5,Riverside-Rubidoux,24 
+2003-08-28,2266,A,20.6,Fontana-Arrow Highway,24 
+2003-08-28,3254,A,19.2,Ontario-1408 Francis Street,24 
+2003-08-28,2221,A,18.7,San Bernardino-4th Street,24 
+2003-08-28,2991,A,11.3,El Rio-Rio Mesa School #2,24 
+2003-08-28,3505,A,11.8,Piru-3301 Pacific Avenue,24 
+2003-08-28,3672,A,15.4,San Nicolas Island-Building 98,24 
+2003-08-28,2880,A,10.5,Simi Valley-Cochran Street,24 
+2003-08-28,2984,A,11.3,Thousand Oaks-Moorpark Road,24 
+2003-08-28,2327,A,13.1,El Cajon-Redwood Avenue,24 
+2003-08-28,2327,C,14.4,El Cajon-Redwood Avenue,24 
+2003-08-28,2964,A,12.7,San Diego-12th Avenue,24 
+2003-08-28,2040,A,10.1,San Diego-Overland Avenue,24 
+2003-08-28,3506,A,12.5,Point Reyes,24 
+2003-08-28,3661,B,12.9,San Jose-Jackson Street,24 
+2003-08-28,3009,C,8.4,Fresno-1st Street,24 
+2003-08-28,3009,D,12.8,Fresno-1st Street,24 
+2003-08-28,3009,A,9.0,Fresno-1st Street,24 
+2003-08-28,3496,A,14.4,Bakersfield-410 E Planz Road,24 
+2003-08-28,3146,E,14.8,Bakersfield-5558 California Avenue,24 
+2003-08-28,3146,H,22.7,Bakersfield-5558 California Avenue,24 
+2003-08-28,3146,A,12.5,Bakersfield-5558 California Avenue,24 
+2003-08-28,3146,G,20.7,Bakersfield-5558 California Avenue,24 
+2003-08-28,2094,A,9.0,Stockton-Hazelton Street,24 
+2003-08-28,2833,A,8.0,Modesto-14th Street,24 
+2003-08-28,2833,E,9.7,Modesto-14th Street,24 
+2003-08-28,2032,B,14.2,Visalia-N Church Street,24 
+2003-08-28,2032,A,10.0,Visalia-N Church Street,24 
+2003-08-28,2415,A,9.0,Brawley-Main Street,24 
+2003-08-28,3173,A,23.9,Calexico-East,24 
+2003-08-28,3135,A,9.7,Calexico-Ethel Street,24 
+2003-08-28,2551,A,8.7,El Centro-9th Street,24 
+2003-08-28,2878,A,10.8,Indio-Jackson Street,24 
+2003-08-28,2199,A,11.4,Palm Springs-Fire Station,24 
+2003-08-28,2115,C,8.5,Chico-Manzanita Avenue,24 
+2003-08-28,2115,D,10.6,Chico-Manzanita Avenue,24 
+2003-08-28,2630,A,12.9,Gridley-Cowee Avenue,24 
+2003-08-28,2744,A,19.0,Colusa-Sunrise Blvd,24 
+2003-08-28,2977,A,13.3,Elk Grove-Bruceville Road,21 
+2003-08-28,3187,A,9.1,Folsom-Natoma Street,24 
+2003-08-28,2731,C,12.5,Sacramento-Del Paso Manor,24 
+2003-08-28,2731,D,9.0,Sacramento-Del Paso Manor,24 
+2003-08-28,2731,A,7.0,Sacramento-Del Paso Manor,24 
+2003-08-28,2346,A,6.0,Sacramento-Health Dept Stockton Blvd,24 
+2003-08-28,3011,A,9.0,Sacramento-T Street,24 
+2003-08-28,2143,A,6.8,Davis-UCD Campus,24 
+2003-08-28,3249,A,6.0,Woodland-Gibson Road,24

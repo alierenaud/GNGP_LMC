@@ -13,6 +13,15 @@ day = np.array([7,14,21,28])
 mon = np.arange(1,13)
 
 
+# y = 2002
+# m = 4
+# d = 21
+
+
+# print(str(y)+"-"+str(m)+"-"+str(d)+" CO")
+# urllib.request.urlretrieve("https://www.arb.ca.gov/aqmis2/display.php?download=y&year="+str(y)+"&mon="+str(m)+"&day="+str(d)+"&param=CO&units=007&statistic=DAVG&order=basin%2Ccounty_name%2Cname&county_name=--COUNTY--&basin=--AIR+BASIN--&latitude=A-Whole+State&std15=&o3switch=new&hours=all&ptype=aqd&report=7DAY&btnsubmit=Update+Display", "data/data"+str(y)+"-"+str(m)+"-"+str(d)+"-CO.txt")
+
+
 # ### PM25
 
 # for y in years:

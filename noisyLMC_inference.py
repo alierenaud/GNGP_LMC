@@ -111,6 +111,35 @@ def V_move_conj_scale(Rs_inv_current, A_inv_current, taus_current, Dm1_current, 
     return(V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current)
 
 
+def V_move_conj_scale_mis(Mis_obs,Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y, V_current, Vmmu1_current, A_invVmmu1_current, mu_current):
+    
+    p = Rs_inv_current.shape[0]
+    n = Rs_inv_current.shape[1]
+    
+    outsies = np.array([np.outer(A_inv_current[j],A_inv_current[j]) for j in range(p)])
+    
+    
+    
+    for i in random.permutation(range(n)):
+        delta_i = np.sum([Rs_inv_current[j,i,i]*outsies[j] for j in range(p)],axis=0)
+        M = delta_i + Dm1_current * np.diag(Mis_obs[:,i])
+        Minv = np.linalg.inv(M)
+
+        b = Dm1Y_current[:,i]*Mis_obs[:,i] + delta_i@mu_current - np.sum([(np.inner(Rs_inv_current[j,i],A_invVmmu1_current[j]) - Rs_inv_current[j,i,i]*A_invVmmu1_current[j,i])*A_inv_current[j] for j in range(p)],axis=0)
+        
+        V_current[:,i] = np.linalg.cholesky(Minv)@random.normal(size=p) + Minv@b
+        Vmmu1_current[:,i] = V_current[:,i] - mu_current
+        A_invVmmu1_current[:,i] = A_inv_current@Vmmu1_current[:,i]
+
+  
+    
+    VmY_current = V_current - Y
+    VmY_inner_rows_current = np.array([ np.inner(VmY_current[j]*Mis_obs[j], VmY_current[j]) for j in range(p) ])
+    
+
+    
+    return(V_current, Vmmu1_current, VmY_current, VmY_inner_rows_current, A_invVmmu1_current)
+
 def V_move_conj_kron(Rs_inv_current, A_inv_current, taus_current, Dm1_current, Dm1Y_current, Y, V_current, Vmmu1_current, mu_current):
     
     p = Rs_inv_current.shape[0]
@@ -223,6 +252,22 @@ def taus_move(taus_current,VmY_inner_rows_current,Y,a,b,n):
     Dm1Y_current = Dm1_current @ Y
     
     return(taus_current, Dm1_current, Dm1Y_current)
+
+
+
+def taus_move_mis(taus_current,VmY_inner_rows_current,Y,a,b,ns):
+    
+    p = VmY_inner_rows_current.shape[0]
+    
+    for j in range(p):
+        
+        taus_current[j] = random.gamma(a + ns[j]/2, 1/( b + VmY_inner_rows_current[j]/2), 1)
+        
+    Dm1_current = np.diag(taus_current)
+    Dm1Y_current = Dm1_current @ Y
+    
+    return(taus_current, Dm1_current, Dm1Y_current)
+
 
 
 # ### global parameters

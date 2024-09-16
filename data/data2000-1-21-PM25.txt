@@ -1,0 +1,239 @@
+summary_date,site,monitor,pm25_davg,name,obs_count 
+2000-01-15,2484,A,13.1,Azusa,24 
+2000-01-15,2899,A,23.6,Los Angeles-North Main Street,24 
+2000-01-15,2429,A,30.6,North Long Beach,24 
+2000-01-15,2623,A,26.1,Anaheim-Harbor Blvd,24 
+2000-01-15,2327,A,22.2,El Cajon-Redwood Avenue,24 
+2000-01-15,2263,A,23.9,Escondido-E Valley Parkway,24 
+2000-01-15,2964,A,24.2,San Diego-12th Avenue,24 
+2000-01-15,3488,A,18.5,San Diego-Logan Avenue,24 
+2000-01-15,2831,A,36.7,Concord-2956-A Treat Blvd,24 
+2000-01-15,2373,A,12.7,San Francisco-Arkansas Street,24 
+2000-01-15,2413,A,6.1,San Jose-4th Street,24 
+2000-01-15,2413,E,6.1,San Jose-4th Street,24 
+2000-01-15,3009,A,13.0,Fresno-1st Street,24 
+2000-01-15,3146,A,46.6,Bakersfield-5558 California Avenue,24 
+2000-01-15,2346,A,26.0,Sacramento-Health Dept Stockton Blvd,24 
+2000-01-15,3011,A,28.0,Sacramento-T Street,24 
+2000-01-16,3487,A,1.0,Echo Summit,24 
+2000-01-16,2208,A,7.0,Truckee-Fire Station,24 
+2000-01-16,3020,A,7.0,Quincy-N Church Street,24 
+2000-01-16,3492,A,2.6,Ridgecrest-100 West California Avenue,24 
+2000-01-16,3007,A,9.8,Lancaster-W Pondera Street,24 
+2000-01-16,3489,A,7.4,Salinas-High School,24 
+2000-01-16,3489,B,7.0,Salinas-High School,24 
+2000-01-16,3200,A,6.9,Santa Cruz AMS,24 
+2000-01-16,2484,A,22.6,Azusa,24 
+2000-01-16,2899,A,28.9,Los Angeles-North Main Street,24 
+2000-01-16,2583,A,27.7,Lynwood,24 
+2000-01-16,2429,A,26.8,North Long Beach,24 
+2000-01-16,2160,A,26.2,Pasadena-S Wilson Avenue,24 
+2000-01-16,2166,A,34.3,Pico Rivera,24 
+2000-01-16,2420,A,38.8,Reseda,24 
+2000-01-16,2623,A,31.0,Anaheim-Harbor Blvd,24 
+2000-01-16,3265,A,22.9,Mission Viejo-26081 Via Pera,24 
+2000-01-16,3266,A,2.8,Big Bear City-501 W. Valley Blvd,24 
+2000-01-16,2266,A,22.7,Fontana-Arrow Highway,24 
+2000-01-16,3254,A,34.0,Ontario-1408 Francis Street,24 
+2000-01-16,2221,A,27.3,San Bernardino-4th Street,24 
+2000-01-16,2991,A,8.6,El Rio-Rio Mesa School #2,24 
+2000-01-16,2880,A,21.0,Simi Valley-Cochran Street,24 
+2000-01-16,2984,A,16.4,Thousand Oaks-Moorpark Road,24 
+2000-01-16,2589,A,15.5,Chula Vista,24 
+2000-01-16,2327,A,38.6,El Cajon-Redwood Avenue,24 
+2000-01-16,2263,A,27.3,Escondido-E Valley Parkway,24 
+2000-01-16,2964,A,24.9,San Diego-12th Avenue,24 
+2000-01-16,3488,A,19.4,San Diego-Logan Avenue,24 
+2000-01-16,2040,A,11.7,San Diego-Overland Avenue,24 
+2000-01-16,2293,A,7.8,Fremont-Chapel Way,24 
+2000-01-16,3490,A,12.1,Livermore-793 Rincon Avenue,24 
+2000-01-16,2831,A,10.9,Concord-2956-A Treat Blvd,24 
+2000-01-16,2373,A,6.6,San Francisco-Arkansas Street,24 
+2000-01-16,2125,A,10.0,Redwood City,24 
+2000-01-16,2413,E,8.6,San Jose-4th Street,24 
+2000-01-16,2413,A,8.6,San Jose-4th Street,24 
+2000-01-16,2936,A,8.7,San Jose-Tully Road,24 
+2000-01-16,2410,A,18.5,Vallejo-304 Tuolumne Street,24 
+2000-01-16,2105,A,9.5,Santa Rosa-5th Street,24 
+2000-01-16,3026,A,4.3,Clovis-N Villa Avenue,24 
+2000-01-16,3009,A,21.0,Fresno-1st Street,24 
+2000-01-16,3485,A,17.6,Fresno-Hamilton and Winery,24 
+2000-01-16,3146,A,12.9,Bakersfield-5558 California Avenue,24 
+2000-01-16,3145,A,10.9,Bakersfield-Golden State Highway,24 
+2000-01-16,3253,A,12.9,Merced-2334 M Street,24 
+2000-01-16,2094,A,10.0,Stockton-Hazelton Street,24 
+2000-01-16,2833,A,13.0,Modesto-14th Street,24 
+2000-01-16,2032,A,22.0,Visalia-N Church Street,24 
+2000-01-16,2415,A,41.5,Brawley-Main Street,24 
+2000-01-16,3135,A,56.0,Calexico-Ethel Street,24 
+2000-01-16,2551,A,39.3,El Centro-9th Street,24 
+2000-01-16,2878,A,26.2,Indio-Jackson Street,24 
+2000-01-16,2199,A,13.1,Palm Springs-Fire Station,24 
+2000-01-16,2744,A,1.0,Colusa-Sunrise Blvd,24 
+2000-01-16,2346,A,19.0,Sacramento-Health Dept Stockton Blvd,24 
+2000-01-16,3011,A,14.0,Sacramento-T Street,24 
+2000-01-16,3249,A,7.0,Woodland-Gibson Road,24 
+2000-01-17,2484,A,8.5,Azusa,24 
+2000-01-17,2899,A,32.2,Los Angeles-North Main Street,24 
+2000-01-17,2429,A,49.2,North Long Beach,24 
+2000-01-17,2623,A,36.5,Anaheim-Harbor Blvd,24 
+2000-01-17,2327,A,12.6,El Cajon-Redwood Avenue,24 
+2000-01-17,2263,A,8.8,Escondido-E Valley Parkway,24 
+2000-01-17,2964,A,13.3,San Diego-12th Avenue,24 
+2000-01-17,3488,A,11.0,San Diego-Logan Avenue,24 
+2000-01-17,2831,A,13.5,Concord-2956-A Treat Blvd,24 
+2000-01-17,2413,A,22.7,San Jose-4th Street,24 
+2000-01-17,2413,E,22.7,San Jose-4th Street,24 
+2000-01-17,3009,A,28.0,Fresno-1st Street,24 
+2000-01-17,3146,A,27.8,Bakersfield-5558 California Avenue,24 
+2000-01-17,2346,A,18.0,Sacramento-Health Dept Stockton Blvd,24 
+2000-01-17,3011,A,15.0,Sacramento-T Street,24 
+2000-01-18,2484,A,10.2,Azusa,24 
+2000-01-18,2899,A,10.5,Los Angeles-North Main Street,24 
+2000-01-18,2429,A,17.9,North Long Beach,24 
+2000-01-18,2623,A,16.7,Anaheim-Harbor Blvd,24 
+2000-01-18,2327,A,11.6,El Cajon-Redwood Avenue,24 
+2000-01-18,2263,A,11.3,Escondido-E Valley Parkway,24 
+2000-01-18,2964,A,14.9,San Diego-12th Avenue,24 
+2000-01-18,3488,A,14.5,San Diego-Logan Avenue,24 
+2000-01-18,2831,A,9.5,Concord-2956-A Treat Blvd,24 
+2000-01-18,2373,A,11.8,San Francisco-Arkansas Street,24 
+2000-01-18,2413,A,9.3,San Jose-4th Street,24 
+2000-01-18,2413,E,9.3,San Jose-4th Street,24 
+2000-01-18,2936,A,8.4,San Jose-Tully Road,24 
+2000-01-18,3009,A,10.0,Fresno-1st Street,24 
+2000-01-18,3146,A,31.0,Bakersfield-5558 California Avenue,24 
+2000-01-18,2346,A,9.0,Sacramento-Health Dept Stockton Blvd,24 
+2000-01-18,3011,A,7.0,Sacramento-T Street,24 
+2000-01-19,2914,A,2.3,Lakeport-Lakeport Blvd,24 
+2000-01-19,2948,A,4.0,South Lake Tahoe-Sandy Way,24 
+2000-01-19,2948,B,4.0,South Lake Tahoe-Sandy Way,24 
+2000-01-19,3144,A,6.0,San Andreas-Gold Strike Road,24 
+2000-01-19,3487,A,1.0,Echo Summit,24 
+2000-01-19,3126,A,2.0,Grass Valley-Litton Building,24 
+2000-01-19,2208,B,16.0,Truckee-Fire Station,24 
+2000-01-19,2208,A,13.0,Truckee-Fire Station,24 
+2000-01-19,3020,A,10.0,Quincy-N Church Street,24 
+2000-01-19,2386,A,8.7,Eureka-I Street,24 
+2000-01-19,2271,A,7.1,Ukiah-County Library,24 
+2000-01-19,2271,B,7.1,Ukiah-County Library,24 
+2000-01-19,3489,A,4.1,Salinas-High School,24 
+2000-01-19,3489,B,3.8,Salinas-High School,24 
+2000-01-19,3200,A,5.5,Santa Cruz AMS,24 
+2000-01-19,2959,A,12.0,Alturas-W 4th Street,24 
+2000-01-19,2484,A,9.3,Azusa,24 
+2000-01-19,2899,A,11.1,Los Angeles-North Main Street,24 
+2000-01-19,2583,A,17.6,Lynwood,24 
+2000-01-19,2429,A,14.1,North Long Beach,24 
+2000-01-19,2160,A,8.7,Pasadena-S Wilson Avenue,24 
+2000-01-19,2166,A,18.8,Pico Rivera,24 
+2000-01-19,2420,A,9.3,Reseda,24 
+2000-01-19,2623,A,15.1,Anaheim-Harbor Blvd,24 
+2000-01-19,3265,A,7.4,Mission Viejo-26081 Via Pera,24 
+2000-01-19,2333,A,14.0,Riverside-Magnolia,24 
+2000-01-19,2596,A,15.1,Riverside-Rubidoux,24 
+2000-01-19,3266,A,7.8,Big Bear City-501 W. Valley Blvd,24 
+2000-01-19,2266,A,16.1,Fontana-Arrow Highway,24 
+2000-01-19,3254,A,18.9,Ontario-1408 Francis Street,24 
+2000-01-19,2221,A,12.7,San Bernardino-4th Street,24 
+2000-01-19,2965,B,7.7,Atascadero-Lewis Avenue,24 
+2000-01-19,2965,A,7.8,Atascadero-Lewis Avenue,24 
+2000-01-19,2709,A,5.3,San Luis Obispo-Marsh Street,24 
+2000-01-19,2500,A,6.8,Santa Barbara-W Carillo Street,24 
+2000-01-19,3486,A,5.5,Santa Maria-906 S Broadway,24 
+2000-01-19,2991,A,8.4,El Rio-Rio Mesa School #2,24 
+2000-01-19,2880,A,7.4,Simi Valley-Cochran Street,24 
+2000-01-19,2984,B,5.7,Thousand Oaks-Moorpark Road,24 
+2000-01-19,2984,A,4.9,Thousand Oaks-Moorpark Road,24 
+2000-01-19,2327,A,8.9,El Cajon-Redwood Avenue,24 
+2000-01-19,3488,A,9.1,San Diego-Logan Avenue,24 
+2000-01-19,2293,A,6.9,Fremont-Chapel Way,24 
+2000-01-19,3490,A,8.7,Livermore-793 Rincon Avenue,24 
+2000-01-19,2831,B,9.5,Concord-2956-A Treat Blvd,24 
+2000-01-19,2831,A,10.1,Concord-2956-A Treat Blvd,24 
+2000-01-19,2373,A,10.4,San Francisco-Arkansas Street,24 
+2000-01-19,2125,B,8.6,Redwood City,24 
+2000-01-19,2125,A,9.1,Redwood City,24 
+2000-01-19,2413,E,10.2,San Jose-4th Street,24 
+2000-01-19,2413,A,10.2,San Jose-4th Street,24 
+2000-01-19,2936,A,11.3,San Jose-Tully Road,24 
+2000-01-19,2410,A,7.5,Vallejo-304 Tuolumne Street,24 
+2000-01-19,2105,A,7.5,Santa Rosa-5th Street,24 
+2000-01-19,3026,A,11.5,Clovis-N Villa Avenue,24 
+2000-01-19,3009,A,19.0,Fresno-1st Street,24 
+2000-01-19,3009,B,17.0,Fresno-1st Street,24 
+2000-01-19,3485,A,14.1,Fresno-Hamilton and Winery,24 
+2000-01-19,3146,A,15.4,Bakersfield-5558 California Avenue,24 
+2000-01-19,3146,B,15.3,Bakersfield-5558 California Avenue,24 
+2000-01-19,3145,A,16.0,Bakersfield-Golden State Highway,24 
+2000-01-19,3253,A,17.1,Merced-2334 M Street,24 
+2000-01-19,2094,A,19.0,Stockton-Hazelton Street,24 
+2000-01-19,2833,A,22.0,Modesto-14th Street,24 
+2000-01-19,2032,A,17.0,Visalia-N Church Street,24 
+2000-01-19,2878,A,5.7,Indio-Jackson Street,24 
+2000-01-19,2199,A,6.1,Palm Springs-Fire Station,24 
+2000-01-19,2115,A,12.0,Chico-Manzanita Avenue,24 
+2000-01-19,2744,A,1.0,Colusa-Sunrise Blvd,24 
+2000-01-19,2956,A,16.0,Roseville-N Sunrise Blvd,24 
+2000-01-19,2731,B,15.0,Sacramento-Del Paso Manor,24 
+2000-01-19,2346,A,13.0,Sacramento-Health Dept Stockton Blvd,24 
+2000-01-19,3011,A,12.0,Sacramento-T Street,24 
+2000-01-19,2829,A,6.0,Redding-Health Dept Roof,24 
+2000-01-19,2958,B,12.0,Yuba City-Almond Street,24 
+2000-01-19,2958,A,11.0,Yuba City-Almond Street,24 
+2000-01-19,3249,A,11.0,Woodland-Gibson Road,24 
+2000-01-20,3121,A,2.6,Mojave-923 Poole Street,24 
+2000-01-20,3492,A,2.5,Ridgecrest-100 West California Avenue,24 
+2000-01-20,3007,A,5.7,Lancaster-W Pondera Street,24 
+2000-01-20,3500,A,8.1,Victorville-14306 Park Avenue,24 
+2000-01-20,2484,A,18.3,Azusa,24 
+2000-01-20,2899,A,16.3,Los Angeles-North Main Street,24 
+2000-01-20,2429,A,8.7,North Long Beach,24 
+2000-01-20,2623,A,12.9,Anaheim-Harbor Blvd,24 
+2000-01-20,2596,A,18.0,Riverside-Rubidoux,24 
+2000-01-20,2589,A,9.7,Chula Vista,24 
+2000-01-20,2327,A,7.5,El Cajon-Redwood Avenue,24 
+2000-01-20,2964,A,10.0,San Diego-12th Avenue,24 
+2000-01-20,3488,A,10.2,San Diego-Logan Avenue,24 
+2000-01-20,2040,A,8.6,San Diego-Overland Avenue,24 
+2000-01-20,2831,A,7.1,Concord-2956-A Treat Blvd,24 
+2000-01-20,2373,A,7.8,San Francisco-Arkansas Street,24 
+2000-01-20,2413,E,7.7,San Jose-4th Street,24 
+2000-01-20,2413,A,7.7,San Jose-4th Street,24 
+2000-01-20,2936,A,8.6,San Jose-Tully Road,24 
+2000-01-20,3009,A,17.0,Fresno-1st Street,24 
+2000-01-20,3146,A,16.7,Bakersfield-5558 California Avenue,24 
+2000-01-20,2415,A,15.0,Brawley-Main Street,24 
+2000-01-20,3135,A,12.4,Calexico-Ethel Street,24 
+2000-01-20,2551,A,9.7,El Centro-9th Street,24 
+2000-01-20,2346,A,10.0,Sacramento-Health Dept Stockton Blvd,24 
+2000-01-20,3011,A,8.0,Sacramento-T Street,24 
+2000-01-21,2484,A,17.3,Azusa,24 
+2000-01-21,2899,A,15.5,Los Angeles-North Main Street,24 
+2000-01-21,2429,A,10.3,North Long Beach,24 
+2000-01-21,2623,A,10.5,Anaheim-Harbor Blvd,24 
+2000-01-21,2596,A,20.3,Riverside-Rubidoux,24 
+2000-01-21,2327,A,8.1,El Cajon-Redwood Avenue,24 
+2000-01-21,2964,A,6.1,San Diego-12th Avenue,24 
+2000-01-21,3488,A,5.0,San Diego-Logan Avenue,23 
+2000-01-21,2831,A,6.0,Concord-2956-A Treat Blvd,24 
+2000-01-21,2373,A,9.7,San Francisco-Arkansas Street,24 
+2000-01-21,2413,A,7.1,San Jose-4th Street,24 
+2000-01-21,2413,E,7.1,San Jose-4th Street,24 
+2000-01-21,2936,A,5.9,San Jose-Tully Road,24 
+2000-01-21,3009,A,20.0,Fresno-1st Street,24 
+2000-01-21,3146,A,17.5,Bakersfield-5558 California Avenue,24 
+2000-01-21,2346,A,11.0,Sacramento-Health Dept Stockton Blvd,24 
+2000-01-21,3011,A,10.0,Sacramento-T Street,24
+ 
+ Quality Flag Definition 
+0, Valid observation 
+1, The data supplier marked the observation as suspect - but it is still valid 
+2, The automated qa routine judged the observation questionable and invalid 
+3, The automated qa routine judged the observation invalid  
+4, The data supplier flagged the observation invalid  
+5, The observation was flagged invalid manually  
+
+Data extracted from mrgd database: 
+December 3, 2023 at 10:45:15
+  

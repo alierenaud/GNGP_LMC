@@ -1,0 +1,348 @@
+summary_date,site,monitor,pm25_davg,name,obs_count 
+2002-03-22,2353,A,10.0,Yosemite Village-Visitor Center,24 
+2002-03-22,2484,A,14.0,Azusa,24 
+2002-03-22,3508,A,15.4,Los Angeles-651 Mott Street,24 
+2002-03-22,2899,A,12.1,Los Angeles-North Main Street,24 
+2002-03-22,2429,A,7.3,North Long Beach,24 
+2002-03-22,3509,A,14.6,Wilmington-1115 N.Mahar Avenue,24 
+2002-03-22,3674,A,11.3,Anaheim-Pampas Lane,24 
+2002-03-22,2596,A,28.3,Riverside-Rubidoux,24 
+2002-03-22,2327,A,13.3,El Cajon-Redwood Avenue,24 
+2002-03-22,2263,A,13.4,Escondido-E Valley Parkway,24 
+2002-03-22,2964,A,12.2,San Diego-12th Avenue,24 
+2002-03-22,2831,A,4.6,Concord-2956-A Treat Blvd,24 
+2002-03-22,3506,A,13.7,Point Reyes,24 
+2002-03-22,2373,A,5.6,San Francisco-Arkansas Street,24 
+2002-03-22,2413,A,6.1,San Jose-4th Street,24 
+2002-03-22,2413,E,6.1,San Jose-4th Street,24 
+2002-03-22,2936,A,4.7,San Jose-Tully Road,24 
+2002-03-22,3009,A,12.0,Fresno-1st Street,24 
+2002-03-22,3009,D,14.8,Fresno-1st Street,24 
+2002-03-22,3146,A,5.7,Bakersfield-5558 California Avenue,24 
+2002-03-22,3146,H,10.3,Bakersfield-5558 California Avenue,24 
+2002-03-22,3146,G,9.9,Bakersfield-5558 California Avenue,24 
+2002-03-22,2833,E,12.5,Modesto-14th Street,24 
+2002-03-22,2032,B,26.6,Visalia-N Church Street,24 
+2002-03-22,3173,A,23.3,Calexico-East,24 
+2002-03-22,2115,D,11.3,Chico-Manzanita Avenue,24 
+2002-03-22,2115,C,5.0,Chico-Manzanita Avenue,21 
+2002-03-22,2630,A,8.5,Gridley-Cowee Avenue,24 
+2002-03-22,2731,D,9.9,Sacramento-Del Paso Manor,24 
+2002-03-22,2346,A,6.0,Sacramento-Health Dept Stockton Blvd,24 
+2002-03-22,3011,A,9.0,Sacramento-T Street,24 
+2002-03-22,3249,A,6.0,Woodland-Gibson Road,24 
+2002-03-23,2353,A,8.0,Yosemite Village-Visitor Center,24 
+2002-03-23,2484,A,7.1,Azusa,24 
+2002-03-23,3508,A,10.1,Los Angeles-651 Mott Street,24 
+2002-03-23,2899,A,6.5,Los Angeles-North Main Street,24 
+2002-03-23,2429,A,6.5,North Long Beach,24 
+2002-03-23,3509,A,10.9,Wilmington-1115 N.Mahar Avenue,24 
+2002-03-23,3674,A,5.6,Anaheim-Pampas Lane,24 
+2002-03-23,2596,A,10.3,Riverside-Rubidoux,24 
+2002-03-23,2327,A,5.3,El Cajon-Redwood Avenue,24 
+2002-03-23,2263,A,5.1,Escondido-E Valley Parkway,24 
+2002-03-23,2964,A,6.6,San Diego-12th Avenue,24 
+2002-03-23,2831,A,2.6,Concord-2956-A Treat Blvd,24 
+2002-03-23,3506,A,9.9,Point Reyes,24 
+2002-03-23,2373,A,3.5,San Francisco-Arkansas Street,24 
+2002-03-23,2413,A,2.8,San Jose-4th Street,24 
+2002-03-23,2413,E,2.8,San Jose-4th Street,24 
+2002-03-23,2936,A,2.5,San Jose-Tully Road,24 
+2002-03-23,3009,D,7.1,Fresno-1st Street,24 
+2002-03-23,3009,A,5.0,Fresno-1st Street,24 
+2002-03-23,3146,A,3.2,Bakersfield-5558 California Avenue,24 
+2002-03-23,2833,E,5.4,Modesto-14th Street,24 
+2002-03-23,2032,B,12.4,Visalia-N Church Street,24 
+2002-03-23,3173,A,,Calexico-East,14 
+2002-03-23,2115,D,6.5,Chico-Manzanita Avenue,24 
+2002-03-23,2115,C,,Chico-Manzanita Avenue,13 
+2002-03-23,2630,A,5.3,Gridley-Cowee Avenue,24 
+2002-03-23,2731,D,5.1,Sacramento-Del Paso Manor,24 
+2002-03-23,2346,A,2.0,Sacramento-Health Dept Stockton Blvd,24 
+2002-03-23,3011,A,4.0,Sacramento-T Street,24 
+2002-03-23,2829,A,6.0,Redding-Health Dept Roof,24 
+2002-03-24,3154,A,2.0,Keeler-Cerro Gordo Road,24 
+2002-03-24,2353,A,8.8,Yosemite Village-Visitor Center,24 
+2002-03-24,2208,A,6.0,Truckee-Fire Station,24 
+2002-03-24,3494,A,17.0,Portola-161 Nevada Street,24 
+2002-03-24,3121,A,1.7,Mojave-923 Poole Street,24 
+2002-03-24,3500,A,3.0,Victorville-14306 Park Avenue,24 
+2002-03-24,3500,B,3.0,Victorville-14306 Park Avenue,24 
+2002-03-24,2484,A,5.9,Azusa,24 
+2002-03-24,2492,A,6.6,Burbank-W Palm Avenue,24 
+2002-03-24,3508,A,9.3,Los Angeles-651 Mott Street,24 
+2002-03-24,2899,A,7.3,Los Angeles-North Main Street,24 
+2002-03-24,2583,A,7.7,Lynwood,24 
+2002-03-24,2429,A,7.1,North Long Beach,24 
+2002-03-24,2160,A,6.7,Pasadena-S Wilson Avenue,24 
+2002-03-24,2166,A,6.3,Pico Rivera,24 
+2002-03-24,2420,A,5.0,Reseda,24 
+2002-03-24,3509,A,10.6,Wilmington-1115 N.Mahar Avenue,24 
+2002-03-24,3674,A,6.5,Anaheim-Pampas Lane,24 
+2002-03-24,3265,A,4.3,Mission Viejo-26081 Via Pera,24 
+2002-03-24,2333,A,5.1,Riverside-Magnolia,24 
+2002-03-24,2596,D,6.0,Riverside-Rubidoux,24 
+2002-03-24,2596,C,8.9,Riverside-Rubidoux,24 
+2002-03-24,2596,A,5.7,Riverside-Rubidoux,24 
+2002-03-24,2266,A,6.9,Fontana-Arrow Highway,24 
+2002-03-24,3254,A,5.4,Ontario-1408 Francis Street,24 
+2002-03-24,2221,A,7.8,San Bernardino-4th Street,24 
+2002-03-24,2991,A,4.1,El Rio-Rio Mesa School #2,24 
+2002-03-24,3505,A,2.3,Piru-3301 Pacific Avenue,24 
+2002-03-24,2984,A,4.4,Thousand Oaks-Moorpark Road,24 
+2002-03-24,2589,A,4.6,Chula Vista,24 
+2002-03-24,2327,C,6.4,El Cajon-Redwood Avenue,24 
+2002-03-24,2327,A,4.9,El Cajon-Redwood Avenue,24 
+2002-03-24,2263,A,4.6,Escondido-E Valley Parkway,24 
+2002-03-24,2964,A,4.3,San Diego-12th Avenue,24 
+2002-03-24,2040,A,4.2,San Diego-Overland Avenue,24 
+2002-03-24,2293,A,3.3,Fremont-Chapel Way,24 
+2002-03-24,3490,A,3.1,Livermore-793 Rincon Avenue,24 
+2002-03-24,2831,A,3.5,Concord-2956-A Treat Blvd,24 
+2002-03-24,3506,A,7.3,Point Reyes,24 
+2002-03-24,2373,A,3.6,San Francisco-Arkansas Street,24 
+2002-03-24,2125,A,4.6,Redwood City,24 
+2002-03-24,2413,A,3.3,San Jose-4th Street,24 
+2002-03-24,2413,E,3.3,San Jose-4th Street,24 
+2002-03-24,2413,B,4.5,San Jose-4th Street,24 
+2002-03-24,2936,A,5.8,San Jose-Tully Road,24 
+2002-03-24,2410,A,2.3,Vallejo-304 Tuolumne Street,24 
+2002-03-24,2105,A,3.9,Santa Rosa-5th Street,24 
+2002-03-24,3026,A,5.0,Clovis-N Villa Avenue,24 
+2002-03-24,3009,D,7.3,Fresno-1st Street,24 
+2002-03-24,3009,C,5.4,Fresno-1st Street,24 
+2002-03-24,3009,A,5.0,Fresno-1st Street,24 
+2002-03-24,3485,A,6.2,Fresno-Hamilton and Winery,24 
+2002-03-24,3146,E,4.9,Bakersfield-5558 California Avenue,24 
+2002-03-24,3146,A,5.0,Bakersfield-5558 California Avenue,24 
+2002-03-24,3146,F,5.7,Bakersfield-5558 California Avenue,24 
+2002-03-24,3145,A,4.5,Bakersfield-Golden State Highway,24 
+2002-03-24,3253,A,4.2,Merced-2334 M Street,24 
+2002-03-24,2094,A,3.0,Stockton-Hazelton Street,24 
+2002-03-24,2833,E,4.7,Modesto-14th Street,24 
+2002-03-24,2833,A,3.0,Modesto-14th Street,24 
+2002-03-24,2032,B,15.0,Visalia-N Church Street,24 
+2002-03-24,2032,A,6.0,Visalia-N Church Street,24 
+2002-03-24,2415,A,9.2,Brawley-Main Street,24 
+2002-03-24,3135,A,4.9,Calexico-Ethel Street,24 
+2002-03-24,2551,A,5.8,El Centro-9th Street,24 
+2002-03-24,2878,A,4.4,Indio-Jackson Street,24 
+2002-03-24,2199,A,3.1,Palm Springs-Fire Station,24 
+2002-03-24,2115,C,,Chico-Manzanita Avenue,15 
+2002-03-24,2115,D,9.8,Chico-Manzanita Avenue,24 
+2002-03-24,2630,A,5.1,Gridley-Cowee Avenue,20 
+2002-03-24,2731,C,6.2,Sacramento-Del Paso Manor,24 
+2002-03-24,2731,D,3.9,Sacramento-Del Paso Manor,24 
+2002-03-24,2346,A,3.0,Sacramento-Health Dept Stockton Blvd,24 
+2002-03-24,3011,A,3.0,Sacramento-T Street,24 
+2002-03-24,3249,A,1.0,Woodland-Gibson Road,24 
+2002-03-25,2353,A,11.0,Yosemite Village-Visitor Center,24 
+2002-03-25,2484,A,9.1,Azusa,24 
+2002-03-25,3508,A,15.7,Los Angeles-651 Mott Street,24 
+2002-03-25,2899,A,12.3,Los Angeles-North Main Street,24 
+2002-03-25,2429,A,10.3,North Long Beach,24 
+2002-03-25,3509,A,14.5,Wilmington-1115 N.Mahar Avenue,24 
+2002-03-25,3674,A,8.9,Anaheim-Pampas Lane,24 
+2002-03-25,2596,A,14.0,Riverside-Rubidoux,24 
+2002-03-25,2991,A,7.9,El Rio-Rio Mesa School #2,24 
+2002-03-25,2327,A,7.0,El Cajon-Redwood Avenue,24 
+2002-03-25,2263,A,7.7,Escondido-E Valley Parkway,24 
+2002-03-25,2964,A,8.7,San Diego-12th Avenue,24 
+2002-03-25,2831,A,7.0,Concord-2956-A Treat Blvd,24 
+2002-03-25,3506,A,8.8,Point Reyes,24 
+2002-03-25,2373,A,4.6,San Francisco-Arkansas Street,24 
+2002-03-25,2413,E,6.6,San Jose-4th Street,24 
+2002-03-25,2413,A,6.6,San Jose-4th Street,24 
+2002-03-25,2936,A,6.9,San Jose-Tully Road,24 
+2002-03-25,3009,D,11.3,Fresno-1st Street,24 
+2002-03-25,3009,A,7.0,Fresno-1st Street,24 
+2002-03-25,3146,A,13.6,Bakersfield-5558 California Avenue,24 
+2002-03-25,2833,E,12.1,Modesto-14th Street,24 
+2002-03-25,2032,B,25.4,Visalia-N Church Street,24 
+2002-03-25,3173,A,,Calexico-East,10 
+2002-03-25,2115,D,16.6,Chico-Manzanita Avenue,24 
+2002-03-25,2115,C,10.6,Chico-Manzanita Avenue,22 
+2002-03-25,2630,A,7.8,Gridley-Cowee Avenue,24 
+2002-03-25,2731,D,5.4,Sacramento-Del Paso Manor,24 
+2002-03-25,2346,A,4.0,Sacramento-Health Dept Stockton Blvd,24 
+2002-03-25,3011,A,2.0,Sacramento-T Street,24 
+2002-03-26,2353,A,12.9,Yosemite Village-Visitor Center,24 
+2002-03-26,2484,A,16.5,Azusa,24 
+2002-03-26,3508,A,23.0,Los Angeles-651 Mott Street,24 
+2002-03-26,2899,A,16.0,Los Angeles-North Main Street,24 
+2002-03-26,2429,A,18.5,North Long Beach,24 
+2002-03-26,3509,A,26.6,Wilmington-1115 N.Mahar Avenue,24 
+2002-03-26,3674,A,15.4,Anaheim-Pampas Lane,24 
+2002-03-26,2596,A,21.1,Riverside-Rubidoux,24 
+2002-03-26,2327,A,9.0,El Cajon-Redwood Avenue,24 
+2002-03-26,2263,A,10.3,Escondido-E Valley Parkway,24 
+2002-03-26,2964,A,20.1,San Diego-12th Avenue,24 
+2002-03-26,2831,A,5.5,Concord-2956-A Treat Blvd,24 
+2002-03-26,3506,A,9.7,Point Reyes,24 
+2002-03-26,2373,A,9.0,San Francisco-Arkansas Street,24 
+2002-03-26,2413,A,9.6,San Jose-4th Street,24 
+2002-03-26,2413,E,9.6,San Jose-4th Street,24 
+2002-03-26,2936,A,9.0,San Jose-Tully Road,24 
+2002-03-26,3009,A,6.0,Fresno-1st Street,24 
+2002-03-26,3009,D,9.9,Fresno-1st Street,24 
+2002-03-26,3496,A,27.3,Bakersfield-410 E Planz Road,24 
+2002-03-26,3146,A,25.0,Bakersfield-5558 California Avenue,24 
+2002-03-26,2833,E,13.0,Modesto-14th Street,24 
+2002-03-26,2032,B,27.4,Visalia-N Church Street,24 
+2002-03-26,3173,A,20.6,Calexico-East,23 
+2002-03-26,2115,C,,Chico-Manzanita Avenue,10 
+2002-03-26,2115,D,10.4,Chico-Manzanita Avenue,24 
+2002-03-26,2630,A,10.2,Gridley-Cowee Avenue,23 
+2002-03-26,2731,D,9.1,Sacramento-Del Paso Manor,24 
+2002-03-26,2346,A,6.0,Sacramento-Health Dept Stockton Blvd,24 
+2002-03-26,3011,A,6.0,Sacramento-T Street,24 
+2002-03-27,3154,A,2.0,Keeler-Cerro Gordo Road,24 
+2002-03-27,3154,B,2.0,Keeler-Cerro Gordo Road,24 
+2002-03-27,2914,A,1.7,Lakeport-Lakeport Blvd,24 
+2002-03-27,2948,A,8.0,South Lake Tahoe-Sandy Way,24 
+2002-03-27,2948,B,7.0,South Lake Tahoe-Sandy Way,24 
+2002-03-27,3144,A,6.0,San Andreas-Gold Strike Road,24 
+2002-03-27,2353,A,8.5,Yosemite Village-Visitor Center,24 
+2002-03-27,2208,A,7.0,Truckee-Fire Station,24 
+2002-03-27,3494,A,24.0,Portola-161 Nevada Street,24 
+2002-03-27,3494,B,19.0,Portola-161 Nevada Street,24 
+2002-03-27,3121,A,15.7,Mojave-923 Poole Street,24 
+2002-03-27,3492,A,3.7,Ridgecrest-100 West California Avenue,24 
+2002-03-27,3500,A,19.0,Victorville-14306 Park Avenue,24 
+2002-03-27,3500,B,20.0,Victorville-14306 Park Avenue,24 
+2002-03-27,2386,A,7.8,Eureka-I Street,24 
+2002-03-27,2271,A,5.0,Ukiah-County Library,24 
+2002-03-27,2271,B,5.0,Ukiah-County Library,24 
+2002-03-27,3489,B,7.3,Salinas-High School,24 
+2002-03-27,3489,A,7.6,Salinas-High School,24 
+2002-03-27,3200,A,7.5,Santa Cruz AMS,24 
+2002-03-27,2484,A,20.6,Azusa,24 
+2002-03-27,2492,A,17.8,Burbank-W Palm Avenue,24 
+2002-03-27,3508,A,22.9,Los Angeles-651 Mott Street,24 
+2002-03-27,2899,A,17.9,Los Angeles-North Main Street,24 
+2002-03-27,2583,A,13.8,Lynwood,24 
+2002-03-27,2429,A,11.3,North Long Beach,24 
+2002-03-27,2160,A,17.0,Pasadena-S Wilson Avenue,24 
+2002-03-27,2166,A,14.7,Pico Rivera,24 
+2002-03-27,2420,A,12.3,Reseda,24 
+2002-03-27,3509,A,20.3,Wilmington-1115 N.Mahar Avenue,24 
+2002-03-27,3674,A,11.1,Anaheim-Pampas Lane,24 
+2002-03-27,3265,A,7.3,Mission Viejo-26081 Via Pera,24 
+2002-03-27,2333,A,21.9,Riverside-Magnolia,24 
+2002-03-27,2596,C,23.8,Riverside-Rubidoux,24 
+2002-03-27,2596,D,21.4,Riverside-Rubidoux,24 
+2002-03-27,2596,A,22.6,Riverside-Rubidoux,24 
+2002-03-27,3266,A,21.8,Big Bear City-501 W. Valley Blvd,24 
+2002-03-27,2266,A,23.5,Fontana-Arrow Highway,24 
+2002-03-27,3254,A,17.9,Ontario-1408 Francis Street,24 
+2002-03-27,2221,A,26.6,San Bernardino-4th Street,24 
+2002-03-27,2965,B,9.0,Atascadero-Lewis Avenue,24 
+2002-03-27,2965,A,8.5,Atascadero-Lewis Avenue,24 
+2002-03-27,2709,A,9.0,San Luis Obispo-Marsh Street,24 
+2002-03-27,2991,A,7.1,El Rio-Rio Mesa School #2,24 
+2002-03-27,3505,A,7.7,Piru-3301 Pacific Avenue,24 
+2002-03-27,2880,A,9.0,Simi Valley-Cochran Street,24 
+2002-03-27,2880,B,8.8,Simi Valley-Cochran Street,24 
+2002-03-27,2984,A,6.6,Thousand Oaks-Moorpark Road,24 
+2002-03-27,2589,A,7.9,Chula Vista,24 
+2002-03-27,2327,A,12.5,El Cajon-Redwood Avenue,24 
+2002-03-27,2327,C,10.7,El Cajon-Redwood Avenue,24 
+2002-03-27,2263,A,13.8,Escondido-E Valley Parkway,24 
+2002-03-27,2964,A,8.2,San Diego-12th Avenue,24 
+2002-03-27,2040,A,8.5,San Diego-Overland Avenue,24 
+2002-03-27,2293,A,7.7,Fremont-Chapel Way,24 
+2002-03-27,3490,A,8.6,Livermore-793 Rincon Avenue,24 
+2002-03-27,2831,A,6.5,Concord-2956-A Treat Blvd,24 
+2002-03-27,2831,B,6.0,Concord-2956-A Treat Blvd,24 
+2002-03-27,3506,A,,Point Reyes,12 
+2002-03-27,2373,A,13.4,San Francisco-Arkansas Street,24 
+2002-03-27,2125,A,8.8,Redwood City,24 
+2002-03-27,2413,B,12.0,San Jose-4th Street,24 
+2002-03-27,2413,A,8.9,San Jose-4th Street,24 
+2002-03-27,2413,E,8.8,San Jose-4th Street,24 
+2002-03-27,2936,A,9.8,San Jose-Tully Road,24 
+2002-03-27,2410,A,7.7,Vallejo-304 Tuolumne Street,24 
+2002-03-27,2105,A,6.3,Santa Rosa-5th Street,24 
+2002-03-27,3026,A,9.6,Clovis-N Villa Avenue,24 
+2002-03-27,3009,A,11.0,Fresno-1st Street,24 
+2002-03-27,3009,C,12.2,Fresno-1st Street,24 
+2002-03-27,3009,D,16.3,Fresno-1st Street,24 
+2002-03-27,3009,B,12.0,Fresno-1st Street,24 
+2002-03-27,3485,A,13.4,Fresno-Hamilton and Winery,24 
+2002-03-27,3496,A,29.8,Bakersfield-410 E Planz Road,24 
+2002-03-27,3146,B,23.0,Bakersfield-5558 California Avenue,24 
+2002-03-27,3146,F,22.9,Bakersfield-5558 California Avenue,24 
+2002-03-27,3146,G,,Bakersfield-5558 California Avenue,13 
+2002-03-27,3146,A,24.1,Bakersfield-5558 California Avenue,24 
+2002-03-27,3146,H,,Bakersfield-5558 California Avenue,13 
+2002-03-27,3146,E,23.6,Bakersfield-5558 California Avenue,24 
+2002-03-27,3145,A,31.1,Bakersfield-Golden State Highway,24 
+2002-03-27,3194,A,14.7,Corcoran-Patterson Avenue,24 
+2002-03-27,3253,A,9.0,Merced-2334 M Street,24 
+2002-03-27,2094,A,7.0,Stockton-Hazelton Street,24 
+2002-03-27,2833,A,8.0,Modesto-14th Street,24 
+2002-03-27,2833,E,13.3,Modesto-14th Street,24 
+2002-03-27,2833,D,9.0,Modesto-14th Street,24 
+2002-03-27,2032,B,29.6,Visalia-N Church Street,24 
+2002-03-27,2032,A,20.0,Visalia-N Church Street,24 
+2002-03-27,2032,C,21.0,Visalia-N Church Street,24 
+2002-03-27,2415,A,7.1,Brawley-Main Street,24 
+2002-03-27,3173,A,15.4,Calexico-East,24 
+2002-03-27,3135,A,14.5,Calexico-Ethel Street,24 
+2002-03-27,3135,C,20.0,Calexico-Ethel Street,24 
+2002-03-27,2551,A,3.6,El Centro-9th Street,24 
+2002-03-27,2878,A,11.1,Indio-Jackson Street,24 
+2002-03-27,2199,A,11.8,Palm Springs-Fire Station,24 
+2002-03-27,2115,A,5.0,Chico-Manzanita Avenue,24 
+2002-03-27,2115,D,7.7,Chico-Manzanita Avenue,24 
+2002-03-27,2115,C,,Chico-Manzanita Avenue,9 
+2002-03-27,2115,B,4.0,Chico-Manzanita Avenue,24 
+2002-03-27,2630,A,7.5,Gridley-Cowee Avenue,22 
+2002-03-27,2956,A,6.0,Roseville-N Sunrise Blvd,24 
+2002-03-27,2731,D,7.6,Sacramento-Del Paso Manor,24 
+2002-03-27,2731,C,7.5,Sacramento-Del Paso Manor,24 
+2002-03-27,3011,A,7.0,Sacramento-T Street,24 
+2002-03-27,3807,A,4.0,Redding-Buckeye,24 
+2002-03-27,2829,A,5.0,Redding-Health Dept Roof,24 
+2002-03-27,2958,A,6.0,Yuba City-Almond Street,24 
+2002-03-27,2958,B,6.0,Yuba City-Almond Street,24 
+2002-03-27,3249,A,6.0,Woodland-Gibson Road,24 
+2002-03-28,2353,A,12.1,Yosemite Village-Visitor Center,24 
+2002-03-28,2484,A,18.2,Azusa,24 
+2002-03-28,3508,A,16.2,Los Angeles-651 Mott Street,24 
+2002-03-28,2899,A,10.5,Los Angeles-North Main Street,24 
+2002-03-28,2429,A,8.7,North Long Beach,24 
+2002-03-28,3509,A,14.0,Wilmington-1115 N.Mahar Avenue,24 
+2002-03-28,2596,A,19.0,Riverside-Rubidoux,24 
+2002-03-28,2327,A,5.7,El Cajon-Redwood Avenue,24 
+2002-03-28,2263,A,8.3,Escondido-E Valley Parkway,24 
+2002-03-28,2964,A,5.4,San Diego-12th Avenue,24 
+2002-03-28,2831,A,9.0,Concord-2956-A Treat Blvd,24 
+2002-03-28,2413,E,14.8,San Jose-4th Street,24 
+2002-03-28,2413,A,14.8,San Jose-4th Street,24 
+2002-03-28,2936,A,11.6,San Jose-Tully Road,24 
+2002-03-28,3009,A,15.0,Fresno-1st Street,24 
+2002-03-28,3009,D,22.6,Fresno-1st Street,24 
+2002-03-28,3146,G,25.0,Bakersfield-5558 California Avenue,24 
+2002-03-28,3146,H,26.0,Bakersfield-5558 California Avenue,24 
+2002-03-28,3146,A,17.7,Bakersfield-5558 California Avenue,24 
+2002-03-28,2833,E,11.4,Modesto-14th Street,24 
+2002-03-28,2032,B,31.8,Visalia-N Church Street,24 
+2002-03-28,3173,A,7.6,Calexico-East,24 
+2002-03-28,2115,C,5.8,Chico-Manzanita Avenue,24 
+2002-03-28,2115,D,7.5,Chico-Manzanita Avenue,24 
+2002-03-28,2630,A,6.0,Gridley-Cowee Avenue,24 
+2002-03-28,2731,D,6.8,Sacramento-Del Paso Manor,24 
+2002-03-28,3011,A,5.0,Sacramento-T Street,24
+ 
+ Quality Flag Definition 
+0, Valid observation 
+1, The data supplier marked the observation as suspect - but it is still valid 
+2, The automated qa routine judged the observation questionable and invalid 
+3, The automated qa routine judged the observation invalid  
+4, The data supplier flagged the observation invalid  
+5, The observation was flagged invalid manually  
+
+Data extracted from mrgd database: 
+December 3, 2023 at 10:46:14
+  
