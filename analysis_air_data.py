@@ -269,7 +269,6 @@ prob_ind = np.mean(Sigmas0==0,axis=0)
 
 
 likes = np.array([np.sqrt(np.diag(taus_run[j])/2/np.pi)@np.exp(-1/2*np.diag(taus_run[j])@(Y_obs-V_run[j])**2) for j in range(tail,N)])
-
 waic = - np.mean(np.log(np.mean(likes,axis=0))) + np.mean(np.var(np.log(likes),axis=0))
 
 

@@ -219,16 +219,20 @@ for i in range(N):
     
     
     
-    mu_current, Vmmu1_current, A_invVmmu1_current = mu_move(A_inv_current,Rs_inv_current,V_current,sigma_mu,mu_mu)
 
     
     
     A_current, A_inv_current, A_invVmmu1_current = A_move_slice_mask(A_current, A_invVmmu1_current, A_mask_current, Rs_inv_current, Vmmu1_current, sigma_A, mu_A, sigma_slice)
     
+    A_current, A_inv_current, A_invVmmu1_current, n_ones_current, A_mask_current, A_ones_ind_current, A_zeros_ind_current = A_rjmcmc(Rs_inv_current, Vmmu1_current, A_current, A_inv_current, A_invVmmu1_current, A_zeros_ind_current, A_ones_ind_current, A_mask_current, n_ones_current, prob_one, mu_A, sigma_A, n_jumps)
     
     
     
     phis_current, Rs_current, Rs_inv_current, acc_phis[:,i] = phis_move(phis_current,phis_prop,min_phi,max_phi,alphas,betas,Dists_obs,A_invVmmu1_current,Rs_current,Rs_inv_current)
+    
+    
+    mu_current, Vmmu1_current, A_invVmmu1_current = mu_move(A_inv_current,Rs_inv_current,V_current,sigma_mu,mu_mu)
+
     
     taus_current, Dm1_current, Dm1Y_current = taus_move_mis(taus_current,VmY_inner_rows_current,Y_obs,a,b,ns)
 
@@ -236,8 +240,7 @@ for i in range(N):
     
     
         
-    A_current, A_inv_current, A_invVmmu1_current, n_ones_current, A_mask_current, A_ones_ind_current, A_zeros_ind_current = A_rjmcmc(Rs_inv_current, Vmmu1_current, A_current, A_inv_current, A_invVmmu1_current, A_zeros_ind_current, A_ones_ind_current, A_mask_current, n_ones_current, prob_one, mu_A, sigma_A, n_jumps)
-    
+
 
     mu_run[i] = mu_current
     V_run[i] = V_current
