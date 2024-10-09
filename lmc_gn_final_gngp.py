@@ -198,34 +198,47 @@ tab_cols = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 'tab
 ### import lansing woods data
 
 maple = np.loadtxt("maple.csv", delimiter=",")
-hickory = np.loadtxt("hickory.csv", delimiter=",")
+# hickory = np.loadtxt("hickory.csv", delimiter=",")
 # whiteoak = np.loadtxt("whiteoak.csv", delimiter=",")
 # redoak = np.loadtxt("redoak.csv", delimiter=",")
 # blackoak = np.loadtxt("blackoak.csv", delimiter=",")
 
 n_maple = maple.shape[0]
-n_hickory = hickory.shape[0]
+# n_hickory = hickory.shape[0]
 # n_whiteoak = whiteoak.shape[0]
 # n_redoak = redoak.shape[0]
 # n_blackoak = blackoak.shape[0]
 
 # X_obs = np.concatenate((maple,hickory,whiteoak,redoak,blackoak))
-X_obs = np.concatenate((maple,hickory))
+# X_obs = np.concatenate((maple,hickory))
+X_obs = maple
 
 # n_obs = n_maple + n_hickory + n_whiteoak + n_redoak + n_blackoak
-n_obs = n_maple + n_hickory
+# n_obs = n_maple + n_hickory
+n_obs = n_maple
 # Y_obs = np.concatenate((np.ones(n_maple,dtype=int)*1,np.ones(n_hickory,dtype=int)*2,np.ones(n_whiteoak,dtype=int)*3,np.ones(n_redoak,dtype=int)*4,np.ones(n_blackoak,dtype=int)*5))
-Y_obs = np.concatenate((np.ones(n_maple,dtype=int)*1,np.ones(n_hickory,dtype=int)*2))
+# Y_obs = np.concatenate((np.ones(n_maple,dtype=int)*1,np.ones(n_hickory,dtype=int)*2))
+Y_obs = np.ones(n_maple,dtype=int)*1
 
 
 X_obs += random.uniform(size=(n_obs,2))/10**3
 
 # p = 5
-p = 2
+# p = 2
+p = 1
 
 n_grid=50
 
 a_lam = n_obs*(p+1)/p
+
+
+fig, ax = plt.subplots()
+ax.set_xlim(0,1)
+ax.set_ylim(0,1)
+ax.set_box_aspect(1)
+ax.scatter(X_obs[:,0],X_obs[:,1],color=tab_cols[0])
+# plt.savefig("maple_points.pdf", bbox_inches='tight')
+plt.show()
 
 ### base intensity
 # lam = 2500
@@ -239,8 +252,8 @@ a_lam = n_obs*(p+1)/p
 m = 3
 
 ### markov chain + tail length
-N = 20000
-tail = 10000
+N = 3000
+tail = 1000
 
 
 ### generate base poisson process
@@ -654,7 +667,7 @@ A_invVmmu1_current = A_inv_current @ Vmmu1_current
 A_invV_gridmmu1_current = A_inv_current @ V_gridmmu1_current
 
 
-
+count_thin = 0
 
 st = time.time()
 
@@ -690,7 +703,7 @@ for i in range(N):
     A_run[i] = A_current
     V_grid_run[i] = V_grid_current 
     
-    if i % 10 == 0:
+    if i % 200 == 0:
         
         
         ett = time.time()
@@ -704,9 +717,12 @@ for i in range(N):
         ax.set_xlim(0,1)
         ax.set_ylim(0,1)
         ax.set_box_aspect(1)
-        ax.scatter(X_current[:n_obs,0],X_current[:n_obs,1],c="black")
+        # ax.scatter(X_current[:n_obs,0],X_current[:n_obs,1],c="black")
         ax.scatter(X_current[n_obs:,0],X_current[n_obs:,1],c="grey")
+        # plt.savefig("thin"+str(count_thin)+".pdf", bbox_inches='tight')
         plt.show()
+        
+        count_thin += 1
     
 
 
@@ -839,16 +855,16 @@ for i in range(p):
 
 ### confidence interval C_12(0) and C_12(0.1)
 
-c0l = np.quantile(Sigma_run[tail:,0,1],0.05)
-c0u = np.quantile(Sigma_run[tail:,0,1],0.95)
+# c0l = np.quantile(Sigma_run[tail:,0,1],0.05)
+# c0u = np.quantile(Sigma_run[tail:,0,1],0.95)
 
-print("C_12(0) : [", c0l,",",c0u,"]")
+# print("C_12(0) : [", c0l,",",c0u,"]")
 
 
-c0p1l = np.quantile(Sigma_0p1_run[tail:,0,1],0.05)
-c0p1u = np.quantile(Sigma_0p1_run[tail:,0,1],0.95)
+# c0p1l = np.quantile(Sigma_0p1_run[tail:,0,1],0.05)
+# c0p1u = np.quantile(Sigma_0p1_run[tail:,0,1],0.95)
 
-print("C_12(0.1) : [", c0p1l,",",c0p1u,"]")
+# print("C_12(0.1) : [", c0p1l,",",c0p1u,"]")
 
 
 rho_run = np.array([np.diag(np.diag(Sigma_run[i])**(-1/2))@Sigma_run[i]@np.diag(np.diag(Sigma_run[i])**(-1/2)) for i in range(N)])
@@ -1001,4 +1017,203 @@ for i in range(p):
 # np.save("run2_A.npy",A_run)
 # np.save("run2_V_grid.npy",V_grid_run)
 
+### pcf function
+
+Ns = 10000000
+nds = 50
+lim = 1
+
+
+
+
+def pcf_val(d,A,phis,mu,Ns):
+
+
+    
+    locs = np.array([[0],[d]])
+    
+    p = A.shape[0]
+    
+    D = distance_matrix(locs,locs)
+    
+    Rs = np.array([ np.exp(-D*phis[j]) for j in range(p) ])
+    Cs = np.array([np.linalg.cholesky(Rs[j]) for j in range(p)])
+    Zs = np.array([np.matmul( Cs[j], random.normal(size=(2,Ns)) ) for j in range(p)])
+    Vs = np.array([np.matmul( A, Zs[:,j] ) + np.outer(mu,np.ones(Ns)) for j in range(2)])
+    Ys = Vs + random.normal(size=(2,p,Ns))
+    return(Ys)
+
+def pairs(p):
+    
+    prs = np.zeros((p*(p+1)//2,2))
+    ind = 0
+    
+    for i in range(p):
+        for j in range(i,p):
+            prs[ind] = [i+1,j+1] 
+            
+            ind+=1
+            
+    return(prs)
+
+prs_p = pairs(p)
+jumps = 100
+
+ds = (np.arange(nds)+1)/nds*lim
+
+
+pcfs = np.zeros((p*(p+1)//2,(N-tail)//jumps,nds))
+
+import time
+st = time.time()
+
+for i in range(tail,N,jumps):
+    
+    
+    for j in range(nds):
+        y = pcf_val(ds[j],A_run[i],phis_run[i],mu_run[i],Ns)
+        mm = (np.argmax(y,axis=1) + 1) * (np.max(y,axis=1) > 0)
+        ind=0
+        for prs in prs_p:
+            ik = mm == prs[0]
+            il = mm == prs[1]
+            
+            ikl = np.array([ik[0] & il[1],ik[1] & il[0]])
+            
+            pcfs[ind,(i-tail)//jumps,j] = np.mean(ikl)/np.mean(ik)/np.mean(il)
+            ind+=1
+     
+    print(i)    
+        
+et = time.time()
+print((et-st)/60,"minutes")
+
+
+mean_pcfs = np.mean(pcfs,axis=1)
+q05_pcfs = np.quantile(pcfs,0.05,axis=1)
+q95_pcfs = np.quantile(pcfs,0.95,axis=1)
+
+plt.plot(ds,mean_pcfs[0])
+plt.fill_between(ds, q05_pcfs[0], q95_pcfs[0], alpha=0.5)
+# plt.savefig("maple_pcf.pdf", bbox_inches='tight')
+plt.show()
+# plt.legend(["pcf"], loc ="upper right")
+
+### repetitions
+
+n_repi = 20
+rep_count = 0
+
+for repi in range(n_repi):
+    
+
+    ### cox model
+    
+    
+    ### generate base poisson process
+    
+    rand_pa = random.choice(np.arange(tail,N))
+    
+    n_rep = random.poisson(lam_run[rand_pa])
+    X_rep = random.uniform(size=(n_rep,2))
+    
+    
+    
+    ### random example
+    
+    Y_rep = rmultiLMC(A_run[rand_pa],phis_run[rand_pa],mu_run[rand_pa],X_rep, retZV=False) 
+    
+    fig, ax = plt.subplots()
+    ax.set_xlim(0,1)
+    ax.set_ylim(0,1)
+    ax.set_box_aspect(1)
+    ax.scatter(X_rep[Y_rep==1,0],X_rep[Y_rep==1,1],color=tab_cols[0])
+    # plt.savefig("maple_rep"+str(rep_count)+".pdf", bbox_inches='tight')
+    plt.show()
+    
+    rep_count += 1
+    
+
+rep_count = 0    
+for repi in range(n_repi):
+    
+    ### poisson model
+    
+    
+    n_rep = random.poisson(lam_run[rand_pa])
+    X_rep = random.uniform(size=(n_rep,2))
+    
+    ogNei_new = np.zeros((n_rep,(m+1)**2),dtype=int)
+    dist_pnei_ogrid_new = np.zeros(((n_rep,(m+1)**2)))
+    
+        
+    
+    for i in range(n_rep):
+            
+        left_lim = ell(X_rep[i,0],n_grid,m)
+        xNei = np.arange(left_lim,left_lim+m+1) 
+        
+        down_lim = ell(X_rep[i,1],n_grid,m)
+        yNei = np.arange(down_lim,down_lim+m+1) 
+    
+        
+        ogNei_new[i] = np.array([ii*(n_grid+1)+jj for ii in yNei for jj in xNei],dtype=int)
+        
+        dist_pnei_ogrid_new[i] = distance_matrix([X_rep[i]],loc_grid[ogNei_new[i]])[0]
+    
+        
+    
+    ogbs_new = np.zeros((p,n_rep,(m+1)**2))
+    ogrs_new = np.zeros((p,n_rep))
+    
+    
+    for j in range(p):
+        
+        R_j_N_inv = np.linalg.inv(matern_kernel(dist_nei_ogrid,phis_run[rand_pa,j]))
+        
+        
+        for i in range(n_rep):
+        
+            r_j_Nii = matern_kernel(dist_pnei_ogrid_new[i],phis_run[rand_pa,j])
+        
+            ogb = R_j_N_inv@r_j_Nii
+            
+            ogbs_new[j,i] = ogb
+            ogrs_new[j,i] = 1 - np.inner(r_j_Nii,ogb)
+    
+    outsies = np.array([np.outer(A_run[rand_pa,:,j],A_run[rand_pa,:,j]) for j in range(p)])
+    V_rep = np.zeros((p,n_rep))
+    
+    
+    
+    V_gridmmu1_current = V_grid_run[rand_pa]-np.outer(mu_run[rand_pa],np.ones((n_grid+1)**2))
+    
+    A_inv_current = np.linalg.inv(A_run[rand_pa])
+    A_invV_gridmmu1_current = A_inv_current @ V_gridmmu1_current
+    
+    
+    for i in range(n_rep):
+        
+        
+        Sigma_new = np.sum([outsies[j]*ogrs_new[j,i] for j in range(p)],axis=0)
+        mu_new = mu_run[rand_pa] + np.sum([np.inner(A_invV_gridmmu1_current[j,ogNei_new[i]],ogbs_new[j,i])*A_run[rand_pa,:,j]  for j in range(p)],axis=0)
+        
+        V_rep[:,i] = np.linalg.cholesky(Sigma_new)@random.normal(size=p) + mu_new
+    
+    
+    Z_rep = V_rep + random.normal(size=(p,n_rep))
+    
+    Y_ind = np.prod(Z_rep>0,axis=0)
+    
+    X_1_rep = X_rep[Y_ind==1]
+    
+    fig, ax = plt.subplots()
+    ax.set_xlim(0,1)
+    ax.set_ylim(0,1)
+    ax.set_box_aspect(1)
+    ax.scatter(X_1_rep[:,0],X_1_rep[:,1],color=tab_cols[0])
+    # plt.savefig("maple_rep_int"+str(rep_count)+".pdf", bbox_inches='tight')
+    plt.show()
+    
+    rep_count += 1
 

@@ -44,7 +44,11 @@ def Z_move(V_current,Z_current,Y):
                         Z_current[jj,ii] = truncnorm.rvs(a=-np.inf,b=Z_current[Y[ii]-1,ii]-V_current[jj,ii],loc=V_current[jj,ii])
             
                     else:
-                        mini = np.max([np.max(np.delete(Z_current[:,ii], Y[ii]-1)),0])
+                        
+                        if p == 1:
+                            mini=0
+                        else:
+                            mini = np.max([np.max(np.delete(Z_current[:,ii], Y[ii]-1)),0])
                         Z_current[jj,ii] = truncnorm.rvs(a=mini-V_current[jj,ii],b=np.inf,loc=V_current[jj,ii])
             else:
                 for jj in random.permutation(range(p)):
