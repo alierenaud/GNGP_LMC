@@ -18,13 +18,13 @@ tab_cols = ['tab:blue', 'tab:orange', 'tab:green', 'tab:red', 'tab:purple', 'tab
 
 ### computing pcf
 
-Ns = 10000000
+Ns = 1000000
 nds = 50
 lim = 1
 
-d = 0.1
+# d = 0.1
 
-# p = 5
+p = 5
 
 # A = np.ones((p,p))*np.sqrt(1/p)
 # fac = np.ones((p,p))
@@ -32,6 +32,17 @@ d = 0.1
 #     for j in range(i+1,p):
 #         fac[i,j] = -1 
 # A *= fac
+
+# line = np.ones(p)
+
+# for i in range(p):
+#     line[i] /= (i+1)
+    
+# A = np.ones((p,p))
+
+# for i in range(p):
+#     A[i] = np.concatenate((line[i:],line[:i]))
+
 
 # Sigma = A@np.transpose(A)
     
@@ -74,19 +85,54 @@ def pairs(p):
 
 
 
-p = 5
 prs_p = pairs(p)
+
+ds = (np.arange(nds)+1)/nds*lim
+
+# pcfs_1 = np.zeros((p*(p+1)//2,nds))
+
+#### one set of parameters
+# import time
+# st = time.time()
+
+# for j in range(nds):
+#     y = pcf_val(ds[j],A,phis,mu,Ns)
+#     mm = (np.argmax(y,axis=1) + 1) * (np.max(y,axis=1) > 0)
+#     ind=0
+#     for prs in prs_p:
+#         ik = mm == prs[0]
+#         il = mm == prs[1]
+        
+#         ikl = np.array([ik[0] & il[1],ik[1] & il[0]])
+        
+#         pcfs_1[ind,j] = np.mean(ikl)/np.mean(ik)/np.mean(il)
+#         ind+=1
+# et = time.time()
+# print((et-st)/60,"minutes")
+
+
+
+# plt.plot(ds,pcfs_1[0])
+# plt.plot(ds,pcfs_1[2])
+# plt.plot(ds,pcfs_1[1],c="grey")
+# plt.legend(["maple", "hickory","cross"], loc ="upper right") 
+# plt.show()
+# # plt.savefig("2pcfs.pdf", bbox_inches='tight')
+
+
+
+
+p = 5
+
 
 
 N = 20000
 tail = 10000
 jumps = 100
 
-ds = (np.arange(nds)+1)/nds*lim
-
-A_run = np.load("run2_A.npy")
-phis_run = np.load("run2_phis.npy")
-mu_run = np.load("run2_mu.npy")
+A_run = np.load("run_A.npy")
+phis_run = np.load("run_phis.npy")
+mu_run = np.load("run_mu.npy")
 
 # mms = np.zeros(((N-tail)//jumps,nds,2,Ns))
 pcfs = np.zeros((p*(p+1)//2,(N-tail)//jumps,nds))
@@ -120,7 +166,7 @@ print((et-st)/60,"minutes")
 
 
 # np.save("pcf2.npy",pcfs)
-pcfs = np.load("pcf2.npy")
+pcfs = np.load("pcf5.npy")
 
 
 
@@ -161,112 +207,223 @@ q95_pcfs = np.quantile(pcfs,0.95,axis=1)
 
 # p = 2 #
 
-plt.plot(ds,mean_pcfs[0])
-plt.plot(ds,mean_pcfs[2])
-plt.plot(ds,mean_pcfs[1],c="grey")
-plt.fill_between(ds, q05_pcfs[0], q95_pcfs[0], alpha=0.5)
-plt.fill_between(ds, q05_pcfs[2], q95_pcfs[2], alpha=0.5)
-plt.fill_between(ds, q05_pcfs[1], q95_pcfs[1], color="grey", alpha=0.5)
-plt.legend(["maple", "hickory","cross"], loc ="upper right") 
-# plt.show()
-plt.savefig("2pcfs.pdf", bbox_inches='tight')
+# plt.plot(ds,mean_pcfs[0])
+# plt.plot(ds,mean_pcfs[2])
+# plt.plot(ds,mean_pcfs[1],c="grey")
+# plt.fill_between(ds, q05_pcfs[0], q95_pcfs[0], alpha=0.5)
+# plt.fill_between(ds, q05_pcfs[2], q95_pcfs[2], alpha=0.5)
+# plt.fill_between(ds, q05_pcfs[1], q95_pcfs[1], color="grey", alpha=0.5)
+# plt.legend(["maple", "hickory","cross"], loc ="upper right") 
+# # plt.show()
+# plt.savefig("2pcfs.pdf", bbox_inches='tight')
 
 # p = 5 #
 
-# fig, ax = plt.subplots(5, 2, figsize=(8, 10))
+fig, ax = plt.subplots(5, 2, figsize=(8, 10))
 
-# ax[0,0].plot(ds,mean_pcfs[0],c=tab_cols[0])
-# ax[0,0].plot(ds,mean_pcfs[5],c=tab_cols[1])
-# ax[0,0].plot(ds,mean_pcfs[1],c="grey")
-# ax[0,0].fill_between(ds, q05_pcfs[0], q95_pcfs[0], color=tab_cols[0], alpha=0.5)
-# ax[0,0].fill_between(ds, q05_pcfs[5], q95_pcfs[5], color=tab_cols[1], alpha=0.5)
-# ax[0,0].fill_between(ds, q05_pcfs[1], q95_pcfs[1], color="grey", alpha=0.5)
-# ax[0,0].legend(["maple", "hickory","cross"], loc ="upper right") 
-# # plt.show()
+ax[0,0].plot(ds,mean_pcfs[0],c=tab_cols[0])
+ax[0,0].plot(ds,mean_pcfs[5],c=tab_cols[1])
+ax[0,0].plot(ds,mean_pcfs[1],c="grey")
+ax[0,0].fill_between(ds, q05_pcfs[0], q95_pcfs[0], color=tab_cols[0], alpha=0.5)
+ax[0,0].fill_between(ds, q05_pcfs[5], q95_pcfs[5], color=tab_cols[1], alpha=0.5)
+ax[0,0].fill_between(ds, q05_pcfs[1], q95_pcfs[1], color="grey", alpha=0.5)
+ax[0,0].legend(["maple", "hickory","cross"], loc ="upper right") 
+# plt.show()
 
-# ax[0,1].plot(ds,mean_pcfs[0],c=tab_cols[0])
-# ax[0,1].plot(ds,mean_pcfs[9],c=tab_cols[2])
-# ax[0,1].plot(ds,mean_pcfs[2],c="grey")
-# ax[0,1].fill_between(ds, q05_pcfs[0], q95_pcfs[0], color=tab_cols[0], alpha=0.5)
-# ax[0,1].fill_between(ds, q05_pcfs[9], q95_pcfs[9], color=tab_cols[2], alpha=0.5)
-# ax[0,1].fill_between(ds, q05_pcfs[2], q95_pcfs[2], color="grey", alpha=0.5)
-# ax[0,1].legend(["maple", "whiteoak","cross"], loc ="upper right") 
-# # plt.show()
+ax[0,1].plot(ds,mean_pcfs[0],c=tab_cols[0])
+ax[0,1].plot(ds,mean_pcfs[9],c=tab_cols[2])
+ax[0,1].plot(ds,mean_pcfs[2],c="grey")
+ax[0,1].fill_between(ds, q05_pcfs[0], q95_pcfs[0], color=tab_cols[0], alpha=0.5)
+ax[0,1].fill_between(ds, q05_pcfs[9], q95_pcfs[9], color=tab_cols[2], alpha=0.5)
+ax[0,1].fill_between(ds, q05_pcfs[2], q95_pcfs[2], color="grey", alpha=0.5)
+ax[0,1].legend(["maple", "whiteoak","cross"], loc ="upper right") 
+# plt.show()
 
-# ax[1,0].plot(ds,mean_pcfs[0],c=tab_cols[0])
-# ax[1,0].plot(ds,mean_pcfs[12],c=tab_cols[3])
-# ax[1,0].plot(ds,mean_pcfs[3],c="grey")
-# ax[1,0].fill_between(ds, q05_pcfs[0], q95_pcfs[0], color=tab_cols[0], alpha=0.5)
-# ax[1,0].fill_between(ds, q05_pcfs[12], q95_pcfs[12], color=tab_cols[3], alpha=0.5)
-# ax[1,0].fill_between(ds, q05_pcfs[3], q95_pcfs[3], color="grey", alpha=0.5)
-# ax[1,0].legend(["maple", "redoak","cross"], loc ="upper right") 
-# # plt.show()
+ax[1,0].plot(ds,mean_pcfs[0],c=tab_cols[0])
+ax[1,0].plot(ds,mean_pcfs[12],c=tab_cols[3])
+ax[1,0].plot(ds,mean_pcfs[3],c="grey")
+ax[1,0].fill_between(ds, q05_pcfs[0], q95_pcfs[0], color=tab_cols[0], alpha=0.5)
+ax[1,0].fill_between(ds, q05_pcfs[12], q95_pcfs[12], color=tab_cols[3], alpha=0.5)
+ax[1,0].fill_between(ds, q05_pcfs[3], q95_pcfs[3], color="grey", alpha=0.5)
+ax[1,0].legend(["maple", "redoak","cross"], loc ="upper right") 
+# plt.show()
 
-# ax[1,1].plot(ds,mean_pcfs[0],c=tab_cols[0])
-# ax[1,1].plot(ds,mean_pcfs[14],c=tab_cols[4])
-# ax[1,1].plot(ds,mean_pcfs[4],c="grey")
-# ax[1,1].fill_between(ds, q05_pcfs[0], q95_pcfs[0], color=tab_cols[0], alpha=0.5)
-# ax[1,1].fill_between(ds, q05_pcfs[14], q95_pcfs[14], color=tab_cols[4], alpha=0.5)
-# ax[1,1].fill_between(ds, q05_pcfs[4], q95_pcfs[4], color="grey", alpha=0.5)
-# ax[1,1].legend(["maple", "blackoak","cross"], loc ="upper right")
-# # plt.show()
+ax[1,1].plot(ds,mean_pcfs[0],c=tab_cols[0])
+ax[1,1].plot(ds,mean_pcfs[14],c=tab_cols[4])
+ax[1,1].plot(ds,mean_pcfs[4],c="grey")
+ax[1,1].fill_between(ds, q05_pcfs[0], q95_pcfs[0], color=tab_cols[0], alpha=0.5)
+ax[1,1].fill_between(ds, q05_pcfs[14], q95_pcfs[14], color=tab_cols[4], alpha=0.5)
+ax[1,1].fill_between(ds, q05_pcfs[4], q95_pcfs[4], color="grey", alpha=0.5)
+ax[1,1].legend(["maple", "blackoak","cross"], loc ="upper right")
+# plt.show()
 
-# ax[2,0].plot(ds,mean_pcfs[5],c=tab_cols[1])
-# ax[2,0].plot(ds,mean_pcfs[9],c=tab_cols[2])
-# ax[2,0].plot(ds,mean_pcfs[6],c="grey")
-# ax[2,0].fill_between(ds, q05_pcfs[5], q95_pcfs[5], color=tab_cols[1], alpha=0.5)
-# ax[2,0].fill_between(ds, q05_pcfs[9], q95_pcfs[9], color=tab_cols[2], alpha=0.5)
-# ax[2,0].fill_between(ds, q05_pcfs[6], q95_pcfs[6], color="grey", alpha=0.5)
-# ax[2,0].legend(["hickory", "whiteoak","cross"], loc ="upper right")
-# # plt.show()
+ax[2,0].plot(ds,mean_pcfs[5],c=tab_cols[1])
+ax[2,0].plot(ds,mean_pcfs[9],c=tab_cols[2])
+ax[2,0].plot(ds,mean_pcfs[6],c="grey")
+ax[2,0].fill_between(ds, q05_pcfs[5], q95_pcfs[5], color=tab_cols[1], alpha=0.5)
+ax[2,0].fill_between(ds, q05_pcfs[9], q95_pcfs[9], color=tab_cols[2], alpha=0.5)
+ax[2,0].fill_between(ds, q05_pcfs[6], q95_pcfs[6], color="grey", alpha=0.5)
+ax[2,0].legend(["hickory", "whiteoak","cross"], loc ="upper right")
+# plt.show()
 
-# ax[2,1].plot(ds,mean_pcfs[5],c=tab_cols[1])
-# ax[2,1].plot(ds,mean_pcfs[12],c=tab_cols[3])
-# ax[2,1].plot(ds,mean_pcfs[7],c="grey")
-# ax[2,1].fill_between(ds, q05_pcfs[5], q95_pcfs[5], color=tab_cols[1], alpha=0.5)
-# ax[2,1].fill_between(ds, q05_pcfs[12], q95_pcfs[12], color=tab_cols[3], alpha=0.5)
-# ax[2,1].fill_between(ds, q05_pcfs[7], q95_pcfs[7], color="grey", alpha=0.5)
-# ax[2,1].legend(["hickory", "redoak","cross"], loc ="upper right")
-# # plt.show()
+ax[2,1].plot(ds,mean_pcfs[5],c=tab_cols[1])
+ax[2,1].plot(ds,mean_pcfs[12],c=tab_cols[3])
+ax[2,1].plot(ds,mean_pcfs[7],c="grey")
+ax[2,1].fill_between(ds, q05_pcfs[5], q95_pcfs[5], color=tab_cols[1], alpha=0.5)
+ax[2,1].fill_between(ds, q05_pcfs[12], q95_pcfs[12], color=tab_cols[3], alpha=0.5)
+ax[2,1].fill_between(ds, q05_pcfs[7], q95_pcfs[7], color="grey", alpha=0.5)
+ax[2,1].legend(["hickory", "redoak","cross"], loc ="upper right")
+# plt.show()
 
-# ax[3,0].plot(ds,mean_pcfs[5],c=tab_cols[1])
-# ax[3,0].plot(ds,mean_pcfs[14],c=tab_cols[4])
-# ax[3,0].plot(ds,mean_pcfs[8],c="grey")
-# ax[3,0].fill_between(ds, q05_pcfs[5], q95_pcfs[5], color=tab_cols[1], alpha=0.5)
-# ax[3,0].fill_between(ds, q05_pcfs[14], q95_pcfs[14], color=tab_cols[4], alpha=0.5)
-# ax[3,0].fill_between(ds, q05_pcfs[8], q95_pcfs[8], color="grey", alpha=0.5)
-# ax[3,0].legend(["hickory", "blackoak","cross"], loc ="upper right")
-# # plt.show()
+ax[3,0].plot(ds,mean_pcfs[5],c=tab_cols[1])
+ax[3,0].plot(ds,mean_pcfs[14],c=tab_cols[4])
+ax[3,0].plot(ds,mean_pcfs[8],c="grey")
+ax[3,0].fill_between(ds, q05_pcfs[5], q95_pcfs[5], color=tab_cols[1], alpha=0.5)
+ax[3,0].fill_between(ds, q05_pcfs[14], q95_pcfs[14], color=tab_cols[4], alpha=0.5)
+ax[3,0].fill_between(ds, q05_pcfs[8], q95_pcfs[8], color="grey", alpha=0.5)
+ax[3,0].legend(["hickory", "blackoak","cross"], loc ="upper right")
+# plt.show()
 
-# ax[3,1].plot(ds,mean_pcfs[9],c=tab_cols[2])
-# ax[3,1].plot(ds,mean_pcfs[12],c=tab_cols[3])
-# ax[3,1].plot(ds,mean_pcfs[10],c="grey")
-# ax[3,1].fill_between(ds, q05_pcfs[9], q95_pcfs[9], color=tab_cols[2], alpha=0.5)
-# ax[3,1].fill_between(ds, q05_pcfs[12], q95_pcfs[12], color=tab_cols[3], alpha=0.5)
-# ax[3,1].fill_between(ds, q05_pcfs[10], q95_pcfs[10], color="grey", alpha=0.5)
-# ax[3,1].legend(["whiteoak", "redoak","cross"], loc ="upper right")
-# # plt.show()
+ax[3,1].plot(ds,mean_pcfs[9],c=tab_cols[2])
+ax[3,1].plot(ds,mean_pcfs[12],c=tab_cols[3])
+ax[3,1].plot(ds,mean_pcfs[10],c="grey")
+ax[3,1].fill_between(ds, q05_pcfs[9], q95_pcfs[9], color=tab_cols[2], alpha=0.5)
+ax[3,1].fill_between(ds, q05_pcfs[12], q95_pcfs[12], color=tab_cols[3], alpha=0.5)
+ax[3,1].fill_between(ds, q05_pcfs[10], q95_pcfs[10], color="grey", alpha=0.5)
+ax[3,1].legend(["whiteoak", "redoak","cross"], loc ="upper right")
+# plt.show()
 
-# ax[4,0].plot(ds,mean_pcfs[9],c=tab_cols[2])
-# ax[4,0].plot(ds,mean_pcfs[14],c=tab_cols[4])
-# ax[4,0].plot(ds,mean_pcfs[11],c="grey")
-# ax[4,0].fill_between(ds, q05_pcfs[9], q95_pcfs[9], color=tab_cols[2], alpha=0.5)
-# ax[4,0].fill_between(ds, q05_pcfs[14], q95_pcfs[14], color=tab_cols[4], alpha=0.5)
-# ax[4,0].fill_between(ds, q05_pcfs[11], q95_pcfs[11], color="grey", alpha=0.5)
-# ax[4,0].legend(["whiteoak", "blackoak","cross"], loc ="upper right")
-# # plt.show()
+ax[4,0].plot(ds,mean_pcfs[9],c=tab_cols[2])
+ax[4,0].plot(ds,mean_pcfs[14],c=tab_cols[4])
+ax[4,0].plot(ds,mean_pcfs[11],c="grey")
+ax[4,0].fill_between(ds, q05_pcfs[9], q95_pcfs[9], color=tab_cols[2], alpha=0.5)
+ax[4,0].fill_between(ds, q05_pcfs[14], q95_pcfs[14], color=tab_cols[4], alpha=0.5)
+ax[4,0].fill_between(ds, q05_pcfs[11], q95_pcfs[11], color="grey", alpha=0.5)
+ax[4,0].legend(["whiteoak", "blackoak","cross"], loc ="upper right")
+# plt.show()
 
-# ax[4,1].plot(ds,mean_pcfs[12],c=tab_cols[3])
-# ax[4,1].plot(ds,mean_pcfs[14],c=tab_cols[4])
-# ax[4,1].plot(ds,mean_pcfs[13],c="grey")
-# ax[4,1].fill_between(ds, q05_pcfs[12], q95_pcfs[12], color=tab_cols[3], alpha=0.5)
-# ax[4,1].fill_between(ds, q05_pcfs[14], q95_pcfs[14], color=tab_cols[4], alpha=0.5)
-# ax[4,1].fill_between(ds, q05_pcfs[13], q95_pcfs[13], color="grey", alpha=0.5)
-# ax[4,1].legend(["redoak", "blackoak","cross"], loc ="upper right")
-# # plt.show()
+ax[4,1].plot(ds,mean_pcfs[12],c=tab_cols[3])
+ax[4,1].plot(ds,mean_pcfs[14],c=tab_cols[4])
+ax[4,1].plot(ds,mean_pcfs[13],c="grey")
+ax[4,1].fill_between(ds, q05_pcfs[12], q95_pcfs[12], color=tab_cols[3], alpha=0.5)
+ax[4,1].fill_between(ds, q05_pcfs[14], q95_pcfs[14], color=tab_cols[4], alpha=0.5)
+ax[4,1].fill_between(ds, q05_pcfs[13], q95_pcfs[13], color="grey", alpha=0.5)
+ax[4,1].legend(["redoak", "blackoak","cross"], loc ="upper right")
+# plt.show()
 # plt.savefig("5pcfs.pdf", bbox_inches='tight')
 
 
+### for oral defence
+
+
+plt.plot(ds,mean_pcfs[0],c=tab_cols[0])
+plt.plot(ds,mean_pcfs[5],c=tab_cols[1])
+plt.plot(ds,mean_pcfs[1],c="grey")
+plt.fill_between(ds, q05_pcfs[0], q95_pcfs[0], color=tab_cols[0], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[5], q95_pcfs[5], color=tab_cols[1], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[1], q95_pcfs[1], color="grey", alpha=0.5)
+# plt.legend(["maple", "hickory","cross"], loc ="upper right") 
+plt.savefig("12pcf.pdf", bbox_inches='tight')
+plt.show()
+
+# fig, ax = plt.subplots(1, 1, figsize=(3, 2))
+plt.plot(ds,mean_pcfs[0],c=tab_cols[0])
+plt.plot(ds,mean_pcfs[9],c=tab_cols[2])
+plt.plot(ds,mean_pcfs[2],c="grey")
+plt.fill_between(ds, q05_pcfs[0], q95_pcfs[0], color=tab_cols[0], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[9], q95_pcfs[9], color=tab_cols[2], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[2], q95_pcfs[2], color="grey", alpha=0.5)
+# plt.legend(["maple", "whiteoak","cross"], loc ="upper right") 
+plt.savefig("13pcf.pdf", bbox_inches='tight')
+plt.show()
+
+# fig, ax = plt.subplots(1, 1, figsize=(3, 2))
+plt.plot(ds,mean_pcfs[0],c=tab_cols[0])
+plt.plot(ds,mean_pcfs[12],c=tab_cols[3])
+plt.plot(ds,mean_pcfs[3],c="grey")
+plt.fill_between(ds, q05_pcfs[0], q95_pcfs[0], color=tab_cols[0], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[12], q95_pcfs[12], color=tab_cols[3], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[3], q95_pcfs[3], color="grey", alpha=0.5)
+# plt.legend(["maple", "redoak","cross"], loc ="upper right") 
+plt.savefig("14pcf.pdf", bbox_inches='tight')
+plt.show()
+
+# fig, ax = plt.subplots(1, 1, figsize=(3, 2))
+plt.plot(ds,mean_pcfs[0],c=tab_cols[0])
+plt.plot(ds,mean_pcfs[14],c=tab_cols[4])
+plt.plot(ds,mean_pcfs[4],c="grey")
+plt.fill_between(ds, q05_pcfs[0], q95_pcfs[0], color=tab_cols[0], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[14], q95_pcfs[14], color=tab_cols[4], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[4], q95_pcfs[4], color="grey", alpha=0.5)
+# plt.legend(["maple", "blackoak","cross"], loc ="upper right")
+plt.savefig("15pcf.pdf", bbox_inches='tight')
+plt.show()
+
+# fig, ax = plt.subplots(1, 1, figsize=(3, 2))
+plt.plot(ds,mean_pcfs[5],c=tab_cols[1])
+plt.plot(ds,mean_pcfs[9],c=tab_cols[2])
+plt.plot(ds,mean_pcfs[6],c="grey")
+plt.fill_between(ds, q05_pcfs[5], q95_pcfs[5], color=tab_cols[1], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[9], q95_pcfs[9], color=tab_cols[2], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[6], q95_pcfs[6], color="grey", alpha=0.5)
+# plt.legend(["hickory", "whiteoak","cross"], loc ="upper right")
+plt.savefig("23pcf.pdf", bbox_inches='tight')
+plt.show()
+
+# fig, ax = plt.subplots(1, 1, figsize=(3, 2))
+plt.plot(ds,mean_pcfs[5],c=tab_cols[1])
+plt.plot(ds,mean_pcfs[12],c=tab_cols[3])
+plt.plot(ds,mean_pcfs[7],c="grey")
+plt.fill_between(ds, q05_pcfs[5], q95_pcfs[5], color=tab_cols[1], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[12], q95_pcfs[12], color=tab_cols[3], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[7], q95_pcfs[7], color="grey", alpha=0.5)
+# plt.legend(["hickory", "redoak","cross"], loc ="upper right")
+plt.savefig("24pcf.pdf", bbox_inches='tight')
+plt.show()
+
+# fig, ax = plt.subplots(1, 1, figsize=(3, 2))
+plt.plot(ds,mean_pcfs[5],c=tab_cols[1])
+plt.plot(ds,mean_pcfs[14],c=tab_cols[4])
+plt.plot(ds,mean_pcfs[8],c="grey")
+plt.fill_between(ds, q05_pcfs[5], q95_pcfs[5], color=tab_cols[1], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[14], q95_pcfs[14], color=tab_cols[4], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[8], q95_pcfs[8], color="grey", alpha=0.5)
+# plt.legend(["hickory", "blackoak","cross"], loc ="upper right")
+plt.savefig("25pcf.pdf", bbox_inches='tight')
+plt.show()
+
+# fig, ax = plt.subplots(1, 1, figsize=(3, 2))
+plt.plot(ds,mean_pcfs[9],c=tab_cols[2])
+plt.plot(ds,mean_pcfs[12],c=tab_cols[3])
+plt.plot(ds,mean_pcfs[10],c="grey")
+plt.fill_between(ds, q05_pcfs[9], q95_pcfs[9], color=tab_cols[2], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[12], q95_pcfs[12], color=tab_cols[3], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[10], q95_pcfs[10], color="grey", alpha=0.5)
+# plt.legend(["whiteoak", "redoak","cross"], loc ="upper right")
+plt.savefig("34pcf.pdf", bbox_inches='tight')
+plt.show()
+
+# fig, ax = plt.subplots(1, 1, figsize=(3, 2))
+plt.plot(ds,mean_pcfs[9],c=tab_cols[2])
+plt.plot(ds,mean_pcfs[14],c=tab_cols[4])
+plt.plot(ds,mean_pcfs[11],c="grey")
+plt.fill_between(ds, q05_pcfs[9], q95_pcfs[9], color=tab_cols[2], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[14], q95_pcfs[14], color=tab_cols[4], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[11], q95_pcfs[11], color="grey", alpha=0.5)
+# plt.legend(["whiteoak", "blackoak","cross"], loc ="upper right")
+plt.savefig("35pcf.pdf", bbox_inches='tight')
+plt.show()
+
+# fig, ax = plt.subplots(1, 1, figsize=(3, 2))
+plt.plot(ds,mean_pcfs[12],c=tab_cols[3])
+plt.plot(ds,mean_pcfs[14],c=tab_cols[4])
+plt.plot(ds,mean_pcfs[13],c="grey")
+plt.fill_between(ds, q05_pcfs[12], q95_pcfs[12], color=tab_cols[3], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[14], q95_pcfs[14], color=tab_cols[4], alpha=0.5)
+plt.fill_between(ds, q05_pcfs[13], q95_pcfs[13], color="grey", alpha=0.5)
+# plt.legend(["redoak", "blackoak","cross"], loc ="upper right")
+plt.savefig("45pcf.pdf", bbox_inches='tight')
+plt.show()
 
 
 

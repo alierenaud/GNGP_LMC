@@ -232,13 +232,13 @@ n_grid=50
 a_lam = n_obs*(p+1)/p
 
 
-fig, ax = plt.subplots()
-ax.set_xlim(0,1)
-ax.set_ylim(0,1)
-ax.set_box_aspect(1)
-ax.scatter(X_obs[:,0],X_obs[:,1],color=tab_cols[0])
-# plt.savefig("maple_points.pdf", bbox_inches='tight')
-plt.show()
+# fig, ax = plt.subplots()
+# ax.set_xlim(0,1)
+# ax.set_ylim(0,1)
+# ax.set_box_aspect(1)
+# ax.scatter(X_obs[:,0],X_obs[:,1],color=tab_cols[0])
+# # plt.savefig("maple_points.pdf", bbox_inches='tight')
+# plt.show()
 
 ### base intensity
 # lam = 2500
@@ -252,8 +252,8 @@ plt.show()
 m = 3
 
 ### markov chain + tail length
-N = 3000
-tail = 1000
+N = 20000
+tail = 10000
 
 
 ### generate base poisson process
@@ -703,7 +703,7 @@ for i in range(N):
     A_run[i] = A_current
     V_grid_run[i] = V_grid_current 
     
-    if i % 200 == 0:
+    if i % 100 == 0:
         
         
         ett = time.time()
@@ -882,8 +882,8 @@ print("Post Mean Rho 0.1\n",np.mean(rho_0p1_run[tail:],axis=0))
 
 ### computing intensity
 
-# lam_run = np.load("run2_lam.npy")
-# V_grid_run = np.load("run2_V_grid.npy")
+# lam_run = np.load("run_lam.npy")
+# V_grid_run = np.load("run_V_grid.npy")
 
 Z_grid_run = V_grid_run + random.normal(size=(N,p,(n_grid+1)**2))
 
