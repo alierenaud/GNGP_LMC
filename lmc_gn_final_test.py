@@ -27,11 +27,11 @@ from gn_func import phis_move, A_move_slice, mu_move, V_move_conj_scale, V_grid_
 
 cols = ["Blues","Oranges","Greens","Reds","Purples"]
 
-random.seed(0)
+random.seed(1)
 
 ### number of points 
 n_obs=100
-n_grid=4
+n_grid=10
 # n_grid=int(np.sqrt(n_obs)-1)
 
 ### number of dimensions
@@ -39,7 +39,7 @@ p = 2
 
 ### number of neighbors
 
-m = 1
+m = 3
 
 ### markov chain + tail length
 N = 10000
