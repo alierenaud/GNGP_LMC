@@ -374,7 +374,7 @@ Dm1 = np.diag(taus)
 # Rho_0p1 = np.diag(np.diag(Sigma)**(-1/2))@Sigma_0p1@np.diag(np.diag(Sigma)**(-1/2))
 
 
-A = np.array([[1.,0.5],[0.5,1.]])
+A = np.array([[1.,0.5],[-0.5,-1.]])
 phis = np.array([5.,10.])
 
 
@@ -485,6 +485,7 @@ st = time.time()
     
     
 for j in range(nds):
+    print(j)
     y = pcf_val(ds[j],A,phis,mu,Ns)
     mm = (np.argmax(y,axis=1) + 1) * (np.max(y,axis=1) > 0)
     ind=0
@@ -503,8 +504,8 @@ et = time.time()
 print((et-st)/60,"minutes")
 
 
-plt.plot(ds,pcfs_true[0])
-plt.plot(ds,pcfs_true[2])
+# plt.plot(ds,pcfs_true[0])
+# plt.plot(ds,pcfs_true[2])
 plt.plot(ds,pcfs_true[1],c="grey")
 # plt.savefig("maple_pcf.pdf", bbox_inches='tight')
 plt.show()
@@ -1111,16 +1112,15 @@ for i in range(p):
 # np.save("run_neg_A.npy",A_run)
 # np.save("run_neg_V_grid.npy",V_grid_run)
 
-# lam_run = np.load("run_pos_lam.npy")
-# n_run = np.load("run_pos_n.npy")
-# mu_run = np.load("run_pos_mu.npy")
-# phis_run = np.load("run_pos_phis.npy")
-# A_run = np.load("run_pos_A.npy")
-# V_grid_run = np.load("run_pos_V_grid.npy")
+
+mu_run = np.load("run_neg_mu.npy")
+phis_run = np.load("run_neg_phis.npy")
+A_run = np.load("run_neg_A.npy")
+
 
 ### pcf function
 
-Ns = 1000000
+Ns = 10000000
 nds = 50
 lim = 1
 
@@ -1171,7 +1171,7 @@ plt.plot(ds,pcfs_true[1],c="black")
 plt.fill_between(ds, q05_pcfs[1], q95_pcfs[1], alpha=0.5, color="grey")
 plt.xlabel("Distance")
 plt.ylabel("Cross Pair Correlation Function")
-# plt.savefig("cpcf_pos.pdf", bbox_inches='tight')
+plt.savefig("cpcf_neg.pdf", bbox_inches='tight')
 plt.show()
 # plt.legend(["pcf"], loc ="upper right")
 
